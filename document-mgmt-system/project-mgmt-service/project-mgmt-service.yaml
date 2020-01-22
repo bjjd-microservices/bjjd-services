@@ -1,0 +1,352 @@
+{
+   "swagger":"2.0",
+   "info":{
+      "version":"18.10.0",
+      "title":"Project Management Service API"
+   },
+   "basePath":"/bjjd/",
+   "tags":[
+      {
+         "name":"ProjectMgmt"
+      }
+   ],
+   "schemes":[
+      "https"
+   ],
+   "paths":{
+      "/project":{
+         "post":{
+            "tags":[
+               "ProjectMgmt"
+            ],
+            "summary":"Project Creation Service",
+            "description":"Project Creation Service",
+            "operationId":"createProject",
+            "consumes":[
+               "application/json",
+               "application/xml"
+            ],
+            "produces":[
+               "application/json",
+               "application/xml"
+            ],
+            "parameters":[
+               {
+                  "name":"xChannel",
+                  "in":"header",
+                  "required":false,
+                  "type":"string",
+                  "minLength":3,
+                  "maxLength":36
+               },
+               {
+                  "in":"body",
+                  "name":"body",
+                  "required":true,
+                  "schema":{
+                     "$ref":"#/definitions/Project"
+                  }
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"OK",
+                  "schema":{
+                     "$ref":"#/definitions/Project"
+                  }
+               },
+               "400":{
+                  "description":"Bad Request"
+               },
+               "500":{
+                  "description":"Internal Server Error"
+                }
+            }
+         }
+      },
+      "/project/findByStatus":{
+         "get":{
+            "tags":[
+               "ProjectMgmt"
+            ],
+            "summary":"Find all the projects by status",
+            "description":"Find all the projects by status",
+            "operationId":"findProjectsByStatus",
+            "consumes":[
+               "application/json",
+               "application/xml"
+            ],
+            "produces":[
+               "application/json",
+               "application/xml"
+            ],
+            "parameters":[
+               {
+                  "name":"xChannel",
+                  "in":"header",
+                  "required":false,
+                  "type":"string",
+                  "minLength":3,
+                  "maxLength":36
+               },
+               {
+                "name": "status",
+        "in": "query",
+        "description": "The status to restrict the results to.  If not provided, all records are returned",
+        "required": false,
+        "type": "string",
+        "enum": ["A","I"]
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"OK",
+                  "schema":{
+           "type" :"array",
+           "items":{
+            "$ref":"#/definitions/Project"
+           }
+                  }
+               },
+               "400":{
+                  "description":"Invalid status value"
+               },
+               "500":{
+                  "description":"Internal Server Error"
+                }
+            }
+         }
+      },
+    "/project/createWithArray":{
+    "post":{
+      "tags":[
+        "ProjectMgmt"
+      ],
+      "summary":"Project Creation with input arrays Service",
+            "description":"Project Finding Service",
+            "operationId":"createProjectsWithArrayInput",
+       "consumes":[
+               "application/json"
+            ],
+            "produces":[
+               "application/json"
+            ],
+      "parameters":[
+               {
+                  "name":"xChannel",
+                  "in":"header",
+                  "required":false,
+                  "type":"string",
+                  "minLength":3,
+                  "maxLength":36
+               },
+               {
+                  "in":"body",
+                  "name":"body",
+                  "required":true,
+                  "schema":{
+           "type" :"array",
+           "items":{
+            "$ref":"#/definitions/Project"
+           }
+                  }
+               }
+            ],
+      "responses":{
+               "200":{
+                  "description":"Successfully found"
+                 
+               },
+               "500":{
+                  "description":"Internal Server Error"
+               }
+            }
+    }
+    },
+    "/project/{id}":{
+         "get":{
+            "tags":[
+               "ProjectMgmt"
+            ],
+            "summary":"Find Project Details based on the project id",
+            "description":"Find Project Details based on the project id",
+            "operationId":"findProjectDetailsById",
+            "consumes":[
+               "application/json"
+            ],
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "name":"id",
+                  "in":"path",
+                  "required":true,
+                  "description":"Project Id",
+                  "type":"integer"
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"Successfully found",
+                  "schema":{
+                     "$ref":"#/definitions/Project"
+                  }
+               },
+               "400":{
+                  "description":"Invalid Project name and password supplied"
+               },
+               "404":{
+                  "description":"Project not found or inactive"
+               },
+               "500":{
+                  "description":"Internal Server Error"
+               }
+            }
+         },
+      "put":{
+            "tags":[
+               "ProjectMgmt"
+            ],
+            "summary":"Update Project Details based on the project id",
+            "description":"Update Project Details based on the project id",
+            "operationId":"updateProjectById",
+            "consumes":[
+               "application/json"
+            ],
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "name":"id",
+                  "in":"path",
+                  "required":true,
+                  "description":"Project Id",
+                  "type":"integer"
+               },
+         {
+                  "in":"body",
+                  "name":"body",
+                  "required":true,
+                  "schema":{
+                     "$ref":"#/definitions/Project"
+                  }
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"Successfully found",
+                  "schema":{
+                     "$ref":"#/definitions/Project"
+                  }
+               },
+               "400":{
+                  "description":"Invalid Project name supplied"
+               },
+               "404":{
+                  "description":"Project not found or inactive"
+               },
+               "500":{
+                  "description":"Internal Server Error"
+               }
+            }
+         },
+     "delete":{
+            "tags":[
+               "ProjectMgmt"
+            ],
+            "summary":"Project Deletion Service based on the project id",
+            "description":"Project Deletion Service based on the project id",
+            "operationId":"deleteProjectById",
+            "consumes":[
+               "application/json"
+            ],
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+                {
+                   "name":"id",
+                  "in":"path",
+                  "required":true,
+                  "description":"Project Id",
+                  "type":"integer"
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"Project deleted succussfully"
+               },
+               "400":{
+                  "description":"Invalid User id supplied"
+               },
+               "404":{
+                  "description":"Project Id not found"
+               },
+               "500":{
+                  "description":"Internal Server Error"
+               }
+            }
+         }
+      }
+   },
+   "definitions":{
+      "Project":{
+         "required":[
+            "projectName"
+         ],
+         "properties":{
+            "id":{
+               "type":"integer",
+               "format":"int64",
+               "description":"user id"
+            },
+            "name":{
+               "type":"string",
+               "minLength":1,
+               "maxLength":50,
+               "description":"User name"
+            },
+            "description":{
+               "type":"string",
+               "minLength":1,
+               "maxLength":50,
+               "description":"User name"
+            },
+          "manager":{
+               "type":"string",
+               "minLength":1,
+               "maxLength":50,
+               "description":"Password of the user"
+            },
+            "startDate":{
+               "type":"string",
+               "format":"date",
+               "description":"Date of the birth"
+            },
+            "completionDate":{
+               "type":"string",
+               "format":"date",
+               "description":"Date of the birth"
+            },
+            "photoId":{
+               "type":"string",
+               "minLength":1,
+               "maxLength":150,
+               "description":"Password of the user"
+            },
+            "status":{
+               "type":"string",
+               "enum": ["A","I"],
+               "description":"Password of the user"
+            },
+            "groupId":{
+               "type":"integer",
+               "format":"int32",
+               "description":"User Group"
+            }
+        }
+      }
+    }
+}

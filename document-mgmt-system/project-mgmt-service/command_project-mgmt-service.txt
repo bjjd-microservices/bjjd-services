@@ -1,0 +1,1 @@
+java -jar swagger-codegen-cli-2.3.1.jar generate -i project-mgmt-service.yaml --api-package com.jmk.project.api --model-package com.jmk.project.model --group-id com.jmk --artifact-id project-mgmt-service --artifact-version 0.0.1-SNAPSHOT -l spring -o project-mgmt-service

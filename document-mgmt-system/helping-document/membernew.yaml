@@ -1,0 +1,211 @@
+{
+   "swagger":"2.0",
+   "info":{
+      "version":"18.10.0",
+      "title":"Member Managerment Service API"
+   },
+   "basePath":"/bjjd/",
+   "tags":[
+      {
+         "name":"MemberMgmt"
+      }
+   ],
+   "schemes":[
+      "https"
+   ],
+   "paths":{
+      "/member":{
+         "post":{
+            "tags":[
+               "MemberMgmt"
+            ],
+            "summary":"Member Creation Service",
+            "description":"Member Creation Service",
+            "operationId":"createMember",
+            "consumes":[
+               "application/json"
+            ],
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "name":"X-Request-ID",
+                  "in":"header",
+                  "required":false,
+                  "type":"string",
+                  "minLength":3,
+                  "maxLength":36
+               },
+               {
+                  "name":"X-Channel",
+                  "in":"header",
+                  "required":false,
+                  "type":"string",
+                  "minLength":3,
+                  "maxLength":36
+               },
+               {
+                  "in":"body",
+                  "name":"body",
+                  "required":true,
+                  "schema":{
+                     "$ref":"#/definitions/MemberModel"
+                  }
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"OK",
+                  "schema":{
+                     "$ref":"#/definitions/MemberModel"
+                  },
+                  "headers":{
+                     "X-Request-ID":{
+                        "description":"Echo of request id",
+                        "type":"string",
+                        "minLength":3,
+                        "maxLength":36
+                     }
+                  }
+               },
+               "400":{
+                  "description":"Bad Request",
+                  "headers":{
+                     "X-Request-ID":{
+                        "description":"Echo of request id",
+                        "type":"string"
+                     }
+                  }
+               },
+               "500":{
+                  "description":"Internal Server Error",
+                  "headers":{
+                     "X-Request-ID":{
+                        "description":"Echo of request id",
+                        "type":"string"
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/member/{memberId}":{
+         "delete":{
+            "tags":[
+               "MemberMgmt"
+            ],
+            "summary":"Member Deletion Service",
+            "description":"Member Deletion Service",
+            "operationId":"deleteMember",
+            "consumes":[
+               "application/json"
+            ],
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "name":"X-Request-ID",
+                  "in":"header",
+                  "required":false,
+                  "type":"string",
+                  "minLength":3,
+                  "maxLength":36
+               },
+               {
+                  "name":"X-Channel",
+                  "in":"header",
+                  "required":false,
+                  "type":"string",
+                  "minLength":3,
+                  "maxLength":36
+               },
+               {
+                  "name":"memberId",
+                  "in":"path",
+                  "required":true,
+                  "description":"MemberId to be delete",
+                  "type":"integer",
+                  "format":"int64"
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"Member deleted succussfully"
+               },
+               "400":{
+                  "description":"Invalid member id supplied"
+               },
+               "404":{
+                  "description":"Member Id not found"
+               },
+               "500":{
+                  "description":"Internal Server Error"
+               }
+            }
+         }
+      }
+   },
+   "definitions":{
+      "PersonModel":{
+		"type":"object",
+         "required":[
+            "firstName",
+            "userName"
+         ],
+		 
+         "properties":{
+            "id":{
+               "type":"string",
+               "description":"member id"
+            },
+            "firstName":{
+               "type":"string",
+               "minLength":1,
+               "maxLength":50,
+               "description":"First name of the member"
+            },
+            "lastName":{
+               "type":"string",
+               "minLength":1,
+               "maxLength":50,
+               "description":"Last name of the member"
+            },
+            "userName":{
+               "type":"string",
+               "minLength":1,
+               "maxLength":50,
+               "description":"User name of the member"
+            },
+            "password":{
+               "type":"string",
+               "minLength":1,
+               "maxLength":50,
+               "description":"Password of the member"
+            },
+            "userType":{
+               "type":"string",
+               "minLength":1,
+               "maxLength":50,
+               "description":"User Type"
+            }
+         }
+      },
+	  "MemberModel":{
+		"allOf":
+		["$ref":"#/definitions/PersonModel",
+		"type":"object"],
+         "required":[
+            "memberType"
+         ],
+         "properties":{
+            "memberType":{
+               "type":"string",
+               "description":"member id"
+            }
+         }
+		 
+      }
+   }
+}
