@@ -54,6 +54,8 @@ public class UserRepositoryTest {
 		identity.setUser(user);
 		user.setIdentity(identity);
 		
+		Set<Address> addresses=new HashSet<>();
+		
 		Address mailingAddress=new Address();
 		mailingAddress.setHouseNo("503");
 		mailingAddress.setAddressLine1("U-503,5th Floor");
@@ -68,7 +70,7 @@ public class UserRepositoryTest {
 		mailingAddress.setLandmark("Navin Bharti Public School");
 		mailingAddress.setState("Uttar Pradesh");
 		mailingAddress.setUser(user);
-		user.setMailingAddress(mailingAddress);
+		addresses.add(mailingAddress);
 		
 		Address permanentAddress=new Address();
 		permanentAddress.setHouseNo("503");
@@ -84,7 +86,7 @@ public class UserRepositoryTest {
 		permanentAddress.setLandmark("Navin Bharti Public School");
 		permanentAddress.setState("Uttar Pradesh");
 		permanentAddress.setUser(user);
-		user.setPermanentAddress(permanentAddress);
+		addresses.add(permanentAddress);
 		
 		Set<User> users=new HashSet<>();
 		users.add(user);

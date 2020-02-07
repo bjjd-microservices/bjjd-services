@@ -8,12 +8,13 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableEurekaClient
 @EnableCircuitBreaker
-@ComponentScan(basePackages = { "io.swagger", "com.jmk.user" })
+@ComponentScan(basePackages ="com.jmk")
 public class UserMgmtWebApplication {
 
     public static void main(String[] args) throws Exception {
@@ -23,6 +24,11 @@ public class UserMgmtWebApplication {
     @Bean
     public ModelMapper modelMapper() {
     	return new ModelMapper();
+    }
+    
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
     
 }

@@ -37,11 +37,14 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 		// 2. Validate the header and check the prefix
 		if(header==null || !header.startsWith(jwtConfig.getPrefix())) {
 			filterChain.doFilter(request, response); // If not valid, go to the next filter.
+			return;
 		}
 		
-		// If there is no token provided and hence the user won't be authenticated.It's Ok. Maybe the user accessing a public path or asking for a token.
-		// All secured paths that needs a token are already defined and secured in config class.And If user tried to access without access token, then he won't be authenticated and an exception will be thrown.
-		
+		// If there is no token provided and hence the user won't be authenticated. 
+		// It's Ok. Maybe the user accessing a public path or asking for a token.
+		// All secured paths that needs a token are already defined and secured in config class.
+		// And If user tried to access without access token, then he won't be authenticated and an exception will be thrown.
+				
 		// 3. Get the token
 		String token=header.replace(jwtConfig.getPrefix(),"");
 		

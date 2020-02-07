@@ -1,9 +1,7 @@
 package com.jmk.model.user;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -64,12 +62,9 @@ public class User {
 	@JsonProperty("identity")
 	private Identity identity = null;
 
-	@JsonProperty("mailingAddress")
-	private Address mailingAddress = null;
-
-	@JsonProperty("permanentAddress")
-	private Address permanentAddress = null;
-
+	@JsonProperty("addresses")
+	private Set<Address> addresses = new HashSet<>();
+	
 	@JsonProperty("roles")
 	private Set<Role> roles = new HashSet<>();
 
@@ -371,49 +366,6 @@ public class User {
 		this.identity = identity;
 	}
 
-	public User mailingAddress(Address mailingAddress) {
-		this.mailingAddress = mailingAddress;
-		return this;
-	}
-
-	/**
-	 * Get mailingAddress
-	 * 
-	 * @return mailingAddress
-	 **/
-	@ApiModelProperty(value = "")
-
-	@Valid
-
-	public Address getMailingAddress() {
-		return mailingAddress;
-	}
-
-	public void setMailingAddress(Address mailingAddress) {
-		this.mailingAddress = mailingAddress;
-	}
-
-	public User permanentAddress(Address permanentAddress) {
-		this.permanentAddress = permanentAddress;
-		return this;
-	}
-
-	/**
-	 * Get permanentAddress
-	 * 
-	 * @return permanentAddress
-	 **/
-	@ApiModelProperty(value = "")
-
-	@Valid
-
-	public Address getPermanentAddress() {
-		return permanentAddress;
-	}
-
-	public void setPermanentAddress(Address permanentAddress) {
-		this.permanentAddress = permanentAddress;
-	}
 
 	public User addRolesItem(Role rolesItem) {
 		if (this.roles == null) {
@@ -444,6 +396,17 @@ public class User {
 		this.groupId = groupId;
 		return this;
 	}
+	
+	
+	
+
+	public Set<Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(Set<Address> addresses) {
+		this.addresses = addresses;
+	}
 
 	/**
 	 * User Group
@@ -472,15 +435,14 @@ public class User {
 				&& Objects.equals(this.displayName, user.displayName) && Objects.equals(this.password, user.password)
 				&& Objects.equals(this.status, user.status) && Objects.equals(this.profile, user.profile)
 				&& Objects.equals(this.identity, user.identity)
-				&& Objects.equals(this.mailingAddress, user.mailingAddress)
-				&& Objects.equals(this.permanentAddress, user.permanentAddress)
+				&& Objects.equals(this.addresses, user.addresses)
 				&& Objects.equals(this.roles, user.roles) && Objects.equals(this.groupId, user.groupId);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, username, displayName, password, status, profile, identity, mailingAddress,
-				permanentAddress, roles, groupId);
+		return Objects.hash(id, username, displayName, password, status, profile, identity, addresses,
+				roles, groupId);
 	}
 
 	@Override
@@ -495,8 +457,7 @@ public class User {
 		sb.append("    status: ").append(toIndentedString(status)).append("\n");
 		sb.append("    profile: ").append(toIndentedString(profile)).append("\n");
 		sb.append("    identity: ").append(toIndentedString(identity)).append("\n");
-		sb.append("    mailingAddress: ").append(toIndentedString(mailingAddress)).append("\n");
-		sb.append("    permanentAddress: ").append(toIndentedString(permanentAddress)).append("\n");
+		sb.append("    addresses: ").append(toIndentedString(addresses)).append("\n");
 		sb.append("    roles: ").append(toIndentedString(roles)).append("\n");
 		sb.append("    groupId: ").append(toIndentedString(groupId)).append("\n");
 		sb.append("}");

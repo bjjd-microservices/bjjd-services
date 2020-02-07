@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -35,6 +37,9 @@ public class UserApiController implements UserApi {
     
     @Autowired
     private UserMgmtService userMgmtService;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private final HttpServletRequest request;
 
@@ -47,6 +52,7 @@ public class UserApiController implements UserApi {
     public ResponseEntity<User> createUser(@ApiParam(value = "" ,required=true )  @Valid @RequestBody User user,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel) {
     	 String accept = request.getHeader("Accept");
          if (accept != null && accept.contains("application/json") || accept.contains("application/xml")) {
+        	 	 user.setPassword(passwordEncoder.encode(user.getPassword()));
              	 user=userMgmtService.saveUser(user);
                  return new ResponseEntity<User>(user,HttpStatus.OK);
          }
@@ -90,10 +96,10 @@ public class UserApiController implements UserApi {
 
     @Override
 	public ResponseEntity<User> findUserDetailsByUserName(
-			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel,
+			@ApiParam(value = "xChannel") @RequestHeader(value = "xChannel", required = false) String xChannel,
 			@ApiParam(value = "username") @Valid @RequestParam(value = "username", required = false) String username) {
 		String accept = request.getHeader("Accept");
-		if (accept != null && accept.contains("application/json")) {
+		if (accept != null && (accept.contains("application/json") || accept.contains("*"))) {
 			User user = userMgmtService.findUserDetailsByUserName(username);
 			return new ResponseEntity<User>(user, HttpStatus.OK);
 		}

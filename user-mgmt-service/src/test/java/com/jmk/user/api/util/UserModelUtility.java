@@ -11,6 +11,7 @@ import com.jmk.enums.Status;
 import com.jmk.model.user.Address;
 import com.jmk.model.user.Identity;
 import com.jmk.model.user.Module;
+import com.jmk.model.user.Profile;
 import com.jmk.model.user.Role;
 import com.jmk.model.user.User;
 import com.jmk.user.enums.Group;
@@ -19,7 +20,7 @@ public class UserModelUtility {
 	
 	public static User createUserModel() {
 		User user=new User();
-		user.username("rajivbansal2981").password("rajiv").displayName("Rajiv Bansal");
+		user.username("rajivbansal2981").password("Rajiv@379").displayName("Rajiv Bansal");
 		user.setEmailSent(MessageSent.N);
 		user.setSmsSent(MessageSent.N);
 		user.setStatus(Status.A);
@@ -39,6 +40,17 @@ public class UserModelUtility {
 		identity.setUser(user);
 		user.setIdentity(identity);
 		
+		
+		Profile profile=new Profile();
+		profile.setFirstName("Rajiv");
+		profile.setCreatedOn(Timestamp.from(Instant.now()));
+		profile.setGroupId(Group.BJJD.getGroupId());
+		profile.setWhenModified(Timestamp.from(Instant.now()));
+		profile.setUser(user);
+		user.setProfile(profile);
+		
+		Set<Address> addresses=new HashSet<>();
+		
 		Address mailingAddress=new Address();
 		mailingAddress.setHouseNo("503");
 		mailingAddress.setAddressLine1("U-503,5th Floor");
@@ -53,7 +65,7 @@ public class UserModelUtility {
 		mailingAddress.setLandmark("Navin Bharti Public School");
 		mailingAddress.setState("Uttar Pradesh");
 		mailingAddress.setUser(user);
-		user.setMailingAddress(mailingAddress);
+		addresses.add(mailingAddress);
 		
 		Address permanentAddress=new Address();
 		permanentAddress.setHouseNo("503");
@@ -69,7 +81,9 @@ public class UserModelUtility {
 		permanentAddress.setLandmark("Navin Bharti Public School");
 		permanentAddress.setState("Uttar Pradesh");
 		permanentAddress.setUser(user);
-		user.setPermanentAddress(permanentAddress);
+		addresses.add(permanentAddress);
+		
+		user.setAddresses(addresses);
 		
 		
 		Set<User> users=new HashSet<>();
@@ -92,9 +106,6 @@ public class UserModelUtility {
 		module.setStatus(Status.A);
 		module.setWhenModified(Timestamp.from(Instant.now()));
 		role.setModules(Arrays.asList(module));
-
-		
-		
 		role.setUsers(users);
 		user.addRolesItem(role);
 		return user;

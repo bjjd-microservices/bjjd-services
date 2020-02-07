@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
@@ -63,17 +64,14 @@ public class User {
 	@Column(name="status")
 	private Status status = null;
 
-	@OneToOne(mappedBy="user",cascade=CascadeType.ALL)
+	@OneToOne(mappedBy="user",cascade = CascadeType.ALL)
 	private Profile profile = null;
 
-	@OneToOne(mappedBy="user",cascade=CascadeType.ALL)
+	@OneToOne(mappedBy="user",cascade = CascadeType.ALL)
 	private Identity identity = null;
 
-	@OneToOne(mappedBy="user",cascade=CascadeType.ALL)
-	private Address mailingAddress = null;
-
-	@OneToOne(mappedBy="user",cascade=CascadeType.ALL)
-	private Address permanentAddress = null;
+	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
+	private Set<Address> addresses = new HashSet();
 
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="USER_ROLE",
@@ -119,7 +117,7 @@ public class User {
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
-
+	
 	public String getPassword() {
 		return password;
 	}
@@ -200,20 +198,12 @@ public class User {
 		this.identity = identity;
 	}
 
-	public Address getMailingAddress() {
-		return mailingAddress;
+	public Set<Address> getAddresses() {
+		return addresses;
 	}
 
-	public void setMailingAddress(Address mailingAddress) {
-		this.mailingAddress = mailingAddress;
-	}
-
-	public Address getPermanentAddress() {
-		return permanentAddress;
-	}
-
-	public void setPermanentAddress(Address permanentAddress) {
-		this.permanentAddress = permanentAddress;
+	public void setAddresses(Set<Address> addresses) {
+		this.addresses = addresses;
 	}
 
 	public Set<Role> getRoles() {
