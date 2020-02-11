@@ -1,0 +1,58 @@
+Table member{
+  id int PK
+  first_name varchar
+  last_name varchar
+  father_name varchar
+  date_of_birth date
+  joining_date date
+  type varchar
+  validity date
+  mobile_number varchar
+  alt_mobile_number varchar
+  email_id varchar
+  photo_id varchar
+  status varchar
+  created_by int
+  created_on date
+  when_modified date
+  version int
+  group_id int
+}
+
+Table member_address{
+ id int PK
+ member_id int FK
+ address_line varchar
+ city varchar
+ state varchar
+ country varchar
+ pin_zip_code varchar
+ type varchar
+ landmark varchar
+ status varchar
+ created_by int
+ created_on date
+ when_modified date
+ version int
+ group_id int
+}
+
+Table member_identity{
+ id int PK
+ member_id int FK
+ pan_number varchar
+ aadhar_number varchar
+ voter_card_number varchar
+ passport_number varchar
+ driving_licence varchar
+ status varchar
+ created_by int
+ created_on date
+ when_modified date
+ version int
+ group_id int
+}
+
+Ref: member_address.member_id > members.id
+
+Ref: member_identity.member_id > members.id

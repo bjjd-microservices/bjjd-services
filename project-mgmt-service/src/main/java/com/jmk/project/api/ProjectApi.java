@@ -34,7 +34,7 @@ public interface ProjectApi {
         @ApiResponse(code = 200, message = "OK", response = Project.class),
         @ApiResponse(code = 400, message = "Bad Request"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/project",
+    @RequestMapping(value = "/",
         produces = { "application/json", "application/xml" }, 
         consumes = { "application/json", "application/xml" },
         method = RequestMethod.POST)
@@ -45,7 +45,7 @@ public interface ProjectApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Successfully found"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/project/createWithArray",
+    @RequestMapping(value = "/createWithArray",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)
@@ -58,7 +58,7 @@ public interface ProjectApi {
         @ApiResponse(code = 400, message = "Invalid User id supplied"),
         @ApiResponse(code = 404, message = "Project Id not found"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/project/{id}",
+    @RequestMapping(value = "/{id}",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.DELETE)
@@ -71,7 +71,7 @@ public interface ProjectApi {
         @ApiResponse(code = 400, message = "Invalid Project name and password supplied"),
         @ApiResponse(code = 404, message = "Project not found or inactive"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/project/{id}",
+    @RequestMapping(value = "/{id}",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.GET)
@@ -83,7 +83,7 @@ public interface ProjectApi {
         @ApiResponse(code = 200, message = "OK", response = Project.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid status value"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/project/findByStatus",
+    @RequestMapping(value = "/findByStatus",
         produces = { "application/json", "application/xml" }, 
         consumes = { "application/json", "application/xml" },
         method = RequestMethod.GET)
@@ -96,7 +96,7 @@ public interface ProjectApi {
         @ApiResponse(code = 400, message = "Invalid Project name supplied"),
         @ApiResponse(code = 404, message = "Project not found or inactive"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/project/{id}",
+    @RequestMapping(value = "/{id}",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.PUT)

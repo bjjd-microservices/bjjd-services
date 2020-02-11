@@ -1,5 +1,6 @@
 package com.jmk.project.service;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -7,6 +8,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,7 +61,7 @@ public class ProjectMgmtServiceImpl  implements ProjectMgmtService {
 		List<Project> projectModels=new ArrayList<>();
 		Iterable<com.jmk.project.entity.Project> iterableProjects=projectRespository.findAll();
 		List<com.jmk.project.entity.Project> projectEntities=StreamSupport.stream(iterableProjects.spliterator(),false).collect(Collectors.toList());
-		BeanUtils.copyProperties(projectEntities,projectModels);
+		projectEntities.forEach(sourceProject->projectModels.add(modelMapper.map(sourceProject, Project.class)));
 		return projectModels;
 	}
 	

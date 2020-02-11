@@ -1,0 +1,14 @@
+https://blog.christianposta.com/microservices/the-hardest-part-about-microservices-data/
+https://microservices.io/patterns/microservices.html
+https://stackoverflow.com/questions/4127241/orchestration-vs-choreography
+https://dzone.com/articles/event-driven-orchestration-an-effective-microservi
+https://github.com/colinlucs/microservices-orchestration-amqp-example
+https://github.com/ewolff/microservice-kafka
+https://dreamix.eu/blog/java/building-microservices-with-netflix-oss-apache-kafka-and-spring-boot
+
+User implementing service
+
+https://medium.com/omarelgabrys-blog/microservices-with-spring-boot-intro-to-microservices-part-1-c0d24cd422c3
+https://dzone.com/articles/securing-rest-services-with-oauth2-in-springboot-1
+https://itnext.io/microservices-with-spring-boot-and-spring-cloud-16d2c056ba12
+https://github.com/OmarElGabry/microservices-spring-boot

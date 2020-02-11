@@ -1,0 +1,1 @@
+java -jar swagger-codegen-cli-3.0.0-rc1.jar generate -i member.yaml --api-package org.jmk.bjjd.member.api --model-package org.jmk.bjjd.member.model --group-id org.jmk.bjjd --artifact-id member-mgmt-service --artifact-version 0.0.1-SNAPSHOT -l spring -o member-mgmt-service
