@@ -33,7 +33,7 @@ public class SecurityTokenConfig extends WebSecurityConfigurerAdapter{
 			
 			.and()
 			//Add a filter to validate the tokens with every request
-			.addFilterAfter(new JwtTokenAuthenticationFilter(jwtConfig),UsernamePasswordAuthenticationFilter.class)
+			.addFilterBefore(new JwtTokenAuthenticationFilter(jwtConfig),UsernamePasswordAuthenticationFilter.class)
 			
 			//authorize request configs
 			.authorizeRequests()
