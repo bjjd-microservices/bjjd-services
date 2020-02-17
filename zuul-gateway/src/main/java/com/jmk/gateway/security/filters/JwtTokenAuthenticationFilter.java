@@ -22,7 +22,6 @@ import io.jsonwebtoken.Jwts;
 public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 	
 	private final JwtConfig jwtConfig;
-	
 	public JwtTokenAuthenticationFilter(JwtConfig jwtConfig) {
 		this.jwtConfig=jwtConfig;
 	}
@@ -39,7 +38,6 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 			filterChain.doFilter(request, response); // If not valid, go to the next filter.
 			return;
 		}
-		
 		// If there is no token provided and hence the user won't be authenticated. 
 		// It's Ok. Maybe the user accessing a public path or asking for a token.
 		// All secured paths that needs a token are already defined and secured in config class.
