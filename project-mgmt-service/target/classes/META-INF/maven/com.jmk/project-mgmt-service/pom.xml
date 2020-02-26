@@ -81,13 +81,7 @@
 		</dependency>
 	
         
-     <!-- to add security to our Spring Boot application, we need to add the security starter dependency -->
-      <!--  <dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency> 
-		 -->
-		<!-- Thymeleaf is a Java library. It is an XML/XHTML/HTML5 template engine that is able to apply a set of transformations 
+     	<!-- Thymeleaf is a Java library. It is an XML/XHTML/HTML5 template engine that is able to apply a set of transformations 
 		to template files in order to display data and/or text produced by your applications. -->      
 			<dependency>
 			<groupId>org.springframework.boot</groupId>
