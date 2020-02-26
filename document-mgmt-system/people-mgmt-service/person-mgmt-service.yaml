@@ -4,7 +4,7 @@
       "version":"18.10.0",
       "title":"People Management Service API"
    },
-   "basePath":"/bjjd/",
+   "basePath":"/api/",
    "tags":[
       {
          "name":"DevoteeMgmtServiceApi",
@@ -1084,11 +1084,12 @@
                "maxLength":50,
                "description":"Secondary Mobile number"
             },
-            "mailingAddress":{
-               "$ref":"#/definitions/Address"
-            },
-            "permanentAddress":{
-               "$ref":"#/definitions/Address"
+            "addresses":{
+               "type":"array",
+               "items":{
+                  "$ref": "#/definitions/Address",
+                  "description":"Person Address"
+               }
             },
             "identities":{
                "type":"array",
