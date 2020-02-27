@@ -58,7 +58,7 @@ public class ProjectApiController implements ProjectApi {
 				return new ResponseEntity<Project>(HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
-
+		
 		if (accept != null && accept.contains("application/xml")) {
 			try {
 				return new ResponseEntity<Project>(objectMapper.readValue(

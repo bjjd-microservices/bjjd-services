@@ -1,0 +1,753 @@
+{
+   "swagger":"2.0",
+   "info":{
+      "version":"18.10.0",
+      "title":"User Management Service API"
+   },
+   "basePath":"/bjjd/",
+   "tags":[
+      {
+         "name":"UserMgmt"
+      }
+   ],
+   "schemes":[
+      "https"
+   ],
+   "paths":{
+      "/user":{
+         "post":{
+            "tags":[
+               "UserMgmt"
+            ],
+            "summary":"User Creation Service",
+            "description":"User Creation Service",
+            "operationId":"createUser",
+            "consumes":[
+               "application/json",
+               "application/xml"
+            ],
+            "produces":[
+               "application/json",
+               "application/xml"
+            ],
+            "parameters":[
+               {
+                  "name":"xChannel",
+                  "in":"header",
+                  "required":false,
+                  "type":"string",
+                  "minLength":3,
+                  "maxLength":36
+               },
+               {
+                  "in":"body",
+                  "name":"body",
+                  "required":true,
+                  "schema":{
+                     "$ref":"#/definitions/User"
+                  }
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"OK",
+                  "schema":{
+                     "$ref":"#/definitions/User"
+                  }
+               },
+               "400":{
+                  "description":"Bad Request"
+               },
+               "500":{
+                  "description":"Internal Server Error"
+                }
+            }
+         }
+      },
+     "/user/createWithArray":{
+    "post":{
+      "tags":[
+        "UserMgmt"
+      ],
+      "summary":"User Creation with input arrays Service",
+            "description":"User Finding Service",
+            "operationId":"createUsersWithArrayInput",
+       "consumes":[
+               "application/json"
+            ],
+            "produces":[
+               "application/json"
+            ],
+      "parameters":[
+               {
+                  "name":"xChannel",
+                  "in":"header",
+                  "required":false,
+                  "type":"string",
+                  "minLength":3,
+                  "maxLength":36
+               },
+               {
+                  "in":"body",
+                  "name":"body",
+                  "required":true,
+                  "schema":{
+           "type" :"array",
+           "items":{
+            "$ref":"#/definitions/User"
+           }
+                  }
+               }
+            ],
+      "responses":{
+               "200":{
+                  "description":"Successfully found"
+                 
+               },
+               "500":{
+                  "description":"Internal Server Error"
+               }
+            }
+    }
+    },
+    "/user/login":{
+    "get":{
+      "tags":[
+               "UserMgmt"
+            ],
+      "summary":"User Login Service",
+      "description":"User Finding Service",
+            "operationId":"loginUser",
+      "consumes":[
+               "application/json"
+            ],
+            "produces":[
+               "application/json"
+            ],
+      "parameters":[
+                {
+                  "name":"username",
+                  "in":"query",
+                  "required":true,
+                  "description":"username to be find",
+                  "type":"string",
+                  "minLength":3,
+                  "maxLength":36
+               },
+         {
+                  "name":"password",
+                  "in":"query",
+                  "required":true,
+                  "description":"password of the user",
+                  "type":"string",
+                  "minLength":3,
+                  "maxLength":36
+               }
+            ],
+      "responses":{
+               "200":{
+                  "description":"Successfully found",
+                  "schema":{
+                     "$ref":"#/definitions/User"
+                  },
+          "headers":{
+          "X-Rate-Limit":{
+            "type": "integer",
+            "format": "int32",
+            "description": "calls per hour allowed by the user"
+          },
+          "X-Expires-After":{
+            "type": "string",
+            "format": "date-time",
+            "description": "date in UTC when token expires"
+          }
+         }
+        },
+               "400":{
+                  "description":"Invalid username/password supplied"
+               },
+               "404":{
+                  "description":"User not found"
+               },
+               "500":{
+                  "description":"Internal Server Error"
+               }
+            }
+    }
+    },
+      "/user/findByMobileNumber":{
+         "get":{
+            "tags":[
+               "UserMgmt"
+            ],
+            "summary":"Find all the user by status",
+            "description":"Find all the user by status",
+            "operationId":"findUserByMobileNumber",
+            "consumes":[
+               "application/json",
+               "application/xml"
+            ],
+            "produces":[
+               "application/json",
+               "application/xml"
+            ],
+            "parameters":[
+               {
+                  "name":"xChannel",
+                  "in":"header",
+                  "required":false,
+                  "type":"string",
+                  "minLength":3,
+                  "maxLength":36
+               },
+               {
+                "name": "mobileNo",
+                "in": "query",
+                "required": false,
+                "type": "string"
+               }
+            ],
+            "responses":{
+              "200":{
+                  "description":"Successfully found",
+                  "schema":{
+                     "$ref":"#/definitions/User"
+                  }
+               },
+               "400":{
+                  "description":"Invalid mobile number supplied"
+               },
+               "404":{
+                  "description":"user not found or inactive"
+               },
+               "500":{
+                  "description":"Internal Server Error"
+               }
+
+            }
+         }
+      },
+    "/user/logout":{
+    "get":{
+            "tags":[
+               "UserMgmt"
+            ],
+            "summary":"Logs out current logged in user session",
+            "description":"User Finding Service",
+            "operationId":"logoutUser",
+            "produces":[
+               "application/json"
+            ],
+       "parameters":[
+       ],
+       "responses":{
+               "200":{
+                  "description":"Successfully found"
+          }
+      }
+    }
+    },
+      "/user/{username}":{
+         "get":{
+            "tags":[
+               "UserMgmt"
+            ],
+            "summary":"Find User Details based on the username and password",
+            "description":"Find User Details based on the username and password",
+            "operationId":"findUserDetailsByUserName",
+            "consumes":[
+               "application/json"
+            ],
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "name":"username",
+                  "in":"path",
+                  "required":true,
+                  "description":"Username",
+                  "type":"string"
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"Successfully found",
+                  "schema":{
+                     "$ref":"#/definitions/User"
+                  }
+               },
+               "400":{
+                  "description":"Invalid User name and password supplied"
+               },
+               "404":{
+                  "description":"User not found or inactive"
+               },
+               "500":{
+                  "description":"Internal Server Error"
+               }
+            }
+         },
+      "put":{
+            "tags":[
+               "UserMgmt"
+            ],
+            "summary":"Find User Details based on the username and password",
+            "description":"Find User Details based on the username and password",
+            "operationId":"updateUserByUserName",
+            "consumes":[
+               "application/json"
+            ],
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "name":"username",
+                  "in":"path",
+                  "required":true,
+                  "description":"Username",
+                  "type":"string"
+               },
+         {
+                  "in":"body",
+                  "name":"body",
+                  "required":true,
+                  "schema":{
+                     "$ref":"#/definitions/User"
+                  }
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"Successfully found",
+                  "schema":{
+                     "$ref":"#/definitions/User"
+                  }
+               },
+               "400":{
+                  "description":"Invalid User name supplied"
+               },
+               "404":{
+                  "description":"User not found or inactive"
+               },
+               "500":{
+                  "description":"Internal Server Error"
+               }
+            }
+         },
+     "delete":{
+            "tags":[
+               "UserMgmt"
+            ],
+            "summary":"User Deletion Service",
+            "description":"User Deletion Service",
+            "operationId":"deleteUserByUsername",
+            "consumes":[
+               "application/json"
+            ],
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+                {
+                  "name":"username",
+                  "in":"path",
+                  "required":true,
+                  "description":"Username",
+                  "type":"string"
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"User deleted succussfully"
+               },
+               "400":{
+                  "description":"Invalid User id supplied"
+               },
+               "404":{
+                  "description":"User Id not found"
+               },
+               "500":{
+                  "description":"Internal Server Error"
+               }
+            }
+         }
+      },
+      "/user/{id}":{
+         "get":{
+            "tags":[
+               "UserMgmt"
+            ],
+            "summary":"Find User Details based on the user id",
+            "description":"Find User Details based on the user id",
+            "operationId":"findUserDetailsById",
+            "consumes":[
+               "application/json"
+            ],
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "name":"id",
+                  "in":"path",
+                  "required":true,
+                  "description":"User Id",
+                  "type":"integer"
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"Successfully found",
+                  "schema":{
+                     "$ref":"#/definitions/User"
+                  }
+               },
+               "400":{
+                  "description":"Invalid User name and password supplied"
+               },
+               "404":{
+                  "description":"User not found or inactive"
+               },
+               "500":{
+                  "description":"Internal Server Error"
+               }
+            }
+         },
+      "put":{
+            "tags":[
+               "UserMgmt"
+            ],
+            "summary":"Find User Details based on the username and password",
+            "description":"Find User Details based on the username and password",
+            "operationId":"updateUserById",
+            "consumes":[
+               "application/json"
+            ],
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+               {
+                  "name":"id",
+                  "in":"path",
+                  "required":true,
+                  "description":"User Id",
+                  "type":"integer"
+               },
+         {
+                  "in":"body",
+                  "name":"body",
+                  "required":true,
+                  "schema":{
+                     "$ref":"#/definitions/User"
+                  }
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"Successfully found",
+                  "schema":{
+                     "$ref":"#/definitions/User"
+                  }
+               },
+               "400":{
+                  "description":"Invalid User name supplied"
+               },
+               "404":{
+                  "description":"User not found or inactive"
+               },
+               "500":{
+                  "description":"Internal Server Error"
+               }
+            }
+         },
+     "delete":{
+            "tags":[
+               "UserMgmt"
+            ],
+            "summary":"User Deletion Service based on the user id",
+            "description":"User Deletion Service based on the user id",
+            "operationId":"deleteUserById",
+            "consumes":[
+               "application/json"
+            ],
+            "produces":[
+               "application/json"
+            ],
+            "parameters":[
+                {
+                   "name":"id",
+                  "in":"path",
+                  "required":true,
+                  "description":"User Id",
+                  "type":"integer"
+               }
+            ],
+            "responses":{
+               "200":{
+                  "description":"User deleted succussfully"
+               },
+               "400":{ 
+                  "description":"Invalid User id supplied"
+               },
+               "404":{
+                  "description":"User Id not found"
+               },
+               "500":{
+                  "description":"Internal Server Error"
+               }
+            }
+         }
+      }
+   },
+   "definitions":{
+      "User":{
+         "required":[
+            "userName",
+            "password"
+         ],
+         "properties":{
+            "id":{
+               "type":"integer",
+               "format":"int64",
+               "description":"user id"
+            },
+            "username":{
+               "type":"string",
+               "minLength":1,
+               "maxLength":50,
+               "description":"User name"
+            },
+            "displayName":{
+               "type":"string",
+               "minLength":1,
+               "maxLength":50,
+               "description":"User name"
+            },
+          "password":{
+               "type":"string",
+               "minLength":1,
+               "maxLength":50,
+               "description":"Password of the user"
+            },
+      "status":{
+               "type":"string",
+               "enum": ["A","I"],
+               "description":"Password of the user"
+            },
+            "profile":{
+               "$ref":"#/definitions/Profile"
+            },
+            "identity":{
+               "$ref":"#/definitions/Identity"
+            },
+            "addresses":{
+               "type":"array",
+               "items":{
+                  "$ref": "#/definitions/Address",
+                  "description":"Person Address"
+               }
+            },
+            "roles":{
+               "type":"array",
+               "items":{
+                  "$ref": "#/definitions/Role",
+                  "description":"Roles assigned to the user"
+               }
+            },
+            "groupId":{
+               "type":"integer",
+               "format":"int32",
+               "description":"Group Id"
+            }
+        }
+      },
+      "Profile":{
+         "properties":{
+            "id":{
+               "type":"integer",
+               "format":"int64",
+               "description":"user id"
+            },
+            "firstName":{
+               "type":"string",
+               "minLength":1,
+               "maxLength":50,
+               "description":"Password of the user"
+            },
+      "lastName":{
+               "type":"string",
+               "minLength":1,
+               "maxLength":50,
+               "description":"Password of the user"
+            },
+      "dateOfBirth":{
+               "type":"string",
+               "format":"date",
+               "description":"Date of the birth"
+            },
+      "gender":{
+               "type":"string",
+               "enum": ["M","F"],
+               "description":"Password of the user"
+            },
+      "maritalStatus":{
+               "type":"string",
+               "enum": ["M","S"],
+               "description":"Marital Status of the user"
+            },
+            "emailId":{
+               "type":"string",
+               "minLength":1,
+               "maxLength":150,
+               "description":"Password of the user"
+            },
+      "photoId":{
+               "type":"string",
+               "minLength":1,
+               "maxLength":150,
+               "description":"Password of the user"
+            },
+      "mobileNo":{
+               "type":"string",
+               "minLength":1,
+               "maxLength":50,
+               "description":"Password of the user"
+            },
+      "altMobileNo":{
+               "type":"string",
+               "minLength":1,
+               "maxLength":50,
+               "description":"Password of the user"
+            },
+            "userType":{
+               "type":"string",
+               "minLength":1,
+               "maxLength":50,
+               "description":"User Type"
+            },
+      "groupId":{
+               "type":"integer",
+               "format":"int32",
+               "description":"Group Id"
+            }   
+            
+         }
+      },
+    "Identity":{
+         "properties":{
+            "id":{
+               "type":"integer",
+               "format":"int64",
+               "description":"user id"
+            },
+            "passportId":{
+               "type":"string",
+               "description":"User Type"
+            },
+      "panId":{
+               "type":"string",
+               "description":"User Type"
+            },
+      "aadharId":{
+               "type":"string",
+               "description":"User Type"
+            },
+      "voterId":{
+               "type":"string",
+               "description":"User Type"
+            },
+      "driverLicenseId":{
+               "type":"string",
+               "description":"User Type"
+            },
+      "groupId":{
+               "type":"integer",
+               "format":"int32",
+               "description":"Group Id"
+            }
+            
+         }
+      },
+      "Address":{
+         "properties":{
+            "id":{
+               "type":"integer",
+               "format":"int64",
+               "description":"user id"
+            },
+            "houseNo":{
+               "type":"string",
+               "description":"User Type"
+            },
+      "addressLine1":{
+               "type":"string",
+               "description":"User Type"
+            },
+      "addressLine2":{
+               "type":"string",
+               "description":"User Type"
+            },
+            "city":{
+               "type":"string",
+               "description":"User Type"
+            },
+            "state":{
+               "type":"string",
+               "description":"User Type"
+            },
+            "country":{
+               "type":"string",
+               "description":"User Type"
+            },
+            "pinCode":{
+               "type":"string",
+               "description":"User Type"
+            },
+            "landmark":{
+               "type":"string",
+               "description":"User Type"
+            },
+            "type":{
+               "type":"string",
+               "description":"User Type"
+            },
+            "addressType":{
+               "type":"string",
+               "description":"User Type"
+            },
+      "groupId":{
+               "type":"integer",
+               "format":"int32",
+               "description":"Group Id"
+            }
+         }
+      },
+      "Role":{
+         "properties":{
+            "id":{
+               "type":"integer",
+               "format":"int64",
+               "description":"user id"
+            },
+            "name":{
+               "type":"string",
+               "description":"User Type"
+            },
+      "status":{
+               "type":"string",
+               "enum": ["A","I"],
+               "description":"Password of the user"
+            },
+      "groupId":{
+               "type":"integer",
+               "format":"int32",
+               "description":"Group Id"
+            }
+         }
+      }
+      
+   }
+}
