@@ -71,13 +71,16 @@ public class User {
 	private Identity identity = null;
 
 	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
-	private Set<Address> addresses = new HashSet();
+	private Set<Address> addresses = new HashSet<>();
 
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="USER_ROLE",
 	joinColumns= {@JoinColumn(name="user_id")},
 	inverseJoinColumns= {@JoinColumn(name="role_id")})
-	private Set<Role> roles=new HashSet();
+	private Set<Role> roles=new HashSet<>();
+	
+	@Column(name="group_id")
+	private Integer groupId = null;
 	
 	@Column(name="created_by")
 	private Integer createdBy = null;
@@ -89,10 +92,8 @@ public class User {
 	private Timestamp whenModified=null;
 	
 	@Version
-	private Long version=null;
-	
-	@Column(name="groupId")
-	private Integer groupId = null;
+	@Column(name = "VERSION", nullable = false, columnDefinition = "default 1")
+	private Long version = 1L;
 
 	public Long getId() {
 		return id;

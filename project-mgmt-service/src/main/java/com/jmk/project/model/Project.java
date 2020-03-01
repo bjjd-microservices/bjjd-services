@@ -3,14 +3,10 @@ package com.jmk.project.model;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Version;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.validation.annotation.Validated;
-import org.threeten.bp.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jmk.enums.Status;
@@ -22,7 +18,6 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-06T22:35:14.568+05:30")
-
 public class Project {
 	@JsonProperty("id")
 	private Long id = null;

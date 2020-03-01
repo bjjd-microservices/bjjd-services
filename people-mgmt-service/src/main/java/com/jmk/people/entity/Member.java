@@ -1,23 +1,24 @@
-package com.jmk.people.model;
+package com.jmk.people.entity;
 
 import java.util.Objects;
 
+import javax.persistence.Entity;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.validation.Valid;
 
-import org.springframework.validation.annotation.Validated;
 import org.threeten.bp.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jmk.people.enums.MemberType;
-
-import io.swagger.annotations.ApiModelProperty;
+import com.jmk.people.model.Person;
 
 /**
  * Member
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-02-27T07:02:52.969Z")
-
+@Entity
+@Table(name = "MEMBER")
+@SequenceGenerator(name = "default_gen", sequenceName = "member_seq", allocationSize = 1)
 public class Member extends Person  {
 
   @JsonProperty("memberType")
@@ -37,13 +38,6 @@ public class Member extends Person  {
     return this;
   }
 
-  /**
-   * Password of the user
-   * @return memberType
-  **/
-  @ApiModelProperty(value = "Password of the user")
-
-
   public MemberType getMemberType() {
     return memberType;
   }
@@ -61,10 +55,6 @@ public class Member extends Person  {
    * Date of the birth
    * @return joiningDate
   **/
-  @ApiModelProperty(value = "Date of the birth")
-
-  @Valid
-
   public LocalDate getJoiningDate() {
     return joiningDate;
   }
@@ -78,14 +68,6 @@ public class Member extends Person  {
     return this;
   }
 
-  /**
-   * Date of the birth
-   * @return validity
-  **/
-  @ApiModelProperty(value = "Date of the birth")
-
-  @Valid
-
   public LocalDate getValidity() {
     return validity;
   }
@@ -98,13 +80,6 @@ public class Member extends Person  {
     this.groupId = groupId;
     return this;
   }
-
-  /**
-   * Group Id
-   * @return groupId
-  **/
-  @ApiModelProperty(value = "Group Id")
-
 
   public Integer getGroupId() {
     return groupId;

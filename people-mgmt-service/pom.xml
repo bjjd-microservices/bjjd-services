@@ -52,6 +52,26 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        
+        <dependency>
+  			<groupId>com.jmk</groupId>
+			<artifactId>common-service</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		 <!-- Starter for using Spring Data JPA with Hibernate to store and retrieve data in a relational database. -->
+       	<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		
+		<!--MySQL provides connectivity for client applications developed in the Java with MySQL Connector/J,
+		 a driver that implements the Java Database Connectivity (JDBC) API. MySQL Connector/J is a JDBC Type 4 driver.  -->
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		     <version>8.0.13</version><!--$NO-MVN-MAN-VER$-->
+	    </dependency>
     </dependencies>
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>

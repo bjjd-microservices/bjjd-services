@@ -25,39 +25,40 @@ public class Identity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id = null;
 
-	@Column(name = "passportId")
+	@Column(name = "passport_id")
 	private String passportId = null;
 
-	@Column(name = "panId")
+	@Column(name = "pan_id")
 	private String panId = null;
 
-	@Column(name = "aadharId")
+	@Column(name = "aadhar_id")
 	private String aadharId = null;
 
-	@Column(name = "voterId")
+	@Column(name = "voter_id")
 	private String voterId = null;
 
-	@Column(name = "driverLicenseId")
+	@Column(name = "driver_license_id")
 	private String driverLicenseId = null;
-
-	@Column(name = "groupId")
-	private Integer groupId = null;
-
-	@Column(name = "created_by")
-	private Integer createdBy = null;
-
-	@Column(name = "created_on")
-	private Timestamp createdOn = null;
-
-	@Column(name = "when_modified")
-	private Timestamp whenModified = null;
-
-	@Version
-	private Long version = null;
-
+	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
+
+	@Column(name="group_id")
+	private Integer groupId = null;
+	
+	@Column(name="created_by")
+	private Integer createdBy = null;
+	
+	@Column(name="created_on")
+	private Timestamp createdOn=null;
+	
+	@Column(name="when_modified")
+	private Timestamp whenModified=null;
+	
+	@Version
+	@Column(name = "VERSION", nullable = false, columnDefinition = "default 1")
+	private Long version = 1L;
 
 	@Override
 	public boolean equals(java.lang.Object o) {

@@ -25,13 +25,13 @@ public class Address {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id = null;
 
-	@Column(name = "houseNo")
+	@Column(name = "house_no")
 	private String houseNo = null;
 
-	@Column(name = "addressLine1")
+	@Column(name = "address_line1")
 	private String addressLine1 = null;
 
-	@Column(name = "addressLine2")
+	@Column(name = "address_line2")
 	private String addressLine2 = null;
 
 	@Column(name = "city")
@@ -43,7 +43,7 @@ public class Address {
 	@Column(name = "country")
 	private String country = null;
 
-	@Column(name = "pinCode")
+	@Column(name = "pincode")
 	private String pinCode = null;
 
 	@Column(name = "landmark")
@@ -52,10 +52,14 @@ public class Address {
 	@Column(name = "type")
 	private String type = null;
 
-	@Column(name = "addressType")
+	@Column(name = "address_type")
 	private String addressType = null;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	private User user;
 
-	@Column(name = "groupId")
+	@Column(name = "group_id")
 	private Integer groupId = null;
 
 	@Column(name = "created_by")
@@ -67,12 +71,9 @@ public class Address {
 	@Column(name = "when_modified")
 	private Timestamp whenModified = null;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id", referencedColumnName = "id")
-	private User user;
-
 	@Version
-	private Long version = null;
+	@Column(name = "VERSION", nullable = false, columnDefinition = "default 1")
+	private Long version = 1L;
 
 	@Override
 	public boolean equals(java.lang.Object o) {

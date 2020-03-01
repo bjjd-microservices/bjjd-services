@@ -36,32 +36,33 @@ public class Role {
 	@Column(name = "name")
 	private String name = null;
 
-	@Enumerated(EnumType.STRING)
-	@Column(name = "status")
-	private Status status = null;
-
-	@Column(name = "groupId")
-	private Integer groupId = null;
-
 	@ManyToMany(mappedBy = "roles")
-	private Set<User> users=new HashSet();
-
-	@Column(name = "created_by")
-	private Integer createdBy = null;
-
-	@Column(name = "created_on")
-	private Timestamp createdOn = null;
-
-	@Column(name = "when_modified")
-	private Timestamp whenModified = null;
+	private Set<User> users=new HashSet<>();
 
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "ROLE_MODULE", joinColumns = { @JoinColumn(name = "role_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "module_id") })
 	private List<Module> modules = null;
 
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status")
+	private Status status = null;
+
+	@Column(name="group_id")
+	private Integer groupId = null;
+	
+	@Column(name="created_by")
+	private Integer createdBy = null;
+	
+	@Column(name="created_on")
+	private Timestamp createdOn=null;
+	
+	@Column(name="when_modified")
+	private Timestamp whenModified=null;
+	
 	@Version
-	private Long version = null;
+	@Column(name = "VERSION", nullable = false, columnDefinition = "default 1")
+	private Long version = 1L;
 
 	@Override
 	public boolean equals(java.lang.Object o) {

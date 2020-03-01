@@ -1,72 +1,86 @@
-package com.jmk.model.user;
+package com.jmk.people.entity;
 
 import java.sql.Timestamp;
 import java.util.Objects;
 
-import org.springframework.validation.annotation.Validated;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Version;
 
 import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Address
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-07-12T22:05:50.743+05:30")
-
+@Entity
+@Table(name = "ADDRESS")
 public class Address {
-	@JsonProperty("id")
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id = null;
 
-	@JsonProperty("houseNo")
+	@Column(name = "house_no")
 	private String houseNo = null;
 
-	@JsonProperty("addressLine1")
+	@Column(name = "address_line1")
 	private String addressLine1 = null;
 
-	@JsonProperty("addressLine2")
+	@Column(name = "address_line2")
 	private String addressLine2 = null;
 
-	@JsonProperty("city")
+	@Column(name = "city")
 	private String city = null;
 
-	@JsonProperty("state")
+	@Column(name = "state")
 	private String state = null;
 
-	@JsonProperty("country")
+	@Column(name = "country")
 	private String country = null;
 
-	@JsonProperty("pinCode")
+	@Column(name = "pincode")
 	private String pinCode = null;
 
-	@JsonProperty("landmark")
+	@Column(name = "landmark")
 	private String landmark = null;
 
-	@JsonProperty("type")
+	@Column(name = "type")
 	private String type = null;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "person_id", referencedColumnName = "id")
+	private Person person;
 
-	@JsonProperty("addressType")
+	@Column(name = "address_type")
 	private String addressType = null;
-
-	@JsonProperty("groupId")
+	
+	@Column(name = "groupId")
 	private Integer groupId = null;
 
-	@JsonProperty("createdBy")
+	@Column(name = "created_by")
 	private Integer createdBy = null;
 
-	@JsonProperty("createdOn")
+	@Column(name = "created_on")
 	private Timestamp createdOn = null;
 
-	@JsonProperty("whenModified")
+	@Column(name = "when_modified")
 	private Timestamp whenModified = null;
 
-	@JsonProperty("version")
-	private Long version = null;
+	@Version
+	@Column(name = "VERSION", nullable = false, columnDefinition = "default 1")
+	private Long version = 1L;
 
-	@JsonIgnore
-	private User user;
+	public Address id(Long id) {
+		this.id = id;
+		return this;
+	}
 
 	/**
 	 * user id
@@ -88,12 +102,45 @@ public class Address {
 		return this;
 	}
 
+	public Integer getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(Integer createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Timestamp getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(Timestamp createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public Timestamp getWhenModified() {
+		return whenModified;
+	}
+
+	public void setWhenModified(Timestamp whenModified) {
+		this.whenModified = whenModified;
+	}
+
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+
 	/**
 	 * User Type
 	 * 
 	 * @return houseNo
 	 **/
 	@ApiModelProperty(value = "User Type")
+
 	public String getHouseNo() {
 		return houseNo;
 	}
@@ -105,76 +152,6 @@ public class Address {
 	public Address addressLine1(String addressLine1) {
 		this.addressLine1 = addressLine1;
 		return this;
-	}
-
-	/**
-	 * @return the createdBy
-	 */
-	public Integer getCreatedBy() {
-		return createdBy;
-	}
-
-	/**
-	 * @param createdBy the createdBy to set
-	 */
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	/**
-	 * @return the createdOn
-	 */
-	public Timestamp getCreatedOn() {
-		return createdOn;
-	}
-
-	/**
-	 * @param createdOn the createdOn to set
-	 */
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
-
-	/**
-	 * @return the whenModified
-	 */
-	public Timestamp getWhenModified() {
-		return whenModified;
-	}
-
-	/**
-	 * @param whenModified the whenModified to set
-	 */
-	public void setWhenModified(Timestamp whenModified) {
-		this.whenModified = whenModified;
-	}
-
-	/**
-	 * @return the version
-	 */
-	public Long getVersion() {
-		return version;
-	}
-
-	/**
-	 * @param version the version to set
-	 */
-	public void setVersion(Long version) {
-		this.version = version;
-	}
-
-	/**
-	 * @return the user
-	 */
-	public User getUser() {
-		return user;
-	}
-
-	/**
-	 * @param user the user to set
-	 */
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	/**
@@ -358,11 +335,12 @@ public class Address {
 	}
 
 	/**
-	 * User Group
+	 * Group Id
 	 * 
 	 * @return groupId
 	 **/
-	@ApiModelProperty(value = "User Group")
+	@ApiModelProperty(value = "Group Id")
+
 	public Integer getGroupId() {
 		return groupId;
 	}
@@ -427,3 +405,4 @@ public class Address {
 		return o.toString().replace("\n", "\n    ");
 	}
 }
+

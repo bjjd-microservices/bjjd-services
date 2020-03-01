@@ -1,4 +1,4 @@
-package com.jmk.people.model;
+package com.jmk.people.entity;
 
 import java.sql.Timestamp;
 import java.util.Objects;

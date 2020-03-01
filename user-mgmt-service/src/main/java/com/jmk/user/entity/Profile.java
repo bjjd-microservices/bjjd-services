@@ -31,13 +31,13 @@ public class Profile {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id = null;
 
-	@Column(name = "firstName")
+	@Column(name = "first_name")
 	private String firstName = null;
 
-	@Column(name = "lastName")
+	@Column(name = "last_name")
 	private String lastName = null;
 
-	@Column(name = "dateOfBirth")
+	@Column(name = "date_of_birth")
 	private LocalDate dateOfBirth = null;
 
 	@Enumerated(EnumType.STRING)
@@ -45,43 +45,44 @@ public class Profile {
 	private Gender gender = null;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "maritalStatus")
+	@Column(name = "marital_status")
 	private MaritalStatus maritalStatus = null;
 
-	@Column(name = "emailId")
+	@Column(name = "email_id")
 	private String emailId = null;
 
-	@Column(name = "photoId")
+	@Column(name = "photo_id")
 	private String photoId = null;
 
-	@Column(name = "mobileNo")
+	@Column(name = "mobile_no")
 	private String mobileNo = null;
 
-	@Column(name = "altMobileNo")
+	@Column(name = "alt_mobile_no")
 	private String altMobileNo = null;
 
 	@Column(name = "userType")
 	private String userType = null;
-
-	@Column(name = "groupId")
-	private Integer groupId = null;
-
-	@Column(name = "created_by")
-	private Integer createdBy = null;
-
-	@Column(name = "created_on")
-	private Timestamp createdOn = null;
-
-	@Column(name = "when_modified")
-	private Timestamp whenModified = null;
-
-	@Version
-	private Long version = null;
-
+	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
 
+	@Column(name="group_id")
+	private Integer groupId = null;
+	
+	@Column(name="created_by")
+	private Integer createdBy = null;
+	
+	@Column(name="created_on")
+	private Timestamp createdOn=null;
+	
+	@Column(name="when_modified")
+	private Timestamp whenModified=null;
+	
+	@Version
+	@Column(name = "VERSION", nullable = false, columnDefinition = "default 1")
+	private Long version = 1L;
+	
 	@Override
 	public boolean equals(java.lang.Object o) {
 		if (this == o) {

@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,12 +28,16 @@ public class Module {
 	@Column(name="description")
 	private String description=null;
 
-	@Column(name = "status")
+	@Enumerated(EnumType.STRING)
+	@Column(name="status")
 	private Status status = null;
+	
+	@ManyToMany(mappedBy="modules")
+	private List<Role> roles;
 
-	@Column(name = "groupId")
+	@Column(name="group_id")
 	private Integer groupId = null;
-
+	
 	@Column(name="created_by")
 	private Integer createdBy = null;
 	
@@ -42,11 +48,9 @@ public class Module {
 	private Timestamp whenModified=null;
 	
 	@Version
-	private Long version=null;
+	@Column(name = "VERSION", nullable = false, columnDefinition = "default 1")
+	private Long version = 1L;
 	
-	@ManyToMany(mappedBy="modules")
-	private List<Role> roles;
-
 	public Long getId() {
 		return id;
 	}

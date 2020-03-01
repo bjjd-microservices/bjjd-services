@@ -1,466 +1,375 @@
-package com.jmk.people.model;
+package com.jmk.people.entity;
 
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
+import javax.persistence.Version;
 
-import org.springframework.validation.annotation.Validated;
 import org.threeten.bp.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jmk.enums.Gender;
 import com.jmk.enums.MaritalStatus;
 import com.jmk.enums.Status;
-import com.jmk.people.entity.Address;
-import com.jmk.people.entity.Identity;
-
-import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Person
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-02-27T07:02:52.969Z")
+@MappedSuperclass
 public class Person {
-	@JsonProperty("id")
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "default_gen")
 	private Long id = null;
 
-	@JsonProperty("username")
+	@Column(name = "username")
 	private String username = null;
 
 	@JsonProperty("user_id")
 	private Long userId = null;
 
-	@JsonProperty("firstName")
+	@Column(name = "first_name")
 	private String firstName = null;
 
-	@JsonProperty("lastName")
+	@Column(name = "last_name")
 	private String lastName = null;
 
-	@JsonProperty("dateOfBirth")
+	@Column(name = "date_of_birth")
 	private LocalDate dateOfBirth = null;
 
-	@JsonProperty("gender")
+	@Enumerated(EnumType.STRING)
+	@Column(name = "gender")
 	private Gender gender = null;
 
-	@JsonProperty("maritalStatus")
+	@Enumerated(EnumType.STRING)
+	@Column(name = "marital_status")
 	private MaritalStatus maritalStatus = null;
 
-	@JsonProperty("emailId")
+	@Column(name = "email_id")
 	private String emailId = null;
 
-	@JsonProperty("photoId")
+	@Column(name = "photo_id")
 	private String photoId = null;
 
-	@JsonProperty("mobileNo")
+	@Column(name = "mobile_no")
 	private String mobileNo = null;
 
-	@JsonProperty("altMobileNo")
+	@Column(name = "alt_mobile_no")
 	private String altMobileNo = null;
 
-	@JsonProperty("addresses")
-	@Valid
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
 	private Set<Address> addresses = new HashSet<>();
 
-	@JsonProperty("identities")
-	@Valid
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
 	private Set<Identity> identities = new HashSet<>();
 
-	@JsonProperty("status")
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status")
 	private Status status = null;
 
-	@JsonProperty("groupId")
+	@Column(name = "group_id")
 	private Integer groupId = null;
 
-	@JsonProperty
+	@Column(name = "created_by")
 	private Integer createdBy = null;
 
-	@JsonProperty
+	@Column(name = "created_on")
 	private Timestamp createdOn = null;
 
-	@JsonProperty
+	@Column(name = "when_modified")
 	private Timestamp whenModified = null;
 
-	@JsonProperty
-	private Long version = null;
-
-	public Person id(Long id) {
-		this.id = id;
-		return this;
-	}
+	@Version
+	@Column(name = "VERSION", nullable = false, columnDefinition = "default 1")
+	private Long version = 1L;
 
 	/**
-	 * user id
-	 * 
-	 * @return id
-	 **/
-	@ApiModelProperty(value = "user id")
-
+	 * @return the id
+	 */
 	public Long getId() {
 		return id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public Person username(String username) {
-		this.username = username;
-		return this;
-	}
-
 	/**
-	 * User name of the member
-	 * 
-	 * @return userName
-	 **/
-	@ApiModelProperty(required = true, value = "User name of the member")
-	@NotNull
-
-	@Size(min = 1, max = 50)
-	public String getUserName() {
+	 * @return the username
+	 */
+	public String getUsername() {
 		return username;
 	}
 
-	public void setUserName(String userName) {
-		this.username = userName;
-	}
-
-	public Person userId(Long userId) {
-		this.userId = userId;
-		return this;
+	/**
+	 * @param username the username to set
+	 */
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	/**
-	 * User name of the member
-	 * 
-	 * @return userId
-	 **/
-	@ApiModelProperty(value = "User name of the member")
-
-	@Size(min = 1, max = 50)
+	 * @return the userId
+	 */
 	public Long getUserId() {
 		return userId;
 	}
 
+	/**
+	 * @param userId the userId to set
+	 */
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
-	public Person firstName(String firstName) {
-		this.firstName = firstName;
-		return this;
-	}
-
 	/**
-	 * Password of the user
-	 * 
-	 * @return firstName
-	 **/
-	@ApiModelProperty(required = true, value = "Password of the user")
-	@NotNull
-
-	@Size(min = 1, max = 50)
+	 * @return the firstName
+	 */
 	public String getFirstName() {
 		return firstName;
 	}
 
+	/**
+	 * @param firstName the firstName to set
+	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
-	public Person lastName(String lastName) {
-		this.lastName = lastName;
-		return this;
-	}
-
 	/**
-	 * Password of the user
-	 * 
-	 * @return lastName
-	 **/
-	@ApiModelProperty(value = "Password of the user")
-
-	@Size(min = 1, max = 50)
+	 * @return the lastName
+	 */
 	public String getLastName() {
 		return lastName;
 	}
 
+	/**
+	 * @param lastName the lastName to set
+	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
-	public Person dateOfBirth(LocalDate dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-		return this;
-	}
-
 	/**
-	 * Date of the birth
-	 * 
-	 * @return dateOfBirth
-	 **/
-	@ApiModelProperty(value = "Date of the birth")
-
-	@Valid
-
+	 * @return the dateOfBirth
+	 */
 	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
 	}
 
+	/**
+	 * @param dateOfBirth the dateOfBirth to set
+	 */
 	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public Person gender(Gender gender) {
-		this.gender = gender;
-		return this;
-	}
-
 	/**
-	 * Person Gender
-	 * 
-	 * @return gender
-	 **/
-	@ApiModelProperty(value = "Person Gender")
-
+	 * @return the gender
+	 */
 	public Gender getGender() {
 		return gender;
 	}
 
+	/**
+	 * @param gender the gender to set
+	 */
 	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
 
-	public Person maritalStatus(MaritalStatus maritalStatus) {
-		this.maritalStatus = maritalStatus;
-		return this;
-	}
-
 	/**
-	 * Marital Status
-	 * 
-	 * @return maritalStatus
-	 **/
-	@ApiModelProperty(value = "Marital Status")
-
+	 * @return the maritalStatus
+	 */
 	public MaritalStatus getMaritalStatus() {
 		return maritalStatus;
 	}
 
+	/**
+	 * @param maritalStatus the maritalStatus to set
+	 */
 	public void setMaritalStatus(MaritalStatus maritalStatus) {
 		this.maritalStatus = maritalStatus;
 	}
 
-	public Person emailId(String emailId) {
-		this.emailId = emailId;
-		return this;
-	}
-
 	/**
-	 * Email id
-	 * 
-	 * @return emailId
-	 **/
-	@ApiModelProperty(value = "Email id")
-
-	@Size(min = 1, max = 150)
+	 * @return the emailId
+	 */
 	public String getEmailId() {
 		return emailId;
 	}
 
+	/**
+	 * @param emailId the emailId to set
+	 */
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
 
-	public Person photoId(String photoId) {
-		this.photoId = photoId;
-		return this;
-	}
-
 	/**
-	 * Photo Id
-	 * 
-	 * @return photoId
-	 **/
-	@ApiModelProperty(value = "Photo Id")
-
-	@Size(min = 1, max = 150)
+	 * @return the photoId
+	 */
 	public String getPhotoId() {
 		return photoId;
 	}
 
+	/**
+	 * @param photoId the photoId to set
+	 */
 	public void setPhotoId(String photoId) {
 		this.photoId = photoId;
 	}
 
-	public Person mobileNo(String mobileNo) {
-		this.mobileNo = mobileNo;
-		return this;
-	}
-
 	/**
-	 * Primary Mobile number
-	 * 
-	 * @return mobileNo
-	 **/
-	@ApiModelProperty(value = "Primary Mobile number")
-
-	@Size(min = 1, max = 50)
+	 * @return the mobileNo
+	 */
 	public String getMobileNo() {
 		return mobileNo;
 	}
 
+	/**
+	 * @param mobileNo the mobileNo to set
+	 */
 	public void setMobileNo(String mobileNo) {
 		this.mobileNo = mobileNo;
 	}
 
-	public Person altMobileNo(String altMobileNo) {
-		this.altMobileNo = altMobileNo;
-		return this;
-	}
-
 	/**
-	 * Secondary Mobile number
-	 * 
-	 * @return altMobileNo
-	 **/
-	@ApiModelProperty(value = "Secondary Mobile number")
-
-	@Size(min = 1, max = 50)
+	 * @return the altMobileNo
+	 */
 	public String getAltMobileNo() {
 		return altMobileNo;
 	}
 
+	/**
+	 * @param altMobileNo the altMobileNo to set
+	 */
 	public void setAltMobileNo(String altMobileNo) {
 		this.altMobileNo = altMobileNo;
 	}
 
-	public Person addresses(Set<Address> addresses) {
-		this.addresses = addresses;
-		return this;
-	}
-
-	public Person addAddressesItem(Address addressesItem) {
-		this.addresses.add(addressesItem);
-		return this;
-	}
-
 	/**
-	 * Get addresses
-	 * 
-	 * @return addresses
-	 **/
-	@ApiModelProperty(value = "")
-	@Valid
+	 * @return the addresses
+	 */
 	public Set<Address> getAddresses() {
 		return addresses;
 	}
 
+	/**
+	 * @param addresses the addresses to set
+	 */
 	public void setAddresses(Set<Address> addresses) {
 		this.addresses = addresses;
 	}
 
-	public Person identities(Set<Identity> identities) {
-		this.identities = identities;
-		return this;
-	}
-
-	public Person addIdentitiesItem(Identity identitiesItem) {
-		this.identities.add(identitiesItem);
-		return this;
-	}
-
 	/**
-	 * Get identities
-	 * 
-	 * @return identities
-	 **/
-	@ApiModelProperty(value = "")
-
-	@Valid
-
+	 * @return the identities
+	 */
 	public Set<Identity> getIdentities() {
 		return identities;
 	}
 
+	/**
+	 * @param identities the identities to set
+	 */
 	public void setIdentities(Set<Identity> identities) {
 		this.identities = identities;
 	}
 
-	public Person status(Status status) {
-		this.status = status;
-		return this;
-	}
-
 	/**
-	 * Password of the user
-	 * 
-	 * @return status
-	 **/
-	@ApiModelProperty(value = "Password of the user")
-
+	 * @return the status
+	 */
 	public Status getStatus() {
 		return status;
 	}
 
+	/**
+	 * @param status the status to set
+	 */
 	public void setStatus(Status status) {
 		this.status = status;
 	}
 
-	public Person groupId(Integer groupId) {
-		this.groupId = groupId;
-		return this;
-	}
-
 	/**
-	 * Group Id
-	 * 
-	 * @return groupId
-	 **/
-	@ApiModelProperty(value = "Group Id")
-
+	 * @return the groupId
+	 */
 	public Integer getGroupId() {
 		return groupId;
 	}
 
+	/**
+	 * @param groupId the groupId to set
+	 */
 	public void setGroupId(Integer groupId) {
 		this.groupId = groupId;
 	}
 
+	/**
+	 * @return the createdBy
+	 */
 	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
+	/**
+	 * @param createdBy the createdBy to set
+	 */
 	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
+	/**
+	 * @return the createdOn
+	 */
 	public Timestamp getCreatedOn() {
 		return createdOn;
 	}
 
+	/**
+	 * @param createdOn the createdOn to set
+	 */
 	public void setCreatedOn(Timestamp createdOn) {
 		this.createdOn = createdOn;
 	}
 
+	/**
+	 * @return the whenModified
+	 */
 	public Timestamp getWhenModified() {
 		return whenModified;
 	}
 
+	/**
+	 * @param whenModified the whenModified to set
+	 */
 	public void setWhenModified(Timestamp whenModified) {
 		this.whenModified = whenModified;
 	}
 
+	/**
+	 * @return the version
+	 */
 	public Long getVersion() {
 		return version;
 	}
 
+	/**
+	 * @param version the version to set
+	 */
 	public void setVersion(Long version) {
 		this.version = version;
 	}
