@@ -1,16 +1,22 @@
 package com.jmk.people.entity;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.validation.Valid;
 
 import org.threeten.bp.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jmk.people.enums.SevaDays;
 import com.jmk.people.enums.SevadarCategory;
 import com.jmk.people.model.Person;
@@ -22,21 +28,20 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @Entity
 @Table(name = "SEVADAR")
-@SequenceGenerator(name = "default_gen", sequenceName = "sevadar_seq", allocationSize = 1)
 public class Sevadar extends Person  {
 
-  @JsonProperty("sevadarCategory")
+  @Enumerated(EnumType.STRING)
+  @Column(name="sevadar_category")
   private SevadarCategory sevadarCategory = null;
 
-  @JsonProperty("sevaDays")
-  @Valid
-  private List<SevaDays> sevaDays = null;
+  @ElementCollection(fetch=FetchType.EAGER)
+  @CollectionTable(name = "sevadar_sevadays", joinColumns = @JoinColumn(name = "sevadar_id"))
+  @Enumerated(EnumType.STRING)
+  @Column(name="seva_days")
+  private Collection<SevaDays> sevaDays = null;
 
-  @JsonProperty("joiningDate")
+  @Column(name="joining_date")
   private LocalDate joiningDate = null;
-
-  @JsonProperty("groupId")
-  private Integer groupId = null;
 
   public Sevadar sevadarCategory(SevadarCategory sevadarCategory) {
     this.sevadarCategory = sevadarCategory;
@@ -75,7 +80,7 @@ public class Sevadar extends Person  {
   @ApiModelProperty(value = "")
 
 
-  public List<SevaDays> getSevaDays() {
+  public Collection<SevaDays> getSevaDays() {
     return sevaDays;
   }
 
@@ -104,27 +109,6 @@ public class Sevadar extends Person  {
     this.joiningDate = joiningDate;
   }
 
-  public Sevadar groupId(Integer groupId) {
-    this.groupId = groupId;
-    return this;
-  }
-
-  /**
-   * Group Id
-   * @return groupId
-  **/
-  @ApiModelProperty(value = "Group Id")
-
-
-  public Integer getGroupId() {
-    return groupId;
-  }
-
-  public void setGroupId(Integer groupId) {
-    this.groupId = groupId;
-  }
-
-
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -137,13 +121,12 @@ public class Sevadar extends Person  {
     return Objects.equals(this.sevadarCategory, sevadar.sevadarCategory) &&
         Objects.equals(this.sevaDays, sevadar.sevaDays) &&
         Objects.equals(this.joiningDate, sevadar.joiningDate) &&
-        Objects.equals(this.groupId, sevadar.groupId) &&
         super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(sevadarCategory, sevaDays, joiningDate, groupId, super.hashCode());
+    return Objects.hash(sevadarCategory, sevaDays, joiningDate, super.hashCode());
   }
 
   @Override
@@ -154,7 +137,6 @@ public class Sevadar extends Person  {
     sb.append("    sevadarCategory: ").append(toIndentedString(sevadarCategory)).append("\n");
     sb.append("    sevaDays: ").append(toIndentedString(sevaDays)).append("\n");
     sb.append("    joiningDate: ").append(toIndentedString(joiningDate)).append("\n");
-    sb.append("    groupId: ").append(toIndentedString(groupId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

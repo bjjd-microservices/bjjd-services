@@ -3,192 +3,189 @@ package com.jmk.people.entity;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-import org.springframework.validation.annotation.Validated;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Version;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jmk.enums.DocumentType;
-
-import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Identity
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-02-27T07:02:52.969Z")
-
+@Entity
+@Table(name = "USER")
 public class Identity {
-	@JsonProperty("id")
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id = null;
 
-	@JsonProperty("documentType")
+	@Column(name = "document_type")
 	private DocumentType documentType = null;
 
-	@JsonProperty("documentNumber")
+	@Column(name = "document_number")
 	private String documentNumber = null;
 
-	@JsonProperty("documentName")
+	@Column(name = "document_name")
 	private String documentName = null;
 
-	@JsonProperty("documentPath")
+	@Column(name = "document_path")
 	private String documentPath = null;
 
-	@JsonProperty("documentDetails")
+	@Column(name = "document_details")
 	private String documentDetails = null;
 
-	@JsonProperty("groupId")
+	@Column(name = "group_id")
 	private Integer groupId = null;
 
-	@JsonProperty
+	@Column(name = "created_by")
 	private Integer createdBy = null;
 
-	@JsonProperty
+	@Column(name = "created_on")
 	private Timestamp createdOn = null;
 
-	@JsonProperty
+	@Column(name = "when_modified")
 	private Timestamp whenModified = null;
 
-	@JsonProperty
-	private Long version = null;
+	@Version
+	@Column(name = "VERSION", nullable = false, columnDefinition = "default 1")
+	private Long version = 1L;
 
 	public Identity id(Long id) {
 		this.id = id;
 		return this;
 	}
 
+	
+	
 	/**
-	 * user id
-	 * 
-	 * @return id
-	 **/
-	@ApiModelProperty(value = "user id")
-
+	 * @return the id
+	 */
 	public Long getId() {
 		return id;
 	}
 
+
+
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public Identity documentType(DocumentType documentType) {
-		this.documentType = documentType;
-		return this;
-	}
+
 
 	/**
-	 * Password of the user
-	 * 
-	 * @return documentType
-	 **/
-	@ApiModelProperty(value = "Password of the user")
-
+	 * @return the documentType
+	 */
 	public DocumentType getDocumentType() {
 		return documentType;
 	}
 
+
+
+	/**
+	 * @param documentType the documentType to set
+	 */
 	public void setDocumentType(DocumentType documentType) {
 		this.documentType = documentType;
 	}
 
-	public Identity documentNumber(String documentNumber) {
-		this.documentNumber = documentNumber;
-		return this;
-	}
+
 
 	/**
-	 * User Type
-	 * 
-	 * @return documentNumber
-	 **/
-	@ApiModelProperty(value = "User Type")
-
+	 * @return the documentNumber
+	 */
 	public String getDocumentNumber() {
 		return documentNumber;
 	}
 
+
+
+	/**
+	 * @param documentNumber the documentNumber to set
+	 */
 	public void setDocumentNumber(String documentNumber) {
 		this.documentNumber = documentNumber;
 	}
 
-	public Identity documentName(String documentName) {
-		this.documentName = documentName;
-		return this;
-	}
+
 
 	/**
-	 * User Type
-	 * 
-	 * @return documentName
-	 **/
-	@ApiModelProperty(value = "User Type")
-
+	 * @return the documentName
+	 */
 	public String getDocumentName() {
 		return documentName;
 	}
 
+
+
+	/**
+	 * @param documentName the documentName to set
+	 */
 	public void setDocumentName(String documentName) {
 		this.documentName = documentName;
 	}
 
-	public Identity documentPath(String documentPath) {
-		this.documentPath = documentPath;
-		return this;
-	}
+
 
 	/**
-	 * User Type
-	 * 
-	 * @return documentPath
-	 **/
-	@ApiModelProperty(value = "User Type")
-
+	 * @return the documentPath
+	 */
 	public String getDocumentPath() {
 		return documentPath;
 	}
 
+
+
+	/**
+	 * @param documentPath the documentPath to set
+	 */
 	public void setDocumentPath(String documentPath) {
 		this.documentPath = documentPath;
 	}
 
-	public Identity documentDetails(String documentDetails) {
-		this.documentDetails = documentDetails;
-		return this;
-	}
+
 
 	/**
-	 * User Type
-	 * 
-	 * @return documentDetails
-	 **/
-	@ApiModelProperty(value = "User Type")
-
+	 * @return the documentDetails
+	 */
 	public String getDocumentDetails() {
 		return documentDetails;
 	}
 
+
+
+	/**
+	 * @param documentDetails the documentDetails to set
+	 */
 	public void setDocumentDetails(String documentDetails) {
 		this.documentDetails = documentDetails;
 	}
 
-	public Identity groupId(Integer groupId) {
-		this.groupId = groupId;
-		return this;
-	}
+
 
 	/**
-	 * User Group
-	 * 
-	 * @return groupId
-	 **/
-	@ApiModelProperty(value = "User Group")
-
+	 * @return the groupId
+	 */
 	public Integer getGroupId() {
 		return groupId;
 	}
 
+
+
+	/**
+	 * @param groupId the groupId to set
+	 */
 	public void setGroupId(Integer groupId) {
 		this.groupId = groupId;
 	}
+
+
 
 	@Override
 	public boolean equals(java.lang.Object o) {

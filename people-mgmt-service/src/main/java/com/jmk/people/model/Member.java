@@ -17,7 +17,6 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-02-27T07:02:52.969Z")
-
 public class Member extends Person  {
 
   @JsonProperty("memberType")
@@ -28,9 +27,6 @@ public class Member extends Person  {
 
   @JsonProperty("validity")
   private LocalDate validity = null;
-
-  @JsonProperty("groupId")
-  private Integer groupId = null;
 
   public Member memberType(MemberType memberType) {
     this.memberType = memberType;
@@ -94,27 +90,6 @@ public class Member extends Person  {
     this.validity = validity;
   }
 
-  public Member groupId(Integer groupId) {
-    this.groupId = groupId;
-    return this;
-  }
-
-  /**
-   * Group Id
-   * @return groupId
-  **/
-  @ApiModelProperty(value = "Group Id")
-
-
-  public Integer getGroupId() {
-    return groupId;
-  }
-
-  public void setGroupId(Integer groupId) {
-    this.groupId = groupId;
-  }
-
-
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -127,13 +102,12 @@ public class Member extends Person  {
     return Objects.equals(this.memberType, member.memberType) &&
         Objects.equals(this.joiningDate, member.joiningDate) &&
         Objects.equals(this.validity, member.validity) &&
-        Objects.equals(this.groupId, member.groupId) &&
         super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(memberType, joiningDate, validity, groupId, super.hashCode());
+    return Objects.hash(memberType, joiningDate, validity, super.hashCode());
   }
 
   @Override
@@ -144,7 +118,6 @@ public class Member extends Person  {
     sb.append("    memberType: ").append(toIndentedString(memberType)).append("\n");
     sb.append("    joiningDate: ").append(toIndentedString(joiningDate)).append("\n");
     sb.append("    validity: ").append(toIndentedString(validity)).append("\n");
-    sb.append("    groupId: ").append(toIndentedString(groupId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

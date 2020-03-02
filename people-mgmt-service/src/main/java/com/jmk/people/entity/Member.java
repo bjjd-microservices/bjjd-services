@@ -2,14 +2,15 @@ package com.jmk.people.entity;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.Valid;
 
 import org.threeten.bp.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jmk.people.enums.MemberType;
 import com.jmk.people.model.Person;
 
@@ -21,17 +22,15 @@ import com.jmk.people.model.Person;
 @SequenceGenerator(name = "default_gen", sequenceName = "member_seq", allocationSize = 1)
 public class Member extends Person  {
 
-  @JsonProperty("memberType")
+  @Enumerated(EnumType.STRING)
+  @Column(name = "member_type")
   private MemberType memberType = null;
 
-  @JsonProperty("joiningDate")
+  @Column(name="joining_date")
   private LocalDate joiningDate = null;
 
-  @JsonProperty("validity")
+  @Column(name="validity")
   private LocalDate validity = null;
-
-  @JsonProperty("groupId")
-  private Integer groupId = null;
 
   public Member memberType(MemberType memberType) {
     this.memberType = memberType;
@@ -76,20 +75,6 @@ public class Member extends Person  {
     this.validity = validity;
   }
 
-  public Member groupId(Integer groupId) {
-    this.groupId = groupId;
-    return this;
-  }
-
-  public Integer getGroupId() {
-    return groupId;
-  }
-
-  public void setGroupId(Integer groupId) {
-    this.groupId = groupId;
-  }
-
-
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -102,13 +87,12 @@ public class Member extends Person  {
     return Objects.equals(this.memberType, member.memberType) &&
         Objects.equals(this.joiningDate, member.joiningDate) &&
         Objects.equals(this.validity, member.validity) &&
-        Objects.equals(this.groupId, member.groupId) &&
         super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(memberType, joiningDate, validity, groupId, super.hashCode());
+    return Objects.hash(memberType, joiningDate, validity, super.hashCode());
   }
 
   @Override
@@ -119,7 +103,6 @@ public class Member extends Person  {
     sb.append("    memberType: ").append(toIndentedString(memberType)).append("\n");
     sb.append("    joiningDate: ").append(toIndentedString(joiningDate)).append("\n");
     sb.append("    validity: ").append(toIndentedString(validity)).append("\n");
-    sb.append("    groupId: ").append(toIndentedString(groupId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

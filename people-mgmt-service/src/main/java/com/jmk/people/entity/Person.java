@@ -7,18 +7,17 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
 import org.threeten.bp.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jmk.enums.Gender;
 import com.jmk.enums.MaritalStatus;
 import com.jmk.enums.Status;
@@ -26,17 +25,17 @@ import com.jmk.enums.Status;
 /**
  * Person
  */
-@MappedSuperclass
+@Entity
 public class Person {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "default_gen")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id = null;
 
 	@Column(name = "username")
 	private String username = null;
 
-	@JsonProperty("user_id")
+	@Column(name="user_id")
 	private Long userId = null;
 
 	@Column(name = "first_name")

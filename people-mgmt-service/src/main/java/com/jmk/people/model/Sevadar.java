@@ -1,6 +1,7 @@
 package com.jmk.people.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,7 +21,6 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-02-27T07:02:52.969Z")
-
 public class Sevadar extends Person  {
   /**
    * Sevadar Category
@@ -31,13 +31,10 @@ public class Sevadar extends Person  {
 
   @JsonProperty("sevaDays")
   @Valid
-  private List<SevaDays> sevaDays = null;
+  private Collection<SevaDays> sevaDays = null;
 
   @JsonProperty("joiningDate")
   private LocalDate joiningDate = null;
-
-  @JsonProperty("groupId")
-  private Integer groupId = null;
 
   public Sevadar sevadarCategory(SevadarCategory sevadarCategory) {
     this.sevadarCategory = sevadarCategory;
@@ -77,7 +74,7 @@ public class Sevadar extends Person  {
    * @return sevaDays
   **/
   @ApiModelProperty(value = "")
-  public List<SevaDays> getSevaDays() {
+  public Collection<SevaDays> getSevaDays() {
     return sevaDays;
   }
 
@@ -106,26 +103,6 @@ public class Sevadar extends Person  {
     this.joiningDate = joiningDate;
   }
 
-  public Sevadar groupId(Integer groupId) {
-    this.groupId = groupId;
-    return this;
-  }
-
-  /**
-   * Group Id
-   * @return groupId
-  **/
-  @ApiModelProperty(value = "Group Id")
-
-
-  public Integer getGroupId() {
-    return groupId;
-  }
-
-  public void setGroupId(Integer groupId) {
-    this.groupId = groupId;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -139,13 +116,12 @@ public class Sevadar extends Person  {
     return Objects.equals(this.sevadarCategory, sevadar.sevadarCategory) &&
         Objects.equals(this.sevaDays, sevadar.sevaDays) &&
         Objects.equals(this.joiningDate, sevadar.joiningDate) &&
-        Objects.equals(this.groupId, sevadar.groupId) &&
         super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(sevadarCategory, sevaDays, joiningDate, groupId, super.hashCode());
+    return Objects.hash(sevadarCategory, sevaDays, joiningDate, super.hashCode());
   }
 
   @Override
@@ -156,7 +132,6 @@ public class Sevadar extends Person  {
     sb.append("    sevadarCategory: ").append(toIndentedString(sevadarCategory)).append("\n");
     sb.append("    sevaDays: ").append(toIndentedString(sevaDays)).append("\n");
     sb.append("    joiningDate: ").append(toIndentedString(joiningDate)).append("\n");
-    sb.append("    groupId: ").append(toIndentedString(groupId)).append("\n");
     sb.append("}");
     return sb.toString();
   }
