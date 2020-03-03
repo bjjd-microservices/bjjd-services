@@ -6,12 +6,14 @@ import java.util.Objects;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.Valid;
 
@@ -28,6 +30,8 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @Entity
 @Table(name = "SEVADAR")
+@DiscriminatorValue("SEVADAR")
+@PrimaryKeyJoinColumn(name="ID",referencedColumnName="ID")
 public class Sevadar extends Person  {
 
   @Enumerated(EnumType.STRING)

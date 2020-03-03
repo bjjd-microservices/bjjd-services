@@ -3,20 +3,22 @@ package com.jmk.people.entity;
 import java.util.Objects;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.jmk.people.model.Person;
-
-import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Devotee
  */
 @Entity
 @Table(name = "DEVOTEE")
+@DiscriminatorValue("DEVOTEE")
+@PrimaryKeyJoinColumn(name="ID",referencedColumnName="ID")
 public class Devotee extends Person {
 
 	@Enumerated(EnumType.STRING)
