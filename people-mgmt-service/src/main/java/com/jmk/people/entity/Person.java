@@ -12,6 +12,7 @@ import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -75,10 +76,10 @@ public class Person {
 	@Column(name = "alt_mobile_no")
 	private String altMobileNo = null;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
+	@OneToMany(mappedBy = "person",cascade = CascadeType.ALL)
 	private Set<Address> addresses = new HashSet<>();
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
+	@OneToMany(mappedBy = "person",cascade = CascadeType.ALL)
 	private Set<Identity> identities = new HashSet<>();
 
 	@Enumerated(EnumType.STRING)
@@ -98,7 +99,6 @@ public class Person {
 	private Timestamp whenModified = null;
 
 	@Version
-	@Column(name = "VERSION", nullable = false, columnDefinition = "default 1")
 	private Long version = 1L;
 
 	/**

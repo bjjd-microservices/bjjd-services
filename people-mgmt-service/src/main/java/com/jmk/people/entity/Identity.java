@@ -5,9 +5,12 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
@@ -17,7 +20,7 @@ import com.jmk.enums.DocumentType;
  * Identity
  */
 @Entity
-@Table(name = "USER")
+@Table(name = "IDENTITY")
 public class Identity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,6 +40,10 @@ public class Identity {
 
 	@Column(name = "document_details")
 	private String documentDetails = null;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "person_id", referencedColumnName = "id")
+	private Person person;
 
 	@Column(name = "group_id")
 	private Integer groupId = null;
@@ -51,24 +58,14 @@ public class Identity {
 	private Timestamp whenModified = null;
 
 	@Version
-	@Column(name = "VERSION", nullable = false, columnDefinition = "default 1")
-	private Long version = 1L;
+	private Long version;
 
-	public Identity id(Long id) {
-		this.id = id;
-		return this;
-	}
-
-	
-	
 	/**
 	 * @return the id
 	 */
 	public Long getId() {
 		return id;
 	}
-
-
 
 	/**
 	 * @param id the id to set
@@ -77,16 +74,12 @@ public class Identity {
 		this.id = id;
 	}
 
-
-
 	/**
 	 * @return the documentType
 	 */
 	public DocumentType getDocumentType() {
 		return documentType;
 	}
-
-
 
 	/**
 	 * @param documentType the documentType to set
@@ -95,16 +88,12 @@ public class Identity {
 		this.documentType = documentType;
 	}
 
-
-
 	/**
 	 * @return the documentNumber
 	 */
 	public String getDocumentNumber() {
 		return documentNumber;
 	}
-
-
 
 	/**
 	 * @param documentNumber the documentNumber to set
@@ -113,16 +102,12 @@ public class Identity {
 		this.documentNumber = documentNumber;
 	}
 
-
-
 	/**
 	 * @return the documentName
 	 */
 	public String getDocumentName() {
 		return documentName;
 	}
-
-
 
 	/**
 	 * @param documentName the documentName to set
@@ -131,16 +116,12 @@ public class Identity {
 		this.documentName = documentName;
 	}
 
-
-
 	/**
 	 * @return the documentPath
 	 */
 	public String getDocumentPath() {
 		return documentPath;
 	}
-
-
 
 	/**
 	 * @param documentPath the documentPath to set
@@ -149,16 +130,12 @@ public class Identity {
 		this.documentPath = documentPath;
 	}
 
-
-
 	/**
 	 * @return the documentDetails
 	 */
 	public String getDocumentDetails() {
 		return documentDetails;
 	}
-
-
 
 	/**
 	 * @param documentDetails the documentDetails to set
@@ -167,7 +144,19 @@ public class Identity {
 		this.documentDetails = documentDetails;
 	}
 
+	/**
+	 * @return the person
+	 */
+	public Person getPerson() {
+		return person;
+	}
 
+	/**
+	 * @param person the person to set
+	 */
+	public void setPerson(Person person) {
+		this.person = person;
+	}
 
 	/**
 	 * @return the groupId
@@ -176,8 +165,6 @@ public class Identity {
 		return groupId;
 	}
 
-
-
 	/**
 	 * @param groupId the groupId to set
 	 */
@@ -185,87 +172,64 @@ public class Identity {
 		this.groupId = groupId;
 	}
 
-
-
-	@Override
-	public boolean equals(java.lang.Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
-		Identity identity = (Identity) o;
-		return Objects.equals(this.id, identity.id) && Objects.equals(this.documentType, identity.documentType)
-				&& Objects.equals(this.documentNumber, identity.documentNumber)
-				&& Objects.equals(this.documentName, identity.documentName)
-				&& Objects.equals(this.documentPath, identity.documentPath)
-				&& Objects.equals(this.documentDetails, identity.documentDetails)
-				&& Objects.equals(this.groupId, identity.groupId);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, documentType, documentNumber, documentName, documentPath, documentDetails, groupId);
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("class Identity {\n");
-
-		sb.append("    id: ").append(toIndentedString(id)).append("\n");
-		sb.append("    documentType: ").append(toIndentedString(documentType)).append("\n");
-		sb.append("    documentNumber: ").append(toIndentedString(documentNumber)).append("\n");
-		sb.append("    documentName: ").append(toIndentedString(documentName)).append("\n");
-		sb.append("    documentPath: ").append(toIndentedString(documentPath)).append("\n");
-		sb.append("    documentDetails: ").append(toIndentedString(documentDetails)).append("\n");
-		sb.append("    groupId: ").append(toIndentedString(groupId)).append("\n");
-		sb.append("}");
-		return sb.toString();
-	}
-
 	/**
-	 * Convert the given object to string with each line indented by 4 spaces
-	 * (except the first line).
+	 * @return the createdBy
 	 */
-	private String toIndentedString(java.lang.Object o) {
-		if (o == null) {
-			return "null";
-		}
-		return o.toString().replace("\n", "\n    ");
-	}
-
 	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
+	/**
+	 * @param createdBy the createdBy to set
+	 */
 	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
+	/**
+	 * @return the createdOn
+	 */
 	public Timestamp getCreatedOn() {
 		return createdOn;
 	}
 
+	/**
+	 * @param createdOn the createdOn to set
+	 */
 	public void setCreatedOn(Timestamp createdOn) {
 		this.createdOn = createdOn;
 	}
 
+	/**
+	 * @return the whenModified
+	 */
 	public Timestamp getWhenModified() {
 		return whenModified;
 	}
 
+	/**
+	 * @param whenModified the whenModified to set
+	 */
 	public void setWhenModified(Timestamp whenModified) {
 		this.whenModified = whenModified;
 	}
 
+	/**
+	 * @return the version
+	 */
 	public Long getVersion() {
 		return version;
 	}
 
+	/**
+	 * @param version the version to set
+	 */
 	public void setVersion(Long version) {
 		this.version = version;
 	}
+	
+	
+	
+	
 
 }

@@ -16,8 +16,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jmk.enums.Gender;
 import com.jmk.enums.MaritalStatus;
 import com.jmk.enums.Status;
-import com.jmk.people.entity.Address;
-import com.jmk.people.entity.Identity;
 
 import io.swagger.annotations.ApiModelProperty;
 

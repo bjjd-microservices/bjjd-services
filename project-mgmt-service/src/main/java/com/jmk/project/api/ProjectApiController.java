@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jmk.enums.Status;
+import com.jmk.model.user.User;
 import com.jmk.project.model.Project;
 import com.jmk.project.service.ProjectMgmtService;
 
@@ -45,61 +46,47 @@ public class ProjectApiController implements ProjectApi {
 	}
 
 	public ResponseEntity<Project> createProject(
-			@ApiParam(value = "", required = true) @Valid @RequestBody Project body,
+			@ApiParam(value = "", required = true) @Valid @RequestBody Project project,
 			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel) {
 		String accept = request.getHeader("Accept");
-		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<Project>(objectMapper.readValue(
-						"{  \"projectManager\" : \"projectManager\",  \"displayName\" : \"displayName\",  \"groupId\" : 6,  \"photoId\" : \"photoId\",  \"completionDate\" : \"2000-01-23\",  \"id\" : 0,  \"projectName\" : \"projectName\",  \"startDate\" : \"2000-01-23\",  \"status\" : \"A\"}",
-						Project.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Project>(HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-		}
-		
-		if (accept != null && accept.contains("application/xml")) {
-			try {
-				return new ResponseEntity<Project>(objectMapper.readValue(
-						"<null>  <id>123456789</id>  <projectName>aeiou</projectName>  <displayName>aeiou</displayName>  <projectManager>aeiou</projectManager>  <startDate>2000-01-23</startDate>  <completionDate>2000-01-23</completionDate>  <photoId>aeiou</photoId>  <status>aeiou</status>  <groupId>123</groupId></null>",
-						Project.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/xml", e);
-				return new ResponseEntity<Project>(HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
+				|| accept.contains("*")) {
+			project = projectMgmtService.saveProject(project);
+			return new ResponseEntity<Project>(project, HttpStatus.OK);
 		}
 
-		return new ResponseEntity<Project>(HttpStatus.NOT_IMPLEMENTED);
+		return new ResponseEntity<Project>(HttpStatus.INTERNAL_SERVER_ERROR);
+
 	}
 
 	public ResponseEntity<Void> createProjectsWithArrayInput(
-			@ApiParam(value = "", required = true) @Valid @RequestBody List<Project> body,
+			@ApiParam(value = "", required = true) @Valid @RequestBody List<Project> projects,
 			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel) {
 		String accept = request.getHeader("Accept");
+		 if (accept != null && accept.contains("application/json") || accept.contains("application/xml")) {
+			 projects=projectMgmtService.saveProjects(projects);
+        	 if(projects!=null) {
+        		 return new ResponseEntity<>(HttpStatus.OK);
+        	 }
+        }
+       
 		return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
 	public ResponseEntity<Void> deleteProjectById(
-			@ApiParam(value = "Project Id", required = true) @PathVariable("id") Integer id) {
-		String accept = request.getHeader("Accept");
-		return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+			@ApiParam(value = "Project Id", required = true) @PathVariable("id") Long id) {
+		projectMgmtService.deleteProjectById(id);
+        //Below return statement is the correct way to handle the delete request
+        return ResponseEntity.noContent().build();
 	}
 
 	public ResponseEntity<Project> findProjectDetailsById(
-			@ApiParam(value = "Project Id", required = true) @PathVariable("id") Integer id) {
+			@ApiParam(value = "Project Id", required = true) @PathVariable("id") Long id) {
 		String accept = request.getHeader("Accept");
-		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<Project>(objectMapper.readValue(
-						"{  \"projectManager\" : \"projectManager\",  \"displayName\" : \"displayName\",  \"groupId\" : 6,  \"photoId\" : \"photoId\",  \"completionDate\" : \"2000-01-23\",  \"id\" : 0,  \"projectName\" : \"projectName\",  \"startDate\" : \"2000-01-23\",  \"status\" : \"A\"}",
-						Project.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Project>(HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+		if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
+			Project project = projectMgmtService.findProjectDetailsById(id);
+			return new ResponseEntity<Project>(project, HttpStatus.OK);
 		}
-
 		return new ResponseEntity<Project>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
@@ -107,7 +94,7 @@ public class ProjectApiController implements ProjectApi {
 			@ApiParam(value = "xChannel") @RequestHeader(value = "xChannel", required = false) String xChannel,
 			@ApiParam(value = "The status to restrict the results to.  If not provided, all records are returned", allowableValues = "A, I") @Valid @RequestParam(value = "status", required = false) String status) {
 		String accept = request.getHeader("Accept");
-		if (accept != null && (accept.contains("application/json") || accept.contains("*"))) {
+		if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
 			List<Project> projects = projectMgmtService.findAllProjectsByStatus(Status.A);
 			return new ResponseEntity<List<Project>>(projects, HttpStatus.OK);
 		}
@@ -116,21 +103,16 @@ public class ProjectApiController implements ProjectApi {
 	}
 
 	public ResponseEntity<Project> updateProjectById(
-			@ApiParam(value = "Project Id", required = true) @PathVariable("id") Integer id,
-			@ApiParam(value = "", required = true) @Valid @RequestBody Project body) {
+			@ApiParam(value = "Project Id", required = true) @PathVariable("id") Long id,
+			@ApiParam(value = "", required = true) @Valid @RequestBody Project project) {
 		String accept = request.getHeader("Accept");
-		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<Project>(objectMapper.readValue(
-						"{  \"projectManager\" : \"projectManager\",  \"displayName\" : \"displayName\",  \"groupId\" : 6,  \"photoId\" : \"photoId\",  \"completionDate\" : \"2000-01-23\",  \"id\" : 0,  \"projectName\" : \"projectName\",  \"startDate\" : \"2000-01-23\",  \"status\" : \"A\"}",
-						Project.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Project>(HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
+				|| accept.contains("*")) {
+			project = projectMgmtService.saveProject(project);
+			return new ResponseEntity<Project>(project, HttpStatus.OK);
 		}
 
-		return new ResponseEntity<Project>(HttpStatus.NOT_IMPLEMENTED);
+		return new ResponseEntity<Project>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 }

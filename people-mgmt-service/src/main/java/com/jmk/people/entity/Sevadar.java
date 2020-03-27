@@ -21,7 +21,6 @@ import org.threeten.bp.LocalDate;
 
 import com.jmk.people.enums.SevaDays;
 import com.jmk.people.enums.SevadarCategory;
-import com.jmk.people.model.Person;
 
 import io.swagger.annotations.ApiModelProperty;
 

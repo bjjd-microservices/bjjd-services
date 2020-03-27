@@ -63,7 +63,7 @@ public interface DevoteeApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.DELETE)
-    ResponseEntity<Void> deleteDevoteeById(@ApiParam(value = "Devotee Id",required=true) @PathVariable("id") Integer id) ;
+    ResponseEntity<Void> deleteDevoteeById(@ApiParam(value = "Devotee Id",required=true) @PathVariable("id") Long id) ;
 
 
     @ApiOperation(value = "Find all the devotees by status", nickname = "findDevoteeByMobileNumber", notes = "Find all the devotees by status", response = Devotee.class, tags={ "DevoteeMgmtServiceApi", })
@@ -89,7 +89,7 @@ public interface DevoteeApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.GET)
-    ResponseEntity<Devotee> findDevoteeDetailsById(@ApiParam(value = "Devotee Id",required=true) @PathVariable("id") Integer id) ;
+    ResponseEntity<Devotee> findDevoteeDetailsById(@ApiParam(value = "Devotee Id",required=true) @PathVariable("id") Long id) ;
 
 
     @ApiOperation(value = "Find all the devotees by status", nickname = "findDevoteesByStatus", notes = "Find all the devotees by status", response = Devotee.class, responseContainer = "List", tags={ "DevoteeMgmtServiceApi", })
@@ -114,6 +114,6 @@ public interface DevoteeApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.PUT)
-    ResponseEntity<Devotee> updateDevoteeById(@ApiParam(value = "Devotee Id",required=true) @PathVariable("id") Integer id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Devotee body) ;
+    ResponseEntity<Devotee> updateDevoteeById(@ApiParam(value = "Devotee Id",required=true) @PathVariable("id") Long id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Devotee body) ;
 
 }

@@ -13,7 +13,6 @@ import javax.persistence.Table;
 import org.threeten.bp.LocalDate;
 
 import com.jmk.people.enums.MemberType;
-import com.jmk.people.model.Person;
 
 /**
  * Member

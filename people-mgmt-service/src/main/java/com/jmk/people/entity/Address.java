@@ -14,8 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * Address
  */
@@ -54,7 +52,7 @@ public class Address {
 	@Column(name = "type")
 	private String type = null;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "person_id", referencedColumnName = "id")
 	private Person person;
 
@@ -74,7 +72,6 @@ public class Address {
 	private Timestamp whenModified = null;
 
 	@Version
-	@Column(name = "VERSION", nullable = false, columnDefinition = "default 1")
 	private Long version = 1L;
 
 	public Address id(Long id) {
@@ -82,13 +79,31 @@ public class Address {
 		return this;
 	}
 
+	
+	
+	/**
+	 * @return the person
+	 */
+	public Person getPerson() {
+		return person;
+	}
+
+
+
+	/**
+	 * @param person the person to set
+	 */
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
+
+
 	/**
 	 * user id
 	 * 
 	 * @return id
 	 **/
-	@ApiModelProperty(value = "user id")
-
 	public Long getId() {
 		return id;
 	}
@@ -134,13 +149,6 @@ public class Address {
 		this.version = version;
 	}
 
-	/**
-	 * User Type
-	 * 
-	 * @return houseNo
-	 **/
-	@ApiModelProperty(value = "User Type")
-
 	public String getHouseNo() {
 		return houseNo;
 	}
@@ -153,13 +161,6 @@ public class Address {
 		this.addressLine1 = addressLine1;
 		return this;
 	}
-
-	/**
-	 * User Type
-	 * 
-	 * @return addressLine1
-	 **/
-	@ApiModelProperty(value = "User Type")
 
 	public String getAddressLine1() {
 		return addressLine1;
@@ -174,13 +175,6 @@ public class Address {
 		return this;
 	}
 
-	/**
-	 * User Type
-	 * 
-	 * @return addressLine2
-	 **/
-	@ApiModelProperty(value = "User Type")
-
 	public String getAddressLine2() {
 		return addressLine2;
 	}
@@ -193,13 +187,6 @@ public class Address {
 		this.city = city;
 		return this;
 	}
-
-	/**
-	 * User Type
-	 * 
-	 * @return city
-	 **/
-	@ApiModelProperty(value = "User Type")
 
 	public String getCity() {
 		return city;
@@ -214,13 +201,6 @@ public class Address {
 		return this;
 	}
 
-	/**
-	 * User Type
-	 * 
-	 * @return state
-	 **/
-	@ApiModelProperty(value = "User Type")
-
 	public String getState() {
 		return state;
 	}
@@ -233,13 +213,6 @@ public class Address {
 		this.country = country;
 		return this;
 	}
-
-	/**
-	 * User Type
-	 * 
-	 * @return country
-	 **/
-	@ApiModelProperty(value = "User Type")
 
 	public String getCountry() {
 		return country;
@@ -254,13 +227,6 @@ public class Address {
 		return this;
 	}
 
-	/**
-	 * User Type
-	 * 
-	 * @return pinCode
-	 **/
-	@ApiModelProperty(value = "User Type")
-
 	public String getPinCode() {
 		return pinCode;
 	}
@@ -273,13 +239,6 @@ public class Address {
 		this.landmark = landmark;
 		return this;
 	}
-
-	/**
-	 * User Type
-	 * 
-	 * @return landmark
-	 **/
-	@ApiModelProperty(value = "User Type")
 
 	public String getLandmark() {
 		return landmark;
@@ -294,13 +253,6 @@ public class Address {
 		return this;
 	}
 
-	/**
-	 * User Type
-	 * 
-	 * @return type
-	 **/
-	@ApiModelProperty(value = "User Type")
-
 	public String getType() {
 		return type;
 	}
@@ -314,13 +266,6 @@ public class Address {
 		return this;
 	}
 
-	/**
-	 * User Type
-	 * 
-	 * @return addressType
-	 **/
-	@ApiModelProperty(value = "User Type")
-
 	public String getAddressType() {
 		return addressType;
 	}
@@ -333,13 +278,6 @@ public class Address {
 		this.groupId = groupId;
 		return this;
 	}
-
-	/**
-	 * Group Id
-	 * 
-	 * @return groupId
-	 **/
-	@ApiModelProperty(value = "Group Id")
 
 	public Integer getGroupId() {
 		return groupId;

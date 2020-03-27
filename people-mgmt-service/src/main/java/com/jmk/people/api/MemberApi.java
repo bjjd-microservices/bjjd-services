@@ -63,7 +63,7 @@ public interface MemberApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.DELETE)
-    ResponseEntity<Void> deleteMemberById(@ApiParam(value = "Member Id",required=true) @PathVariable("id") Integer id);
+    ResponseEntity<Void> deleteMemberById(@ApiParam(value = "Member Id",required=true) @PathVariable("id") Long id);
 
 
     @ApiOperation(value = "Find all the members by status", nickname = "findMemberByMobileNumber", notes = "Find all the members by status", response = Member.class, tags={ "MemberMgmtServiceApi", })
@@ -89,7 +89,7 @@ public interface MemberApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.GET)
-    ResponseEntity<Member> findMemberDetailsById(@ApiParam(value = "Member Id",required=true) @PathVariable("id") Integer id) ;
+    ResponseEntity<Member> findMemberDetailsById(@ApiParam(value = "Member Id",required=true) @PathVariable("id") Long id) ;
 
 
     @ApiOperation(value = "Find all the members by status", nickname = "findMembersByStatus", notes = "Find all the members by status", response = Member.class, responseContainer = "List", tags={ "MemberMgmtServiceApi", })
@@ -114,6 +114,6 @@ public interface MemberApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.PUT)
-    ResponseEntity<Member> updateMemberById(@ApiParam(value = "Member Id",required=true) @PathVariable("id") Integer id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Member body) ;
+    ResponseEntity<Member> updateMemberById(@ApiParam(value = "Member Id",required=true) @PathVariable("id") Long id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Member body) ;
 
 }

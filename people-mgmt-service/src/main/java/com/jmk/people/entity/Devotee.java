@@ -5,12 +5,9 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-import com.jmk.people.model.Person;
 
 /**
  * Devotee
@@ -21,7 +18,6 @@ import com.jmk.people.model.Person;
 @PrimaryKeyJoinColumn(name="ID",referencedColumnName="ID")
 public class Devotee extends Person {
 
-	@Enumerated(EnumType.STRING)
 	@Column(name = "devotee_type")
 	private String devoteeType = null;
 

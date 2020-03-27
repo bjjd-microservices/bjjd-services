@@ -46,6 +46,8 @@ public class Identity {
 
 	@JsonProperty
 	private Timestamp whenModified = null;
+	
+	private Person person;
 
 	@JsonProperty
 	private Long version = null;
@@ -55,6 +57,8 @@ public class Identity {
 		return this;
 	}
 
+	
+	
 	/**
 	 * user id
 	 * 
@@ -73,6 +77,20 @@ public class Identity {
 	public Identity documentType(DocumentType documentType) {
 		this.documentType = documentType;
 		return this;
+	}
+
+	/**
+	 * @return the person
+	 */
+	public Person getPerson() {
+		return person;
+	}
+
+	/**
+	 * @param person the person to set
+	 */
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 
 	/**

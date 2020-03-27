@@ -62,7 +62,7 @@ public interface SevadarApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.DELETE)
-    ResponseEntity<Void> deleteSevadarById(@ApiParam(value = "Sevadar Id",required=true) @PathVariable("id") Integer id) ;
+    ResponseEntity<Void> deleteSevadarById(@ApiParam(value = "Sevadar Id",required=true) @PathVariable("id") Long id) ;
 
 
     @ApiOperation(value = "Find the sevadar by mobile number", nickname = "findSevadarByMobileNumber", notes = "Find the sevadar by mobile number", response = Sevadar.class, tags={ "SevadarMgmtServiceApi", })
@@ -88,7 +88,7 @@ public interface SevadarApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.GET)
-    ResponseEntity<Sevadar> findSevadarDetailsById(@ApiParam(value = "Sevadar Id",required=true) @PathVariable("id") Integer id) ;
+    ResponseEntity<Sevadar> findSevadarDetailsById(@ApiParam(value = "Sevadar Id",required=true) @PathVariable("id") Long id) ;
 
 
     @ApiOperation(value = "Find the sevadars by status", nickname = "findSevadarsByStatus", notes = "Find all the sevadars by status", response = Sevadar.class, responseContainer = "List", tags={ "SevadarMgmtServiceApi", })
@@ -113,6 +113,6 @@ public interface SevadarApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.PUT)
-    ResponseEntity<Sevadar> updateSevadarById(@ApiParam(value = "Sevadar Id",required=true) @PathVariable("id") Integer id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Sevadar body);
+    ResponseEntity<Sevadar> updateSevadarById(@ApiParam(value = "Sevadar Id",required=true) @PathVariable("id") Long id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Sevadar body);
 
 }

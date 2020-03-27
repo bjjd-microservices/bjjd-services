@@ -72,7 +72,6 @@ public class Address {
 	private Timestamp whenModified = null;
 
 	@Version
-	@Column(name = "VERSION", nullable = false, columnDefinition = "default 1")
 	private Long version = 1L;
 
 	@Override

@@ -20,13 +20,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class ProjectMgmtRestApplication {
 
 	public static void main(String[] args) throws Exception {
-   	 SpringApplication.run(ProjectMgmtRestApplication.class,args);
-   }
+		SpringApplication.run(ProjectMgmtRestApplication.class, args);
+	}
 
-	  @Bean
-	    public ModelMapper modelMapper() {
-	    	return new ModelMapper();
-	    }
-	    
-	
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
+	}
+
 }

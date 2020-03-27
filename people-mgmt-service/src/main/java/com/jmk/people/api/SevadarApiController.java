@@ -69,7 +69,7 @@ public class SevadarApiController implements SevadarApi {
         return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Void> deleteSevadarById(@ApiParam(value = "Sevadar Id",required=true) @PathVariable("id") Integer id) {
+    public ResponseEntity<Void> deleteSevadarById(@ApiParam(value = "Sevadar Id",required=true) @PathVariable("id") Long id) {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
@@ -97,7 +97,7 @@ public class SevadarApiController implements SevadarApi {
         return new ResponseEntity<Sevadar>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Sevadar> findSevadarDetailsById(@ApiParam(value = "Sevadar Id",required=true) @PathVariable("id") Integer id) {
+    public ResponseEntity<Sevadar> findSevadarDetailsById(@ApiParam(value = "Sevadar Id",required=true) @PathVariable("id") Long id) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
@@ -134,7 +134,7 @@ public class SevadarApiController implements SevadarApi {
         return new ResponseEntity<List<Sevadar>>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Sevadar> updateSevadarById(@ApiParam(value = "Sevadar Id",required=true) @PathVariable("id") Integer id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Sevadar body) {
+    public ResponseEntity<Sevadar> updateSevadarById(@ApiParam(value = "Sevadar Id",required=true) @PathVariable("id") Long id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Sevadar body) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {

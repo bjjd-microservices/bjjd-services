@@ -62,7 +62,7 @@ public interface ProjectApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.DELETE)
-    ResponseEntity<Void> deleteProjectById(@ApiParam(value = "Project Id",required=true) @PathVariable("id") Integer id);
+    ResponseEntity<Void> deleteProjectById(@ApiParam(value = "Project Id",required=true) @PathVariable("id") Long id);
 
 
     @ApiOperation(value = "Find Project Details based on the project id", nickname = "findProjectDetailsById", notes = "Find Project Details based on the project id", response = Project.class, tags={ "ProjectMgmt", })
@@ -75,7 +75,7 @@ public interface ProjectApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.GET)
-    ResponseEntity<Project> findProjectDetailsById(@ApiParam(value = "Project Id",required=true) @PathVariable("id") Integer id);
+    ResponseEntity<Project> findProjectDetailsById(@ApiParam(value = "Project Id",required=true) @PathVariable("id") Long id);
 
 
     @ApiOperation(value = "Find all the projects by status", nickname = "findProjectsByStatus", notes = "Find all the projects by status", response = Project.class, responseContainer = "List", tags={ "ProjectMgmt", })
@@ -100,6 +100,6 @@ public interface ProjectApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.PUT)
-    ResponseEntity<Project> updateProjectById(@ApiParam(value = "Project Id",required=true) @PathVariable("id") Integer id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Project body);
+    ResponseEntity<Project> updateProjectById(@ApiParam(value = "Project Id",required=true) @PathVariable("id") Long id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Project body);
 
 }

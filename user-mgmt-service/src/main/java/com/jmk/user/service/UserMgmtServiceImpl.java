@@ -61,7 +61,7 @@ public class UserMgmtServiceImpl implements UserMgmtService{
 		List<User> userModels=new ArrayList<>();
 		Iterable<com.jmk.user.entity.User> iterableUsers=userRepository.findAll();
 		List<com.jmk.user.entity.User> userEntities=StreamSupport.stream(iterableUsers.spliterator(),false).collect(Collectors.toList());
-		BeanUtils.copyProperties(userEntities,userModels);
+		userEntities.forEach(sourceUser->userModels.add(modelMapper.map(sourceUser, User.class)));
 		return userModels;
 	}
 
