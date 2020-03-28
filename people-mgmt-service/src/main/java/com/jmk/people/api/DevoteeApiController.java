@@ -37,7 +37,7 @@ public class DevoteeApiController implements DevoteeApi {
     private final HttpServletRequest request;
     
     @Resource(name="devoteeMgmtService")
-    private PersonMgmtService<Devotee> devoteeMgmtService;
+    private PersonMgmtService<Devotee> personMgmtService;
     
     @org.springframework.beans.factory.annotation.Autowired
     public DevoteeApiController(ObjectMapper objectMapper, HttpServletRequest request) {
@@ -50,7 +50,7 @@ public class DevoteeApiController implements DevoteeApi {
 			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
-			devotee = devoteeMgmtService.savePerson(devotee);
+			devotee = personMgmtService.savePerson(devotee);
 			return new ResponseEntity<Devotee>(devotee, HttpStatus.OK);
 		}
 
@@ -60,7 +60,7 @@ public class DevoteeApiController implements DevoteeApi {
     public ResponseEntity<Void> createDevoteesWithArrayInput(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Devotee> devotees,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel) {
     	String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json") || accept.contains("application/xml")) {
-        	devotees=devoteeMgmtService.savePersons(devotees);
+        	devotees=personMgmtService.savePersons(devotees);
         	 if(devotees!=null) {
         		 return new ResponseEntity<>(HttpStatus.OK);
         	 }
@@ -72,7 +72,7 @@ public class DevoteeApiController implements DevoteeApi {
     public ResponseEntity<Void> deleteDevoteeById(@ApiParam(value = "Devotee Id",required=true) @PathVariable("id") Long id) {
     	String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
-        	devoteeMgmtService.deletePersonById(id);
+        	personMgmtService.deletePersonById(id);
         }
         return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -80,7 +80,7 @@ public class DevoteeApiController implements DevoteeApi {
     public ResponseEntity<Devotee> findDevoteeByMobileNumber(@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel,@ApiParam(value = "") @Valid @RequestParam(value = "mobileNo", required = false) String mobileNo) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && (accept.contains("application/json") || accept.contains("*"))) {
-			Devotee devotee = devoteeMgmtService.findPersonByMobileNumber(mobileNo);
+			Devotee devotee = personMgmtService.findPersonByMobileNumber(mobileNo);
 			return new ResponseEntity<Devotee>(devotee, HttpStatus.OK);
 		}
 		return new ResponseEntity<Devotee>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -90,7 +90,7 @@ public class DevoteeApiController implements DevoteeApi {
     	String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
-			Devotee devotee = devoteeMgmtService.findPersonDetailsById(id);
+			Devotee devotee = personMgmtService.findPersonDetailsById(id);
 			return new ResponseEntity<Devotee>(devotee, HttpStatus.OK);
 		}
         return new ResponseEntity<Devotee>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -99,7 +99,7 @@ public class DevoteeApiController implements DevoteeApi {
     public ResponseEntity<List<Devotee>> findDevoteesByStatus(@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel,@ApiParam(value = "The status to restrict the results to.  If not provided, all records are returned", allowableValues = "A, I") @Valid @RequestParam(value = "status", required = false) String status) {
     	String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
-			List<Devotee> devotees = devoteeMgmtService.findAllPersonsByStatus(Status.A);
+			List<Devotee> devotees = personMgmtService.findAllPersonsByStatus(Status.A);
 			return new ResponseEntity<List<Devotee>>(devotees, HttpStatus.OK);
 		}
 
@@ -110,7 +110,7 @@ public class DevoteeApiController implements DevoteeApi {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
-			devotee = devoteeMgmtService.savePerson(devotee);
+			devotee = personMgmtService.savePerson(devotee);
 			return new ResponseEntity<Devotee>(devotee, HttpStatus.OK);
 		}
 
