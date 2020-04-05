@@ -1,16 +1,22 @@
 package com.jmk.account.model;
 
-import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
-import org.threeten.bp.LocalDate;
-import org.springframework.validation.annotation.Validated;
+import java.util.Objects;
+
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.springframework.validation.annotation.Validated;
+import org.threeten.bp.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.jmk.account.enums.DonorType;
+import com.jmk.enums.Status;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Donation
@@ -34,41 +40,8 @@ public class Donation   {
   @JsonProperty("projectName")
   private String projectName = null;
 
-  /**
-   * Password of the user
-   */
-  public enum DonorTypeEnum {
-    MEMBER("MEMBER"),
-    
-    SEVADAR_("SEVADAR,"),
-    
-    DEVOTEE("DEVOTEE");
-
-    private String value;
-
-    DonorTypeEnum(String value) {
-      this.value = value;
-    }
-
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static DonorTypeEnum fromValue(String text) {
-      for (DonorTypeEnum b : DonorTypeEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }
-
   @JsonProperty("donorType")
-  private DonorTypeEnum donorType = null;
+  private DonorType donorType = null;
 
   @JsonProperty("donorId")
   private String donorId = null;
@@ -97,39 +70,8 @@ public class Donation   {
   @JsonProperty("remarks")
   private String remarks = null;
 
-  /**
-   * Password of the user
-   */
-  public enum StatusEnum {
-    A("A"),
-    
-    I("I");
-
-    private String value;
-
-    StatusEnum(String value) {
-      this.value = value;
-    }
-
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static StatusEnum fromValue(String text) {
-      for (StatusEnum b : StatusEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }
-
   @JsonProperty("status")
-  private StatusEnum status = null;
+  private Status status = null;
 
   @JsonProperty("groupId")
   private Integer groupId = null;
@@ -239,7 +181,7 @@ public class Donation   {
     this.projectName = projectName;
   }
 
-  public Donation donorType(DonorTypeEnum donorType) {
+  public Donation donorType(DonorType donorType) {
     this.donorType = donorType;
     return this;
   }
@@ -251,11 +193,11 @@ public class Donation   {
   @ApiModelProperty(value = "Password of the user")
 
 
-  public DonorTypeEnum getDonorType() {
+  public DonorType getDonorType() {
     return donorType;
   }
 
-  public void setDonorType(DonorTypeEnum donorType) {
+  public void setDonorType(DonorType donorType) {
     this.donorType = donorType;
   }
 
@@ -439,7 +381,7 @@ public class Donation   {
     this.remarks = remarks;
   }
 
-  public Donation status(StatusEnum status) {
+  public Donation status(Status status) {
     this.status = status;
     return this;
   }
@@ -451,11 +393,11 @@ public class Donation   {
   @ApiModelProperty(value = "Password of the user")
 
 
-  public StatusEnum getStatus() {
+  public Status getStatus() {
     return status;
   }
 
-  public void setStatus(StatusEnum status) {
+  public void setStatus(Status status) {
     this.status = status;
   }
 
