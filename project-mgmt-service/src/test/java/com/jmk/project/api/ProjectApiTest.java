@@ -36,10 +36,10 @@ public class ProjectApiTest {
 
 
 	@Test
-	public void testFindUserDetailsByUsername() {
+	public void testFindProjectByStatus() {
 		try {
 			ResultActions resultActions=mockMvc.perform( MockMvcRequestBuilders
-				      .get("http://localhost:5379/findByStatus").param("status","A")
+				      .get("http://localhost:5379/project/findByStatus").param("status","A")
 				      .accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON_VALUE))
 				          .andExpect(MockMvcResultMatchers.status().isOk());
 			projects=(List<Project>)objectMapper.readValue(resultActions.andReturn().getResponse().getContentAsByteArray(), List.class);

@@ -52,7 +52,7 @@ public class UserApiTest {
 		}
 		try {
 			MvcResult mvcResult=mockMvc.perform(
-					MockMvcRequestBuilders.post("http://localhost:3379/").accept(MediaType.APPLICATION_JSON_VALUE)
+					MockMvcRequestBuilders.post("http://localhost:3379/user/").accept(MediaType.APPLICATION_JSON_VALUE)
 							.contentType(MediaType.APPLICATION_JSON_VALUE).content(jsonRequest))
 					.andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
 			user=objectMapper.readValue(mvcResult.getResponse().getContentAsByteArray(), User.class);
@@ -66,7 +66,7 @@ public class UserApiTest {
 	public void testFindUserDetailsByUsername() {
 		try {
 			ResultActions resultActions=mockMvc.perform( MockMvcRequestBuilders
-				      .get("http://localhost:3379/findByUsername").param("username",user.getUsername())
+				      .get("http://localhost:3379/user/findByUsername").param("username",user.getUsername())
 				      .accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON_VALUE))
 				          .andExpect(MockMvcResultMatchers.status().isOk());
 			user=objectMapper.readValue(resultActions.andReturn().getResponse().getContentAsByteArray(),User.class);

@@ -1,0 +1,1 @@
+java -jar swagger-codegen-cli-2.3.1.jar generate -i swagger-account-mgmt-service.yaml --api-package com.jmk.account.api --model-package com.jmk.account.model --group-id com.jmk --artifact-id account-mgmt-service --artifact-version 0.0.1-SNAPSHOT -l spring -o account-mgmt-service

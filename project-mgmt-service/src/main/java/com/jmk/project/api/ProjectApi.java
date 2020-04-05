@@ -27,6 +27,7 @@ import io.swagger.annotations.ApiResponses;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-06T22:35:14.568+05:30")
 
 @Api(value = "project", description = "the project API")
+@RequestMapping(value = "/project")
 public interface ProjectApi {
 
     @ApiOperation(value = "Project Creation Service", nickname = "createProject", notes = "Project Creation Service", response = Project.class, tags={ "ProjectMgmt", })

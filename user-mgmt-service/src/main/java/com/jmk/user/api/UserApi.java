@@ -30,6 +30,7 @@ import io.swagger.annotations.ApiResponses;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-11-27T08:54:51.282+05:30")
 
 @Api(value = "user", description = "the user API")
+@RequestMapping(value="/user")
 public interface UserApi {
 
 	@ApiOperation(value = "User Creation Service", nickname = "createUser", notes = "User Creation Service", response = User.class, tags = {

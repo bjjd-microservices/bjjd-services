@@ -12,8 +12,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-@EnableSwagger2
 @EnableEurekaClient
+@EnableSwagger2
 @EnableJpaRepositories
 @EnableCircuitBreaker
 @ComponentScan(basePackages = { "com.jmk" })

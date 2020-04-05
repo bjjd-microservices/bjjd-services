@@ -19,7 +19,7 @@ import com.jmk.model.user.User;
 @FeignClient(name="user-mgmt-service") //Service id of User-Mgmt-Service application
 public interface UserMgmtServiceClient{
 	
-	@GetMapping(value="/user/findByUsername",produces = "application/json",consumes = "application/json")
+	@GetMapping(value="/api/user-mgmt-service/user/findByUsername",produces = "application/json",consumes = "application/json")
 	ResponseEntity<User> findUserDetailsByUserName(@RequestParam(value = "username", required = false) String username);
 
 }
