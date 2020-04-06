@@ -1,6 +1,5 @@
 package com.jmk.project.api;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jmk.enums.Status;
-import com.jmk.model.user.User;
 import com.jmk.project.model.Project;
 import com.jmk.project.service.ProjectMgmtService;
 
@@ -32,8 +30,6 @@ public class ProjectApiController implements ProjectApi {
 
 	private static final Logger log = LoggerFactory.getLogger(ProjectApiController.class);
 
-	private final ObjectMapper objectMapper;
-
 	private final HttpServletRequest request;
 
 	@Autowired
@@ -41,7 +37,6 @@ public class ProjectApiController implements ProjectApi {
 
 	@org.springframework.beans.factory.annotation.Autowired
 	public ProjectApiController(ObjectMapper objectMapper, HttpServletRequest request) {
-		this.objectMapper = objectMapper;
 		this.request = request;
 	}
 
