@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jmk.account.enums.DonorType;
+import com.jmk.account.feign.client.PeopleMgmtServiceClient;
+import com.jmk.account.feign.client.UserMgmtServiceClient;
 import com.jmk.account.model.Donation;
 import com.jmk.account.service.DonationService;
+import com.jmk.people.model.Devotee;
 
 import io.swagger.annotations.ApiParam;
 
@@ -27,9 +31,13 @@ public class DonationApiController implements DonationApi {
 	private static final Logger log = LoggerFactory.getLogger(DonationApiController.class);
 
 	private final HttpServletRequest request;
-
+	
 	@Autowired
 	private DonationService donationService;
+	
+	@Autowired
+	private PeopleMgmtServiceClient peopleMgmtServiceClient;
+	
 
 	@org.springframework.beans.factory.annotation.Autowired
 	public DonationApiController(ObjectMapper objectMapper, HttpServletRequest request) {
@@ -42,6 +50,12 @@ public class DonationApiController implements DonationApi {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
+			if(DonorType.DEVOTEE.equals(donation.getDonorType()) || donation.getDonorId()==null) {
+				Devotee devotee=new Devotee();
+				devotee.setFirstName(donation.getDonorName());
+				devotee.setDevoteeType("Regular");
+				peopleMgmtServiceClient.createDevotee(devotee);
+			}
 			donation = donationService.saveDonation(donation);
 			return new ResponseEntity<Donation>(donation, HttpStatus.OK);
 		}
