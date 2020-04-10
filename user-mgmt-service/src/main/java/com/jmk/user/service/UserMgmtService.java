@@ -2,7 +2,7 @@ package com.jmk.user.service;
 
 import java.util.List;
 
-import com.jmk.model.user.User;
+import com.jmk.user.model.User;
 
 public interface UserMgmtService {
 	

@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.jmk.model.user.User;
+import com.jmk.user.model.User;
 
 /**
  * To send HTTP Request to a destination user-mgmt-service Microservice we will need to

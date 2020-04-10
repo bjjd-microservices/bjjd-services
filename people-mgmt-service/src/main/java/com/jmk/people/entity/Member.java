@@ -1,5 +1,6 @@
 package com.jmk.people.entity;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -9,8 +10,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-
-import org.threeten.bp.LocalDate;
 
 import com.jmk.people.enums.MemberType;
 

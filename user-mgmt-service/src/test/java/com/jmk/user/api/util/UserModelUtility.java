@@ -8,13 +8,13 @@ import java.util.Set;
 
 import com.jmk.enums.MessageSent;
 import com.jmk.enums.Status;
-import com.jmk.model.user.Address;
-import com.jmk.model.user.Identity;
-import com.jmk.model.user.Module;
-import com.jmk.model.user.Profile;
-import com.jmk.model.user.Role;
-import com.jmk.model.user.User;
 import com.jmk.user.enums.Group;
+import com.jmk.user.model.Address;
+import com.jmk.user.model.Identity;
+import com.jmk.user.model.Module;
+import com.jmk.user.model.Profile;
+import com.jmk.user.model.Role;
+import com.jmk.user.model.User;
 
 public class UserModelUtility {
 	

@@ -1,6 +1,7 @@
 package com.jmk.user.entity;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -15,8 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
-
-import org.threeten.bp.LocalDate;
 
 import com.jmk.enums.Gender;
 import com.jmk.enums.MaritalStatus;

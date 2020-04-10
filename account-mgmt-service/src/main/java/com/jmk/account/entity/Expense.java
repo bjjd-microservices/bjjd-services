@@ -2,6 +2,7 @@ package com.jmk.account.entity;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -13,8 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
-
-import org.threeten.bp.LocalDate;
 
 import com.jmk.account.enums.PaymentMode;
 import com.jmk.enums.Status;

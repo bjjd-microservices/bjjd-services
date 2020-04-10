@@ -73,14 +73,6 @@
 		<version>8.0.13</version><!--$NO-MVN-MAN-VER$-->
 	</dependency>
 
-	<!-- spring-boot-starter-test “Starter”, which imports both Spring Boot test modules 
-	    as well as JUnit, AssertJ, Hamcrest, and a number of other useful libraries. -->
-	<dependency>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-test</artifactId>
-		<scope>test</scope>
-	</dependency>
-
 	<dependency>
 		<groupId>org.springframework.cloud</groupId>
 		<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
@@ -115,6 +107,14 @@
 		<groupId>com.jmk</groupId>
 		<artifactId>common-service</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
+	</dependency>
+	
+	<!-- spring-boot-starter-test “Starter”, which imports both Spring Boot test modules 
+	    as well as JUnit, AssertJ, Hamcrest, and a number of other useful libraries. -->
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-test</artifactId>
+		<scope>test</scope>
 	</dependency>
         
     </dependencies>

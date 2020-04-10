@@ -18,8 +18,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jmk.model.user.User;
 import com.jmk.user.api.util.UserModelUtility;
+import com.jmk.user.model.User;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -29,7 +29,8 @@ public class UserApiTest {
 	@Autowired
 	private MockMvc mockMvc;
 
-	private ObjectMapper objectMapper = new ObjectMapper();
+	@Autowired
+	private ObjectMapper objectMapper;
 
 	@Value("server.port")
 	private String serverPort;

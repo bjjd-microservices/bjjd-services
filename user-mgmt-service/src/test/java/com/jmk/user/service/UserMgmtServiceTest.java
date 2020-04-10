@@ -8,8 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.jmk.model.user.User;
 import com.jmk.user.api.util.UserModelUtility;
+import com.jmk.user.model.User;
 
 import junit.framework.Assert;
 

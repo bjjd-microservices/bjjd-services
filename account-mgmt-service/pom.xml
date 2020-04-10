@@ -74,6 +74,21 @@
 			<artifactId>modelmapper</artifactId>
 			<version>2.3.5</version>
 		</dependency>
+		
+		<!-- Spring Cloud Open Feign Client -->
+		<dependency>
+    		<groupId>org.springframework.cloud</groupId>
+    		<artifactId>spring-cloud-starter-openfeign</artifactId>
+    		<version>2.1.4.RELEASE</version>
+		</dependency>
+ 	
+ 		<!-- spring-boot-starter-test “Starter”, which imports both Spring Boot test modules 
+	    as well as JUnit, AssertJ, Hamcrest, and a number of other useful libraries. -->
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-test</artifactId>
+		<scope>test</scope>
+	</dependency>
  
     </dependencies>
     <build>

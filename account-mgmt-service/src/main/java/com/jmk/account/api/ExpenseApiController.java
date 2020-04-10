@@ -1,5 +1,7 @@
 package com.jmk.account.api;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -46,4 +48,13 @@ public class ExpenseApiController implements ExpenseApi {
 
 	}
 
+    public ResponseEntity<Void> saveExpenses(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Expense> expenses,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel) {
+    	String accept = request.getHeader("Accept");
+		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
+				|| accept.contains("*")) {
+			expenses = expenseService.saveExpenses(expenses);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
+        return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

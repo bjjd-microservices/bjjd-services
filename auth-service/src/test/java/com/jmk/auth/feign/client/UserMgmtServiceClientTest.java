@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.jmk.model.user.User;
+import com.jmk.user.model.User;
 
 
 @RunWith(SpringRunner.class)

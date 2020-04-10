@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.jmk.model.user.User;
+import com.jmk.user.model.User;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

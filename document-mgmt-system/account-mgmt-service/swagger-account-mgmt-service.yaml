@@ -14,7 +14,7 @@
       "https"
    ],
    "paths":{
-      "/donate":{
+      "/donation":{
          "post":{
             "tags":[
                "AccountMgmt"
@@ -64,6 +64,52 @@
             }
          }
       },
+    "/donation/saveWithArray":{
+    "post":{
+      "tags":[
+        "AccountMgmt"
+      ],
+      "summary":"Saving Donations with input arrays Service",
+            "description":"Saving Donations",
+            "operationId":"saveDonations",
+       "consumes":[
+               "application/json"
+            ],
+            "produces":[
+               "application/json"
+            ],
+      "parameters":[
+               {
+                  "name":"xChannel",
+                  "in":"header",
+                  "required":false,
+                  "type":"string",
+                  "minLength":3,
+                  "maxLength":36
+               },
+               {
+                  "in":"body",
+                  "name":"body",
+                  "required":true,
+                  "schema":{
+           "type" :"array",
+           "items":{
+            "$ref":"#/definitions/Donation"
+           }
+                  }
+               }
+            ],
+      "responses":{
+               "200":{
+                  "description":"Successfully found"
+                 
+               },
+               "500":{
+                  "description":"Internal Server Error"
+               }
+            }
+    }
+    },
     "/expense":{
          "post":{
             "tags":[
@@ -113,7 +159,53 @@
                 }
             }
          }
-      }
+      },
+    "/expense/saveWithArray":{
+    "post":{
+      "tags":[
+        "AccountMgmt"
+      ],
+      "summary":"Saving Expenses with input arrays Service",
+            "description":"Saving Expenses",
+            "operationId":"saveExpenses",
+       "consumes":[
+               "application/json"
+            ],
+            "produces":[
+               "application/json"
+            ],
+      "parameters":[
+               {
+                  "name":"xChannel",
+                  "in":"header",
+                  "required":false,
+                  "type":"string",
+                  "minLength":3,
+                  "maxLength":36
+               },
+               {
+                  "in":"body",
+                  "name":"body",
+                  "required":true,
+                  "schema":{
+           "type" :"array",
+           "items":{
+            "$ref":"#/definitions/Expense"
+           }
+                  }
+               }
+            ],
+      "responses":{
+               "200":{
+                  "description":"Successfully found"
+                 
+               },
+               "500":{
+                  "description":"Internal Server Error"
+               }
+            }
+    }
+    }
    },
    "definitions":{
       "Donation":{

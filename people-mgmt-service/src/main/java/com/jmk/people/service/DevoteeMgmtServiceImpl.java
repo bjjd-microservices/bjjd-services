@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import com.jmk.enums.Status;
 import com.jmk.people.model.Devotee;
-import com.jmk.people.model.Devotee;
 import com.jmk.people.repository.PersonRepository;
 
 @Service("devoteeMgmtService")

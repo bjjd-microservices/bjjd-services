@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.jmk.auth.feign.client.UserMgmtServiceClient;
-import com.jmk.model.user.User;
+import com.jmk.user.model.User;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

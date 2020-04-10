@@ -2,9 +2,11 @@ package com.jmk.account.entity;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -13,8 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import org.threeten.bp.LocalDate;
-
 import com.jmk.account.enums.DonorType;
 import com.jmk.account.enums.PaymentMode;
 import com.jmk.enums.Status;
@@ -22,6 +22,7 @@ import com.jmk.enums.Status;
 /**
  * Donation
  */
+@Entity
 @Table(name = "DONATION")
 public class Donation {
 	@Id

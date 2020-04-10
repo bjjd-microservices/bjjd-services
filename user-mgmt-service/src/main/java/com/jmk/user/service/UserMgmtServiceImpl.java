@@ -13,7 +13,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jmk.model.user.User;
+import com.jmk.user.model.User;
 import com.jmk.user.repository.UserRepository;
 
 @Service("userMgmtService")

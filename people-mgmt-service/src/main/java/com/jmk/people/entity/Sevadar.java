@@ -1,5 +1,6 @@
 package com.jmk.people.entity;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -16,8 +17,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.Valid;
-
-import org.threeten.bp.LocalDate;
 
 import com.jmk.people.enums.SevaDays;
 import com.jmk.people.enums.SevadarCategory;

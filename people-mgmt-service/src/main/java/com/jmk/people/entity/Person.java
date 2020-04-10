@@ -1,6 +1,7 @@
 package com.jmk.people.entity;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -20,8 +21,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
-
-import org.threeten.bp.LocalDate;
 
 import com.jmk.enums.Gender;
 import com.jmk.enums.MaritalStatus;

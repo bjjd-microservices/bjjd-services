@@ -37,4 +37,14 @@ public interface ExpenseApi {
         method = RequestMethod.POST)
     ResponseEntity<Expense> saveExpense(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Expense body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
 
+    @ApiOperation(value = "Saving Expenses with input arrays Service", nickname = "saveExpenses", notes = "Saving Expenses", tags={ "AccountMgmt", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Successfully found"),
+        @ApiResponse(code = 500, message = "Internal Server Error") })
+    @RequestMapping(value = "/expense/saveWithArray",
+        produces = { "application/json" }, 
+        consumes = { "application/json" },
+        method = RequestMethod.POST)
+    ResponseEntity<Void> saveExpenses(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Expense> body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
+
 }

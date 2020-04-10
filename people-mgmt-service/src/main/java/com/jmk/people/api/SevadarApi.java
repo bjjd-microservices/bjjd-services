@@ -27,7 +27,7 @@ import io.swagger.annotations.ApiResponses;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-02-27T07:02:52.969Z")
 
 @Api(value = "sevadar", description = "the sevadar API")
-@RequestMapping(value = "/api/")
+@RequestMapping(value = "/sevadar")
 public interface SevadarApi {
 
     @ApiOperation(value = "Sevadar Creation Service", nickname = "createSevadar", notes = "Sevadar Creation Service", response = Sevadar.class, tags={ "SevadarMgmtServiceApi", })
@@ -35,7 +35,7 @@ public interface SevadarApi {
         @ApiResponse(code = 200, message = "OK", response = Sevadar.class),
         @ApiResponse(code = 400, message = "Bad Request"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/sevadar",
+    @RequestMapping(value = "/",
         produces = { "application/json", "application/xml" }, 
         consumes = { "application/json", "application/xml" },
         method = RequestMethod.POST)
@@ -45,7 +45,7 @@ public interface SevadarApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Successfully found"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/sevadar/createWithArray",
+    @RequestMapping(value = "/createWithArray",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)
@@ -58,7 +58,7 @@ public interface SevadarApi {
         @ApiResponse(code = 400, message = "Invalid User id supplied"),
         @ApiResponse(code = 404, message = "Sevadar Id not found"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/sevadar/{id}",
+    @RequestMapping(value = "/{id}",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.DELETE)
@@ -71,7 +71,7 @@ public interface SevadarApi {
         @ApiResponse(code = 400, message = "Invalid mobile number supplied"),
         @ApiResponse(code = 404, message = "Sevadar not found or inactive"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/sevadar/findByMobileNumber",
+    @RequestMapping(value = "/findByMobileNumber",
         produces = { "application/json", "application/xml" }, 
         consumes = { "application/json", "application/xml" },
         method = RequestMethod.GET)
@@ -84,7 +84,7 @@ public interface SevadarApi {
         @ApiResponse(code = 400, message = "Invalid Sevadar name and password supplied"),
         @ApiResponse(code = 404, message = "Sevadar not found or inactive"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/sevadar/{id}",
+    @RequestMapping(value = "/{id}",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.GET)
@@ -96,7 +96,7 @@ public interface SevadarApi {
         @ApiResponse(code = 200, message = "OK", response = Sevadar.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid status value"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/sevadar/findByStatus",
+    @RequestMapping(value = "/findByStatus",
         produces = { "application/json", "application/xml" }, 
         consumes = { "application/json", "application/xml" },
         method = RequestMethod.GET)
@@ -109,7 +109,7 @@ public interface SevadarApi {
         @ApiResponse(code = 400, message = "Invalid Sevadar name supplied"),
         @ApiResponse(code = 404, message = "Sevadar not found or inactive"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/sevadar/{id}",
+    @RequestMapping(value = "/{id}",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.PUT)

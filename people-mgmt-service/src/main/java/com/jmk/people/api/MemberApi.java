@@ -27,7 +27,7 @@ import io.swagger.annotations.ApiResponses;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-02-27T07:02:52.969Z")
 
 @Api(value = "member", description = "the member API")
-@RequestMapping(value = "/api/")
+@RequestMapping(value = "/member")
 public interface MemberApi {
 
     @ApiOperation(value = "Member Creation Service", nickname = "createMember", notes = "Member Creation Service", response = Member.class, tags={ "MemberMgmtServiceApi", })
@@ -35,7 +35,7 @@ public interface MemberApi {
         @ApiResponse(code = 200, message = "OK", response = Member.class),
         @ApiResponse(code = 400, message = "Bad Request"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/member",
+    @RequestMapping(value = "/",
         produces = { "application/json", "application/xml" }, 
         consumes = { "application/json", "application/xml" },
         method = RequestMethod.POST)
@@ -46,7 +46,7 @@ public interface MemberApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Successfully found"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/member/createWithArray",
+    @RequestMapping(value = "/createWithArray",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)
@@ -59,7 +59,7 @@ public interface MemberApi {
         @ApiResponse(code = 400, message = "Invalid User id supplied"),
         @ApiResponse(code = 404, message = "Member Id not found"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/member/{id}",
+    @RequestMapping(value = "/{id}",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.DELETE)
@@ -72,7 +72,7 @@ public interface MemberApi {
         @ApiResponse(code = 400, message = "Invalid Member number supplied"),
         @ApiResponse(code = 404, message = "Member not found or inactive"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/member/findByMobileNumber",
+    @RequestMapping(value = "/findByMobileNumber",
         produces = { "application/json", "application/xml" }, 
         consumes = { "application/json", "application/xml" },
         method = RequestMethod.GET)
@@ -85,7 +85,7 @@ public interface MemberApi {
         @ApiResponse(code = 400, message = "Invalid Member name and password supplied"),
         @ApiResponse(code = 404, message = "Member not found or inactive"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/member/{id}",
+    @RequestMapping(value = "/{id}",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.GET)
@@ -97,7 +97,7 @@ public interface MemberApi {
         @ApiResponse(code = 200, message = "OK", response = Member.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid status value"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/member/findByStatus",
+    @RequestMapping(value = "/findByStatus",
         produces = { "application/json", "application/xml" }, 
         consumes = { "application/json", "application/xml" },
         method = RequestMethod.GET)
@@ -110,7 +110,7 @@ public interface MemberApi {
         @ApiResponse(code = 400, message = "Invalid Member name supplied"),
         @ApiResponse(code = 404, message = "Member not found or inactive"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/member/{id}",
+    @RequestMapping(value = "/{id}",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.PUT)
