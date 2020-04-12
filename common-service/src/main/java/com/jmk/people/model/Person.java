@@ -12,6 +12,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.validation.annotation.Validated;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jmk.enums.Gender;
 import com.jmk.enums.MaritalStatus;
@@ -62,11 +63,11 @@ public class Person {
 	private String altMobileNo = null;
 
 	@JsonProperty("addresses")
-	@Valid
+	@JsonManagedReference
 	private Set<Address> addresses = new HashSet<>();
 
 	@JsonProperty("identities")
-	@Valid
+	@JsonManagedReference
 	private Set<Identity> identities = new HashSet<>();
 
 	@JsonProperty("status")

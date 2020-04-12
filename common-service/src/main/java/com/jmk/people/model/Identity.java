@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import org.springframework.validation.annotation.Validated;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jmk.enums.DocumentType;
 
@@ -47,6 +48,8 @@ public class Identity {
 	@JsonProperty
 	private Timestamp whenModified = null;
 	
+	@JsonProperty
+	@JsonBackReference
 	private Person person;
 
 	@JsonProperty

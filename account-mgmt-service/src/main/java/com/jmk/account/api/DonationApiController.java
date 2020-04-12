@@ -16,12 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jmk.account.enums.DonorType;
-import com.jmk.account.feign.client.PeopleMgmtServiceClient;
-import com.jmk.account.feign.client.UserMgmtServiceClient;
 import com.jmk.account.model.Donation;
 import com.jmk.account.service.DonationService;
 import com.jmk.account.util.DonorCreator;
-import com.jmk.people.model.Devotee;
+import com.jmk.account.util.RequestValidator;
 
 import io.swagger.annotations.ApiParam;
 
@@ -35,6 +33,9 @@ public class DonationApiController implements DonationApi {
 	
 	@Autowired
 	private DonationService donationService;
+	
+	@Autowired
+	private RequestValidator validator;
 	
 	@Autowired
 	private DonorCreator donorCreator;
@@ -51,6 +52,7 @@ public class DonationApiController implements DonationApi {
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
 			if(DonorType.DEVOTEE.equals(donation.getDonorType()) || donation.getDonorId()==null) {
+				validator.validate(donation);
 				donorCreator.createDevotee(donation);
 			}
 			donation = donationService.saveDonation(donation);

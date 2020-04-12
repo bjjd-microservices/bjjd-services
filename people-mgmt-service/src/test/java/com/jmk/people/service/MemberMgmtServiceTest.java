@@ -34,5 +34,11 @@ public class MemberMgmtServiceTest {
 		member=personMgmtService.findPersonByMobileNumber("9999779379");
 		Assert.assertNotNull(member);
 	}
+	
+	@Test
+	public void testFindPersonByID() {
+		member=personMgmtService.findPersonDetailsById(1L);
+		Assert.assertNotNull(member);
+	}
 
 }

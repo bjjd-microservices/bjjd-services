@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import org.springframework.validation.annotation.Validated;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -61,6 +62,8 @@ public class Address {
 	@JsonProperty
 	private Timestamp whenModified = null;
 	
+	@JsonProperty
+	@JsonBackReference
 	private Person person;
 
 	@JsonProperty
