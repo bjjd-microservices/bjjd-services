@@ -1,6 +1,7 @@
 package com.jmk.project.model;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import javax.validation.constraints.NotNull;
@@ -32,10 +33,10 @@ public class Project {
 	private String manager = null;
 
 	@JsonProperty("start_date")
-	private Timestamp startDate = null;
+	private LocalDate startDate = null;
 
 	@JsonProperty("completion_date")
-	private Timestamp completionDate = null;
+	private LocalDate completionDate = null;
 
 	@JsonProperty("photoId")
 	private String photoId = null;
@@ -144,19 +145,19 @@ public class Project {
 		this.manager = manager;
 	}
 
-	public Timestamp getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Timestamp startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 
-	public Timestamp getCompletionDate() {
+	public LocalDate getCompletionDate() {
 		return completionDate;
 	}
 
-	public void setCompletionDate(Timestamp completionDate) {
+	public void setCompletionDate(LocalDate completionDate) {
 		this.completionDate = completionDate;
 	}
 

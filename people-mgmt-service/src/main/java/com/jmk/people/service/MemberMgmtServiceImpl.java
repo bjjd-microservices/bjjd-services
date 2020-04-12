@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jmk.enums.Status;
+import com.jmk.people.enums.PersonType;
 import com.jmk.people.model.Member;
 import com.jmk.people.repository.PersonRepository;
 
@@ -67,7 +68,9 @@ public class MemberMgmtServiceImpl implements PersonMgmtService<Member> {
 
 	@Override
 	public Member findPersonByMobileNumber(String mobileNumber) {
-		return null;
+		com.jmk.people.entity.Member memberEntity=repository.findPersonByTypeAndMobileNo(PersonType.MEMBER.getType(),mobileNumber);
+		Member memberModel=mapEntityToModel(mapper,memberEntity,Member.class);
+		return memberModel;
 	}
 
 }

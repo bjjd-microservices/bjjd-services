@@ -141,7 +141,6 @@ public class Person {
 	 **/
 	@ApiModelProperty(value = "User name of the member")
 
-	@Size(min = 1, max = 50)
 	public Long getUserId() {
 		return userId;
 	}

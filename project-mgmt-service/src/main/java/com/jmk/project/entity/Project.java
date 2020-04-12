@@ -1,6 +1,7 @@
 package com.jmk.project.entity;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,10 +35,10 @@ public class Project {
 	private String manager = null;
 
 	@Column(name = "start_date")
-	private Timestamp startDate = null;
+	private LocalDate startDate = null;
 
 	@Column(name = "completion_date")
-	private Timestamp completionDate = null;
+	private LocalDate completionDate = null;
 
 	@Column(name = "photo_id")
 	private String photoId = null;
@@ -93,19 +94,19 @@ public class Project {
 		this.manager = manager;
 	}
 
-	public Timestamp getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(Timestamp startDate) {
+	public void setStartDate(LocalDate startDate) {
 		this.startDate = startDate;
 	}
 
-	public Timestamp getCompletionDate() {
+	public LocalDate getCompletionDate() {
 		return completionDate;
 	}
 
-	public void setCompletionDate(Timestamp completionDate) {
+	public void setCompletionDate(LocalDate completionDate) {
 		this.completionDate = completionDate;
 	}
 

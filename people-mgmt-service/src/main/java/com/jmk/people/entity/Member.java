@@ -18,7 +18,7 @@ import com.jmk.people.enums.MemberType;
  */
 @Entity
 @Table(name = "MEMBER")
-@DiscriminatorValue("MEMBER")
+@DiscriminatorValue("Member")
 @PrimaryKeyJoinColumn(name="ID",referencedColumnName="ID")
 public class Member extends Person  {
 

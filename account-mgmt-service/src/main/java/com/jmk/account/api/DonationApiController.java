@@ -20,6 +20,7 @@ import com.jmk.account.feign.client.PeopleMgmtServiceClient;
 import com.jmk.account.feign.client.UserMgmtServiceClient;
 import com.jmk.account.model.Donation;
 import com.jmk.account.service.DonationService;
+import com.jmk.account.util.DonorCreator;
 import com.jmk.people.model.Devotee;
 
 import io.swagger.annotations.ApiParam;
@@ -36,9 +37,8 @@ public class DonationApiController implements DonationApi {
 	private DonationService donationService;
 	
 	@Autowired
-	private PeopleMgmtServiceClient peopleMgmtServiceClient;
+	private DonorCreator donorCreator;
 	
-
 	@org.springframework.beans.factory.annotation.Autowired
 	public DonationApiController(ObjectMapper objectMapper, HttpServletRequest request) {
 		this.request = request;
@@ -51,10 +51,7 @@ public class DonationApiController implements DonationApi {
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
 			if(DonorType.DEVOTEE.equals(donation.getDonorType()) || donation.getDonorId()==null) {
-				Devotee devotee=new Devotee();
-				devotee.setFirstName(donation.getDonorName());
-				devotee.setDevoteeType("Regular");
-				peopleMgmtServiceClient.createDevotee(devotee);
+				donorCreator.createDevotee(donation);
 			}
 			donation = donationService.saveDonation(donation);
 			return new ResponseEntity<Donation>(donation, HttpStatus.OK);

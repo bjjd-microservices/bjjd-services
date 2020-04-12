@@ -32,7 +32,7 @@ import com.jmk.enums.Status;
 @Entity
 @Table(name="PERSON")
 @Inheritance(strategy=InheritanceType.JOINED)
-@DiscriminatorColumn(name="PERSONTYPE",discriminatorType=DiscriminatorType.STRING)//Optional to define the type of Person
+@DiscriminatorColumn(name="person_type",discriminatorType=DiscriminatorType.STRING)//Optional to define the type of Person
 public class Person {
 
 	@Id

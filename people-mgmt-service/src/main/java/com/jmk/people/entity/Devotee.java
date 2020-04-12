@@ -14,7 +14,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "DEVOTEE")
-@DiscriminatorValue("DEVOTEE")
+@DiscriminatorValue("Devotee")
 @PrimaryKeyJoinColumn(name="ID",referencedColumnName="ID")
 public class Devotee extends Person {
 

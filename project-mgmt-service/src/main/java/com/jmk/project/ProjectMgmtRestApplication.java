@@ -27,6 +27,7 @@ public class ProjectMgmtRestApplication {
 		SpringApplication.run(ProjectMgmtRestApplication.class, args);
 	}
 
+	//To handle the time api
 	@Bean
 	public ObjectMapper objectMapper() {
 		Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();

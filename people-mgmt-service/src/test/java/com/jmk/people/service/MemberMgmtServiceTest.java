@@ -23,9 +23,15 @@ public class MemberMgmtServiceTest {
 	private Member member;
 	
 	@Test
-	public void savePerson() {
+	public void testSavePerson() {
 		member=PersonUtility.createMemberModel();
 		member=personMgmtService.savePerson(member);
+		Assert.assertNotNull(member);
+	}
+	
+	@Test
+	public void testFindPersonByMobileNumber() {
+		member=personMgmtService.findPersonByMobileNumber("9999779379");
 		Assert.assertNotNull(member);
 	}
 

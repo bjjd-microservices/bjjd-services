@@ -2,10 +2,12 @@ package com.jmk.people.test.util;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.LocalDate;
 
 import com.jmk.enums.DocumentType;
 import com.jmk.enums.Group;
 import com.jmk.enums.Status;
+import com.jmk.people.enums.MemberType;
 import com.jmk.people.model.Address;
 import com.jmk.people.model.Identity;
 import com.jmk.people.model.Member;
@@ -17,12 +19,15 @@ public class PersonUtility {
 		member.username("rajivbansal2981");
 		member.setStatus(Status.A);
 		member.setFirstName("Rajiv Kumar");
+		member.setMobileNo("9999779379");
 		member.setLastName("Bansal");
 	//	member.setMemberType(MemberType.LIFETIME);
 		member.setCreatedOn(Timestamp.from(Instant.now()));
 		member.setGroupId(Group.BJJD.getGroupId());
 		member.setWhenModified(Timestamp.from(Instant.now()));
-
+		member.setValidity(LocalDate.now());
+		member.setMemberType(MemberType.LIFETIME);
+		
 		Identity identity=new Identity();
 		identity.setDocumentNumber("AOKPB9699G");
 		identity.setDocumentName("RajivKumarBansal");

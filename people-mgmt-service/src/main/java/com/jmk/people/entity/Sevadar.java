@@ -28,7 +28,7 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @Entity
 @Table(name = "SEVADAR")
-@DiscriminatorValue("SEVADAR")
+@DiscriminatorValue("Sevadar")
 @PrimaryKeyJoinColumn(name="ID",referencedColumnName="ID")
 public class Sevadar extends Person  {
 

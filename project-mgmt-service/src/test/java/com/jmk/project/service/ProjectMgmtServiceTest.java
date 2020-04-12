@@ -2,7 +2,9 @@ package com.jmk.project.service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.LocalDate;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +15,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.jmk.enums.Status;
 import com.jmk.project.model.Project;
 
-import junit.framework.Assert;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -31,7 +32,7 @@ public class ProjectMgmtServiceTest {
 		project.setManager("Rajiv");
 		project.setStatus(Status.A);
 		project.setDescription("ProjectDescription");
-		project.setStartDate(Timestamp.from(Instant.now()));
+		project.setStartDate(LocalDate.now());
 		project.setCreatedOn(Timestamp.from(Instant.now()));
 		project.setWhenModified(Timestamp.from(Instant.now()));
 	}
