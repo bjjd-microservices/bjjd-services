@@ -43,7 +43,7 @@ public class Donation {
 	private String paymentModeReference;
 
 	@Column(name = "projectId")
-	private Integer projectId = null;
+	private Long projectId = null;
 
 	@Column(name = "projectName")
 	private String projectName = null;
@@ -53,7 +53,7 @@ public class Donation {
 	private DonorType donorType = null;
 
 	@Column(name = "donorId")
-	private String donorId = null;
+	private Long donorId = null;
 
 	@Column(name = "donorName")
 	private String donorName = null;
@@ -196,7 +196,7 @@ public class Donation {
 	/**
 	 * @return the projectId
 	 */
-	public Integer getProjectId() {
+	public Long getProjectId() {
 		return projectId;
 	}
 
@@ -205,7 +205,7 @@ public class Donation {
 	/**
 	 * @param projectId the projectId to set
 	 */
-	public void setProjectId(Integer projectId) {
+	public void setProjectId(Long projectId) {
 		this.projectId = projectId;
 	}
 
@@ -250,7 +250,7 @@ public class Donation {
 	/**
 	 * @return the donorId
 	 */
-	public String getDonorId() {
+	public Long getDonorId() {
 		return donorId;
 	}
 
@@ -259,7 +259,7 @@ public class Donation {
 	/**
 	 * @param donorId the donorId to set
 	 */
-	public void setDonorId(String donorId) {
+	public void setDonorId(Long donorId) {
 		this.donorId = donorId;
 	}
 

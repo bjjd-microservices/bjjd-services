@@ -43,7 +43,7 @@ public class Donation {
 	private String paymentModeReference;
 
 	@JsonProperty("projectId")
-	private Integer projectId = null;
+	private Long projectId = null;
 
 	@JsonProperty("projectName")
 	private String projectName = null;
@@ -52,7 +52,7 @@ public class Donation {
 	private DonorType donorType = null;
 
 	@JsonProperty("donorId")
-	private String donorId = null;
+	private Long donorId = null;
 
 	@JsonProperty("donorName")
 	private String donorName = null;
@@ -148,6 +148,8 @@ public class Donation {
 	/**
 	 * @return the paymentMode
 	 */
+	@ApiModelProperty(required = true, value = "Mode of the payment")
+	@NotNull
 	public PaymentMode getPaymentMode() {
 		return paymentMode;
 	}
@@ -212,10 +214,10 @@ public class Donation {
 	 * 
 	 * @return donationDate
 	 **/
-	@ApiModelProperty(value = "Donation date")
 
 	@Valid
-
+	@ApiModelProperty(required = true, value = "Donation Date")
+	@NotNull
 	public LocalDate getDonationDate() {
 		return donationDate;
 	}
@@ -234,8 +236,7 @@ public class Donation {
 	 * 
 	 * @return amount
 	 **/
-	@ApiModelProperty(value = "Amount")
-
+	@ApiModelProperty(required = true, value = "Donation Amount")
 	@Valid
 	@DecimalMin("0.01")
 	@DecimalMax("9999999999999.99")
@@ -247,7 +248,7 @@ public class Donation {
 		this.amount = amount;
 	}
 
-	public Donation projectId(Integer projectId) {
+	public Donation projectId(Long projectId) {
 		this.projectId = projectId;
 		return this;
 	}
@@ -257,13 +258,13 @@ public class Donation {
 	 * 
 	 * @return projectId
 	 **/
-	@ApiModelProperty(value = "Project Id")
-
-	public Integer getProjectId() {
+	@ApiModelProperty(required = true, value = "Project Id")
+	@NotNull
+	public Long getProjectId() {
 		return projectId;
 	}
 
-	public void setProjectId(Integer projectId) {
+	public void setProjectId(Long projectId) {
 		this.projectId = projectId;
 	}
 
@@ -279,7 +280,6 @@ public class Donation {
 	 **/
 	@ApiModelProperty(required = true, value = "Project Id")
 	@NotNull
-
 	@Size(min = 1, max = 150)
 	public String getProjectName() {
 		return projectName;
@@ -299,8 +299,7 @@ public class Donation {
 	 * 
 	 * @return donorType
 	 **/
-	@ApiModelProperty(value = "Password of the user")
-
+	@ApiModelProperty(required = true, value = "Donor Type")
 	public DonorType getDonorType() {
 		return donorType;
 	}
@@ -309,7 +308,7 @@ public class Donation {
 		this.donorType = donorType;
 	}
 
-	public Donation donorId(String donorId) {
+	public Donation donorId(Long donorId) {
 		this.donorId = donorId;
 		return this;
 	}
@@ -322,11 +321,11 @@ public class Donation {
 	@ApiModelProperty(value = "Donor Id")
 
 	@Size(min = 1, max = 50)
-	public String getDonorId() {
+	public Long getDonorId() {
 		return donorId;
 	}
 
-	public void setDonorId(String donorId) {
+	public void setDonorId(Long donorId) {
 		this.donorId = donorId;
 	}
 
@@ -340,8 +339,7 @@ public class Donation {
 	 * 
 	 * @return donorName
 	 **/
-	@ApiModelProperty(value = "Donor name")
-
+	@ApiModelProperty(required=true,value = "Donor name")
 	@Size(min = 1, max = 255)
 	public String getDonorName() {
 		return donorName;
@@ -361,9 +359,8 @@ public class Donation {
 	 * 
 	 * @return donorCity
 	 **/
-	@ApiModelProperty(value = "Donor name")
-
-	@Size(min = 1, max = 255)
+	@ApiModelProperty(required = true, value = "Donor City")
+	@Size(min = 1, max = 150)
 	public String getDonorCity() {
 		return donorCity;
 	}
@@ -382,8 +379,8 @@ public class Donation {
 	 * 
 	 * @return donorMobileNo
 	 **/
-	@ApiModelProperty(value = "Donor name")
-
+	@ApiModelProperty(required = true, value = "Donor Mobile Number")
+	@NotNull
 	@Size(min = 1, max = 15)
 	public String getDonorMobileNo() {
 		return donorMobileNo;
@@ -424,9 +421,8 @@ public class Donation {
 	 * 
 	 * @return reference
 	 **/
-	@ApiModelProperty(value = "Password of the user")
-
-	@Size(min = 1, max = 50)
+	@ApiModelProperty(value = "Reference")
+	@Size(min = 1, max = 150)
 	public String getReference() {
 		return reference;
 	}
@@ -445,8 +441,7 @@ public class Donation {
 	 * 
 	 * @return receivedBy
 	 **/
-	@ApiModelProperty(value = "User Group")
-
+	@ApiModelProperty(value = "Received By")
 	public Long getReceivedBy() {
 		return receivedBy;
 	}
@@ -465,8 +460,7 @@ public class Donation {
 	 * 
 	 * @return description
 	 **/
-	@ApiModelProperty(value = "Password of the user")
-
+	@ApiModelProperty(value = "Description")
 	@Size(min = 1, max = 250)
 	public String getDescription() {
 		return description;
@@ -486,8 +480,7 @@ public class Donation {
 	 * 
 	 * @return remarks
 	 **/
-	@ApiModelProperty(value = "Password of the user")
-
+	@ApiModelProperty(value = "Remarks")
 	@Size(min = 1, max = 250)
 	public String getRemarks() {
 		return remarks;
@@ -507,8 +500,7 @@ public class Donation {
 	 * 
 	 * @return status
 	 **/
-	@ApiModelProperty(value = "Password of the user")
-
+	@ApiModelProperty(value = "Status")
 	public Status getStatus() {
 		return status;
 	}

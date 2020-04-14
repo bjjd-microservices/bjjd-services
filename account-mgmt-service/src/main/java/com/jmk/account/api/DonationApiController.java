@@ -51,16 +51,15 @@ public class DonationApiController implements DonationApi {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
-			if(DonorType.DEVOTEE.equals(donation.getDonorType()) || donation.getDonorId()==null) {
-				validator.validate(donation);
-				donorCreator.createDevotee(donation);
+			if (validator.validate(donation)) {
+				if (DonorType.DEVOTEE.equals(donation.getDonorType()) || donation.getDonorId() == null) {
+					donorCreator.createDevotee(donation);
+				}
+				donation = donationService.saveDonation(donation);
 			}
-			donation = donationService.saveDonation(donation);
 			return new ResponseEntity<Donation>(donation, HttpStatus.OK);
 		}
-
 		return new ResponseEntity<Donation>(HttpStatus.INTERNAL_SERVER_ERROR);
-
 	}
 	
     public ResponseEntity<Void> saveDonations(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Donation> donations,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel) {

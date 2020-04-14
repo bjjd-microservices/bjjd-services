@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.jmk.people.model.Devotee;
 import com.jmk.people.model.Member;
+import com.jmk.people.model.Sevadar;
 
 import io.swagger.annotations.ApiParam;
 
@@ -24,9 +25,12 @@ public interface PeopleMgmtServiceClient {
 	ResponseEntity<Devotee> createDevotee(@Valid @RequestBody Devotee devotee);
 	
 	@GetMapping(value="/api/people-mgmt-service/devotee/{id}",produces="application/json",consumes="application/json")
-	ResponseEntity<Devotee> findDevoteeDetailsById(@ApiParam(value = "Devotee Id",required=true) @PathVariable("id") Long id);
+	ResponseEntity<Devotee> findDevoteeDetailsById(@PathVariable("id") Long id);
 	
 	@GetMapping(value="/api/people-mgmt-service/member/{id}",produces="application/json",consumes="application/json")
 	ResponseEntity<Member> findMemberDetailsById(@PathVariable("id") Long id) ;
-
+	
+	@GetMapping(value="/api/people-mgmt-service/sevadar/{id}",produces="application/json",consumes="application/json")
+	ResponseEntity<Sevadar> findSevadarDetailsById(@PathVariable("id") Long id) ;
+			
 }

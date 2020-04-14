@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum DonorType {
   MEMBER("MEMBER"),
   
-  SEVADAR_("SEVADAR,"),
+  SEVADAR("SEVADAR,"),
   
   DEVOTEE("DEVOTEE");
 
