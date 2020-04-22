@@ -11,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jmk.eh.exception.EntityNotFoundException;
 import com.jmk.enums.Status;
 import com.jmk.people.model.Devotee;
 import com.jmk.people.repository.PersonRepository;
@@ -35,6 +36,9 @@ public class DevoteeMgmtServiceImpl implements PersonMgmtService<Devotee> {
 	@Override
 	public Devotee findPersonDetailsById(Long id) {
 		Optional<com.jmk.people.entity.Devotee> devoteeEntity=repository.findById(id);
+		if(!devoteeEntity.isPresent()) {
+		throw new EntityNotFoundException(com.jmk.people.entity.Devotee.class,"id",id.toString());
+		}
 		Devotee devoteeModel=mapEntityToModel(mapper,devoteeEntity.get(),Devotee.class);
 		return devoteeModel;
 	}

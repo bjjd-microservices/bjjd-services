@@ -11,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jmk.eh.exception.EntityNotFoundException;
 import com.jmk.enums.Status;
 import com.jmk.project.model.Project;
 import com.jmk.project.repository.ProjectRepository;
@@ -34,8 +35,11 @@ public class ProjectMgmtServiceImpl  implements ProjectMgmtService {
 
 	@Override
 	public Project findProjectDetailsById(Long id) {
-		Optional<com.jmk.project.entity.Project> projectEntity= projectRespository.findById(id);
-		Project projectModel=modelMapper.map(projectEntity.get(),Project.class);
+		Optional<com.jmk.project.entity.Project> optionalProject= projectRespository.findById(id);
+		if(!optionalProject.isPresent()) {
+			throw new EntityNotFoundException(Project.class,"id",id.toString());
+		}
+		Project projectModel=modelMapper.map(optionalProject.get(),Project.class);
 		return projectModel;
 	}
 

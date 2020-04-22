@@ -46,5 +46,43 @@ public interface ExpenseApi {
         consumes = { "application/json" },
         method = RequestMethod.POST)
     ResponseEntity<Void> saveExpenses(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Expense> body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
+    
+    @ApiOperation(value = "Expense Deletion Service based on the expense id", nickname = "deleteExpenseById", notes = "Expense Deletion Service based on the expense id", tags={ "AccountMgmt", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Expense deleted succussfully"),
+        @ApiResponse(code = 400, message = "Invalid User id supplied"),
+        @ApiResponse(code = 404, message = "Expense Id not found"),
+        @ApiResponse(code = 500, message = "Internal Server Error") })
+    @RequestMapping(value = "/{id}",
+        produces = { "application/json" }, 
+        consumes = { "application/json" },
+        method = RequestMethod.DELETE)
+    ResponseEntity<Void> deleteExpenseById(@ApiParam(value = "Expense Id",required=true) @PathVariable("id") Long id);
+
+
+    @ApiOperation(value = "Find Expense Details based on the expense id", nickname = "findExpenseDetailsById", notes = "Find Expense Details based on the expense id", response = Expense.class, tags={ "AccountMgmt", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Successfully found", response = Expense.class),
+        @ApiResponse(code = 400, message = "Invalid Expense name and password supplied"),
+        @ApiResponse(code = 404, message = "Expense not found or inactive"),
+        @ApiResponse(code = 500, message = "Internal Server Error") })
+    @RequestMapping(value = "/{id}",
+        produces = { "application/json" }, 
+        consumes = { "application/json" },
+        method = RequestMethod.GET)
+    ResponseEntity<Expense> findExpenseDetailsById(@ApiParam(value = "Expense Id",required=true) @PathVariable("id") Long id);
+    
+    @ApiOperation(value = "Update Expense Details based on the expense id", nickname = "updateExpenseById", notes = "Update Expense Details based on the expense id", response = Expense.class, tags={ "AccountMgmt", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Successfully found", response = Expense.class),
+        @ApiResponse(code = 400, message = "Invalid Expense name supplied"),
+        @ApiResponse(code = 404, message = "Expense not found or inactive"),
+        @ApiResponse(code = 500, message = "Internal Server Error") })
+    @RequestMapping(value = "/{id}",
+        produces = { "application/json" }, 
+        consumes = { "application/json" },
+        method = RequestMethod.PUT)
+    ResponseEntity<Expense> updateExpenseById(@ApiParam(value = "Expense Id",required=true) @PathVariable("id") Long id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Expense body);
+
 
 }

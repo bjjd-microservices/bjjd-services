@@ -1,6 +1,8 @@
 package com.jmk.account.service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.jmk.account.model.Expense;
 import com.jmk.account.repository.ExpenseRepository;
+import com.jmk.eh.exception.EntityNotFoundException;
 
 @Service
 public class ExpenseServiceImpl implements ExpenseService {
@@ -37,6 +40,28 @@ public class ExpenseServiceImpl implements ExpenseService {
 		Iterable<com.jmk.account.entity.Expense> iterableExpenses=repository.saveAll(expenseEntities);
 		expenseModels=StreamSupport.stream(iterableExpenses.spliterator(),false).map(expenseEntity->mapper.map(expenseEntity, Expense.class)).collect(Collectors.toList());
 		return expenseModels;
+	}
+
+	@Override
+	public Expense findExpenseDetailsById(Long id) {
+		Optional<com.jmk.account.entity.Expense> optionalExpense=repository.findById(id);
+		if(!optionalExpense.isPresent()) {
+			throw new EntityNotFoundException(Expense.class,"id",id.toString());
+		}
+		Expense expenseModel=mapper.map(optionalExpense.get(),Expense.class);
+		return expenseModel;
+	}
+
+	@Override
+	public void deleteExpenseById(Long id) {
+		repository.deleteById(id);
+		
+	}
+
+	@Override
+	public List<Expense> findExpenseDetailsByDateRange(LocalDate startDate, LocalDate endDate) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

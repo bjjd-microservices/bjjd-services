@@ -25,16 +25,4 @@ public class AccountMgmtRestApplication {
         new SpringApplication(AccountMgmtRestApplication.class).run(args);
     }
     
-    //To handling the dateformat
-    @Bean
-    public ObjectMapper objectMapper() {
-        Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
-        builder.modulesToInstall(new JavaTimeModule());
-        return builder.build();
-    }
-    
-    @Bean
-	public ModelMapper modelMapper() {
-		return new ModelMapper();
-	}
 }

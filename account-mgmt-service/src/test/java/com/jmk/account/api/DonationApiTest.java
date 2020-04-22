@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jmk.account.enums.DonorType;
+import com.jmk.account.enums.PaymentMode;
 import com.jmk.account.model.Donation;
 
 
@@ -40,8 +41,12 @@ public class DonationApiTest {
 	public void setUp() {
 		donation=new Donation();
 		donation.amount(BigDecimal.valueOf(11111));
+		donation.setPaymentMode(PaymentMode.CHEQUE);
 		donation.setDonationDate(LocalDate.now());
+		donation.setDonorId(22L);
 		donation.setDonorType(DonorType.DEVOTEE);
+		donation.setDonorMobileNo("9999779379");
+		donation.setProjectId(1L);
 		donation.setDonorName("NayakJi");
 		donation.setProjectName("DarbarConstruction");
 	}

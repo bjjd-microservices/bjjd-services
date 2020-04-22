@@ -10,6 +10,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,5 +49,44 @@ public interface DonationApi {
         consumes = { "application/json" },
         method = RequestMethod.POST)
     ResponseEntity<Void> saveDonations(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Donation> body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
+    
+    @ApiOperation(value = "Donation Deletion Service based on the donation id", nickname = "deleteDonationById", notes = "Donation Deletion Service based on the donation id", tags={ "AccountMgmt", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Donation deleted succussfully"),
+        @ApiResponse(code = 400, message = "Invalid User id supplied"),
+        @ApiResponse(code = 404, message = "Donation Id not found"),
+        @ApiResponse(code = 500, message = "Internal Server Error") })
+    @RequestMapping(value = "/{id}",
+        produces = { "application/json" }, 
+        consumes = { "application/json" },
+        method = RequestMethod.DELETE)
+    ResponseEntity<Void> deleteDonationById(@ApiParam(value = "Donation Id",required=true) @PathVariable("id") Long id);
+
+
+    @ApiOperation(value = "Find Donation Details based on the donation id", nickname = "findDonationDetailsById", notes = "Find Donation Details based on the donation id", response = Donation.class, tags={ "AccountMgmt", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Successfully found", response = Donation.class),
+        @ApiResponse(code = 400, message = "Invalid Donation name and password supplied"),
+        @ApiResponse(code = 404, message = "Donation not found or inactive"),
+        @ApiResponse(code = 500, message = "Internal Server Error") })
+    @RequestMapping(value = "/{id}",
+        produces = { "application/json" }, 
+        consumes = { "application/json" },
+        method = RequestMethod.GET)
+    ResponseEntity<Donation> findDonationDetailsById(@ApiParam(value = "Donation Id",required=true) @PathVariable("id") Long id);
+    
+    @ApiOperation(value = "Update Donation Details based on the donation id", nickname = "updateDonationById", notes = "Update Donation Details based on the donation id", response = Donation.class, tags={ "AccountMgmt", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Successfully found", response = Donation.class),
+        @ApiResponse(code = 400, message = "Invalid Donation name supplied"),
+        @ApiResponse(code = 404, message = "Donation not found or inactive"),
+        @ApiResponse(code = 500, message = "Internal Server Error") })
+    @RequestMapping(value = "/{id}",
+        produces = { "application/json" }, 
+        consumes = { "application/json" },
+        method = RequestMethod.PUT)
+    ResponseEntity<Donation> updateDonationById(@ApiParam(value = "Donation Id",required=true) @PathVariable("id") Long id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Donation body);
+
+
 
 }

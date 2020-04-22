@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jmk.eh.exception.EntityNotFoundException;
 import com.jmk.enums.Status;
 import com.jmk.people.enums.PersonType;
 import com.jmk.people.model.Member;
@@ -37,8 +38,11 @@ public class MemberMgmtServiceImpl implements PersonMgmtService<Member> {
 
 	@Override
 	public Member findPersonDetailsById(Long id) {
-		Optional<com.jmk.people.entity.Member> memberEntity=repository.findById(id);
-		Member memberModel=mapEntityToModel(mapper,memberEntity.get(),Member.class);
+		Optional<com.jmk.people.entity.Member> memberEntity = repository.findById(id);
+		if (!memberEntity.isPresent()) {
+			throw new EntityNotFoundException(com.jmk.people.entity.Member.class,"id",id.toString());
+		}
+		Member memberModel = mapEntityToModel(mapper, memberEntity.get(), Member.class);
 		return memberModel;
 	}
 

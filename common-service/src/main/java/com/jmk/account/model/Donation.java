@@ -280,7 +280,7 @@ public class Donation {
 	 **/
 	@ApiModelProperty(required = true, value = "Project Id")
 	@NotNull
-	@Size(min = 1, max = 150)
+	@Size(min = 1, max = 255)
 	public String getProjectName() {
 		return projectName;
 	}
@@ -319,8 +319,6 @@ public class Donation {
 	 * @return donorId
 	 **/
 	@ApiModelProperty(value = "Donor Id")
-
-	@Size(min = 1, max = 50)
 	public Long getDonorId() {
 		return donorId;
 	}

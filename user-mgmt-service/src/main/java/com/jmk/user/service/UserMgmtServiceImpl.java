@@ -13,6 +13,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jmk.eh.exception.EntityNotFoundException;
 import com.jmk.user.model.User;
 import com.jmk.user.repository.UserRepository;
 
@@ -42,6 +43,9 @@ public class UserMgmtServiceImpl implements UserMgmtService{
 	@Override
 	public User findUserDetailsByUserName(String userName) {
 		com.jmk.user.entity.User userEntity=userRepository.findByUsername(userName);
+		if(userEntity==null) {
+			throw new EntityNotFoundException(User.class,"UserName",userName);
+		}
 		User userModel=modelMapper.map(userEntity, User.class);
 		return userModel;
 	}
@@ -67,8 +71,11 @@ public class UserMgmtServiceImpl implements UserMgmtService{
 
 	@Override
 	public User findUserDetailsById(Long id) {
-		Optional<com.jmk.user.entity.User> userEntity=userRepository.findById(id);
-		User userModel=modelMapper.map(userEntity, User.class);
+		Optional<com.jmk.user.entity.User> optionalUser=userRepository.findById(id);
+		if(!optionalUser.isPresent()) {
+			throw new EntityNotFoundException(User.class,"id",id.toString());
+		}
+		User userModel=modelMapper.map(optionalUser.get(), User.class);
 		return userModel;
 	}
 
