@@ -62,6 +62,5 @@ public class DonationServiceImpl implements DonationService{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	
 }
+

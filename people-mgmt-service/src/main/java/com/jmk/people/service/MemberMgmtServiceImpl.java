@@ -53,11 +53,9 @@ public class MemberMgmtServiceImpl implements PersonMgmtService<Member> {
 
 	@Override
 	public List<Member> savePersons(List<Member> memberModels) {
-		final List<com.jmk.people.entity.Member> memberEntities = new ArrayList<>();
-		memberModels.forEach(memberModel -> memberEntities.add(mapModelToEntity(mapper, memberModel, com.jmk.people.entity.Member.class)));
+		final List<com.jmk.people.entity.Member> memberEntities = memberModels.stream().map(memberModel->mapModelToEntity(mapper, memberModel, com.jmk.people.entity.Member.class)).collect(Collectors.toList());
 		Iterable<com.jmk.people.entity.Member> iterableMembers = repository.saveAll(memberEntities);
-		final List<com.jmk.people.entity.Member> savedMemberEntities = StreamSupport.stream(iterableMembers.spliterator(), false).collect(Collectors.toList());
-		savedMemberEntities.forEach(sourceMember -> memberModels.add(mapEntityToModel(mapper, sourceMember, Member.class)));
+		memberModels = StreamSupport.stream(iterableMembers.spliterator(), false).map(memberEntity->mapEntityToModel(mapper, memberEntity, Member.class)).collect(Collectors.toList());
 		return memberModels;
 	}
 
@@ -65,8 +63,7 @@ public class MemberMgmtServiceImpl implements PersonMgmtService<Member> {
 	public List<Member> findAllPersonsByStatus(Status status) {
 		List<Member> memberModels=new ArrayList<>();
 		Iterable<com.jmk.people.entity.Member> iterableMembers=repository.findAll();
-		List<com.jmk.people.entity.Member> memberEntities=StreamSupport.stream(iterableMembers.spliterator(),false).collect(Collectors.toList());
-		memberEntities.forEach(sourceMember->memberModels.add(mapEntityToModel(mapper,sourceMember, Member.class)));
+		memberModels = StreamSupport.stream(iterableMembers.spliterator(), false).map(memberEntity->mapEntityToModel(mapper, memberEntity, Member.class)).collect(Collectors.toList());
 		return memberModels;
 	}
 

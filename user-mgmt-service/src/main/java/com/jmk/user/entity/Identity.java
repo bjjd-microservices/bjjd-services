@@ -1,18 +1,21 @@
 package com.jmk.user.entity;
 
 import java.sql.Timestamp;
-import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
+
+import com.jmk.enums.DocumentType;
 
 /**
  * Identity
@@ -25,22 +28,23 @@ public class Identity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id = null;
 
-	@Column(name = "passport_id")
-	private String passportId = null;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "document_type")
+	private DocumentType documentType = null;
 
-	@Column(name = "pan_id")
-	private String panId = null;
+	@Column(name = "document_number")
+	private String documentNumber = null;
 
-	@Column(name = "aadhar_id")
-	private String aadharId = null;
+	@Column(name = "document_name")
+	private String documentName = null;
 
-	@Column(name = "voter_id")
-	private String voterId = null;
+	@Column(name = "document_path")
+	private String documentPath = null;
 
-	@Column(name = "driver_license_id")
-	private String driverLicenseId = null;
+	@Column(name = "document_details")
+	private String documentDetails = null;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User user;
 
@@ -48,7 +52,7 @@ public class Identity {
 	private Integer groupId = null;
 	
 	@Column(name="created_by")
-	private Integer createdBy = null;
+	private Long createdBy = null;
 	
 	@Column(name="created_on")
 	private Timestamp createdOn=null;
@@ -59,148 +63,275 @@ public class Identity {
 	@Version
 	private Long version = 1L;
 
-	@Override
-	public boolean equals(java.lang.Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
-		Identity identity = (Identity) o;
-		return Objects.equals(this.id, identity.id) && Objects.equals(this.passportId, identity.passportId)
-				&& Objects.equals(this.panId, identity.panId) && Objects.equals(this.aadharId, identity.aadharId)
-				&& Objects.equals(this.voterId, identity.voterId)
-				&& Objects.equals(this.driverLicenseId, identity.driverLicenseId)
-				&& Objects.equals(this.groupId, identity.groupId);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, passportId, panId, aadharId, voterId, driverLicenseId, groupId);
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("class Identity {\n");
-
-		sb.append("    id: ").append(toIndentedString(id)).append("\n");
-		sb.append("    passportId: ").append(toIndentedString(passportId)).append("\n");
-		sb.append("    panId: ").append(toIndentedString(panId)).append("\n");
-		sb.append("    aadharId: ").append(toIndentedString(aadharId)).append("\n");
-		sb.append("    voterId: ").append(toIndentedString(voterId)).append("\n");
-		sb.append("    driverLicenseId: ").append(toIndentedString(driverLicenseId)).append("\n");
-		sb.append("    groupId: ").append(toIndentedString(groupId)).append("\n");
-		sb.append("}");
-		return sb.toString();
-	}
-
 	/**
-	 * Convert the given object to string with each line indented by 4 spaces
-	 * (except the first line).
+	 * @return the id
 	 */
-	private String toIndentedString(java.lang.Object o) {
-		if (o == null) {
-			return "null";
-		}
-		return o.toString().replace("\n", "\n    ");
-	}
-
 	public Long getId() {
 		return id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	
 
-	public String getPassportId() {
-		return passportId;
+	/**
+	 * @return the documentType
+	 */
+	public DocumentType getDocumentType() {
+		return documentType;
 	}
 
-	public void setPassportId(String passportId) {
-		this.passportId = passportId;
+	/**
+	 * @param documentType the documentType to set
+	 */
+	public void setDocumentType(DocumentType documentType) {
+		this.documentType = documentType;
 	}
 
-	public String getPanId() {
-		return panId;
+	/**
+	 * @return the documentNumber
+	 */
+	public String getDocumentNumber() {
+		return documentNumber;
 	}
 
-	public void setPanId(String panId) {
-		this.panId = panId;
+	/**
+	 * @param documentNumber the documentNumber to set
+	 */
+	public void setDocumentNumber(String documentNumber) {
+		this.documentNumber = documentNumber;
 	}
 
-	public String getAadharId() {
-		return aadharId;
+	/**
+	 * @return the documentName
+	 */
+	public String getDocumentName() {
+		return documentName;
 	}
 
-	public void setAadharId(String aadharId) {
-		this.aadharId = aadharId;
+	/**
+	 * @param documentName the documentName to set
+	 */
+	public void setDocumentName(String documentName) {
+		this.documentName = documentName;
 	}
 
-	public String getVoterId() {
-		return voterId;
+	/**
+	 * @return the documentPath
+	 */
+	public String getDocumentPath() {
+		return documentPath;
 	}
 
-	public void setVoterId(String voterId) {
-		this.voterId = voterId;
+	/**
+	 * @param documentPath the documentPath to set
+	 */
+	public void setDocumentPath(String documentPath) {
+		this.documentPath = documentPath;
 	}
 
-	public String getDriverLicenseId() {
-		return driverLicenseId;
+	/**
+	 * @return the documentDetails
+	 */
+	public String getDocumentDetails() {
+		return documentDetails;
 	}
 
-	public void setDriverLicenseId(String driverLicenseId) {
-		this.driverLicenseId = driverLicenseId;
+	/**
+	 * @param documentDetails the documentDetails to set
+	 */
+	public void setDocumentDetails(String documentDetails) {
+		this.documentDetails = documentDetails;
 	}
 
-	public Integer getGroupId() {
-		return groupId;
-	}
-
-	public void setGroupId(Integer groupId) {
-		this.groupId = groupId;
-	}
-
-	public Integer getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public Timestamp getCreatedOn() {
-		return createdOn;
-	}
-
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
-
-	public Timestamp getWhenModified() {
-		return whenModified;
-	}
-
-	public void setWhenModified(Timestamp whenModified) {
-		this.whenModified = whenModified;
-	}
-
-	public Long getVersion() {
-		return version;
-	}
-
-	public void setVersion(Long version) {
-		this.version = version;
-	}
-
+	/**
+	 * @return the user
+	 */
 	public User getUser() {
 		return user;
 	}
 
+	/**
+	 * @param user the user to set
+	 */
 	public void setUser(User user) {
 		this.user = user;
 	}
 
+	/**
+	 * @return the groupId
+	 */
+	public Integer getGroupId() {
+		return groupId;
+	}
+
+	/**
+	 * @param groupId the groupId to set
+	 */
+	public void setGroupId(Integer groupId) {
+		this.groupId = groupId;
+	}
+
+	/**
+	 * @return the createdBy
+	 */
+	public Long getCreatedBy() {
+		return createdBy;
+	}
+
+	/**
+	 * @param createdBy the createdBy to set
+	 */
+	public void setCreatedBy(Long createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	/**
+	 * @return the createdOn
+	 */
+	public Timestamp getCreatedOn() {
+		return createdOn;
+	}
+
+	/**
+	 * @param createdOn the createdOn to set
+	 */
+	public void setCreatedOn(Timestamp createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	/**
+	 * @return the whenModified
+	 */
+	public Timestamp getWhenModified() {
+		return whenModified;
+	}
+
+	/**
+	 * @param whenModified the whenModified to set
+	 */
+	public void setWhenModified(Timestamp whenModified) {
+		this.whenModified = whenModified;
+	}
+
+	/**
+	 * @return the version
+	 */
+	public Long getVersion() {
+		return version;
+	}
+
+	/**
+	 * @param version the version to set
+	 */
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((createdBy == null) ? 0 : createdBy.hashCode());
+		result = prime * result + ((createdOn == null) ? 0 : createdOn.hashCode());
+		result = prime * result + ((documentDetails == null) ? 0 : documentDetails.hashCode());
+		result = prime * result + ((documentName == null) ? 0 : documentName.hashCode());
+		result = prime * result + ((documentNumber == null) ? 0 : documentNumber.hashCode());
+		result = prime * result + ((documentPath == null) ? 0 : documentPath.hashCode());
+		result = prime * result + ((documentType == null) ? 0 : documentType.hashCode());
+		result = prime * result + ((groupId == null) ? 0 : groupId.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((version == null) ? 0 : version.hashCode());
+		result = prime * result + ((whenModified == null) ? 0 : whenModified.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Identity other = (Identity) obj;
+		if (createdBy == null) {
+			if (other.createdBy != null)
+				return false;
+		} else if (!createdBy.equals(other.createdBy))
+			return false;
+		if (createdOn == null) {
+			if (other.createdOn != null)
+				return false;
+		} else if (!createdOn.equals(other.createdOn))
+			return false;
+		if (documentDetails == null) {
+			if (other.documentDetails != null)
+				return false;
+		} else if (!documentDetails.equals(other.documentDetails))
+			return false;
+		if (documentName == null) {
+			if (other.documentName != null)
+				return false;
+		} else if (!documentName.equals(other.documentName))
+			return false;
+		if (documentNumber == null) {
+			if (other.documentNumber != null)
+				return false;
+		} else if (!documentNumber.equals(other.documentNumber))
+			return false;
+		if (documentPath == null) {
+			if (other.documentPath != null)
+				return false;
+		} else if (!documentPath.equals(other.documentPath))
+			return false;
+		if (documentType != other.documentType)
+			return false;
+		if (groupId == null) {
+			if (other.groupId != null)
+				return false;
+		} else if (!groupId.equals(other.groupId))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (version == null) {
+			if (other.version != null)
+				return false;
+		} else if (!version.equals(other.version))
+			return false;
+		if (whenModified == null) {
+			if (other.whenModified != null)
+				return false;
+		} else if (!whenModified.equals(other.whenModified))
+			return false;
+		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Identity [id=" + id + ", documentType=" + documentType + ", documentNumber=" + documentNumber
+				+ ", documentName=" + documentName + ", documentPath=" + documentPath + ", documentDetails="
+				+ documentDetails + ", user=" + user + ", groupId=" + groupId + ", createdBy=" + createdBy
+				+ ", createdOn=" + createdOn + ", whenModified=" + whenModified + ", version=" + version + "]";
+	}
+
+
+	
 }

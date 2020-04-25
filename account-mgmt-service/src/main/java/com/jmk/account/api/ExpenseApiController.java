@@ -2,6 +2,7 @@ package com.jmk.account.api;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jmk.account.model.Expense;
 import com.jmk.account.service.ExpenseService;
+import com.jmk.account.util.RequestValidator;
 
 import io.swagger.annotations.ApiParam;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-04-05T20:28:14.461+05:30")
@@ -31,22 +33,27 @@ public class ExpenseApiController implements ExpenseApi {
     
     @Autowired
     private ExpenseService expenseService;
+    
+    @Resource(name="expenseRequestValidator")
+    private RequestValidator<Expense> validator;
 
     @org.springframework.beans.factory.annotation.Autowired
     public ExpenseApiController(ObjectMapper objectMapper, HttpServletRequest request) {
         this.request = request;
     }
 
-    public ResponseEntity<Expense> saveExpense(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Expense expense,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel) {
+	public ResponseEntity<Expense> saveExpense(
+			@ApiParam(value = "", required = true) @Valid @RequestBody Expense expense,
+			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
-			expense = expenseService.saveExpense(expense);
-			return new ResponseEntity<Expense>(expense, HttpStatus.OK);
+			if (validator.validate(expense)) {
+				expense = expenseService.saveExpense(expense);
+				return new ResponseEntity<Expense>(expense, HttpStatus.OK);
+			}
 		}
-
 		return new ResponseEntity<Expense>(HttpStatus.INTERNAL_SERVER_ERROR);
-
 	}
 
     public ResponseEntity<Void> saveExpenses(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Expense> expenses,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel) {

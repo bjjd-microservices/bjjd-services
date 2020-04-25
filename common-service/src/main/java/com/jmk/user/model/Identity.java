@@ -3,12 +3,12 @@ package com.jmk.user.model;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-import javax.validation.constraints.Size;
-
 import org.springframework.validation.annotation.Validated;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.jmk.enums.DocumentType;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -22,26 +22,26 @@ public class Identity {
 	@JsonProperty("id")
 	private Long id = null;
 
-	@JsonProperty("passportId")
-	private String passportId = null;
+	@JsonProperty("documentType")
+	private DocumentType documentType = null;
 
-	@JsonProperty("panId")
-	private String panId = null;
+	@JsonProperty("documentNumber")
+	private String documentNumber = null;
 
-	@JsonProperty("aadharId")
-	private String aadharId = null;
+	@JsonProperty("documentName")
+	private String documentName = null;
 
-	@JsonProperty("voterId")
-	private String voterId = null;
+	@JsonProperty("documentPath")
+	private String documentPath = null;
 
-	@JsonProperty("driverLicenseId")
-	private String driverLicenseId = null;
+	@JsonProperty("documentDetails")
+	private String documentDetails = null;
 
 	@JsonProperty("groupId")
 	private Integer groupId = null;
 
 	@JsonProperty("createdBy")
-	private Integer createdBy = null;
+	private Long createdBy = null;
 
 	@JsonProperty("createdOn")
 	private Timestamp createdOn = null;
@@ -52,9 +52,17 @@ public class Identity {
 	@JsonProperty("version")
 	private Long version = null;
 
-	@JsonIgnore
+	@JsonProperty
+	@JsonBackReference
 	private User user;
+	
+	public Identity id(Long id) {
+		this.id = id;
+		return this;
+	}
 
+	
+	
 	/**
 	 * user id
 	 * 
@@ -70,66 +78,11 @@ public class Identity {
 		this.id = id;
 	}
 
-	public Identity passportId(String passportId) {
-		this.passportId = passportId;
+	public Identity documentType(DocumentType documentType) {
+		this.documentType = documentType;
 		return this;
 	}
 
-	/**
-	 * @return the createdBy
-	 */
-	public Integer getCreatedBy() {
-		return createdBy;
-	}
-
-	/**
-	 * @param createdBy the createdBy to set
-	 */
-	public void setCreatedBy(Integer createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	/**
-	 * @return the createdOn
-	 */
-	public Timestamp getCreatedOn() {
-		return createdOn;
-	}
-
-	/**
-	 * @param createdOn the createdOn to set
-	 */
-	public void setCreatedOn(Timestamp createdOn) {
-		this.createdOn = createdOn;
-	}
-
-	/**
-	 * @return the whenModified
-	 */
-	public Timestamp getWhenModified() {
-		return whenModified;
-	}
-
-	/**
-	 * @param whenModified the whenModified to set
-	 */
-	public void setWhenModified(Timestamp whenModified) {
-		this.whenModified = whenModified;
-	}
-
-	/**
-	 * @return the version
-	 */
-	public Long getVersion() {
-		return version;
-	}
-
-	/**
-	 * @param version the version to set
-	 */
-	public void setVersion(Long version) {
-		this.version = version;
-	}
 
 	/**
 	 * @return the user
@@ -138,6 +91,8 @@ public class Identity {
 		return user;
 	}
 
+
+
 	/**
 	 * @param user the user to set
 	 */
@@ -145,99 +100,101 @@ public class Identity {
 		this.user = user;
 	}
 
+
+
 	/**
-	 * User Type
+	 * Password of the user
 	 * 
-	 * @return passportId
+	 * @return documentType
 	 **/
-	@ApiModelProperty(value = "User Type")
+	@ApiModelProperty(value = "Password of the user")
 
-	public String getPassportId() {
-		return passportId;
+	public DocumentType getDocumentType() {
+		return documentType;
 	}
 
-	public void setPassportId(String passportId) {
-		this.passportId = passportId;
+	public void setDocumentType(DocumentType documentType) {
+		this.documentType = documentType;
 	}
 
-	public Identity panId(String panId) {
-		this.panId = panId;
+	public Identity documentNumber(String documentNumber) {
+		this.documentNumber = documentNumber;
 		return this;
 	}
 
 	/**
 	 * User Type
 	 * 
-	 * @return panId
+	 * @return documentNumber
 	 **/
 	@ApiModelProperty(value = "User Type")
 
-	public String getPanId() {
-		return panId;
+	public String getDocumentNumber() {
+		return documentNumber;
 	}
 
-	public void setPanId(String panId) {
-		this.panId = panId;
+	public void setDocumentNumber(String documentNumber) {
+		this.documentNumber = documentNumber;
 	}
 
-	public Identity aadharId(String aadharId) {
-		this.aadharId = aadharId;
+	public Identity documentName(String documentName) {
+		this.documentName = documentName;
 		return this;
 	}
 
 	/**
 	 * User Type
 	 * 
-	 * @return aadharId
+	 * @return documentName
 	 **/
 	@ApiModelProperty(value = "User Type")
 
-	public String getAadharId() {
-		return aadharId;
+	public String getDocumentName() {
+		return documentName;
 	}
 
-	public void setAadharId(String aadharId) {
-		this.aadharId = aadharId;
+	public void setDocumentName(String documentName) {
+		this.documentName = documentName;
 	}
 
-	public Identity voterId(String voterId) {
-		this.voterId = voterId;
+	public Identity documentPath(String documentPath) {
+		this.documentPath = documentPath;
 		return this;
 	}
 
 	/**
 	 * User Type
 	 * 
-	 * @return voterId
+	 * @return documentPath
 	 **/
 	@ApiModelProperty(value = "User Type")
 
-	public String getVoterId() {
-		return voterId;
+	public String getDocumentPath() {
+		return documentPath;
 	}
 
-	public void setVoterId(String voterId) {
-		this.voterId = voterId;
+	public void setDocumentPath(String documentPath) {
+		this.documentPath = documentPath;
 	}
 
-	public Identity driverLicenseId(String driverLicenseId) {
-		this.driverLicenseId = driverLicenseId;
+	public Identity documentDetails(String documentDetails) {
+		this.documentDetails = documentDetails;
 		return this;
 	}
 
 	/**
 	 * User Type
 	 * 
-	 * @return driverLicenseId
+	 * @return documentDetails
 	 **/
 	@ApiModelProperty(value = "User Type")
 
-	public String getDriverLicenseId() {
-		return driverLicenseId;
+	public String getDocumentDetails() {
+		return documentDetails;
 	}
 
-	public void setDriverLicenseId(String driverLicenseId) {
-		this.driverLicenseId = driverLicenseId;
+	public void setDocumentDetails(String documentDetails) {
+		this.documentDetails = documentDetails;
 	}
 
 	public Identity groupId(Integer groupId) {
@@ -251,6 +208,7 @@ public class Identity {
 	 * @return groupId
 	 **/
 	@ApiModelProperty(value = "User Group")
+
 	public Integer getGroupId() {
 		return groupId;
 	}
@@ -268,16 +226,17 @@ public class Identity {
 			return false;
 		}
 		Identity identity = (Identity) o;
-		return Objects.equals(this.id, identity.id) && Objects.equals(this.passportId, identity.passportId)
-				&& Objects.equals(this.panId, identity.panId) && Objects.equals(this.aadharId, identity.aadharId)
-				&& Objects.equals(this.voterId, identity.voterId)
-				&& Objects.equals(this.driverLicenseId, identity.driverLicenseId)
+		return Objects.equals(this.id, identity.id) && Objects.equals(this.documentType, identity.documentType)
+				&& Objects.equals(this.documentNumber, identity.documentNumber)
+				&& Objects.equals(this.documentName, identity.documentName)
+				&& Objects.equals(this.documentPath, identity.documentPath)
+				&& Objects.equals(this.documentDetails, identity.documentDetails)
 				&& Objects.equals(this.groupId, identity.groupId);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, passportId, panId, aadharId, voterId, driverLicenseId, groupId);
+		return Objects.hash(id, documentType, documentNumber, documentName, documentPath, documentDetails, groupId);
 	}
 
 	@Override
@@ -286,11 +245,11 @@ public class Identity {
 		sb.append("class Identity {\n");
 
 		sb.append("    id: ").append(toIndentedString(id)).append("\n");
-		sb.append("    passportId: ").append(toIndentedString(passportId)).append("\n");
-		sb.append("    panId: ").append(toIndentedString(panId)).append("\n");
-		sb.append("    aadharId: ").append(toIndentedString(aadharId)).append("\n");
-		sb.append("    voterId: ").append(toIndentedString(voterId)).append("\n");
-		sb.append("    driverLicenseId: ").append(toIndentedString(driverLicenseId)).append("\n");
+		sb.append("    documentType: ").append(toIndentedString(documentType)).append("\n");
+		sb.append("    documentNumber: ").append(toIndentedString(documentNumber)).append("\n");
+		sb.append("    documentName: ").append(toIndentedString(documentName)).append("\n");
+		sb.append("    documentPath: ").append(toIndentedString(documentPath)).append("\n");
+		sb.append("    documentDetails: ").append(toIndentedString(documentDetails)).append("\n");
 		sb.append("    groupId: ").append(toIndentedString(groupId)).append("\n");
 		sb.append("}");
 		return sb.toString();
@@ -306,4 +265,38 @@ public class Identity {
 		}
 		return o.toString().replace("\n", "\n    ");
 	}
+
+	public Long getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(Long createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Timestamp getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(Timestamp createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public Timestamp getWhenModified() {
+		return whenModified;
+	}
+
+	public void setWhenModified(Timestamp whenModified) {
+		this.whenModified = whenModified;
+	}
+
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+
+
 }

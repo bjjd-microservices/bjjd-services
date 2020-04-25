@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jmk.enums.Status;
+import com.jmk.people.enums.PersonType;
 import com.jmk.people.model.Sevadar;
 import com.jmk.people.repository.PersonRepository;
 
@@ -45,11 +46,9 @@ public class SevadarMgmtServiceImpl implements PersonMgmtService<Sevadar>{
 
 	@Override
 	public List<Sevadar> savePersons(List<Sevadar> sevadarModels) {
-		final List<com.jmk.people.entity.Sevadar> sevadarEntities = new ArrayList<>();
-		sevadarModels.forEach(sevadarModel -> sevadarEntities.add(mapModelToEntity(mapper, sevadarModel, com.jmk.people.entity.Sevadar.class)));
+		final List<com.jmk.people.entity.Sevadar> sevadarEntities = sevadarModels.stream().map(sevadarModel->mapModelToEntity(mapper, sevadarModel, com.jmk.people.entity.Sevadar.class)).collect(Collectors.toList());
 		Iterable<com.jmk.people.entity.Sevadar> iterableSevadars = repository.saveAll(sevadarEntities);
-		final List<com.jmk.people.entity.Sevadar> savedSevadarEntities = StreamSupport.stream(iterableSevadars.spliterator(), false).collect(Collectors.toList());
-		savedSevadarEntities.forEach(sourceSevadar -> sevadarModels.add(mapEntityToModel(mapper, sourceSevadar, Sevadar.class)));
+		sevadarModels = StreamSupport.stream(iterableSevadars.spliterator(), false).map(sevadarEntity->mapEntityToModel(mapper, sevadarEntity, Sevadar.class)).collect(Collectors.toList());
 		return sevadarModels;
 	}
 
@@ -57,14 +56,15 @@ public class SevadarMgmtServiceImpl implements PersonMgmtService<Sevadar>{
 	public List<Sevadar> findAllPersonsByStatus(Status status) {
 		List<Sevadar> sevadarModels=new ArrayList<>();
 		Iterable<com.jmk.people.entity.Sevadar> iterableSevadars=repository.findAll();
-		List<com.jmk.people.entity.Sevadar> sevadarEntities=StreamSupport.stream(iterableSevadars.spliterator(),false).collect(Collectors.toList());
-		sevadarEntities.forEach(sourceSevadar->sevadarModels.add(mapEntityToModel(mapper,sourceSevadar, Sevadar.class)));
+		sevadarModels = StreamSupport.stream(iterableSevadars.spliterator(), false).map(sevadarEntity->mapEntityToModel(mapper, sevadarEntity, Sevadar.class)).collect(Collectors.toList());
 		return sevadarModels;
 	}
 
 	@Override
 	public Sevadar findPersonByMobileNumber(String mobileNumber) {
-		return null;
+		com.jmk.people.entity.Sevadar sevadarEntity=repository.findPersonByTypeAndMobileNo(PersonType.SEVADAR.getType(),mobileNumber);
+		Sevadar sevadarModel=mapEntityToModel(mapper, sevadarEntity, Sevadar.class);
+		return sevadarModel;
 	}
 
 }

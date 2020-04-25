@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,11 +49,9 @@ public class ProjectMgmtServiceImpl  implements ProjectMgmtService {
 
 	@Override
 	public List<Project> saveProjects(List<Project> projectModels) {
-		List<com.jmk.project.entity.Project> projectEntities=new ArrayList<>();
-		BeanUtils.copyProperties(projectModels, projectEntities);
-		Iterable<com.jmk.project.entity.Project> iterableUsers=projectRespository.saveAll(projectEntities);
-		projectEntities=StreamSupport.stream(iterableUsers.spliterator(),false).collect(Collectors.toList());
-		projectEntities.forEach(sourceProject->projectModels.add(modelMapper.map(sourceProject, Project.class)));
+		List<com.jmk.project.entity.Project> projectEntities=projectModels.stream().map(projectModel->modelMapper.map(projectModel,com.jmk.project.entity.Project.class)).collect(Collectors.toList());
+		Iterable<com.jmk.project.entity.Project> iterableProjects=projectRespository.saveAll(projectEntities);
+		projectModels=StreamSupport.stream(iterableProjects.spliterator(),false).map(projectEntity->modelMapper.map(projectEntity, Project.class)).collect(Collectors.toList());
 		return projectModels;
 	}
 
@@ -62,8 +59,7 @@ public class ProjectMgmtServiceImpl  implements ProjectMgmtService {
 	public List<Project> findAllProjectsByStatus(Status status) {
 		List<Project> projectModels=new ArrayList<>();
 		Iterable<com.jmk.project.entity.Project> iterableProjects=projectRespository.findAll();
-		List<com.jmk.project.entity.Project> projectEntities=StreamSupport.stream(iterableProjects.spliterator(),false).collect(Collectors.toList());
-		projectEntities.forEach(sourceProject->projectModels.add(modelMapper.map(sourceProject, Project.class)));
+		projectModels=StreamSupport.stream(iterableProjects.spliterator(),false).map(projectEntity->modelMapper.map(projectEntity, Project.class)).collect(Collectors.toList());
 		return projectModels;
 	}
 	

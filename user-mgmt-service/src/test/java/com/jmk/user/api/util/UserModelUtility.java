@@ -6,6 +6,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.jmk.enums.AddressType;
+import com.jmk.enums.DocumentType;
 import com.jmk.enums.MessageSent;
 import com.jmk.enums.Status;
 import com.jmk.user.enums.Group;
@@ -29,16 +31,34 @@ public class UserModelUtility {
 		user.setWhenModified(Timestamp.from(Instant.now()));
 		
 		Identity identity=new Identity();
-		identity.setAadharId("1234567899999");
+		identity.setDocumentNumber("AOKPB9699G");
+		identity.setDocumentName("RajivKumarBansal");
+		identity.setDocumentType(DocumentType.PANCARD);
 		identity.setCreatedOn(Timestamp.from(Instant.now()));
 		identity.setGroupId(Group.BJJD.getGroupId());
-		identity.setDriverLicenseId("DL0519990152868");
-		identity.setPanId("AOKPB9699G");
-		identity.setPassportId("S12323423");
-		identity.setVoterId("D123123123");
 		identity.setWhenModified(Timestamp.from(Instant.now()));
 		identity.setUser(user);
-		user.setIdentity(identity);
+		user.addIdentitiesItem(identity);
+		
+		identity=new Identity();
+		identity.setDocumentNumber("DL0519990152868");
+		identity.setDocumentName("RajivKumarBansal");
+		identity.setDocumentType(DocumentType.DRIVINGLICENSE);
+		identity.setCreatedOn(Timestamp.from(Instant.now()));
+		identity.setGroupId(Group.BJJD.getGroupId());
+		identity.setWhenModified(Timestamp.from(Instant.now()));
+		identity.setUser(user);
+		user.addIdentitiesItem(identity);
+		
+		identity=new Identity();
+		identity.setDocumentNumber("1234567899999");
+		identity.setDocumentName("RajivKumarBansal");
+		identity.setDocumentType(DocumentType.AADHARCARD);
+		identity.setCreatedOn(Timestamp.from(Instant.now()));
+		identity.setGroupId(Group.BJJD.getGroupId());
+		identity.setWhenModified(Timestamp.from(Instant.now()));
+		identity.setUser(user);
+		user.addIdentitiesItem(identity);
 		
 		
 		Profile profile=new Profile();
@@ -55,7 +75,7 @@ public class UserModelUtility {
 		mailingAddress.setHouseNo("503");
 		mailingAddress.setAddressLine1("U-503,5th Floor");
 		mailingAddress.setAddressLine2("Hyde Park,Sector-78");
-		mailingAddress.setAddressType("PERMANENT");
+		mailingAddress.setAddressType(AddressType.PERMANENT);
 		mailingAddress.setCity("Noida");
 		mailingAddress.setCountry("INDIA");
 		mailingAddress.setCreatedOn(Timestamp.from(Instant.now()));
@@ -71,7 +91,7 @@ public class UserModelUtility {
 		permanentAddress.setHouseNo("503");
 		permanentAddress.setAddressLine1("U-503,5th Floor");
 		permanentAddress.setAddressLine2("Hyde Park,Sector-78");
-		permanentAddress.setAddressType("PERMANENT");
+		permanentAddress.setAddressType(AddressType.MAILING);
 		permanentAddress.setCity("Noida");
 		permanentAddress.setCountry("INDIA");
 		permanentAddress.setCreatedOn(Timestamp.from(Instant.now()));

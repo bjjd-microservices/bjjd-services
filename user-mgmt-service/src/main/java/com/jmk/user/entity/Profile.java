@@ -70,7 +70,7 @@ public class Profile {
 	private Integer groupId = null;
 	
 	@Column(name="created_by")
-	private Integer createdBy = null;
+	private Long createdBy = null;
 	
 	@Column(name="created_on")
 	private Timestamp createdOn=null;
@@ -235,11 +235,11 @@ public class Profile {
 		this.groupId = groupId;
 	}
 
-	public Integer getCreatedBy() {
+	public Long getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(Integer createdBy) {
+	public void setCreatedBy(Long createdBy) {
 		this.createdBy = createdBy;
 	}
 

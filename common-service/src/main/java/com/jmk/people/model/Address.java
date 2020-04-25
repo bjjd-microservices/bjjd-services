@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.jmk.enums.AddressType;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -44,17 +45,14 @@ public class Address {
 	@JsonProperty("landmark")
 	private String landmark = null;
 
-	@JsonProperty("type")
-	private String type = null;
-
 	@JsonProperty("addressType")
-	private String addressType = null;
+	private AddressType addressType = null;
 
 	@JsonProperty("groupId")
 	private Integer groupId = null;
 
 	@JsonProperty
-	private Integer createdBy = null;
+	private Long createdBy = null;
 
 	@JsonProperty
 	private Timestamp createdOn = null;
@@ -108,11 +106,11 @@ public class Address {
 		this.person = person;
 	}
 
-	public Integer getCreatedBy() {
+	public Long getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(Integer createdBy) {
+	public void setCreatedBy(Long createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -295,43 +293,19 @@ public class Address {
 		this.landmark = landmark;
 	}
 
-	public Address type(String type) {
-		this.type = type;
-		return this;
-	}
+	
 
 	/**
-	 * User Type
-	 * 
-	 * @return type
-	 **/
-	@ApiModelProperty(value = "User Type")
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public Address addressType(String addressType) {
-		this.addressType = addressType;
-		return this;
-	}
-
-	/**
-	 * User Type
-	 * 
-	 * @return addressType
-	 **/
-	@ApiModelProperty(value = "User Type")
-
-	public String getAddressType() {
+	 * @return the addressType
+	 */
+	public AddressType getAddressType() {
 		return addressType;
 	}
 
-	public void setAddressType(String addressType) {
+	/**
+	 * @param addressType the addressType to set
+	 */
+	public void setAddressType(AddressType addressType) {
 		this.addressType = addressType;
 	}
 
@@ -369,14 +343,14 @@ public class Address {
 				&& Objects.equals(this.addressLine2, address.addressLine2) && Objects.equals(this.city, address.city)
 				&& Objects.equals(this.state, address.state) && Objects.equals(this.country, address.country)
 				&& Objects.equals(this.pinCode, address.pinCode) && Objects.equals(this.landmark, address.landmark)
-				&& Objects.equals(this.type, address.type) && Objects.equals(this.addressType, address.addressType)
+				&& Objects.equals(this.addressType, address.addressType) 
 				&& Objects.equals(this.groupId, address.groupId);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, houseNo, addressLine1, addressLine2, city, state, country, pinCode, landmark, type,
-				addressType, groupId);
+		return Objects.hash(id, houseNo, addressLine1, addressLine2, city, state, country, pinCode, landmark, addressType,
+				 groupId);
 	}
 
 	@Override
@@ -393,7 +367,6 @@ public class Address {
 		sb.append("    country: ").append(toIndentedString(country)).append("\n");
 		sb.append("    pinCode: ").append(toIndentedString(pinCode)).append("\n");
 		sb.append("    landmark: ").append(toIndentedString(landmark)).append("\n");
-		sb.append("    type: ").append(toIndentedString(type)).append("\n");
 		sb.append("    addressType: ").append(toIndentedString(addressType)).append("\n");
 		sb.append("    groupId: ").append(toIndentedString(groupId)).append("\n");
 		sb.append("}");

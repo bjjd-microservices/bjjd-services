@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.jmk.eh.apierror.ApiError;
 import com.jmk.eh.exception.EntityNotFoundException;
+import com.jmk.eh.exception.StatusNotActiveException;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @RestControllerAdvice
@@ -39,6 +40,19 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler{
 	@ExceptionHandler(EntityNotFoundException.class)
 	protected ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException exception){
 		ApiError apiError=new ApiError(HttpStatus.NOT_FOUND, exception.getMessage());
+		apiError.setMessage("Record not found");
+		return buildResponseEntity(apiError);
+	}
+	
+	/**
+	 * 
+	 * @param exception
+	 * @return
+	 */
+	@ExceptionHandler(StatusNotActiveException.class)
+	protected ResponseEntity<Object> handleStatusNotActive(StatusNotActiveException exception){
+		ApiError apiError=new ApiError(HttpStatus.NOT_FOUND, exception.getMessage());
+		apiError.setMessage("Status of the Entity is not active");
 		return buildResponseEntity(apiError);
 	}
 	

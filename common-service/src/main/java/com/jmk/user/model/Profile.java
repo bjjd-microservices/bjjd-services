@@ -9,6 +9,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.validation.annotation.Validated;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jmk.enums.Gender;
@@ -60,7 +61,7 @@ public class Profile {
 	private Integer groupId = null;
 
 	@JsonProperty("createdBy")
-	private Integer createdBy = null;
+	private Long createdBy = null;
 
 	@JsonProperty("createdOn")
 	private Timestamp createdOn = null;
@@ -71,20 +72,21 @@ public class Profile {
 	@JsonProperty("version")
 	private Long version = null;
 
-	@JsonIgnore
+	@JsonProperty
+	@JsonBackReference
 	private User user;
 
 	/**
 	 * @return the createdBy
 	 */
-	public Integer getCreatedBy() {
+	public Long getCreatedBy() {
 		return createdBy;
 	}
 
 	/**
 	 * @param createdBy the createdBy to set
 	 */
-	public void setCreatedBy(Integer createdBy) {
+	public void setCreatedBy(Long createdBy) {
 		this.createdBy = createdBy;
 	}
 

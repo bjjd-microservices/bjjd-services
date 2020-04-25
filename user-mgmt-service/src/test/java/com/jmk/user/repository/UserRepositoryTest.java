@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,14 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.jmk.enums.DocumentType;
 import com.jmk.enums.MessageSent;
 import com.jmk.user.entity.Address;
 import com.jmk.user.entity.Identity;
 import com.jmk.user.entity.Module;
 import com.jmk.user.entity.Role;
 import com.jmk.user.entity.User;
+import com.jmk.user.enums.Group;
 
-import junit.framework.Assert;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -42,17 +44,38 @@ public class UserRepositoryTest {
 	//	user.setGroupId(Group.BJJD.name());
 		user.setWhenModified(Timestamp.from(Instant.now()));
 		
+		Set<Identity> identities=new HashSet<>();
+		
 		Identity identity=new Identity();
-		identity.setAadharId("1234567899999");
+		identity.setDocumentNumber("AOKPB9699G");
+		identity.setDocumentName("RajivKumarBansal");
+		identity.setDocumentType(DocumentType.PANCARD);
 		identity.setCreatedOn(Timestamp.from(Instant.now()));
-	//	identity.setGroupId(Group.BJJD.name());
-		identity.setDriverLicenseId("DL0519990152868");
-		identity.setPanId("AOKPB9699G");
-		identity.setPassportId("S12323423");
-		identity.setVoterId("D123123123");
+		identity.setGroupId(Group.BJJD.getGroupId());
 		identity.setWhenModified(Timestamp.from(Instant.now()));
 		identity.setUser(user);
-		user.setIdentity(identity);
+		identities.add(identity);
+		
+		identity=new Identity();
+		identity.setDocumentNumber("DL0519990152868");
+		identity.setDocumentName("RajivKumarBansal");
+		identity.setDocumentType(DocumentType.DRIVINGLICENSE);
+		identity.setCreatedOn(Timestamp.from(Instant.now()));
+		identity.setGroupId(Group.BJJD.getGroupId());
+		identity.setWhenModified(Timestamp.from(Instant.now()));
+		identity.setUser(user);
+		identities.add(identity);
+		
+		identity=new Identity();
+		identity.setDocumentNumber("1234567899999");
+		identity.setDocumentName("RajivKumarBansal");
+		identity.setDocumentType(DocumentType.AADHARCARD);
+		identity.setCreatedOn(Timestamp.from(Instant.now()));
+		identity.setGroupId(Group.BJJD.getGroupId());
+		identity.setWhenModified(Timestamp.from(Instant.now()));
+		identity.setUser(user);
+		identities.add(identity);
+		user.setIdentities(identities);
 		
 		Set<Address> addresses=new HashSet<>();
 		
@@ -60,7 +83,6 @@ public class UserRepositoryTest {
 		mailingAddress.setHouseNo("503");
 		mailingAddress.setAddressLine1("U-503,5th Floor");
 		mailingAddress.setAddressLine2("Hyde Park,Sector-78");
-		mailingAddress.setAddressType("PERMANENT");
 		mailingAddress.setCity("Noida");
 		mailingAddress.setCountry("INDIA");
 		mailingAddress.setCreatedOn(Timestamp.from(Instant.now()));
@@ -76,7 +98,6 @@ public class UserRepositoryTest {
 		permanentAddress.setHouseNo("503");
 		permanentAddress.setAddressLine1("U-503,5th Floor");
 		permanentAddress.setAddressLine2("Hyde Park,Sector-78");
-		permanentAddress.setAddressType("PERMANENT");
 		permanentAddress.setCity("Noida");
 		permanentAddress.setCountry("INDIA");
 		permanentAddress.setCreatedOn(Timestamp.from(Instant.now()));

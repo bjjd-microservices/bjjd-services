@@ -45,7 +45,7 @@ public class Expense {
 	private String paymentModeReference;
 
 	@Column(name = "projectId")
-	private Integer projectId = null;
+	private Long projectId = null;
 
 	@Column(name = "projectName")
 	private String projectName = null;
@@ -67,7 +67,7 @@ public class Expense {
 	private Integer groupId = null;
 	
 	@Column(name="created_by")
-	private Integer createdBy = null;
+	private Long createdBy = null;
 	
 	@Column(name="created_on")
 	private Timestamp createdOn=null;
@@ -168,14 +168,14 @@ public class Expense {
 	/**
 	 * @return the projectId
 	 */
-	public Integer getProjectId() {
+	public Long getProjectId() {
 		return projectId;
 	}
 
 	/**
 	 * @param projectId the projectId to set
 	 */
-	public void setProjectId(Integer projectId) {
+	public void setProjectId(Long projectId) {
 		this.projectId = projectId;
 	}
 
@@ -266,14 +266,14 @@ public class Expense {
 	/**
 	 * @return the createdBy
 	 */
-	public Integer getCreatedBy() {
+	public Long getCreatedBy() {
 		return createdBy;
 	}
 
 	/**
 	 * @param createdBy the createdBy to set
 	 */
-	public void setCreatedBy(Integer createdBy) {
+	public void setCreatedBy(Long createdBy) {
 		this.createdBy = createdBy;
 	}
 

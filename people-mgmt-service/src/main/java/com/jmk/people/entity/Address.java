@@ -5,6 +5,8 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
+
+import com.jmk.enums.AddressType;
 
 /**
  * Address
@@ -49,21 +53,19 @@ public class Address {
 	@Column(name = "landmark")
 	private String landmark = null;
 
-	@Column(name = "type")
-	private String type = null;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "address_type")
+	private AddressType addressType = null;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "person_id", referencedColumnName = "id")
 	private Person person;
 
-	@Column(name = "address_type")
-	private String addressType = null;
-	
 	@Column(name = "groupId")
 	private Integer groupId = null;
 
 	@Column(name = "created_by")
-	private Integer createdBy = null;
+	private Long createdBy = null;
 
 	@Column(name = "created_on")
 	private Timestamp createdOn = null;
@@ -117,11 +119,11 @@ public class Address {
 		return this;
 	}
 
-	public Integer getCreatedBy() {
+	public Long getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(Integer createdBy) {
+	public void setCreatedBy(Long createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -248,31 +250,23 @@ public class Address {
 		this.landmark = landmark;
 	}
 
-	public Address type(String type) {
-		this.type = type;
-		return this;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public Address addressType(String addressType) {
-		this.addressType = addressType;
-		return this;
-	}
-
-	public String getAddressType() {
+	/**
+	 * @return the addressType
+	 */
+	public AddressType getAddressType() {
 		return addressType;
 	}
 
-	public void setAddressType(String addressType) {
+
+
+	/**
+	 * @param addressType the addressType to set
+	 */
+	public void setAddressType(AddressType addressType) {
 		this.addressType = addressType;
 	}
+
+
 
 	public Address groupId(Integer groupId) {
 		this.groupId = groupId;
@@ -301,14 +295,14 @@ public class Address {
 				&& Objects.equals(this.addressLine2, address.addressLine2) && Objects.equals(this.city, address.city)
 				&& Objects.equals(this.state, address.state) && Objects.equals(this.country, address.country)
 				&& Objects.equals(this.pinCode, address.pinCode) && Objects.equals(this.landmark, address.landmark)
-				&& Objects.equals(this.type, address.type) && Objects.equals(this.addressType, address.addressType)
+				&& Objects.equals(this.addressType, address.addressType) 
 				&& Objects.equals(this.groupId, address.groupId);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, houseNo, addressLine1, addressLine2, city, state, country, pinCode, landmark, type,
-				addressType, groupId);
+		return Objects.hash(id, houseNo, addressLine1, addressLine2, city, state, country, pinCode, landmark, addressType,
+				 groupId);
 	}
 
 	@Override
@@ -325,7 +319,6 @@ public class Address {
 		sb.append("    country: ").append(toIndentedString(country)).append("\n");
 		sb.append("    pinCode: ").append(toIndentedString(pinCode)).append("\n");
 		sb.append("    landmark: ").append(toIndentedString(landmark)).append("\n");
-		sb.append("    type: ").append(toIndentedString(type)).append("\n");
 		sb.append("    addressType: ").append(toIndentedString(addressType)).append("\n");
 		sb.append("    groupId: ").append(toIndentedString(groupId)).append("\n");
 		sb.append("}");

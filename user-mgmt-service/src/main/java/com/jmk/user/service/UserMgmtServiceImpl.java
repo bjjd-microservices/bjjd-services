@@ -9,11 +9,12 @@ import java.util.stream.StreamSupport;
 import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jmk.eh.exception.EntityNotFoundException;
+import com.jmk.user.model.Address;
+import com.jmk.user.model.Identity;
 import com.jmk.user.model.User;
 import com.jmk.user.repository.UserRepository;
 
@@ -29,7 +30,7 @@ public class UserMgmtServiceImpl implements UserMgmtService{
 
 	@Override
 	public User saveUser(User userModel) {
-		com.jmk.user.entity.User userEntity=modelMapper.map(userModel, com.jmk.user.entity.User.class);
+		com.jmk.user.entity.User userEntity=modelMapper.map(updateUserModel(userModel), com.jmk.user.entity.User.class);
 		userEntity=userRepository.save(userEntity);
 		userModel=modelMapper.map(userEntity, User.class);
 		return userModel;
@@ -52,20 +53,12 @@ public class UserMgmtServiceImpl implements UserMgmtService{
 
 	@Override
 	public List<User> saveUsers(List<User> userModels) {
-		List<com.jmk.user.entity.User> userEntities=new ArrayList<>();
-		BeanUtils.copyProperties(userModels, userEntities);
-		Iterable<com.jmk.user.entity.User> iterableUsers=userRepository.saveAll(userEntities);
-		userEntities=StreamSupport.stream(iterableUsers.spliterator(),false).collect(Collectors.toList());
-		BeanUtils.copyProperties(userEntities,userModels);
-		return userModels;
-	}
-
-	@Override
-	public List<User> findAllUsers() {
-		List<User> userModels=new ArrayList<>();
-		Iterable<com.jmk.user.entity.User> iterableUsers=userRepository.findAll();
-		List<com.jmk.user.entity.User> userEntities=StreamSupport.stream(iterableUsers.spliterator(),false).collect(Collectors.toList());
-		userEntities.forEach(sourceUser->userModels.add(modelMapper.map(sourceUser, User.class)));
+		final List<com.jmk.user.entity.User> userEntities = userModels.stream()
+				.map(userModel -> modelMapper.map(updateUserModel(userModel), com.jmk.user.entity.User.class))
+				.collect(Collectors.toList());
+		Iterable<com.jmk.user.entity.User> iterableUsers = userRepository.saveAll(userEntities);
+		userModels = StreamSupport.stream(iterableUsers.spliterator(), false)
+				.map(userEntity -> modelMapper.map(userEntity, User.class)).collect(Collectors.toList());
 		return userModels;
 	}
 
@@ -80,9 +73,36 @@ public class UserMgmtServiceImpl implements UserMgmtService{
 	}
 
 	@Override
+	public List<User> findAllUsers() {
+		List<User> userModels=new ArrayList<>();
+		Iterable<com.jmk.user.entity.User> iterableUsers=userRepository.findAll();
+		userModels=StreamSupport.stream(iterableUsers.spliterator(),false).map(userEntity->modelMapper.map(userEntity,User.class)).collect(Collectors.toList());
+		return userModels;
+	}
+
+	
+	@Override
 	public int deleteUserByUsername(String username) {
 		int userid=userRepository.deleteByUsername(username);
 		return userid;
 	}
+	
+	/**
+	 * To update the user model to set the user object reference in the associated reference object
+	 * @param userModel
+	 * @return
+	 */
+	protected User updateUserModel(User userModel) {
+		for(Address address:userModel.getAddresses()) {
+			address.setUser(userModel);
+		}
+		for(Identity identity:userModel.getIdentities()) {
+			identity.setUser(userModel);
+		}
+		userModel.getProfile().setUser(userModel);
+		return userModel;
+	}
+	
+	
 
 }

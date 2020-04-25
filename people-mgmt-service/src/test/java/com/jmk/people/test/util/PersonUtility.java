@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
 
+import com.jmk.enums.AddressType;
 import com.jmk.enums.DocumentType;
 import com.jmk.enums.Group;
 import com.jmk.enums.Status;
@@ -21,7 +22,7 @@ public class PersonUtility {
 		member.setFirstName("Rajiv Kumar");
 		member.setMobileNo("9999779379");
 		member.setLastName("Bansal");
-	//	member.setMemberType(MemberType.LIFETIME);
+		member.setMemberType(MemberType.LIFETIME);
 		member.setCreatedOn(Timestamp.from(Instant.now()));
 		member.setGroupId(Group.BJJD.getGroupId());
 		member.setWhenModified(Timestamp.from(Instant.now()));
@@ -62,7 +63,7 @@ public class PersonUtility {
 		mailingAddress.setHouseNo("503");
 		mailingAddress.setAddressLine1("U-503,5th Floor");
 		mailingAddress.setAddressLine2("Hyde Park,Sector-78");
-		mailingAddress.setAddressType("PERMANENT");
+		mailingAddress.setAddressType(AddressType.PERMANENT);
 		mailingAddress.setCity("Noida");
 		mailingAddress.setCountry("INDIA");
 		mailingAddress.setCreatedOn(Timestamp.from(Instant.now()));
@@ -78,7 +79,7 @@ public class PersonUtility {
 		permanentAddress.setHouseNo("502");
 		permanentAddress.setAddressLine1("U-502,5th Floor");
 		permanentAddress.setAddressLine2("Hyde Park,Sector-78");
-		permanentAddress.setAddressType("PERMANENT");
+		permanentAddress.setAddressType(AddressType.MAILING);
 		permanentAddress.setCity("Noida");
 		permanentAddress.setCountry("INDIA");
 		permanentAddress.setCreatedOn(Timestamp.from(Instant.now()));

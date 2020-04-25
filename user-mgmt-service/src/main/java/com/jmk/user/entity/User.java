@@ -67,8 +67,8 @@ public class User {
 	@OneToOne(mappedBy="user",cascade = CascadeType.ALL)
 	private Profile profile = null;
 
-	@OneToOne(mappedBy="user",cascade = CascadeType.ALL)
-	private Identity identity = null;
+	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
+	private Set<Identity> identities = new HashSet<>();
 
 	@OneToMany(mappedBy="user",cascade = CascadeType.ALL)
 	private Set<Address> addresses = new HashSet<>();
@@ -83,7 +83,7 @@ public class User {
 	private Integer groupId = null;
 	
 	@Column(name="created_by")
-	private Integer createdBy = null;
+	private Long createdBy = null;
 	
 	@Column(name="created_on")
 	private Timestamp createdOn=null;
@@ -93,6 +93,8 @@ public class User {
 	
 	@Version
 	private Long version = 1L;
+	
+	
 
 	public Long getId() {
 		return id;
@@ -190,12 +192,18 @@ public class User {
 		this.profile = profile;
 	}
 
-	public Identity getIdentity() {
-		return identity;
+	/**
+	 * @return the identities
+	 */
+	public Set<Identity> getIdentities() {
+		return identities;
 	}
 
-	public void setIdentity(Identity identity) {
-		this.identity = identity;
+	/**
+	 * @param identities the identities to set
+	 */
+	public void setIdentities(Set<Identity> identities) {
+		this.identities = identities;
 	}
 
 	public Set<Address> getAddresses() {
@@ -214,11 +222,11 @@ public class User {
 		this.roles = roles;
 	}
 
-	public Integer getCreatedBy() {
+	public Long getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(Integer createdBy) {
+	public void setCreatedBy(Long createdBy) {
 		this.createdBy = createdBy;
 	}
 

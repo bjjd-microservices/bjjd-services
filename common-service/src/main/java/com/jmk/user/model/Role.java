@@ -10,6 +10,7 @@ import javax.validation.constraints.Size;
 
 import org.springframework.validation.annotation.Validated;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jmk.enums.Status;
@@ -34,7 +35,8 @@ public class Role {
 	@JsonProperty("status")
 	private Status status = null;
 
-	@JsonIgnore
+	@JsonProperty
+	@JsonBackReference
 	private Set<User> users=new HashSet<>();
 
 	private List<Module> modules = null;
@@ -43,7 +45,7 @@ public class Role {
 	private Integer groupId = null;
 
 	@JsonProperty("createdBy")
-	private Integer createdBy = null;
+	private Long createdBy = null;
 
 	@JsonProperty("createdOn")
 	private Timestamp createdOn = null;
@@ -127,14 +129,14 @@ public class Role {
 	/**
 	 * @return the createdBy
 	 */
-	public Integer getCreatedBy() {
+	public Long getCreatedBy() {
 		return createdBy;
 	}
 
 	/**
 	 * @param createdBy the createdBy to set
 	 */
-	public void setCreatedBy(Integer createdBy) {
+	public void setCreatedBy(Long createdBy) {
 		this.createdBy = createdBy;
 	}
 

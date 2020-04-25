@@ -6,8 +6,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +27,6 @@ import io.swagger.annotations.ApiParam;
 @RestController
 public class DonationApiController implements DonationApi {
 
-	private static final Logger log = LoggerFactory.getLogger(DonationApiController.class);
-
 	private final HttpServletRequest request;
 	
 	@Autowired
@@ -46,13 +42,11 @@ public class DonationApiController implements DonationApi {
 	public DonationApiController(ObjectMapper objectMapper, HttpServletRequest request) {
 		this.request = request;
 	}
-
 	public ResponseEntity<Donation> saveDonation(
 			@ApiParam(value = "", required = true) @Valid @RequestBody Donation donation,
 			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel) {
 		String accept = request.getHeader("Accept");
-		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
-				|| accept.contains("*")) {
+		if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
 			if (validator.validate(donation)) {
 				if (DonorType.DEVOTEE.equals(donation.getDonorType()) && donation.getDonorId() == null) {
 					donorCreator.createDevotee(donation);
@@ -66,8 +60,7 @@ public class DonationApiController implements DonationApi {
 	
     public ResponseEntity<Void> saveDonations(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Donation> donations,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel) {
     	String accept = request.getHeader("Accept");
-		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
-				|| accept.contains("*")) {
+		if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
 			donations = donationService.saveDonations(donations);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
@@ -95,14 +88,10 @@ public class DonationApiController implements DonationApi {
 			@ApiParam(value = "Donation Id", required = true) @PathVariable("id") Long id,
 			@ApiParam(value = "", required = true) @Valid @RequestBody Donation donation) {
 		String accept = request.getHeader("Accept");
-		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
-				|| accept.contains("*")) {
+		if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
 			donation = donationService.saveDonation(donation);
 			return new ResponseEntity<Donation>(donation, HttpStatus.OK);
 		}
-
 		return new ResponseEntity<Donation>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-
-
 }

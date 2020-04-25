@@ -8,6 +8,8 @@ import com.jmk.account.enums.DonorType;
 import com.jmk.account.feign.client.PeopleMgmtServiceClient;
 import com.jmk.account.feign.client.ProjectMgmtServiceClient;
 import com.jmk.account.model.Donation;
+import com.jmk.eh.exception.StatusNotActiveException;
+import com.jmk.enums.Status;
 import com.jmk.people.model.Person;
 
 @Component("donationRequestValidator")
@@ -41,9 +43,13 @@ public class DonationRequestValidator implements RequestValidator<Donation> {
 			default:
 			}
 			Person person = responseEntity.getBody();
-			isValid = person != null;
+			if (Status.A.equals(person.getStatus())) {
+				isValid = true;
+			} else {
+				throw new StatusNotActiveException(person.getClass(), "id", person.getId().toString());
+			}
 		}else if(donation.getDonorId()==null && donation.getDonorType()==DonorType.DEVOTEE) {
-			isValid=true;
+			isValid = true;
 		}
 		return isValid;
 	}
@@ -54,3 +60,5 @@ public class DonationRequestValidator implements RequestValidator<Donation> {
 	}
 	
 }
+
+

@@ -85,7 +85,7 @@ public class Donation {
 	private Integer groupId = null;
 
 	@JsonProperty
-	private Integer createdBy = null;
+	private Long createdBy = null;
 
 	@JsonProperty
 	private Timestamp createdOn = null;
@@ -104,14 +104,14 @@ public class Donation {
 	/**
 	 * @return the createdBy
 	 */
-	public Integer getCreatedBy() {
+	public Long getCreatedBy() {
 		return createdBy;
 	}
 
 	/**
 	 * @param createdBy the createdBy to set
 	 */
-	public void setCreatedBy(Integer createdBy) {
+	public void setCreatedBy(Long createdBy) {
 		this.createdBy = createdBy;
 	}
 

@@ -87,7 +87,7 @@ public class Donation {
 	private Integer groupId = null;
 	
 	@Column(name="created_by")
-	private Integer createdBy = null;
+	private Long createdBy = null;
 	
 	@Column(name="created_on")
 	private Timestamp createdOn=null;
@@ -448,7 +448,7 @@ public class Donation {
 	/**
 	 * @return the createdBy
 	 */
-	public Integer getCreatedBy() {
+	public Long getCreatedBy() {
 		return createdBy;
 	}
 
@@ -457,7 +457,7 @@ public class Donation {
 	/**
 	 * @param createdBy the createdBy to set
 	 */
-	public void setCreatedBy(Integer createdBy) {
+	public void setCreatedBy(Long createdBy) {
 		this.createdBy = createdBy;
 	}
 

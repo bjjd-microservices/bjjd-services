@@ -13,8 +13,6 @@ import com.jmk.people.model.Devotee;
 import com.jmk.people.model.Member;
 import com.jmk.people.model.Sevadar;
 
-import io.swagger.annotations.ApiParam;
-
 /**
  * 
  */
@@ -34,3 +32,4 @@ public interface PeopleMgmtServiceClient {
 	ResponseEntity<Sevadar> findSevadarDetailsById(@PathVariable("id") Long id) ;
 			
 }
+

@@ -43,8 +43,8 @@ public class DonationApiTest {
 		donation.amount(BigDecimal.valueOf(11111));
 		donation.setPaymentMode(PaymentMode.CHEQUE);
 		donation.setDonationDate(LocalDate.now());
-		donation.setDonorId(22L);
-		donation.setDonorType(DonorType.DEVOTEE);
+		donation.setDonorId(1L);
+		donation.setDonorType(DonorType.MEMBER);
 		donation.setDonorMobileNo("9999779379");
 		donation.setProjectId(1L);
 		donation.setDonorName("NayakJi");
@@ -61,13 +61,14 @@ public class DonationApiTest {
 			e.printStackTrace();
 		}
 		try {
-			MvcResult mvcResult=mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:7379/donation").accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE).content(jsonDonation)).andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
+			MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:7379/donation/")
+					.accept(MediaType.APPLICATION_JSON_VALUE).contentType(MediaType.APPLICATION_JSON_VALUE)
+					.content(jsonDonation)).andExpect(MockMvcResultMatchers.status().isOk()).andReturn();
 			donation=objectMapper.readValue(mvcResult.getResponse().getContentAsByteArray(), Donation.class);
 			Assert.assertNotNull(donation);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
 }
+

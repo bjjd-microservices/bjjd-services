@@ -48,7 +48,7 @@ public class Project {
 	private Integer groupId = null;
 	
 	@JsonProperty
-	private Integer createdBy = null;
+	private Long createdBy = null;
 	
 	@JsonProperty
 	private Timestamp createdOn=null;
@@ -81,11 +81,11 @@ public class Project {
 	
 	
 
-	public Integer getCreatedBy() {
+	public Long getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(Integer createdBy) {
+	public void setCreatedBy(Long createdBy) {
 		this.createdBy = createdBy;
 	}
 

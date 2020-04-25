@@ -39,21 +39,21 @@ public class Identity {
 	@JsonProperty("groupId")
 	private Integer groupId = null;
 
-	@JsonProperty
-	private Integer createdBy = null;
+	@JsonProperty("createdBy")
+	private Long createdBy = null;
 
-	@JsonProperty
+	@JsonProperty("createdOn")
 	private Timestamp createdOn = null;
 
-	@JsonProperty
+	@JsonProperty("whenModified")
 	private Timestamp whenModified = null;
+
+	@JsonProperty("version")
+	private Long version = null;
 	
 	@JsonProperty
 	@JsonBackReference
 	private Person person;
-
-	@JsonProperty
-	private Long version = null;
 
 	public Identity id(Long id) {
 		this.id = id;
@@ -260,11 +260,11 @@ public class Identity {
 		return o.toString().replace("\n", "\n    ");
 	}
 
-	public Integer getCreatedBy() {
+	public Long getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(Integer createdBy) {
+	public void setCreatedBy(Long createdBy) {
 		this.createdBy = createdBy;
 	}
 

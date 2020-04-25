@@ -1,10 +1,11 @@
 package com.jmk.people.entity;
 
 import java.sql.Timestamp;
-import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,6 +27,7 @@ public class Identity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id = null;
 
+	@Enumerated(EnumType.STRING)
 	@Column(name = "document_type")
 	private DocumentType documentType = null;
 
@@ -49,7 +51,7 @@ public class Identity {
 	private Integer groupId = null;
 
 	@Column(name = "created_by")
-	private Integer createdBy = null;
+	private Long createdBy = null;
 
 	@Column(name = "created_on")
 	private Timestamp createdOn = null;
@@ -175,14 +177,14 @@ public class Identity {
 	/**
 	 * @return the createdBy
 	 */
-	public Integer getCreatedBy() {
+	public Long getCreatedBy() {
 		return createdBy;
 	}
 
 	/**
 	 * @param createdBy the createdBy to set
 	 */
-	public void setCreatedBy(Integer createdBy) {
+	public void setCreatedBy(Long createdBy) {
 		this.createdBy = createdBy;
 	}
 

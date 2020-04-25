@@ -59,8 +59,8 @@ public class User {
 	@JsonProperty("profile")
 	private Profile profile = null;
 
-	@JsonProperty("identity")
-	private Identity identity = null;
+	@JsonProperty("identities")
+	private Set<Identity> identities = new HashSet<>();
 
 	@JsonProperty("addresses")
 	private Set<Address> addresses = new HashSet<>();
@@ -72,7 +72,7 @@ public class User {
 	private Integer groupId = null;
 
 	@JsonProperty("createdBy")
-	private Integer createdBy = null;
+	private Long createdBy = null;
 
 	@JsonProperty("createdOn")
 	private Timestamp createdOn = null;
@@ -185,14 +185,14 @@ public class User {
 	/**
 	 * @return the createdBy
 	 */
-	public Integer getCreatedBy() {
+	public Long getCreatedBy() {
 		return createdBy;
 	}
 
 	/**
 	 * @param createdBy the createdBy to set
 	 */
-	public void setCreatedBy(Integer createdBy) {
+	public void setCreatedBy(Long createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -344,29 +344,6 @@ public class User {
 		this.profile = profile;
 	}
 
-	public User identity(Identity identity) {
-		this.identity = identity;
-		return this;
-	}
-
-	/**
-	 * Get identity
-	 * 
-	 * @return identity
-	 **/
-	@ApiModelProperty(value = "")
-
-	@Valid
-
-	public Identity getIdentity() {
-		return identity;
-	}
-
-	public void setIdentity(Identity identity) {
-		this.identity = identity;
-	}
-
-
 	public User addRolesItem(Role rolesItem) {
 		if (this.roles == null) {
 			this.roles = new HashSet<Role>();
@@ -375,6 +352,8 @@ public class User {
 		return this;
 	}
 
+	
+	
 	/**
 	 * Get roles
 	 * 
@@ -434,14 +413,14 @@ public class User {
 		return Objects.equals(this.id, user.id) && Objects.equals(this.username, user.username)
 				&& Objects.equals(this.displayName, user.displayName) && Objects.equals(this.password, user.password)
 				&& Objects.equals(this.status, user.status) && Objects.equals(this.profile, user.profile)
-				&& Objects.equals(this.identity, user.identity)
+				&& Objects.equals(this.identities, user.identities)
 				&& Objects.equals(this.addresses, user.addresses)
 				&& Objects.equals(this.roles, user.roles) && Objects.equals(this.groupId, user.groupId);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, username, displayName, password, status, profile, identity, addresses,
+		return Objects.hash(id, username, displayName, password, status, profile, identities, addresses,
 				roles, groupId);
 	}
 
@@ -456,7 +435,7 @@ public class User {
 		sb.append("    password: ").append(toIndentedString(password)).append("\n");
 		sb.append("    status: ").append(toIndentedString(status)).append("\n");
 		sb.append("    profile: ").append(toIndentedString(profile)).append("\n");
-		sb.append("    identity: ").append(toIndentedString(identity)).append("\n");
+		sb.append("    identity: ").append(toIndentedString(identities)).append("\n");
 		sb.append("    addresses: ").append(toIndentedString(addresses)).append("\n");
 		sb.append("    roles: ").append(toIndentedString(roles)).append("\n");
 		sb.append("    groupId: ").append(toIndentedString(groupId)).append("\n");
@@ -464,7 +443,25 @@ public class User {
 		return sb.toString();
 	}
 	
+	public User addIdentitiesItem(Identity identitiesItem) {
+		this.identities.add(identitiesItem);
+		return this;
+	}
+
 	
+	/**
+	 * @return the identities
+	 */
+	public Set<Identity> getIdentities() {
+		return identities;
+	}
+
+	/**
+	 * @param identities the identities to set
+	 */
+	public void setIdentities(Set<Identity> identities) {
+		this.identities = identities;
+	}
 
 	/**
 	 * Convert the given object to string with each line indented by 4 spaces

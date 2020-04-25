@@ -18,3 +18,4 @@ public interface DonationService {
 	public List<Donation> findDonationDetailsByDateRange(LocalDate startDate,LocalDate endDate);
 	
 }
+

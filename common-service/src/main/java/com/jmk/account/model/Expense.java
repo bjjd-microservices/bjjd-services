@@ -45,7 +45,7 @@ public class Expense {
 	private String paymentModeReference;
 
 	@JsonProperty("projectId")
-	private Integer projectId = null;
+	private Long projectId = null;
 
 	@JsonProperty("projectName")
 	private String projectName = null;
@@ -66,7 +66,7 @@ public class Expense {
 	private Integer groupId = null;
 
 	@JsonProperty
-	private Integer createdBy = null;
+	private Long createdBy = null;
 
 	@JsonProperty
 	private Timestamp createdOn = null;
@@ -85,14 +85,14 @@ public class Expense {
 	/**
 	 * @return the createdBy
 	 */
-	public Integer getCreatedBy() {
+	public Long getCreatedBy() {
 		return createdBy;
 	}
 
 	/**
 	 * @param createdBy the createdBy to set
 	 */
-	public void setCreatedBy(Integer createdBy) {
+	public void setCreatedBy(Long createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -247,7 +247,7 @@ public class Expense {
 		this.amount = amount;
 	}
 
-	public Expense projectId(Integer projectId) {
+	public Expense projectId(Long projectId) {
 		this.projectId = projectId;
 		return this;
 	}
@@ -259,11 +259,11 @@ public class Expense {
 	 **/
 	@ApiModelProperty(value = "Project Id")
 
-	public Integer getProjectId() {
+	public Long getProjectId() {
 		return projectId;
 	}
 
-	public void setProjectId(Integer projectId) {
+	public void setProjectId(Long projectId) {
 		this.projectId = projectId;
 	}
 
