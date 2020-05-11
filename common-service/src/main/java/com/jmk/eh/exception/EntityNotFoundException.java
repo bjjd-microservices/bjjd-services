@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-import org.apache.commons.lang.StringUtils;
+import org.springframework.util.StringUtils;
 
 public class EntityNotFoundException extends RuntimeException {
 
