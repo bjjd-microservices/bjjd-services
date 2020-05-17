@@ -1,5 +1,13 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.2.4.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
     <groupId>com.jmk</groupId>
     <artifactId>user-mgmt-service</artifactId>
     <packaging>jar</packaging>
@@ -10,16 +18,10 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <springfox-version>2.7.0</springfox-version>
-        <spring-cloud.version>2.1.2.RELEASE</spring-cloud.version>
    		<hibernate.version>5.4.10.Final</hibernate.version>
    		<spring-cloud.version>Hoxton.SR4</spring-cloud.version>
         <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
     </properties>
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-         <version>2.2.4.RELEASE</version>
-    </parent>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -60,13 +62,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-		<!--MySQL provides connectivity MySQL Connector/J is a JDBC Type 4 driver. -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.13</version><!--$NO-MVN-MAN-VER$ -->
 		</dependency>
-		<!-- Bean Validation API support -->
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
@@ -76,9 +76,6 @@
 			<artifactId>common-service</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		<!-- spring-boot-starter-test “Starter”, which imports both Spring Boot 
-			test modules as well as JUnit, AssertJ, Hamcrest, and a number of other useful 
-			libraries. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
