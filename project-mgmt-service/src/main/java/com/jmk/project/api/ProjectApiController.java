@@ -54,18 +54,18 @@ public class ProjectApiController implements ProjectApi {
 
 	}
 
-	public ResponseEntity<Void> createProjectsWithArrayInput(
+	public ResponseEntity<List<Project>> createProjects(
 			@ApiParam(value = "", required = true) @Valid @RequestBody List<Project> projects,
 			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel) {
 		String accept = request.getHeader("Accept");
 		 if (accept != null && accept.contains("application/json") || accept.contains("application/xml")) {
 			 projects=projectMgmtService.saveProjects(projects);
         	 if(projects!=null) {
-        		 return new ResponseEntity<>(HttpStatus.OK);
+        		 return new ResponseEntity<List<Project>>(projects,HttpStatus.OK);
         	 }
         }
        
-		return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+		return new ResponseEntity<List<Project>>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
 	public ResponseEntity<Void> deleteProjectById(
@@ -96,6 +96,16 @@ public class ProjectApiController implements ProjectApi {
 
 		return new ResponseEntity<List<Project>>(HttpStatus.NOT_IMPLEMENTED);
 	}
+	
+	public ResponseEntity<Project> findProjectByCode(@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel,@ApiParam(value = "") @Valid @RequestParam(value = "code", required = false) String code){
+		String accept = request.getHeader("Accept");
+		if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
+			Project project = projectMgmtService.findProjectByCode(code);
+			return new ResponseEntity<Project>(project, HttpStatus.OK);
+		}
+		return new ResponseEntity<Project>(HttpStatus.NOT_IMPLEMENTED);
+	}
+
 
 	public ResponseEntity<Project> updateProjectById(
 			@ApiParam(value = "Project Id", required = true) @PathVariable("id") Long id,

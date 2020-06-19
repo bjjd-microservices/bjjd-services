@@ -62,6 +62,20 @@ public class ProjectMgmtServiceImpl  implements ProjectMgmtService {
 		projectModels=StreamSupport.stream(iterableProjects.spliterator(),false).map(projectEntity->modelMapper.map(projectEntity, Project.class)).collect(Collectors.toList());
 		return projectModels;
 	}
+
+	/* (non-Javadoc)
+	 * @see com.jmk.project.service.ProjectMgmtService#findProjectByCode(java.lang.String)
+	 */
+	@Override
+	public Project findProjectByCode(String code) {
+		Project projectModel=null;
+		com.jmk.project.entity.Project projectEntity=projectRespository.findByCode(code);
+		if(projectEntity!=null) {
+		 projectModel=modelMapper.map(projectEntity, Project.class);
+		}
+		return projectModel;
+	}
+	
 	
 }
 

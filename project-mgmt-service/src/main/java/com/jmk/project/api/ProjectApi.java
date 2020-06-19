@@ -50,7 +50,7 @@ public interface ProjectApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    ResponseEntity<Void> createProjectsWithArrayInput(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Project> body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
+    ResponseEntity<List<Project>> createProjects(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Project> body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
 
 
     @ApiOperation(value = "Project Deletion Service based on the project id", nickname = "deleteProjectById", notes = "Project Deletion Service based on the project id", tags={ "ProjectMgmt", })
@@ -90,6 +90,16 @@ public interface ProjectApi {
         method = RequestMethod.GET)
     ResponseEntity<List<Project>> findProjectsByStatus(@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel,@ApiParam(value = "The status to restrict the results to.  If not provided, all records are returned", allowableValues = "A, I") @Valid @RequestParam(value = "status", required = false) String status);
 
+    @ApiOperation(value = "Find the project by code", nickname = "findProjectByCode", notes = "Find the project by code", response = Project.class, tags={ "ProjectMgmt", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "OK", response = Project.class),
+        @ApiResponse(code = 400, message = "Invalid Project Code"),
+        @ApiResponse(code = 500, message = "Internal Server Error") })
+    @RequestMapping(value = "/findProjectByCode",
+        produces = { "application/json", "application/xml" }, 
+        consumes = { "application/json", "application/xml" },
+        method = RequestMethod.GET)
+    ResponseEntity<Project> findProjectByCode(@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel,@ApiParam(value = "") @Valid @RequestParam(value = "code", required = false) String code);
 
     @ApiOperation(value = "Update Project Details based on the project id", nickname = "updateProjectById", notes = "Update Project Details based on the project id", response = Project.class, tags={ "ProjectMgmt", })
     @ApiResponses(value = { 

@@ -4,6 +4,9 @@ public class StatusNotActiveException extends RuntimeException {
 
 	private static final long serialVersionUID = 2555321976707340233L;
 
+	public StatusNotActiveException() {
+	}
+	
 	public StatusNotActiveException(Exception exception) {
 		super(exception);
 	}

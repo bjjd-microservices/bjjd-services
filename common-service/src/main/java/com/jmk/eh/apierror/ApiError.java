@@ -98,7 +98,7 @@ public class ApiError {
     }
 
 	//Private methods
-	private void addSubError(ApiSubError subError) {
+	public void addSubError(ApiSubError subError) {
 		if (subErrors == null) {
 			subErrors = new ArrayList<>();
 		}

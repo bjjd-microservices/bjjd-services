@@ -29,48 +29,51 @@ public class Donation {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id = null;
 
-	@Column(name = "donationDate")
+	@Column(name = "donation_date")
 	private LocalDate donationDate = null;
 
 	@Column(name = "amount")
 	private BigDecimal amount = null;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name="paymentMode")
+	@Column(name="payment_mode")
 	private PaymentMode paymentMode;
 	
-	@Column(name="paymentModeReference")
+	@Column(name="payment_mode_reference")
 	private String paymentModeReference;
 
-	@Column(name = "projectId")
+	@Column(name = "project_id")
 	private Long projectId = null;
 
-	@Column(name = "projectName")
+	@Column(name="project_code")
+	private String projectCode=null;
+
+	@Column(name = "project_name")
 	private String projectName = null;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "donorType")
+	@Column(name = "donor_type")
 	private DonorType donorType = null;
 
-	@Column(name = "donorId")
+	@Column(name = "donor_id")
 	private Long donorId = null;
 
-	@Column(name = "donorName")
+	@Column(name = "donor_name")
 	private String donorName = null;
 
-	@Column(name = "donorCity")
+	@Column(name = "donor_city")
 	private String donorCity = null;
 
-	@Column(name = "donorMobileNo")
+	@Column(name = "donor_mobileNo")
 	private String donorMobileNo = null;
 
-	@Column(name = "donorPANNo")
+	@Column(name = "donor_panno")
 	private String donorPANNo = null;
 
 	@Column(name = "reference")
 	private String reference = null;
 
-	@Column(name = "receivedBy")
+	@Column(name = "received_by")
 	private Long receivedBy = null;
 
 	@Column(name = "description")
@@ -83,7 +86,7 @@ public class Donation {
 	@Column(name = "status")
 	private Status status = null;
 
-	@Column(name = "groupId")
+	@Column(name = "group_id")
 	private Integer groupId = null;
 	
 	@Column(name="created_by")
@@ -497,7 +500,19 @@ public class Donation {
 		this.whenModified = whenModified;
 	}
 
+	/**
+	 * @return the projectCode
+	 */
+	public String getProjectCode() {
+		return projectCode;
+	}
 
+	/**
+	 * @param projectCode the projectCode to set
+	 */
+	public void setProjectCode(String projectCode) {
+		this.projectCode = projectCode;
+	}
 
 	/**
 	 * @return the version

@@ -16,6 +16,8 @@ public interface ProjectMgmtService   {
 	List<Project> saveProjects(List<Project> project);
 
 	List<Project> findAllProjectsByStatus(Status status);
+	
+	Project findProjectByCode(String code);
 
 }
 

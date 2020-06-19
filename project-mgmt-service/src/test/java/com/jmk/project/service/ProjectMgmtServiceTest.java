@@ -29,6 +29,7 @@ public class ProjectMgmtServiceTest {
 	public void setUp() {
 		project=new Project();
 		project.setName("Construction");
+		project.setCode("DNC");
 		project.setManager("Rajiv");
 		project.setStatus(Status.A);
 		project.setDescription("ProjectDescription");
@@ -40,6 +41,13 @@ public class ProjectMgmtServiceTest {
 	@Test
 	public void testCreateProject() {
 		project=projectMgmtService.saveProject(project);
+		Assert.assertNotNull(project);
+		
+	}
+
+	@Test
+	public void testFindProjectByCode() {
+		project=projectMgmtService.findProjectByCode("DNC");
 		Assert.assertNotNull(project);
 		
 	}

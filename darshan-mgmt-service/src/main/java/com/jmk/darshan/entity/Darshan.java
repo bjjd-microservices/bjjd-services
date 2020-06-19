@@ -32,44 +32,44 @@ public class Darshan {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id = null;
 
-	@Column(name = "visitingDate")
+	@Column(name = "visiting_date")
 	private LocalDate visitingDate = null;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "visitorType")
+	@Column(name = "visitor_type")
 	private VisitorType visitorType = null;
 
-	@Column(name = "visitorId")
+	@Column(name = "visitor_id")
 	private String visitorId = null;
 
-	@Column(name = "visitorName")
+	@Column(name = "visitor_name")
 	private String visitorName = null;
 
-	@Column(name = "visitorCity")
+	@Column(name = "visitor_city")
 	private String visitorCity = null;
 
-	@Column(name = "visitorState")
+	@Column(name = "visitor_state")
 	private String visitorState = null;
 
-	@Column(name = "visitorMobileNo")
+	@Column(name = "visitor_mobileno")
 	private String visitorMobileNo = null;
 
 	@Column(name = "reference")
 	private String reference = null;
 
-	@Column(name = "totalMen")
+	@Column(name = "total_men")
 	private Integer totalMen = null;
 
-	@Column(name = "totalWomen")
+	@Column(name = "total_women")
 	private Integer totalWomen = null;
 
-	@Column(name = "totalKids")
+	@Column(name = "total_kids")
 	private Integer totalKids = null;
 
-	@Column(name = "totalVisitors")
+	@Column(name = "total_visitors")
 	private Integer totalVisitors = null;
 
-	@Column(name = "groupId")
+	@Column(name = "group_id")
 	private Integer groupId = null;
 	
 	@Column(name="created_by")

@@ -45,6 +45,10 @@ public class Donation {
 	@JsonProperty("projectId")
 	private Long projectId = null;
 
+	@JsonProperty("projectCode")
+	private String projectCode=null;
+
+
 	@JsonProperty("projectName")
 	private String projectName = null;
 
@@ -506,11 +510,27 @@ public class Donation {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
+	
+	/**
+	 * @return the projectCode
+	 */
+	public String getProjectCode() {
+		return projectCode;
+	}
+
+	/**
+	 * @param projectCode the projectCode to set
+	 */
+	public void setProjectCode(String projectCode) {
+		this.projectCode = projectCode;
+	}
 
 	public Donation groupId(Integer groupId) {
 		this.groupId = groupId;
 		return this;
 	}
+	
+	
 
 	/**
 	 * User Group

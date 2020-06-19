@@ -38,32 +38,32 @@ public class Expense {
 	private BigDecimal amount = null;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name="paymentMode")
+	@Column(name="payment_mode")
 	private PaymentMode paymentMode;
 	
-	@Column(name="paymentModeReference")
+	@Column(name="payment_mode_reference")
 	private String paymentModeReference;
 
-	@Column(name = "projectId")
+	@Column(name = "project_id")
 	private Long projectId = null;
 
-	@Column(name = "projectName")
+	@Column(name = "project_name")
 	private String projectName = null;
 
-	@Column(name = "paidTo")
+	@Column(name = "paid_to")
 	private String paidTo = null;
 
 	@Column(name = "remarks")
 	private String remarks = null;
 
-	@Column(name = "approvedBy")
+	@Column(name = "approved_by")
 	private Long approvedBy = null;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status")
 	private Status status = null;
 
-	@Column(name = "groupId")
+	@Column(name = "group_id")
 	private Integer groupId = null;
 	
 	@Column(name="created_by")

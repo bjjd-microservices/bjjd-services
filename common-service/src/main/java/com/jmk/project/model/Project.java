@@ -25,6 +25,9 @@ public class Project {
 
 	@JsonProperty("name")
 	private String name = null;
+	
+	@JsonProperty("code")
+	private String code=null;
 
 	@JsonProperty("description")
 	private String description = null;
@@ -212,6 +215,20 @@ public class Project {
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, name, description, manager, startDate, completionDate, photoId, status, groupId);
+	}
+	
+	/**
+	 * @return the code
+	 */
+	public String getCode() {
+		return code;
+	}
+
+	/**
+	 * @param code the code to set
+	 */
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	@Override

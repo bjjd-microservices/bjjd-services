@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jmk.enums.Status;
 
 /**
@@ -27,6 +28,10 @@ public class Project {
 
 	@Column(name = "name")
 	private String name = null;
+	
+	@Column(name="code",unique=true)
+	private String code=null;
+
 
 	@Column(name = "description")
 	private String description = null;
@@ -116,6 +121,20 @@ public class Project {
 
 	public void setPhotoId(String photoId) {
 		this.photoId = photoId;
+	}
+	
+	/**
+	 * @return the code
+	 */
+	public String getCode() {
+		return code;
+	}
+
+	/**
+	 * @param code the code to set
+	 */
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public Status getStatus() {

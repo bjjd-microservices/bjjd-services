@@ -1,21 +1,16 @@
 package com.jmk.server;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-@SpringBootApplication
-public class CommonServiceApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(CommonServiceApplication.class, args);
-	}
+@Configuration
+public class CommonServiceConfiguration {
 
 	@Bean
 	public ObjectMapper objectMapper() {
