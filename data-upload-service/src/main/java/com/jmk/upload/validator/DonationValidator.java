@@ -86,6 +86,10 @@ public class DonationValidator extends LocalValidatorFactoryBean implements Vali
 				enrichDonationWithDonorDetails(donation, person);
 			}
 		}
+		
+		if(donation.getAmount().doubleValue()<=0) {
+			errors.rejectValue("donationAmount","donation.amount.invalid","Donation Amount is invalid");
+		}
 	
 	}
 	

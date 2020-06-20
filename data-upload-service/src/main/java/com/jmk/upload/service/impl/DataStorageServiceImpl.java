@@ -31,6 +31,9 @@ public class DataStorageServiceImpl implements DataStorageService{
 				ResponseEntity<List<Project>> responseEntity=projectMgmtServiceClient.createProjects(entry.getValue().stream().map(project->modelMapper.map(project,Project.class)).collect(Collectors.toList()));
 				System.out.println("Result: "+responseEntity.getBody());
 			}
+			if(entry.getKey().equals("Donation")) {
+				
+			}
 		});
 		return null;
 	}
