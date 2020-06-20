@@ -100,5 +100,6 @@ public class DonationValidator extends LocalValidatorFactoryBean implements Vali
 		donation.setDonorMobileNo(person.getMobileNo());
 		Address personAddress=person.getAddresses().stream().filter(address->address.getAddressType()==AddressType.PERMANENT).findAny().orElse(null);
 		donation.setDonorCity(personAddress.getCity());
+		donation.setDonorState(personAddress.getState());
 	}
 }

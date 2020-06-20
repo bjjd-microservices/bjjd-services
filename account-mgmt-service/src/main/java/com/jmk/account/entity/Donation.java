@@ -64,6 +64,10 @@ public class Donation {
 	@Column(name = "donor_city")
 	private String donorCity = null;
 
+	@Column(name="donor_state")
+	private String donorState = null;
+
+
 	@Column(name = "donor_mobileNo")
 	private String donorMobileNo = null;
 
@@ -302,7 +306,19 @@ public class Donation {
 		this.donorCity = donorCity;
 	}
 
+	/**
+	 * @return the donorState
+	 */
+	public String getDonorState() {
+		return donorState;
+	}
 
+	/**
+	 * @param donorState the donorState to set
+	 */
+	public void setDonorState(String donorState) {
+		this.donorState = donorState;
+	}
 
 	/**
 	 * @return the donorMobileNo

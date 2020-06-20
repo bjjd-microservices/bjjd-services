@@ -63,6 +63,10 @@ public class Donation {
 
 	@JsonProperty("donorCity")
 	private String donorCity = null;
+	
+	@JsonProperty("donorState")
+	private String donorState = null;
+
 
 	@JsonProperty("donorMobileNo")
 	private String donorMobileNo = null;
@@ -530,7 +534,19 @@ public class Donation {
 		return this;
 	}
 	
-	
+	/**
+	 * @return the donorState
+	 */
+	public String getDonorState() {
+		return donorState;
+	}
+
+	/**
+	 * @param donorState the donorState to set
+	 */
+	public void setDonorState(String donorState) {
+		this.donorState = donorState;
+	}
 
 	/**
 	 * User Group

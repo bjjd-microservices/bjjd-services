@@ -49,6 +49,8 @@ public class Donation extends Base{
 	private String donorName = null;
 
 	private String donorCity = null;
+	
+	private String donorState = null;
 
 	private String donorMobileNo = null;
 
@@ -396,6 +398,22 @@ public class Donation extends Base{
 	 */
 	public void setProjectCode(String projectCode) {
 		this.projectCode = projectCode;
+	}
+	
+	
+
+	/**
+	 * @return the donorState
+	 */
+	public String getDonorState() {
+		return donorState;
+	}
+
+	/**
+	 * @param donorState the donorState to set
+	 */
+	public void setDonorState(String donorState) {
+		this.donorState = donorState;
 	}
 
 	/**
