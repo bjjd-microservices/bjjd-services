@@ -48,7 +48,7 @@ public interface DonationApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    ResponseEntity<Void> saveDonations(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Donation> body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
+    ResponseEntity<List<Donation>> saveDonations(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Donation> body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
     
     @ApiOperation(value = "Donation Deletion Service based on the donation id", nickname = "deleteDonationById", notes = "Donation Deletion Service based on the donation id", tags={ "DonationService", })
     @ApiResponses(value = { 
