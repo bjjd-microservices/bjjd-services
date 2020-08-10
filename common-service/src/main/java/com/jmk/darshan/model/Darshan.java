@@ -1,7 +1,7 @@
 package com.jmk.darshan.model;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import javax.validation.Valid;
@@ -67,10 +67,10 @@ public class Darshan {
 	private Long createdBy = null;
 
 	@JsonProperty
-	private Timestamp createdOn = null;
+	private LocalDateTime createdOn = null;
 
 	@JsonProperty
-	private Timestamp whenModified = null;
+	private LocalDateTime whenModified = null;
 
 	@JsonProperty
 	private Long version = null;

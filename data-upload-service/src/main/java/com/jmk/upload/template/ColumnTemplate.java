@@ -13,9 +13,9 @@ public class ColumnTemplate  implements Serializable{
 	
 	private int pos;
 	
-	private String templateName;
+	private String sheetColumnName;
 	
-	private String beanColumnName;
+	private String beanPropertyName;
 	
 	private String type;
 	
@@ -48,34 +48,6 @@ public class ColumnTemplate  implements Serializable{
 	}
 
 	/**
-	 * @return the templateName
-	 */
-	public String getTemplateName() {
-		return templateName;
-	}
-
-	/**
-	 * @param templateName the templateName to set
-	 */
-	public void setTemplateName(String templateName) {
-		this.templateName = templateName;
-	}
-
-	/**
-	 * @return the beanColumnName
-	 */
-	public String getBeanColumnName() {
-		return beanColumnName;
-	}
-
-	/**
-	 * @param beanColumnName the beanColumnName to set
-	 */
-	public void setBeanColumnName(String beanColumnName) {
-		this.beanColumnName = beanColumnName;
-	}
-
-	/**
 	 * @return the type
 	 */
 	public String getType() {
@@ -87,6 +59,34 @@ public class ColumnTemplate  implements Serializable{
 	 */
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	/**
+	 * @return the sheetColumnName
+	 */
+	public String getSheetColumnName() {
+		return sheetColumnName;
+	}
+
+	/**
+	 * @param sheetColumnName the sheetColumnName to set
+	 */
+	public void setSheetColumnName(String sheetColumnName) {
+		this.sheetColumnName = sheetColumnName;
+	}
+
+	/**
+	 * @return the beanPropertyName
+	 */
+	public String getBeanPropertyName() {
+		return beanPropertyName;
+	}
+
+	/**
+	 * @param beanPropertyName the beanPropertyName to set
+	 */
+	public void setBeanPropertyName(String beanPropertyName) {
+		this.beanPropertyName = beanPropertyName;
 	}
 	
 }

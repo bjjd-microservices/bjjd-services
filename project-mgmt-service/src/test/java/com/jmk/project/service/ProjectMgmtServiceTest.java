@@ -1,8 +1,7 @@
 package com.jmk.project.service;
 
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -34,8 +33,8 @@ public class ProjectMgmtServiceTest {
 		project.setStatus(Status.A);
 		project.setDescription("ProjectDescription");
 		project.setStartDate(LocalDate.now());
-		project.setCreatedOn(Timestamp.from(Instant.now()));
-		project.setWhenModified(Timestamp.from(Instant.now()));
+		project.setCreatedOn(LocalDateTime.now());
+		project.setWhenModified(LocalDateTime.now());
 	}
 	
 	@Test

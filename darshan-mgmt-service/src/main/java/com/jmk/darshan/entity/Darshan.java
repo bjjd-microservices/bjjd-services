@@ -1,7 +1,7 @@
 package com.jmk.darshan.entity;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -76,10 +76,10 @@ public class Darshan {
 	private Long createdBy = null;
 	
 	@Column(name="created_on")
-	private Timestamp createdOn=null;
+	private LocalDateTime createdOn=null;
 	
 	@Column(name="when_modified")
-	private Timestamp whenModified=null;
+	private LocalDateTime whenModified=null;
 	
 	@Version
 	private Long version=null;

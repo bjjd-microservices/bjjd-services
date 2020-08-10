@@ -7,7 +7,7 @@ import java.util.TreeMap;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.validation.Validator;
 
-import com.jmk.upload.template.SheetTemplate;
+import com.jmk.upload.template.ExcelSheetTemplate;
 
 public class ExcelFile implements Serializable{
 
@@ -22,13 +22,15 @@ public class ExcelFile implements Serializable{
 	
 	int rowsPerThread=100;
 	
-	private SheetTemplate fileTemplate;
+	private ExcelSheetTemplate fileTemplate;
 	
 	private Class<? extends Base> clazz;
 	
 	private Map<Integer, Limit> sheetThreads;
 	
 	private Validator validator;
+	
+	private int headerRowsSize;
 	
 
 	/**
@@ -40,11 +42,12 @@ public class ExcelFile implements Serializable{
 	 * @param sheetThreads
 	 * @param validator
 	 */
-	public ExcelFile(Sheet sheet, boolean hasHeader, int rowsPerThread, SheetTemplate fileTemplate,
+	public ExcelFile(Sheet sheet, boolean hasHeader,int headerRowsSize, int rowsPerThread, ExcelSheetTemplate fileTemplate,
 			Class<? extends Base> clazz, Validator validator) {
 		super();
 		this.sheet = sheet;
 		this.hasHeader = hasHeader;
+		this.headerRowsSize=headerRowsSize;
 		this.rowsPerThread = rowsPerThread;
 		this.fileTemplate = fileTemplate;
 		this.clazz = clazz;
@@ -141,14 +144,14 @@ public class ExcelFile implements Serializable{
 	/**
 	 * @return the fileTemplate
 	 */
-	public SheetTemplate getFileTemplate() {
+	public ExcelSheetTemplate getFileTemplate() {
 		return fileTemplate;
 	}
 
 	/**
 	 * @param fileTemplate the fileTemplate to set
 	 */
-	public void setFileTemplate(SheetTemplate fileTemplate) {
+	public void setFileTemplate(ExcelSheetTemplate fileTemplate) {
 		this.fileTemplate = fileTemplate;
 	}
 
@@ -173,6 +176,24 @@ public class ExcelFile implements Serializable{
 			return (sheet.getLastRowNum()/rowsPerThread);
 	}
 	
+	/**
+	 * @return the headerRowsSize
+	 */
+	public int getHeaderRowsSize() {
+		return headerRowsSize;
+	}
+
+	/**
+	 * @param headerRowsSize the headerRowsSize to set
+	 */
+	public void setHeaderRowsSize(int headerRowsSize) {
+		this.headerRowsSize = headerRowsSize;
+	}
+
+
+
+
+
 	private void prepareThreads() {
 		sheetThreads=new TreeMap<>();
 		int startRow;

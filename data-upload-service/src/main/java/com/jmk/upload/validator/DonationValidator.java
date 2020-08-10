@@ -11,7 +11,10 @@ import com.jmk.account.enums.DonorType;
 import com.jmk.cache.PeopleCache;
 import com.jmk.cache.ProjectCache;
 import com.jmk.enums.AddressType;
+import com.jmk.enums.DocumentType;
+import com.jmk.enums.Status;
 import com.jmk.people.model.Address;
+import com.jmk.people.model.Identity;
 import com.jmk.people.model.Person;
 import com.jmk.project.model.Project;
 import com.jmk.upload.model.Donation;
@@ -46,6 +49,8 @@ public class DonationValidator extends LocalValidatorFactoryBean implements Vali
 			Project project=projectCache.getProjectByCode(donation.getProjectCode());
 			if(project==null) {
 				errors.rejectValue("projectCode","project.code.notExist","Project Code does not exist.");
+			}else if(project.getStatus()!=Status.A){
+				errors.rejectValue("projectCode","project.code.notActive","Project Code is not active.");
 			}else {
 				enrichDonationWithProjectDetails(donation,project);
 			}
@@ -80,9 +85,12 @@ public class DonationValidator extends LocalValidatorFactoryBean implements Vali
 				break;
 			default:
 			}
-			if(person==null) {
-				errors.rejectValue("donorMobileNo", "donation.donorMobileNo.requrired", "Donor does not exist having this mobile number.");
-			}else {
+			if (person == null) {
+				if (donorType != DonorType.DEVOTEE) {
+					errors.rejectValue("donorMobileNo", "donation.donorMobileNo.requrired",
+							"Donor does not exist having this mobile number.");
+				}
+			} else {
 				enrichDonationWithDonorDetails(donation, person);
 			}
 		}
@@ -98,12 +106,27 @@ public class DonationValidator extends LocalValidatorFactoryBean implements Vali
 		donation.setProjectName(project.getName());
 	}
 	
-	private void enrichDonationWithDonorDetails(Donation donation,Person person) {
+	private void enrichDonationWithDonorDetails(Donation donation, Person person) {
 		donation.setDonorId(person.getId());
-		donation.setDonorName(person.getFirstName()+" "+person.getLastName());
+		donation.setDonorName(person.getFirstName() + " " + person.getLastName());
 		donation.setDonorMobileNo(person.getMobileNo());
-		Address personAddress=person.getAddresses().stream().filter(address->address.getAddressType()==AddressType.PERMANENT).findAny().orElse(null);
-		donation.setDonorCity(personAddress.getCity());
-		donation.setDonorState(personAddress.getState());
+		Identity aadharIdentity = person.getIdentities().stream()
+				.filter(identity -> identity.getDocumentType() == DocumentType.AADHARCARD).findAny().orElse(null);
+		if (aadharIdentity != null) {
+			donation.setDonorAadharNo(aadharIdentity.getDocumentNumber());
+		}
+		Identity panIdentity = person.getIdentities().stream()
+				.filter(identity -> identity.getDocumentType() == DocumentType.PANCARD).findAny().orElse(null);
+		if (panIdentity != null) {
+			donation.setDonorPANNo(panIdentity.getDocumentNumber());
+		}
+		Address personAddress = person.getAddresses().stream()
+				.filter(address -> address.getAddressType() == AddressType.PERMANENT).findAny().orElse(null);
+
+		if (personAddress != null) {
+			donation.setDonorAddress(personAddress.getAddressLine1());
+			donation.setDonorCity(personAddress.getCity());
+			donation.setDonorState(personAddress.getState());
+		}
 	}
 }

@@ -1,6 +1,8 @@
 package com.jmk.user.api;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jmk.account.model.Donation;
 import com.jmk.user.model.User;
 import com.jmk.user.service.UserMgmtService;
 
@@ -51,6 +54,7 @@ public class UserApiController implements UserApi {
     	 String accept = request.getHeader("Accept");
          if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
         	 	 user.setPassword(passwordEncoder.encode(user.getPassword()));
+        	 	enrichCommonUserDetails(user);
              	 user=userMgmtService.saveUser(user);
                  return new ResponseEntity<User>(user,HttpStatus.OK);
          }
@@ -62,7 +66,8 @@ public class UserApiController implements UserApi {
     public ResponseEntity<Void> createUsersWithArrayInput(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<User> users,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel) {
     	String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
-        	 users=userMgmtService.saveUsers(users);
+        	users=users.stream().map(user->enrichCommonUserDetails(user)).collect(Collectors.toList());
+        	users=userMgmtService.saveUsers(users);
         	 if(users!=null) {
         		 return new ResponseEntity<>(HttpStatus.OK);
         	 }
@@ -122,8 +127,9 @@ public class UserApiController implements UserApi {
     public ResponseEntity<User> updateUserById(@ApiParam(value = "User Id",required=true) @PathVariable("id") Integer id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody User user) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
-            	user=userMgmtService.saveUser(user);
-                return new ResponseEntity<User>(user,HttpStatus.OK);
+        	enrichCommonUserDetails(user);
+        	user=userMgmtService.saveUser(user);
+            return new ResponseEntity<User>(user,HttpStatus.OK);
         }
 
         return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -132,11 +138,25 @@ public class UserApiController implements UserApi {
     public ResponseEntity<User> updateUserByUserName(@ApiParam(value = "Username",required=true) @PathVariable("username") String username,@ApiParam(value = "" ,required=true )  @Valid @RequestBody User user) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
+        		enrichCommonUserDetails(user);
             	user=userMgmtService.saveUser(user);
-            	  return new ResponseEntity<User>(user,HttpStatus.OK);
+            	return new ResponseEntity<User>(user,HttpStatus.OK);
         }
 
         return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    
 
+    /**
+     * Enrich Common User Details
+     * @param user
+     * @return user the user
+     */
+    private User enrichCommonUserDetails(User user) {
+		if (user.getId() == null) {
+			user.setCreatedOn(LocalDateTime.now());
+		}
+		user.setWhenModified(LocalDateTime.now());
+		return user;
+	}
 }

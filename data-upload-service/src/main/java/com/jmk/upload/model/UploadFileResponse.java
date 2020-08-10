@@ -1,11 +1,15 @@
 package com.jmk.upload.model;
 
+import java.util.List;
+import java.util.Map;
+
 public class UploadFileResponse {
 	private String fileName;
 	private String fileDownloadUri;
 	private String fileType;
 	private long size;
-
+	private Map<String,List<? extends Object>> resultSheetMapping;
+	
 	public UploadFileResponse(String fileName, String fileDownloadUri, String fileType, long size) {
 		super();
 		this.fileName = fileName;
@@ -70,4 +74,27 @@ public class UploadFileResponse {
 		this.size = size;
 	}
 
+	/**
+	 * @return the resultSheetMapping
+	 */
+	public Map<String, List<? extends Object>> getResultSheetMapping() {
+		return resultSheetMapping;
+	}
+
+	/**
+	 * @param resultSheetMapping the resultSheetMapping to set
+	 */
+	public void setResultSheetMapping(Map<String, List<? extends Object>> resultSheetMapping) {
+		this.resultSheetMapping = resultSheetMapping;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "UploadFileResponse [fileName=" + fileName + ", fileDownloadUri=" + fileDownloadUri + ", fileType="
+				+ fileType + ", size=" + size + ", resultSheetMapping=" + resultSheetMapping + "]";
+	}
+	
 }

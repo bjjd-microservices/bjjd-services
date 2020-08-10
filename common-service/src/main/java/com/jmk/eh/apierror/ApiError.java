@@ -27,8 +27,8 @@ public class ApiError {
 	private HttpStatus status;
 
 	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
-	@JsonProperty("timestamp")
-	private LocalDateTime timeStamp;
+	@JsonProperty("LocalDateTime")
+	private LocalDateTime LocalDateTime;
 
 	private String message;
 
@@ -37,7 +37,7 @@ public class ApiError {
 	private List<ApiSubError> subErrors;
 
 	private ApiError() {
-		this.timeStamp = LocalDateTime.now();
+		this.LocalDateTime = LocalDateTime.now();
 	}
 	
 	public ApiError(HttpStatus status) {
@@ -71,12 +71,12 @@ public class ApiError {
 
 	/**
 	 * @param status
-	 * @param timeStamp
+	 * @param LocalDateTime
 	 * @param message
 	 * @param debugMessage
 	 * @param subErrors
 	 */
-	public ApiError(HttpStatus status, LocalDateTime timeStamp, String message, String debugMessage,
+	public ApiError(HttpStatus status, LocalDateTime LocalDateTime, String message, String debugMessage,
 			List<ApiSubError> subErrors) {
 		this();
 		this.status = status;
@@ -153,17 +153,17 @@ public class ApiError {
 	}
 
 	/**
-	 * @return the timeStamp
+	 * @return the LocalDateTime
 	 */
-	public LocalDateTime getTimeStamp() {
-		return timeStamp;
+	public LocalDateTime getLocalDateTime() {
+		return LocalDateTime;
 	}
 
 	/**
-	 * @param timeStamp the timeStamp to set
+	 * @param LocalDateTime the LocalDateTime to set
 	 */
-	public void setTimeStamp(LocalDateTime timeStamp) {
-		this.timeStamp = timeStamp;
+	public void setLocalDateTime(LocalDateTime LocalDateTime) {
+		this.LocalDateTime = LocalDateTime;
 	}
 
 	/**
@@ -219,7 +219,7 @@ public class ApiError {
 		result = prime * result + ((message == null) ? 0 : message.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((subErrors == null) ? 0 : subErrors.hashCode());
-		result = prime * result + ((timeStamp == null) ? 0 : timeStamp.hashCode());
+		result = prime * result + ((LocalDateTime == null) ? 0 : LocalDateTime.hashCode());
 		return result;
 	}
 
@@ -252,10 +252,10 @@ public class ApiError {
 				return false;
 		} else if (!subErrors.equals(other.subErrors))
 			return false;
-		if (timeStamp == null) {
-			if (other.timeStamp != null)
+		if (LocalDateTime == null) {
+			if (other.LocalDateTime != null)
 				return false;
-		} else if (!timeStamp.equals(other.timeStamp))
+		} else if (!LocalDateTime.equals(other.LocalDateTime))
 			return false;
 		return true;
 	}
@@ -265,7 +265,7 @@ public class ApiError {
 	 */
 	@Override
 	public String toString() {
-		return "ApiError [status=" + status + ", timeStamp=" + timeStamp + ", message=" + message + ", debugMessage="
+		return "ApiError [status=" + status + ", LocalDateTime=" + LocalDateTime + ", message=" + message + ", debugMessage="
 				+ debugMessage + ", subErrors=" + subErrors + "]";
 	}
 	

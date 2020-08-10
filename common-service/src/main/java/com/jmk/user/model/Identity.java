@@ -1,12 +1,11 @@
 package com.jmk.user.model;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jmk.enums.DocumentType;
 
@@ -44,10 +43,10 @@ public class Identity {
 	private Long createdBy = null;
 
 	@JsonProperty("createdOn")
-	private Timestamp createdOn = null;
+	private LocalDateTime createdOn = null;
 
 	@JsonProperty("whenModified")
-	private Timestamp whenModified = null;
+	private LocalDateTime whenModified = null;
 
 	@JsonProperty("version")
 	private Long version = null;
@@ -274,19 +273,19 @@ public class Identity {
 		this.createdBy = createdBy;
 	}
 
-	public Timestamp getCreatedOn() {
+	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
 
-	public void setCreatedOn(Timestamp createdOn) {
+	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
 	}
 
-	public Timestamp getWhenModified() {
+	public LocalDateTime getWhenModified() {
 		return whenModified;
 	}
 
-	public void setWhenModified(Timestamp whenModified) {
+	public void setWhenModified(LocalDateTime whenModified) {
 		this.whenModified = whenModified;
 	}
 

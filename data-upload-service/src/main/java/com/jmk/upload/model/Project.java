@@ -1,11 +1,10 @@
 package com.jmk.upload.model;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jmk.enums.Status;
 
 @XmlRootElement
@@ -37,9 +36,9 @@ public class Project extends Base{
 	
 	private Long createdBy = null;
 	
-	private Timestamp createdOn=null;
+	private LocalDateTime createdOn=null;
 	
-	private Timestamp whenModified=null;
+	private LocalDateTime whenModified=null;
 	
 	private Long version=null;
 
@@ -186,28 +185,28 @@ public class Project extends Base{
 	/**
 	 * @return the createdOn
 	 */
-	public Timestamp getCreatedOn() {
+	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
 
 	/**
 	 * @param createdOn the createdOn to set
 	 */
-	public void setCreatedOn(Timestamp createdOn) {
+	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
 	}
 
 	/**
 	 * @return the whenModified
 	 */
-	public Timestamp getWhenModified() {
+	public LocalDateTime getWhenModified() {
 		return whenModified;
 	}
 
 	/**
 	 * @param whenModified the whenModified to set
 	 */
-	public void setWhenModified(Timestamp whenModified) {
+	public void setWhenModified(LocalDateTime whenModified) {
 		this.whenModified = whenModified;
 	}
 

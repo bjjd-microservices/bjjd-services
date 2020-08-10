@@ -38,5 +38,13 @@ public class ValidationResult {
 	public void setSheetResultMapping(Map<String, List<? extends Base>> sheetResultMapping) {
 		this.sheetResultMapping = sheetResultMapping;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "ValidationResult [result=" + result + ", sheetResultMapping=" + sheetResultMapping + "]";
+	}
 	
 }

@@ -1,17 +1,14 @@
 package com.jmk.user.model;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.validation.constraints.Size;
-
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jmk.enums.Status;
 
@@ -48,10 +45,10 @@ public class Role {
 	private Long createdBy = null;
 
 	@JsonProperty("createdOn")
-	private Timestamp createdOn = null;
+	private LocalDateTime createdOn = null;
 
 	@JsonProperty("whenModified")
-	private Timestamp whenModified = null;
+	private LocalDateTime whenModified = null;
 
 	@JsonProperty("version")
 	private Long version = null;
@@ -143,28 +140,28 @@ public class Role {
 	/**
 	 * @return the createdOn
 	 */
-	public Timestamp getCreatedOn() {
+	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
 
 	/**
 	 * @param createdOn the createdOn to set
 	 */
-	public void setCreatedOn(Timestamp createdOn) {
+	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
 	}
 
 	/**
 	 * @return the whenModified
 	 */
-	public Timestamp getWhenModified() {
+	public LocalDateTime getWhenModified() {
 		return whenModified;
 	}
 
 	/**
 	 * @param whenModified the whenModified to set
 	 */
-	public void setWhenModified(Timestamp whenModified) {
+	public void setWhenModified(LocalDateTime whenModified) {
 		this.whenModified = whenModified;
 	}
 

@@ -76,7 +76,7 @@ public interface DevoteeApi {
         produces = { "application/json", "application/xml" }, 
         consumes = { "application/json", "application/xml" },
         method = RequestMethod.GET)
-    ResponseEntity<Devotee> findDevoteeByMobileNumber(@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel,@ApiParam(value = "") @Valid @RequestParam(value = "mobileNo", required = false) String mobileNo);
+    ResponseEntity<Devotee> findDevoteeByMobileNumber(@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel,@ApiParam(value = "") @Valid @RequestParam(value = "mobileNo", required = true) String mobileNo);
 
 
     @ApiOperation(value = "Find Devotee Details based on the devotee id", nickname = "findDevoteeDetailsById", notes = "Find Devotee Details based on the devotee id", response = Devotee.class, tags={ "DevoteeMgmtServiceApi", })

@@ -30,7 +30,7 @@ public class ExcelFileParallelProcessor {
 		List<Future<List<? extends Base>>> results=new ArrayList<>(excelFile.getNoOfthreadsToProcess());
 		for(int i:excelFile.getSheetThreads().keySet()) {
 			results.add(executorService.submit(()->{
-				return ExcelFileReader.readExcelFile(excelFile, excelFile.getSheetThreads().get(i),i==1);
+				return ExcelFileReader.readExcelFile(excelFile, excelFile.getSheetThreads().get(i),i==1,excelFile.getHeaderRowsSize());
 			}));
 		} 
 		log.info("List assembling the results...");

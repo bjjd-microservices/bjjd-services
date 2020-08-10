@@ -1,6 +1,6 @@
 package com.jmk.people.entity;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -54,10 +54,10 @@ public class Identity {
 	private Long createdBy = null;
 
 	@Column(name = "created_on")
-	private Timestamp createdOn = null;
+	private LocalDateTime createdOn = null;
 
 	@Column(name = "when_modified")
-	private Timestamp whenModified = null;
+	private LocalDateTime whenModified = null;
 
 	@Version
 	private Long version;
@@ -191,28 +191,28 @@ public class Identity {
 	/**
 	 * @return the createdOn
 	 */
-	public Timestamp getCreatedOn() {
+	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
 
 	/**
 	 * @param createdOn the createdOn to set
 	 */
-	public void setCreatedOn(Timestamp createdOn) {
+	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
 	}
 
 	/**
 	 * @return the whenModified
 	 */
-	public Timestamp getWhenModified() {
+	public LocalDateTime getWhenModified() {
 		return whenModified;
 	}
 
 	/**
 	 * @param whenModified the whenModified to set
 	 */
-	public void setWhenModified(Timestamp whenModified) {
+	public void setWhenModified(LocalDateTime whenModified) {
 		this.whenModified = whenModified;
 	}
 

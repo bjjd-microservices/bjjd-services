@@ -62,6 +62,14 @@ public class ExcelSheetCellError{
 	public void setMessage(String message) {
 		this.message = message;
 	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "ExcelSheetCellError [columnName=" + columnName + ", rejectedValue=" + rejectedValue + ", message="
+				+ message + "]";
+	}
 	
 	
 	

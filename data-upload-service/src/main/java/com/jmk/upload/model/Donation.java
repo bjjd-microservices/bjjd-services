@@ -1,64 +1,64 @@
 package com.jmk.upload.model;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.Objects;
+import java.time.LocalDateTime;
 
-import javax.validation.Valid;
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.springframework.validation.annotation.Validated;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jmk.account.enums.DonorType;
 import com.jmk.account.enums.PaymentMode;
 import com.jmk.enums.Status;
-
-import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Donation
  */
 @XmlRootElement
-public class Donation extends Base{
+public class Donation extends Base {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4493051293506331228L;
+
 	private Long id = null;
 
 	private LocalDate donationDate = null;
-
-	private BigDecimal amount = null;
-	
-	private PaymentMode paymentMode;
-	
-	private String paymentModeReference;
-
-	private Long projectId = null;
-	
-	private String projectCode=null;
-
-	private String projectName = null;
-
-	private DonorType donorType = null;
 
 	private Long donorId = null;
 
 	private String donorName = null;
 
-	private String donorCity = null;
+	private DonorType donorType = null;
 	
+	private String donorAddress=null;
+	
+	private String donorCity = null;
+
 	private String donorState = null;
 
 	private String donorMobileNo = null;
 
+	private String donorAadharNo=null;
+	
 	private String donorPANNo = null;
+
+	private BigDecimal amount = null;
+
+	private PaymentMode paymentMode;
+
+	private String paymentModeReference;
+	
+	private String amountDepositedInToBank;
+
+	private Long projectId = null;
+
+	private String projectCode = null;
+
+	private String projectName = null;
 
 	private String reference = null;
 
-	private Long receivedBy = null;
+	private String receivedBy = null;
 
 	private String description = null;
 
@@ -70,9 +70,9 @@ public class Donation extends Base{
 
 	private Long createdBy = null;
 
-	private Timestamp createdOn = null;
+	private LocalDateTime createdOn = null;
 
-	private Timestamp whenModified = null;
+	private LocalDateTime whenModified = null;
 
 	private Long version = null;
 
@@ -144,6 +144,36 @@ public class Donation extends Base{
 	 */
 	public void setPaymentModeReference(String paymentModeReference) {
 		this.paymentModeReference = paymentModeReference;
+	}
+	
+	
+
+	/**
+	 * @return the donorAddress
+	 */
+	public String getDonorAddress() {
+		return donorAddress;
+	}
+
+	/**
+	 * @param donorAddress the donorAddress to set
+	 */
+	public void setDonorAddress(String donorAddress) {
+		this.donorAddress = donorAddress;
+	}
+
+	/**
+	 * @return the donorAadharNo
+	 */
+	public String getDonorAadharNo() {
+		return donorAadharNo;
+	}
+
+	/**
+	 * @param donorAadharNo the donorAadharNo to set
+	 */
+	public void setDonorAadharNo(String donorAadharNo) {
+		this.donorAadharNo = donorAadharNo;
 	}
 
 	/**
@@ -275,14 +305,14 @@ public class Donation extends Base{
 	/**
 	 * @return the receivedBy
 	 */
-	public Long getReceivedBy() {
+	public String getReceivedBy() {
 		return receivedBy;
 	}
 
 	/**
 	 * @param receivedBy the receivedBy to set
 	 */
-	public void setReceivedBy(Long receivedBy) {
+	public void setReceivedBy(String receivedBy) {
 		this.receivedBy = receivedBy;
 	}
 
@@ -359,33 +389,31 @@ public class Donation extends Base{
 	/**
 	 * @return the createdOn
 	 */
-	public Timestamp getCreatedOn() {
+	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
 
 	/**
 	 * @param createdOn the createdOn to set
 	 */
-	public void setCreatedOn(Timestamp createdOn) {
+	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
 	}
 
 	/**
 	 * @return the whenModified
 	 */
-	public Timestamp getWhenModified() {
+	public LocalDateTime getWhenModified() {
 		return whenModified;
 	}
 
 	/**
 	 * @param whenModified the whenModified to set
 	 */
-	public void setWhenModified(Timestamp whenModified) {
+	public void setWhenModified(LocalDateTime whenModified) {
 		this.whenModified = whenModified;
 	}
 
-	
-	
 	/**
 	 * @return the projectCode
 	 */
@@ -399,8 +427,6 @@ public class Donation extends Base{
 	public void setProjectCode(String projectCode) {
 		this.projectCode = projectCode;
 	}
-	
-	
 
 	/**
 	 * @return the donorState
@@ -432,7 +458,23 @@ public class Donation extends Base{
 	
 	
 
-	/* (non-Javadoc)
+	/**
+	 * @return the amountDepositedInToBank
+	 */
+	public String getAmountDepositedInToBank() {
+		return amountDepositedInToBank;
+	}
+
+	/**
+	 * @param amountDepositedInToBank the amountDepositedInToBank to set
+	 */
+	public void setAmountDepositedInToBank(String amountDepositedInToBank) {
+		this.amountDepositedInToBank = amountDepositedInToBank;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -446,5 +488,5 @@ public class Donation extends Base{
 				+ createdBy + ", createdOn=" + createdOn + ", whenModified=" + whenModified + ", version=" + version
 				+ "]";
 	}
-	
+
 }

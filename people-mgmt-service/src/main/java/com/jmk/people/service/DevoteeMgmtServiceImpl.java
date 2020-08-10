@@ -15,6 +15,7 @@ import com.jmk.enums.Status;
 import com.jmk.people.enums.PersonType;
 import com.jmk.people.model.Devotee;
 import com.jmk.people.repository.PersonRepository;
+import com.jmk.project.model.Project;
 
 @Service("devoteeMgmtService")
 public class DevoteeMgmtServiceImpl implements PersonMgmtService<Devotee> {
@@ -66,9 +67,12 @@ public class DevoteeMgmtServiceImpl implements PersonMgmtService<Devotee> {
 
 	@Override
 	public Devotee findPersonByMobileNumber(String mobileNumber) {
+		Devotee devoteeModel = null;
 		com.jmk.people.entity.Devotee devoteeEntity = repository
 				.findPersonByTypeAndMobileNo(PersonType.DEVOTEE.getType(), mobileNumber);
-		Devotee devoteeModel = mapEntityToModel(mapper, devoteeEntity, Devotee.class);
+		if (devoteeEntity != null) {
+			devoteeModel = mapEntityToModel(mapper, devoteeEntity, Devotee.class);
+		}
 		return devoteeModel;
 	}
 

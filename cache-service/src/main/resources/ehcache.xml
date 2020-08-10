@@ -11,4 +11,22 @@
             eternal="true"
             overflowToDisk="false"
             timeToLiveSeconds="10000" />
+            
+      <cache name ="devoteeCache" maxElementsInMemory="2000"
+            eternal="true"
+            overflowToDisk="false"
+            timeToLiveSeconds="10000" />
+      
+      
+      <cache name ="memberCache" maxElementsInMemory="2000"
+            eternal="true"
+            overflowToDisk="false"
+            timeToLiveSeconds="10000" />
+      
+      
+      <cache name ="sevadarCache" maxElementsInMemory="2000"
+            eternal="true"
+            overflowToDisk="false"
+            timeToLiveSeconds="10000" />
+      
 </ehcache>

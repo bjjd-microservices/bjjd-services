@@ -62,8 +62,12 @@ public class SevadarMgmtServiceImpl implements PersonMgmtService<Sevadar>{
 
 	@Override
 	public Sevadar findPersonByMobileNumber(String mobileNumber) {
-		com.jmk.people.entity.Sevadar sevadarEntity=repository.findPersonByTypeAndMobileNo(PersonType.SEVADAR.getType(),mobileNumber);
-		Sevadar sevadarModel=mapEntityToModel(mapper, sevadarEntity, Sevadar.class);
+		Sevadar sevadarModel = null;
+		com.jmk.people.entity.Sevadar sevadarEntity = repository
+				.findPersonByTypeAndMobileNo(PersonType.SEVADAR.getType(), mobileNumber);
+		if (sevadarEntity != null) {
+			sevadarModel = mapEntityToModel(mapper, sevadarEntity, Sevadar.class);
+		}
 		return sevadarModel;
 	}
 

@@ -1,8 +1,8 @@
 package com.jmk.account.entity;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jmk.account.enums.DonorType;
 import com.jmk.account.enums.PaymentMode;
 import com.jmk.enums.Status;
@@ -32,35 +33,19 @@ public class Donation {
 	@Column(name = "donation_date")
 	private LocalDate donationDate = null;
 
-	@Column(name = "amount")
-	private BigDecimal amount = null;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(name="payment_mode")
-	private PaymentMode paymentMode;
-	
-	@Column(name="payment_mode_reference")
-	private String paymentModeReference;
-
-	@Column(name = "project_id")
-	private Long projectId = null;
-
-	@Column(name="project_code")
-	private String projectCode=null;
-
-	@Column(name = "project_name")
-	private String projectName = null;
-
-	@Enumerated(EnumType.STRING)
-	@Column(name = "donor_type")
-	private DonorType donorType = null;
-
 	@Column(name = "donor_id")
 	private Long donorId = null;
 
 	@Column(name = "donor_name")
 	private String donorName = null;
 
+	@Enumerated(EnumType.STRING)
+	@Column(name = "donor_type")
+	private DonorType donorType = null;
+	
+	@JsonProperty("donorAddress")
+	private String donorAddress=null;
+	
 	@Column(name = "donor_city")
 	private String donorCity = null;
 
@@ -71,14 +56,39 @@ public class Donation {
 	@Column(name = "donor_mobileNo")
 	private String donorMobileNo = null;
 
-	@Column(name = "donor_panno")
+	@JsonProperty("donor_aadhar_no")
+	private String donorAadharNo=null;
+	
+	@Column(name = "donor_pan_no")
 	private String donorPANNo = null;
 
+	@Column(name = "amount")
+	private BigDecimal amount = null;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name="payment_mode")
+	private PaymentMode paymentMode;
+	
+	@Column(name="payment_mode_reference")
+	private String paymentModeReference;
+	
+	@Column(name="amount_deposited_into_bank")
+	private String amountDepositedInToBank;
+
+	@Column(name = "project_id")
+	private Long projectId = null;
+
+	@Column(name="project_code")
+	private String projectCode=null;
+
+	@Column(name = "project_name")
+	private String projectName = null;
+	
 	@Column(name = "reference")
 	private String reference = null;
 
 	@Column(name = "received_by")
-	private Long receivedBy = null;
+	private String receivedBy = null;
 
 	@Column(name = "description")
 	private String description = null;
@@ -97,10 +107,10 @@ public class Donation {
 	private Long createdBy = null;
 	
 	@Column(name="created_on")
-	private Timestamp createdOn=null;
+	private LocalDateTime createdOn=null;
 	
 	@Column(name="when_modified")
-	private Timestamp whenModified=null;
+	private LocalDateTime whenModified=null;
 	
 	@Version
 	private Long version=null;
@@ -198,7 +208,33 @@ public class Donation {
 		this.paymentModeReference = paymentModeReference;
 	}
 
+	/**
+	 * @return the donorAddress
+	 */
+	public String getDonorAddress() {
+		return donorAddress;
+	}
 
+	/**
+	 * @param donorAddress the donorAddress to set
+	 */
+	public void setDonorAddress(String donorAddress) {
+		this.donorAddress = donorAddress;
+	}
+
+	/**
+	 * @return the donorAadharNo
+	 */
+	public String getDonorAadharNo() {
+		return donorAadharNo;
+	}
+
+	/**
+	 * @param donorAadharNo the donorAadharNo to set
+	 */
+	public void setDonorAadharNo(String donorAadharNo) {
+		this.donorAadharNo = donorAadharNo;
+	}
 
 	/**
 	 * @return the projectId
@@ -377,7 +413,7 @@ public class Donation {
 	/**
 	 * @return the receivedBy
 	 */
-	public Long getReceivedBy() {
+	public String getReceivedBy() {
 		return receivedBy;
 	}
 
@@ -386,7 +422,7 @@ public class Donation {
 	/**
 	 * @param receivedBy the receivedBy to set
 	 */
-	public void setReceivedBy(Long receivedBy) {
+	public void setReceivedBy(String receivedBy) {
 		this.receivedBy = receivedBy;
 	}
 
@@ -485,7 +521,7 @@ public class Donation {
 	/**
 	 * @return the createdOn
 	 */
-	public Timestamp getCreatedOn() {
+	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
 
@@ -494,16 +530,30 @@ public class Donation {
 	/**
 	 * @param createdOn the createdOn to set
 	 */
-	public void setCreatedOn(Timestamp createdOn) {
+	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
 	}
 
 
 
 	/**
+	 * @return the amountDepositedInToBank
+	 */
+	public String getAmountDepositedInToBank() {
+		return amountDepositedInToBank;
+	}
+
+	/**
+	 * @param amountDepositedInToBank the amountDepositedInToBank to set
+	 */
+	public void setAmountDepositedInToBank(String amountDepositedInToBank) {
+		this.amountDepositedInToBank = amountDepositedInToBank;
+	}
+
+	/**
 	 * @return the whenModified
 	 */
-	public Timestamp getWhenModified() {
+	public LocalDateTime getWhenModified() {
 		return whenModified;
 	}
 
@@ -512,7 +562,7 @@ public class Donation {
 	/**
 	 * @param whenModified the whenModified to set
 	 */
-	public void setWhenModified(Timestamp whenModified) {
+	public void setWhenModified(LocalDateTime whenModified) {
 		this.whenModified = whenModified;
 	}
 

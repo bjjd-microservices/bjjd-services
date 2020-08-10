@@ -2,12 +2,11 @@ package com.jmk.upload.template;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class SheetTemplate implements Serializable{
+public class ExcelSheetTemplate implements Serializable{
 	
 	
 	/**
@@ -18,6 +17,8 @@ public class SheetTemplate implements Serializable{
 	private int templateId;
 	
 	private String templateName;
+	
+	private int headerRowsSize;
 	
 	private String validator;
 	
@@ -67,6 +68,20 @@ public class SheetTemplate implements Serializable{
 	public void setColumnTemplates(List<ColumnTemplate> columnTemplates) {
 		this.columnTemplates = columnTemplates;
 	}
+	
+	/**
+	 * @return the headerRowsSize
+	 */
+	public int getHeaderRowsSize() {
+		return headerRowsSize;
+	}
+
+	/**
+	 * @param headerRowsSize the headerRowsSize to set
+	 */
+	public void setHeaderRowsSize(int headerRowsSize) {
+		this.headerRowsSize = headerRowsSize;
+	}
 
 	/**
 	 * @return the columnTemplatesMap
@@ -104,6 +119,8 @@ public class SheetTemplate implements Serializable{
 		this.validator = validator;
 	}
 	
+	
+
 	public ColumnTemplate getColumnTemplateByPos(int pos){
 		initColumnTemplatesMap();
 		return columnTemplatesMap.get(pos);

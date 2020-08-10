@@ -1,5 +1,8 @@
 package com.jmk.upload.api;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,12 +33,14 @@ public class FileUploadController {
 	
 	@PostMapping("/")
 	public ResponseEntity<UploadFileResponse> upload(@RequestParam("file") MultipartFile file){
+		UploadFileResponse uploadFileResponse=new UploadFileResponse(file.getOriginalFilename(), file.getName(), file.getContentType(), file.getSize());
 		System.out.println("File name: "+file.getOriginalFilename());
 		System.out.println("File type: "+file.getContentType());
 		ValidationResult validationResult=dataValidationService.validate(file);
 		if(Result.SUCCESS.equals(validationResult.getResult())) {
 			System.out.println(validationResult.getSheetResultMapping());
-			dataStorageService.storeData(validationResult.getSheetResultMapping());
+			Map<String,List<? extends Object>> resultSheetMapping=dataStorageService.storeData(validationResult.getSheetResultMapping());
+			uploadFileResponse.setResultSheetMapping(resultSheetMapping);
 		}else if(Result.FAILURE.equals(validationResult.getResult())){
 			ExcelSheetValidationError excelSheetValidationError=new ExcelSheetValidationError();
 			ApiError apiError=new ApiError(HttpStatus.BAD_REQUEST);
@@ -44,8 +49,7 @@ public class FileUploadController {
 			validationResult.getSheetResultMapping().entrySet().stream().forEach(entry->entry.getValue().stream().forEach(base->excelSheetValidationError.addSheetRowErrors(entry.getKey(), base.getExcelSheetRowErrors())));
 			throw new ExcelSheetValidationException(apiError);
 		}
-		//storageService.storeData(file);
-		return new ResponseEntity<UploadFileResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<UploadFileResponse>(uploadFileResponse,HttpStatus.OK);
 	}
 	
 }

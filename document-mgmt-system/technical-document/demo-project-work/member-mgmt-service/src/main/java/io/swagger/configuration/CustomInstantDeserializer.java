@@ -156,7 +156,7 @@ public class CustomInstantDeserializer<T extends Temporal>
 
   @Override
   public T deserialize(JsonParser parser, DeserializationContext context) throws IOException {
-    //NOTE: Timestamps contain no timezone info, and are always in configured TZ. Only
+    //NOTE: LocalDateTimes contain no timezone info, and are always in configured TZ. Only
     //string values have to be adjusted to the configured TZ.
     switch (parser.getCurrentTokenId()) {
       case JsonTokenId.ID_NUMBER_FLOAT: {
@@ -168,14 +168,14 @@ public class CustomInstantDeserializer<T extends Temporal>
       }
 
       case JsonTokenId.ID_NUMBER_INT: {
-        long timestamp = parser.getLongValue();
-        if (context.isEnabled(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS)) {
+        long LocalDateTime = parser.getLongValue();
+        if (context.isEnabled(DeserializationFeature.READ_DATE_LocalDateTimeS_AS_NANOSECONDS)) {
           return this.fromNanoseconds.apply(new FromDecimalArguments(
-              timestamp, 0, this.getZone(context)
+              LocalDateTime, 0, this.getZone(context)
           ));
         }
         return this.fromMilliseconds.apply(new FromIntegerArguments(
-            timestamp, this.getZone(context)
+            LocalDateTime, this.getZone(context)
         ));
       }
 

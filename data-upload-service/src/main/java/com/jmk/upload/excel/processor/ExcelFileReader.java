@@ -15,36 +15,29 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 
 import com.jmk.enums.ExcelFileErrorType;
-import com.jmk.enums.Status;
+import com.jmk.upload.enums.ExcelDataType;
 import com.jmk.upload.model.Base;
 import com.jmk.upload.model.ExcelFile;
 import com.jmk.upload.model.Limit;
 import com.jmk.upload.template.ColumnTemplate;
-import com.jmk.upload.template.SheetTemplate;
+import com.jmk.upload.template.ExcelSheetTemplate;
 
 public final class ExcelFileReader {
 
 	private final static Logger log = LoggerFactory.getLogger(ExcelFileParallelProcessor.class);
 
-	private static final String VARCHAR = "VARCHAR";
-	private static final String DECIMAL = "DECIMAL";
-	private static final String TIMESTAMP = "TIMESTAMP";
-	private static final String BOOLEAN = "BOOLEAN";
-	private static final String DATE = "DATE";
-	private static final String STATUS="STATUS";
-
 	private ExcelFileReader() {
 
 	}
 
-	public static <T extends Base> List<T> readExcelFile(ExcelFile excelFile, Limit limit, boolean hasHeaderRow) {
+	public static <T extends Base> List<T> readExcelFile(ExcelFile excelFile, Limit limit, boolean hasHeaderRow,int headerRowsSize) {
 		List<T> objectList = new ArrayList<>();
 		BindException bindException;
 		T object;
 		ColumnTemplate columnTemplate;
 		int startRow = limit.getStartRow();
 		int endRow = limit.getEndRow();
-		SheetTemplate fileTemplate = excelFile.getFileTemplate();
+		ExcelSheetTemplate fileTemplate = excelFile.getFileTemplate();
 		try {
 			// Sheet sheet = workbook.getSheetAt(0);
 			if (limit.getStartRow() == -1 && limit.getEndRow() == -1) {
@@ -58,7 +51,7 @@ public final class ExcelFileReader {
 				Row row = (Row) excelFile.getSheet().getRow(currRow);
 				bindException = new BindException(object, "" + row.getRowNum());
 
-				if (hasHeaderRow && row.getRowNum() < 1) {
+				if (hasHeaderRow && row.getRowNum() < headerRowsSize) {
 					continue;// just skip the row if row number 0 if header row is true
 				}
 
@@ -66,28 +59,33 @@ public final class ExcelFileReader {
 				 * Dynamically calculate positions based on Column Name and Bean Name if needed
 				 * to not use static pos from conf
 				 */
+				
 				for (Integer pos : fileTemplate.getColumnTemplatesMap().keySet()) {
 					columnTemplate = fileTemplate.getColumnTemplatesMap().get(pos);
 					if (row.getCell(pos) != null) {
-						switch (columnTemplate.getType()) {
+						switch (ExcelDataType.valueOf(columnTemplate.getType())) {
 						case DATE:
-							BeanUtils.setProperty(object, columnTemplate.getBeanColumnName(),
+							BeanUtils.setProperty(object, columnTemplate.getBeanPropertyName(),
 									getDateCellValue(row.getCell(pos), bindException, columnTemplate));
 							break;
 						case BOOLEAN:
-							BeanUtils.setProperty(object, columnTemplate.getBeanColumnName(),
+							BeanUtils.setProperty(object, columnTemplate.getBeanPropertyName(),
 									getBooleanCellValue(row.getCell(pos), bindException, columnTemplate));
 							break;
 						case DECIMAL:
-							BeanUtils.setProperty(object, columnTemplate.getBeanColumnName(),
+							BeanUtils.setProperty(object, columnTemplate.getBeanPropertyName(),
 									getDecimalCellValue(row.getCell(pos), bindException, columnTemplate));
 							break;
-						case STATUS:
-							BeanUtils.setProperty(object, columnTemplate.getBeanColumnName(),
-									getStatusCellValue(row.getCell(pos), bindException, columnTemplate));
+						case LONG:
+							BeanUtils.setProperty(object, columnTemplate.getBeanPropertyName(),
+									getLongCellValue(row.getCell(pos), bindException, columnTemplate));
+							break;
+						case ENUMERATION:
+							BeanUtils.setProperty(object, columnTemplate.getBeanPropertyName(),
+									getEnumeratedCellValue(row.getCell(pos),object, bindException, columnTemplate));
 							break;
 						default:
-							BeanUtils.setProperty(object, columnTemplate.getBeanColumnName(),
+							BeanUtils.setProperty(object, columnTemplate.getBeanPropertyName(),
 									getStringCellValue(row.getCell(pos), bindException, columnTemplate));
 						}
 					}
@@ -125,7 +123,7 @@ public final class ExcelFileReader {
 				localDate = cell.getLocalDateTimeCellValue().toLocalDate();
 			} catch (IllegalStateException | NumberFormatException e) {
 				log.error(e.getMessage());
-				errors.rejectValue(columnTemplate.getBeanColumnName(),
+				errors.rejectValue(columnTemplate.getBeanPropertyName(),
 						ExcelFileErrorType.INVALID_DATE_VALUE.getErrorType(),new Object[] {cell}, cell.toString());
 			}
 		}
@@ -156,7 +154,7 @@ public final class ExcelFileReader {
 		} catch (Exception exception) {
 			log.error(exception.getMessage());
 			exception.printStackTrace();
-			errors.rejectValue(columnTemplate.getBeanColumnName(),
+			errors.rejectValue(columnTemplate.getBeanPropertyName(),
 					ExcelFileErrorType.INVALID_STRING_VALUE.getErrorType(), cell.toString());
 		}
 		return rtrnVal;
@@ -170,20 +168,24 @@ public final class ExcelFileReader {
 	 * @param columnTemplate
 	 * @return
 	 */
-	private static Status getStatusCellValue(Cell cell, Errors errors, ColumnTemplate columnTemplate) {
-		Status rtrnVal = null;
+	private static Enum getEnumeratedCellValue(Cell cell,Object object, Errors errors, ColumnTemplate columnTemplate) {
+		Enum rtrnVal = null;
 
 		try {
 			if (cell != null) {
 				if (cell.getCellType() == CellType.STRING) {
 					String cellValue = cell.getStringCellValue();
-					rtrnVal=Status.fromValue(cellValue);
+					Class clazz=object.getClass().getDeclaredField(columnTemplate.getBeanPropertyName()).getType();
+					if(clazz.isEnum()) {
+						rtrnVal= Enum.valueOf(clazz,cellValue);
+					}
+					
 				} 
 			}
 		} catch (Exception exception) {
 			log.error(exception.getMessage());
 			exception.printStackTrace();
-			errors.rejectValue(columnTemplate.getBeanColumnName(),
+			errors.rejectValue(columnTemplate.getBeanPropertyName(),
 					ExcelFileErrorType.INVALID_STRING_VALUE.getErrorType(), cell.toString());
 		}
 		return rtrnVal;
@@ -211,13 +213,42 @@ public final class ExcelFileReader {
 			}
 		} catch (Exception exception) {
 			log.error(exception.getMessage());
-			errors.rejectValue(columnTemplate.getBeanColumnName(),
+			errors.rejectValue(columnTemplate.getBeanPropertyName(),
 					ExcelFileErrorType.INVALID_DECIMAL_VALUE.getErrorType(), cell.toString());
 		}
 
 		return rtrnVal;
 	}
 
+	/**
+	 * Get the decimal value
+	 * 
+	 * @param cell
+	 * @param errors
+	 * @param columnTemplate
+	 * @return
+	 */
+	private static Long getLongCellValue(Cell cell, Errors errors, ColumnTemplate columnTemplate) {
+		Long rtrnVal = 0L;
+		try {
+			if (cell != null) {
+				if (cell.toString().trim().length() == 0)
+					return rtrnVal;
+				else if (cell.getCellType() == CellType.NUMERIC) {
+					Double doubleValue = Double.valueOf(cell.getNumericCellValue());
+					return rtrnVal = doubleValue.longValue();
+				}
+			}
+		} catch (Exception exception) {
+			log.error(exception.getMessage());
+			errors.rejectValue(columnTemplate.getBeanPropertyName(),
+					ExcelFileErrorType.INVALID_LONG_VALUE.getErrorType(), cell.toString());
+		}
+
+		return rtrnVal;
+	}
+
+	
 	/**
 	 * Get the boolean value
 	 * 
@@ -239,7 +270,7 @@ public final class ExcelFileReader {
 			}
 		} catch (IllegalStateException exception) {
 			log.error(exception.getMessage());
-			errors.rejectValue(columnTemplate.getBeanColumnName(),
+			errors.rejectValue(columnTemplate.getBeanPropertyName(),
 					ExcelFileErrorType.INVALID_DECIMAL_VALUE.getErrorType(), cell.toString());
 		}
 

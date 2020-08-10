@@ -1,8 +1,8 @@
 package com.jmk.account.model;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import javax.validation.Valid;
@@ -69,10 +69,10 @@ public class Expense {
 	private Long createdBy = null;
 
 	@JsonProperty
-	private Timestamp createdOn = null;
+	private LocalDateTime createdOn = null;
 
 	@JsonProperty
-	private Timestamp whenModified = null;
+	private LocalDateTime whenModified = null;
 
 	@JsonProperty
 	private Long version = null;
@@ -127,28 +127,28 @@ public class Expense {
 	/**
 	 * @return the createdOn
 	 */
-	public Timestamp getCreatedOn() {
+	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
 
 	/**
 	 * @param createdOn the createdOn to set
 	 */
-	public void setCreatedOn(Timestamp createdOn) {
+	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
 	}
 
 	/**
 	 * @return the whenModified
 	 */
-	public Timestamp getWhenModified() {
+	public LocalDateTime getWhenModified() {
 		return whenModified;
 	}
 
 	/**
 	 * @param whenModified the whenModified to set
 	 */
-	public void setWhenModified(Timestamp whenModified) {
+	public void setWhenModified(LocalDateTime whenModified) {
 		this.whenModified = whenModified;
 	}
 

@@ -23,8 +23,8 @@ import com.jmk.upload.model.ExcelFile;
 import com.jmk.upload.model.Project;
 import com.jmk.upload.model.ValidationResult;
 import com.jmk.upload.service.DataValidationService;
-import com.jmk.upload.template.SheetTemplate;
-import com.jmk.upload.template.handler.SheetTemplateHandler;
+import com.jmk.upload.template.ExcelSheetTemplate;
+import com.jmk.upload.template.handler.ExcelSheetTemplateHandler;
 import com.jmk.upload.validator.DonationValidator;
 import com.jmk.upload.validator.ProjectValidator;
 
@@ -35,7 +35,7 @@ public class DataValidationServiceImpl implements DataValidationService {
 	private ExcelFileParallelProcessor excelFileParallelProcessor;
 
 	@Autowired
-	private SheetTemplateHandler fileTemplateHandler;
+	private ExcelSheetTemplateHandler fileTemplateHandler;
 
 	@Autowired
 	private ProjectValidator projectValidator;
@@ -47,7 +47,7 @@ public class DataValidationServiceImpl implements DataValidationService {
 	public ValidationResult validate(MultipartFile file) {
 		ValidationResult validationResult = null;
 		Map<String, List<Base>> sheetResultMapping = new HashMap<>();
-		Map<String, SheetTemplate> sheetTemplateMapping = fileTemplateHandler.getSheetTemplateMapping();
+		Map<String, ExcelSheetTemplate> sheetTemplateMapping = fileTemplateHandler.getExcelSheetTemplateMapping();
 		List<Base> objectList = null;
 		ExcelFile excelFile = null;
 		try (Workbook workbook = file.getOriginalFilename().endsWith("xls") ? new HSSFWorkbook(file.getInputStream())
@@ -55,15 +55,18 @@ public class DataValidationServiceImpl implements DataValidationService {
 			Iterator<Sheet> sheetIterator = workbook.sheetIterator();
 			while (sheetIterator.hasNext()) {
 				Sheet sheet = sheetIterator.next();
+				ExcelSheetTemplate sheetTemplate=null;
 				switch (sheet.getSheetName()) {
 				case "Donation":
-					excelFile = new ExcelFile(sheet, true, 100, sheetTemplateMapping.get("Donation"), Donation.class,
+					sheetTemplate=sheetTemplateMapping.get("Donation");
+					excelFile = new ExcelFile(sheet, true,sheetTemplate.getHeaderRowsSize(), 100, sheetTemplate, Donation.class,
 							donationValidtor);
 					objectList = excelFileParallelProcessor.readExcelinParallel(excelFile);
 					sheetResultMapping.put(sheet.getSheetName(), objectList);
 					break;
 				case "Project":
-					excelFile = new ExcelFile(sheet, true, 100, sheetTemplateMapping.get("Project"), Project.class,
+					sheetTemplate=sheetTemplateMapping.get("Project");
+					excelFile = new ExcelFile(sheet, true, sheetTemplate.getHeaderRowsSize(),100, sheetTemplate, Project.class,
 							projectValidator);
 					objectList = excelFileParallelProcessor.readExcelinParallel(excelFile);
 					sheetResultMapping.put(sheet.getSheetName(), objectList);

@@ -1,7 +1,7 @@
 package com.jmk.project.model;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import javax.validation.constraints.NotNull;
@@ -54,10 +54,10 @@ public class Project {
 	private Long createdBy = null;
 	
 	@JsonProperty
-	private Timestamp createdOn=null;
+	private LocalDateTime createdOn=null;
 	
 	@JsonProperty
-	private Timestamp whenModified=null;
+	private LocalDateTime whenModified=null;
 	
 	@JsonProperty
 	private Long version=null;
@@ -92,19 +92,19 @@ public class Project {
 		this.createdBy = createdBy;
 	}
 
-	public Timestamp getCreatedOn() {
+	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
 
-	public void setCreatedOn(Timestamp createdOn) {
+	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
 	}
 
-	public Timestamp getWhenModified() {
+	public LocalDateTime getWhenModified() {
 		return whenModified;
 	}
 
-	public void setWhenModified(Timestamp whenModified) {
+	public void setWhenModified(LocalDateTime whenModified) {
 		this.whenModified = whenModified;
 	}
 

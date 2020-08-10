@@ -1,7 +1,7 @@
 package com.jmk.user.api.util;
 
-import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,17 +26,17 @@ public class UserModelUtility {
 		user.setEmailSent(MessageSent.N);
 		user.setSmsSent(MessageSent.N);
 		user.setStatus(Status.A);
-		user.setCreatedOn(Timestamp.from(Instant.now()));
+		user.setCreatedOn(LocalDateTime.now());
 		user.setGroupId(Group.BJJD.getGroupId());
-		user.setWhenModified(Timestamp.from(Instant.now()));
+		user.setWhenModified(LocalDateTime.now());
 		
 		Identity identity=new Identity();
 		identity.setDocumentNumber("AOKPB9699G");
 		identity.setDocumentName("RajivKumarBansal");
 		identity.setDocumentType(DocumentType.PANCARD);
-		identity.setCreatedOn(Timestamp.from(Instant.now()));
+		identity.setCreatedOn(LocalDateTime.now());
 		identity.setGroupId(Group.BJJD.getGroupId());
-		identity.setWhenModified(Timestamp.from(Instant.now()));
+		identity.setWhenModified(LocalDateTime.now());
 		identity.setUser(user);
 		user.addIdentitiesItem(identity);
 		
@@ -44,9 +44,9 @@ public class UserModelUtility {
 		identity.setDocumentNumber("DL0519990152868");
 		identity.setDocumentName("RajivKumarBansal");
 		identity.setDocumentType(DocumentType.DRIVINGLICENSE);
-		identity.setCreatedOn(Timestamp.from(Instant.now()));
+		identity.setCreatedOn(LocalDateTime.now());
 		identity.setGroupId(Group.BJJD.getGroupId());
-		identity.setWhenModified(Timestamp.from(Instant.now()));
+		identity.setWhenModified(LocalDateTime.now());
 		identity.setUser(user);
 		user.addIdentitiesItem(identity);
 		
@@ -54,18 +54,18 @@ public class UserModelUtility {
 		identity.setDocumentNumber("1234567899999");
 		identity.setDocumentName("RajivKumarBansal");
 		identity.setDocumentType(DocumentType.AADHARCARD);
-		identity.setCreatedOn(Timestamp.from(Instant.now()));
+		identity.setCreatedOn(LocalDateTime.now());
 		identity.setGroupId(Group.BJJD.getGroupId());
-		identity.setWhenModified(Timestamp.from(Instant.now()));
+		identity.setWhenModified(LocalDateTime.now());
 		identity.setUser(user);
 		user.addIdentitiesItem(identity);
 		
 		
 		Profile profile=new Profile();
 		profile.setFirstName("Rajiv");
-		profile.setCreatedOn(Timestamp.from(Instant.now()));
+		profile.setCreatedOn(LocalDateTime.now());
 		profile.setGroupId(Group.BJJD.getGroupId());
-		profile.setWhenModified(Timestamp.from(Instant.now()));
+		profile.setWhenModified(LocalDateTime.now());
 		profile.setUser(user);
 		user.setProfile(profile);
 		
@@ -78,9 +78,9 @@ public class UserModelUtility {
 		mailingAddress.setAddressType(AddressType.PERMANENT);
 		mailingAddress.setCity("Noida");
 		mailingAddress.setCountry("INDIA");
-		mailingAddress.setCreatedOn(Timestamp.from(Instant.now()));
+		mailingAddress.setCreatedOn(LocalDateTime.now());
 		mailingAddress.setGroupId(Group.BJJD.getGroupId());
-		mailingAddress.setWhenModified(Timestamp.from(Instant.now()));	
+		mailingAddress.setWhenModified(LocalDateTime.now());	
 		mailingAddress.setPinCode("201301");
 		mailingAddress.setLandmark("Navin Bharti Public School");
 		mailingAddress.setState("Uttar Pradesh");
@@ -94,9 +94,9 @@ public class UserModelUtility {
 		permanentAddress.setAddressType(AddressType.MAILING);
 		permanentAddress.setCity("Noida");
 		permanentAddress.setCountry("INDIA");
-		permanentAddress.setCreatedOn(Timestamp.from(Instant.now()));
+		permanentAddress.setCreatedOn(LocalDateTime.now());
 		permanentAddress.setGroupId(Group.BJJD.getGroupId());
-		permanentAddress.setWhenModified(Timestamp.from(Instant.now()));	
+		permanentAddress.setWhenModified(LocalDateTime.now());	
 		permanentAddress.setPinCode("201301");
 		permanentAddress.setLandmark("Navin Bharti Public School");
 		permanentAddress.setState("Uttar Pradesh");
@@ -111,20 +111,20 @@ public class UserModelUtility {
 		Role role=new Role();
 		role.setId(1003L);
 		role.setName("ADMIN");
-		role.setCreatedOn(Timestamp.from(Instant.now()));
+		role.setCreatedOn(LocalDateTime.now());
 		role.setGroupId(Group.BJJD.getGroupId());
 		role.setStatus(Status.A);
-		role.setWhenModified(Timestamp.from(Instant.now()));
+		role.setWhenModified(LocalDateTime.now());
 		
 		role.setUsers(users);
 
 		Module module=new Module();
 		module.setId(1003L);
 		module.setName("ADMIN");
-		module.setCreatedOn(Timestamp.from(Instant.now()));
+		module.setCreatedOn(LocalDateTime.now());
 		module.setGroupId(Group.BJJD.getGroupId());
 		module.setStatus(Status.A);
-		module.setWhenModified(Timestamp.from(Instant.now()));
+		module.setWhenModified(LocalDateTime.now());
 		role.setModules(Arrays.asList(module));
 		role.setUsers(users);
 		user.addRolesItem(role);

@@ -1,8 +1,8 @@
 package com.jmk.people.test.util;
 
-import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.jmk.enums.AddressType;
 import com.jmk.enums.DocumentType;
@@ -23,9 +23,9 @@ public class PersonUtility {
 		member.setMobileNo("9999779379");
 		member.setLastName("Bansal");
 		member.setMemberType(MemberType.LIFETIME);
-		member.setCreatedOn(Timestamp.from(Instant.now()));
+		member.setCreatedOn(LocalDateTime.now());
 		member.setGroupId(Group.BJJD.getGroupId());
-		member.setWhenModified(Timestamp.from(Instant.now()));
+		member.setWhenModified(LocalDateTime.now());
 		member.setValidity(LocalDate.now());
 		member.setMemberType(MemberType.LIFETIME);
 		
@@ -33,9 +33,9 @@ public class PersonUtility {
 		identity.setDocumentNumber("AOKPB9699G");
 		identity.setDocumentName("RajivKumarBansal");
 		identity.setDocumentType(DocumentType.PANCARD);
-		identity.setCreatedOn(Timestamp.from(Instant.now()));
+		identity.setCreatedOn(LocalDateTime.now());
 		identity.setGroupId(Group.BJJD.getGroupId());
-		identity.setWhenModified(Timestamp.from(Instant.now()));
+		identity.setWhenModified(LocalDateTime.now());
 		identity.setPerson(member);
 	    member.addIdentitiesItem(identity);
 		
@@ -43,9 +43,9 @@ public class PersonUtility {
 		identity.setDocumentNumber("DL0519990152868");
 		identity.setDocumentName("RajivKumarBansal");
 		identity.setDocumentType(DocumentType.DRIVINGLICENSE);
-		identity.setCreatedOn(Timestamp.from(Instant.now()));
+		identity.setCreatedOn(LocalDateTime.now());
 		identity.setGroupId(Group.BJJD.getGroupId());
-		identity.setWhenModified(Timestamp.from(Instant.now()));
+		identity.setWhenModified(LocalDateTime.now());
 		identity.setPerson(member);
 		member.addIdentitiesItem(identity);
 		
@@ -53,9 +53,9 @@ public class PersonUtility {
 		identity.setDocumentNumber("1234567899999");
 		identity.setDocumentName("RajivKumarBansal");
 		identity.setDocumentType(DocumentType.AADHARCARD);
-		identity.setCreatedOn(Timestamp.from(Instant.now()));
+		identity.setCreatedOn(LocalDateTime.now());
 		identity.setGroupId(Group.BJJD.getGroupId());
-		identity.setWhenModified(Timestamp.from(Instant.now()));
+		identity.setWhenModified(LocalDateTime.now());
 		identity.setPerson(member);
 		member.addIdentitiesItem(identity);
 
@@ -66,9 +66,9 @@ public class PersonUtility {
 		mailingAddress.setAddressType(AddressType.PERMANENT);
 		mailingAddress.setCity("Noida");
 		mailingAddress.setCountry("INDIA");
-		mailingAddress.setCreatedOn(Timestamp.from(Instant.now()));
+		mailingAddress.setCreatedOn(LocalDateTime.now());
 		mailingAddress.setGroupId(Group.BJJD.getGroupId());
-		mailingAddress.setWhenModified(Timestamp.from(Instant.now()));	
+		mailingAddress.setWhenModified(LocalDateTime.now());	
 		mailingAddress.setPinCode("201301");
 		mailingAddress.setLandmark("Navin Bharti Public School");
 		mailingAddress.setState("Uttar Pradesh");
@@ -82,9 +82,9 @@ public class PersonUtility {
 		permanentAddress.setAddressType(AddressType.MAILING);
 		permanentAddress.setCity("Noida");
 		permanentAddress.setCountry("INDIA");
-		permanentAddress.setCreatedOn(Timestamp.from(Instant.now()));
+		permanentAddress.setCreatedOn(LocalDateTime.now());
 		permanentAddress.setGroupId(Group.BJJD.getGroupId());
-		permanentAddress.setWhenModified(Timestamp.from(Instant.now()));	
+		permanentAddress.setWhenModified(LocalDateTime.now());	
 		permanentAddress.setPinCode("201301");
 		permanentAddress.setLandmark("Navin Bharti Public School");
 		permanentAddress.setState("Uttar Pradesh");

@@ -69,8 +69,12 @@ public class MemberMgmtServiceImpl implements PersonMgmtService<Member> {
 
 	@Override
 	public Member findPersonByMobileNumber(String mobileNumber) {
-		com.jmk.people.entity.Member memberEntity=repository.findPersonByTypeAndMobileNo(PersonType.MEMBER.getType(),mobileNumber);
-		Member memberModel=mapEntityToModel(mapper,memberEntity,Member.class);
+		Member memberModel = null;
+		com.jmk.people.entity.Member memberEntity = repository.findPersonByTypeAndMobileNo(PersonType.MEMBER.getType(),
+				mobileNumber);
+		if (memberEntity != null) {
+			memberModel = mapEntityToModel(mapper, memberEntity, Member.class);
+		}
 		return memberModel;
 	}
 

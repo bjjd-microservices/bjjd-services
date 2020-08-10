@@ -43,8 +43,7 @@ public class DonationApiTest {
 		donation.amount(BigDecimal.valueOf(11111));
 		donation.setPaymentMode(PaymentMode.CHEQUE);
 		donation.setDonationDate(LocalDate.now());
-		donation.setDonorId(1L);
-		donation.setDonorType(DonorType.MEMBER);
+		donation.setDonorType(DonorType.DEVOTEE);
 		donation.setDonorMobileNo("9999779379");
 		donation.setProjectId(1L);
 		donation.setDonorName("NayakJi");

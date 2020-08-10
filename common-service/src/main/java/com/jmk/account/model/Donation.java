@@ -1,8 +1,8 @@
 package com.jmk.account.model;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import javax.validation.Valid;
@@ -25,7 +25,6 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-04-05T20:28:14.461+05:30")
-
 public class Donation {
 	@JsonProperty("id")
 	private Long id = null;
@@ -33,6 +32,35 @@ public class Donation {
 	@JsonProperty("donationDate")
 	private LocalDate donationDate = null;
 
+	@JsonProperty("donorId")
+	private Long donorId = null;
+
+	@JsonProperty("donorName")
+	private String donorName = null;
+
+	@JsonProperty("donorType")
+	private DonorType donorType = null;
+	
+	@JsonProperty("donorAddress")
+	private String donorAddress=null;
+	
+	@JsonProperty("donorCity")
+	private String donorCity = null;
+	
+	@JsonProperty("donorState")
+	private String donorState = null;
+
+
+	@JsonProperty("donorMobileNo")
+	private String donorMobileNo = null;
+
+
+	@JsonProperty("donorAadharNo")
+	private String donorAadharNo=null;
+	
+	@JsonProperty("donorPANNo")
+	private String donorPANNo = null;
+	
 	@JsonProperty("amount")
 	private BigDecimal amount = null;
 	
@@ -41,6 +69,9 @@ public class Donation {
 	
 	@JsonProperty("paymentModeReference")
 	private String paymentModeReference;
+	
+	@JsonProperty("amountDepositedInToBank")
+	private String amountDepositedInToBank;
 
 	@JsonProperty("projectId")
 	private Long projectId = null;
@@ -52,34 +83,13 @@ public class Donation {
 	@JsonProperty("projectName")
 	private String projectName = null;
 
-	@JsonProperty("donorType")
-	private DonorType donorType = null;
-
-	@JsonProperty("donorId")
-	private Long donorId = null;
-
-	@JsonProperty("donorName")
-	private String donorName = null;
-
-	@JsonProperty("donorCity")
-	private String donorCity = null;
 	
-	@JsonProperty("donorState")
-	private String donorState = null;
-
-
-	@JsonProperty("donorMobileNo")
-	private String donorMobileNo = null;
-
-	@JsonProperty("donorPANNo")
-	private String donorPANNo = null;
-
 	@JsonProperty("reference")
 	private String reference = null;
 
 	@JsonProperty("receivedBy")
-	private Long receivedBy = null;
-
+	private String receivedBy = null;
+	
 	@JsonProperty("description")
 	private String description = null;
 
@@ -96,10 +106,10 @@ public class Donation {
 	private Long createdBy = null;
 
 	@JsonProperty
-	private Timestamp createdOn = null;
+	private LocalDateTime createdOn = null;
 
 	@JsonProperty
-	private Timestamp whenModified = null;
+	private LocalDateTime whenModified = null;
 
 	@JsonProperty
 	private Long version = null;
@@ -126,28 +136,28 @@ public class Donation {
 	/**
 	 * @return the createdOn
 	 */
-	public Timestamp getCreatedOn() {
+	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
 
 	/**
 	 * @param createdOn the createdOn to set
 	 */
-	public void setCreatedOn(Timestamp createdOn) {
+	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
 	}
 
 	/**
 	 * @return the whenModified
 	 */
-	public Timestamp getWhenModified() {
+	public LocalDateTime getWhenModified() {
 		return whenModified;
 	}
 
 	/**
 	 * @param whenModified the whenModified to set
 	 */
-	public void setWhenModified(Timestamp whenModified) {
+	public void setWhenModified(LocalDateTime whenModified) {
 		this.whenModified = whenModified;
 	}
 
@@ -334,10 +344,56 @@ public class Donation {
 	public void setDonorId(Long donorId) {
 		this.donorId = donorId;
 	}
+	
+	
+
+	/**
+	 * @return the amountDepositedInToBank
+	 */
+	public String getAmountDepositedInToBank() {
+		return amountDepositedInToBank;
+	}
+
+	/**
+	 * @param amountDepositedInToBank the amountDepositedInToBank to set
+	 */
+	public void setAmountDepositedInToBank(String amountDepositedInToBank) {
+		this.amountDepositedInToBank = amountDepositedInToBank;
+	}
 
 	public Donation donorName(String donorName) {
 		this.donorName = donorName;
 		return this;
+	}
+	
+	
+
+	/**
+	 * @return the donorAddress
+	 */
+	public String getDonorAddress() {
+		return donorAddress;
+	}
+
+	/**
+	 * @param donorAddress the donorAddress to set
+	 */
+	public void setDonorAddress(String donorAddress) {
+		this.donorAddress = donorAddress;
+	}
+
+	/**
+	 * @return the donorAadharNo
+	 */
+	public String getDonorAadharNo() {
+		return donorAadharNo;
+	}
+
+	/**
+	 * @param donorAadharNo the donorAadharNo to set
+	 */
+	public void setDonorAadharNo(String donorAadharNo) {
+		this.donorAadharNo = donorAadharNo;
 	}
 
 	/**
@@ -437,7 +493,7 @@ public class Donation {
 		this.reference = reference;
 	}
 
-	public Donation receivedBy(Long receivedBy) {
+	public Donation receivedBy(String receivedBy) {
 		this.receivedBy = receivedBy;
 		return this;
 	}
@@ -448,11 +504,11 @@ public class Donation {
 	 * @return receivedBy
 	 **/
 	@ApiModelProperty(value = "Received By")
-	public Long getReceivedBy() {
+	public String getReceivedBy() {
 		return receivedBy;
 	}
 
-	public void setReceivedBy(Long receivedBy) {
+	public void setReceivedBy(String receivedBy) {
 		this.receivedBy = receivedBy;
 	}
 

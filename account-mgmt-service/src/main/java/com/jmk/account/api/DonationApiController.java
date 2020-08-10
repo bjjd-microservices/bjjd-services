@@ -1,6 +1,8 @@
 package com.jmk.account.api;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +22,7 @@ import com.jmk.account.model.Donation;
 import com.jmk.account.service.DonationService;
 import com.jmk.account.util.DonorCreator;
 import com.jmk.account.util.RequestValidator;
+import com.jmk.people.model.Devotee;
 
 import io.swagger.annotations.ApiParam;
 
@@ -49,8 +52,10 @@ public class DonationApiController implements DonationApi {
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
 			if (validator.validate(donation)) {
 				if (DonorType.DEVOTEE.equals(donation.getDonorType()) && donation.getDonorId() == null) {
-					donorCreator.createDevotee(donation);
+					Devotee devotee=donorCreator.createDevotee(donation);
+					donation.setDonorId(devotee.getId());
 				}
+				enrichCommonDonationDetails(donation);
 				donation = donationService.saveDonation(donation);
 			}
 			return new ResponseEntity<Donation>(donation, HttpStatus.OK);
@@ -61,6 +66,13 @@ public class DonationApiController implements DonationApi {
     public ResponseEntity<List<Donation>> saveDonations(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Donation> donations,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel) {
     	String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
+			for(Donation donation:donations) {
+				if (DonorType.DEVOTEE.equals(donation.getDonorType()) && donation.getDonorId() == null) {
+					Devotee devotee=donorCreator.createDevotee(donation);
+					donation.setDonorId(devotee.getId());
+				}
+				enrichCommonDonationDetails(donation);
+			}
 			donations = donationService.saveDonations(donations);
 			return new ResponseEntity<List<Donation>>(donations,HttpStatus.OK);
 		}
@@ -93,5 +105,13 @@ public class DonationApiController implements DonationApi {
 			return new ResponseEntity<Donation>(donation, HttpStatus.OK);
 		}
 		return new ResponseEntity<Donation>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	private Donation enrichCommonDonationDetails(Donation donation) {
+		if (donation.getId() == null) {
+			donation.setCreatedOn(LocalDateTime.now());
+		}
+		donation.setWhenModified(LocalDateTime.now());
+		return donation;
 	}
 }
