@@ -37,7 +37,7 @@ public interface DarshanApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.DELETE)
-    ResponseEntity<Void> deleteDarshanById(@ApiParam(value = "Darshan Id",required=true) @PathVariable("id") Integer id);
+    ResponseEntity<Void> deleteDarshanById(@ApiParam(value = "Darshan Id",required=true) @PathVariable("id") Long id);
 
 
     @ApiOperation(value = "Find Darshan Details based on the darshan id", nickname = "findDarshanDetailsById", notes = "Find Darshan Details based on the darshan id", response = Darshan.class, tags={ "DarshanMgmt", })
@@ -50,7 +50,7 @@ public interface DarshanApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.GET)
-    ResponseEntity<Darshan> findDarshanDetailsById(@ApiParam(value = "Darshan Id",required=true) @PathVariable("id") Integer id);
+    ResponseEntity<Darshan> findDarshanDetailsById(@ApiParam(value = "Darshan Id",required=true) @PathVariable("id") Long id);
 
 
     @ApiOperation(value = "Darshan Saving Service", nickname = "saveDarshan", notes = "Darshan Saving Service", response = Darshan.class, tags={ "DarshanMgmt", })
@@ -73,7 +73,7 @@ public interface DarshanApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    ResponseEntity<Void> saveDarshansWithArrayInput(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Darshan> body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
+    ResponseEntity<List<Darshan>> saveDarshans(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Darshan> body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
 
 
     @ApiOperation(value = "Update Darshan Details based on the darshan id", nickname = "updateDarshanById", notes = "Update Darshan Details based on the darshan id", response = Darshan.class, tags={ "DarshanMgmt", })
@@ -86,6 +86,6 @@ public interface DarshanApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.PUT)
-    ResponseEntity<Darshan> updateDarshanById(@ApiParam(value = "Darshan Id",required=true) @PathVariable("id") Integer id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Darshan body);
+    ResponseEntity<Darshan> updateDarshanById(@ApiParam(value = "Darshan Id",required=true) @PathVariable("id") Long id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Darshan body);
 
 }

@@ -1,6 +1,5 @@
 package com.jmk.people.api;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -20,9 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jmk.enums.Status;
 import com.jmk.people.model.Devotee;
-import com.jmk.people.model.Member;
 import com.jmk.people.service.PersonMgmtService;
-import com.jmk.user.model.User;
 
 import io.swagger.annotations.ApiParam;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-02-27T07:02:52.969Z")
