@@ -16,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jmk.account.enums.DonorType;
 import com.jmk.account.enums.PaymentMode;
+import com.jmk.enums.MessageStatus;
 import com.jmk.enums.Status;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -83,6 +84,8 @@ public class Donation {
 	@JsonProperty("projectName")
 	private String projectName = null;
 
+	@JsonProperty("smsSent")
+	private MessageStatus smsSent=null;
 	
 	@JsonProperty("reference")
 	private String reference = null;
@@ -602,6 +605,20 @@ public class Donation {
 	 */
 	public void setDonorState(String donorState) {
 		this.donorState = donorState;
+	}
+
+	/**
+	 * @return the smsSent
+	 */
+	public MessageStatus getSmsSent() {
+		return smsSent;
+	}
+
+	/**
+	 * @param smsSent the smsSent to set
+	 */
+	public void setSmsSent(MessageStatus smsSent) {
+		this.smsSent = smsSent;
 	}
 
 	/**

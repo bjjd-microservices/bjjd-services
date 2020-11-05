@@ -1,6 +1,5 @@
 package com.jmk.user.api.util;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -8,7 +7,7 @@ import java.util.Set;
 
 import com.jmk.enums.AddressType;
 import com.jmk.enums.DocumentType;
-import com.jmk.enums.MessageSent;
+import com.jmk.enums.MessageStatus;
 import com.jmk.enums.Status;
 import com.jmk.user.enums.Group;
 import com.jmk.user.model.Address;
@@ -23,8 +22,8 @@ public class UserModelUtility {
 	public static User createUserModel() {
 		User user=new User();
 		user.username("rajivbansal2981").password("Rajiv@379").displayName("Rajiv Bansal");
-		user.setEmailSent(MessageSent.N);
-		user.setSmsSent(MessageSent.N);
+		user.setEmailSent(MessageStatus.WAITING_FOR_RECEIPT);
+		user.setSmsSent(MessageStatus.WAITING_FOR_RECEIPT);
 		user.setStatus(Status.A);
 		user.setCreatedOn(LocalDateTime.now());
 		user.setGroupId(Group.BJJD.getGroupId());

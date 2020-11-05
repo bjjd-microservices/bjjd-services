@@ -1,4 +1,4 @@
-package com.jmk.account.model;
+package com.jmk.upload.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -10,8 +10,7 @@ import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.springframework.validation.annotation.Validated;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jmk.account.enums.PaymentMode;
@@ -22,10 +21,14 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * Expense
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-04-05T20:28:14.461+05:30")
+@XmlRootElement
+public class Expense extends Base{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5646366654415141468L;
 
-public class Expense {
 	@JsonProperty("id")
 	private Long id = null;
 	

@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.jmk.enums.MessageSent;
+import com.jmk.enums.MessageStatus;
 import com.jmk.enums.Status;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -48,10 +48,10 @@ public class User {
 	private Integer failAttempt = null;
 
 	@JsonProperty("smsSent")
-	private MessageSent smsSent = null;
+	private MessageStatus smsSent = null;
 
 	@JsonProperty("emailSent")
-	private MessageSent emailSent = null;
+	private MessageStatus emailSent = null;
 
 	@JsonProperty("status")
 	private Status status = null;
@@ -157,28 +157,28 @@ public class User {
 	/**
 	 * @return the smsSent
 	 */
-	public MessageSent getSmsSent() {
+	public MessageStatus getSmsSent() {
 		return smsSent;
 	}
 
 	/**
 	 * @param smsSent the smsSent to set
 	 */
-	public void setSmsSent(MessageSent smsSent) {
+	public void setSmsSent(MessageStatus smsSent) {
 		this.smsSent = smsSent;
 	}
 
 	/**
 	 * @return the emailSent
 	 */
-	public MessageSent getEmailSent() {
+	public MessageStatus getEmailSent() {
 		return emailSent;
 	}
 
 	/**
 	 * @param emailSent the emailSent to set
 	 */
-	public void setEmailSent(MessageSent emailSent) {
+	public void setEmailSent(MessageStatus emailSent) {
 		this.emailSent = emailSent;
 	}
 

@@ -3,7 +3,6 @@ package com.jmk.account.entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,9 +26,18 @@ public class Expense {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
+	@Column(name="voucher_no")
+	private Long voucherNo;
 
 	@Column(name = "expenseDate")
 	private LocalDate expenseDate = null;
+	
+	@Column(name="expense_category")
+	private String expenseCategory=null;
+	
+	@Column(name="expense_item")
+	private String expenseItem=null;
 
 	@Column(name = "description")
 	private String description = null;
@@ -77,9 +85,6 @@ public class Expense {
 	
 	@Version
 	private Long version=null;
-
-	
-	
 
 	/**
 	 * @return the id
@@ -319,48 +324,6 @@ public class Expense {
 		this.version = version;
 	}
 
-	@Override
-	public boolean equals(java.lang.Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
-		Expense expense = (Expense) o;
-		return Objects.equals(this.id, expense.id) && Objects.equals(this.expenseDate, expense.expenseDate)
-				&& Objects.equals(this.description, expense.description) && Objects.equals(this.amount, expense.amount)
-				&& Objects.equals(this.projectId, expense.projectId)
-				&& Objects.equals(this.projectName, expense.projectName) && Objects.equals(this.paidTo, expense.paidTo)
-				&& Objects.equals(this.remarks, expense.remarks) && Objects.equals(this.approvedBy, expense.approvedBy)
-				&& Objects.equals(this.status, expense.status) && Objects.equals(this.groupId, expense.groupId);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, expenseDate, description, amount, projectId, projectName, paidTo, remarks, approvedBy,
-				status, groupId);
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("class Expense {\n");
-
-		sb.append("    id: ").append(toIndentedString(id)).append("\n");
-		sb.append("    expenseDate: ").append(toIndentedString(expenseDate)).append("\n");
-		sb.append("    description: ").append(toIndentedString(description)).append("\n");
-		sb.append("    amount: ").append(toIndentedString(amount)).append("\n");
-		sb.append("    projectId: ").append(toIndentedString(projectId)).append("\n");
-		sb.append("    projectName: ").append(toIndentedString(projectName)).append("\n");
-		sb.append("    paidTo: ").append(toIndentedString(paidTo)).append("\n");
-		sb.append("    remarks: ").append(toIndentedString(remarks)).append("\n");
-		sb.append("    approvedBy: ").append(toIndentedString(approvedBy)).append("\n");
-		sb.append("    status: ").append(toIndentedString(status)).append("\n");
-		sb.append("    groupId: ").append(toIndentedString(groupId)).append("\n");
-		sb.append("}");
-		return sb.toString();
-	}
 
 	/**
 	 * Convert the given object to string with each line indented by 4 spaces
@@ -372,4 +335,63 @@ public class Expense {
 		}
 		return o.toString().replace("\n", "\n    ");
 	}
+
+	/**
+	 * @return the expenseCategory
+	 */
+	public String getExpenseCategory() {
+		return expenseCategory;
+	}
+
+	/**
+	 * @param expenseCategory the expenseCategory to set
+	 */
+	public void setExpenseCategory(String expenseCategory) {
+		this.expenseCategory = expenseCategory;
+	}
+
+	/**
+	 * @return the expenseItem
+	 */
+	public String getExpenseItem() {
+		return expenseItem;
+	}
+
+	/**
+	 * @param expenseItem the expenseItem to set
+	 */
+	public void setExpenseItem(String expenseItem) {
+		this.expenseItem = expenseItem;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Expense [id=" + id + ", expenseDate=" + expenseDate + ", expenseCategory=" + expenseCategory
+				+ ", expenseItem=" + expenseItem + ", description=" + description + ", amount=" + amount
+				+ ", paymentMode=" + paymentMode + ", paymentModeReference=" + paymentModeReference + ", projectId="
+				+ projectId + ", projectName=" + projectName + ", paidTo=" + paidTo + ", remarks=" + remarks
+				+ ", approvedBy=" + approvedBy + ", status=" + status + ", groupId=" + groupId + ", createdBy="
+				+ createdBy + ", createdOn=" + createdOn + ", whenModified=" + whenModified + ", version=" + version
+				+ "]";
+	}
+
+	/**
+	 * @return the voucherNo
+	 */
+	public Long getVoucherNo() {
+		return voucherNo;
+	}
+
+	/**
+	 * @param voucherNo the voucherNo to set
+	 */
+	public void setVoucherNo(Long voucherNo) {
+		this.voucherNo = voucherNo;
+	}
+
+
+	
 }

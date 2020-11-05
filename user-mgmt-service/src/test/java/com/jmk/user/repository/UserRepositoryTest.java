@@ -15,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.jmk.enums.DocumentType;
-import com.jmk.enums.MessageSent;
+import com.jmk.enums.MessageStatus;
 import com.jmk.user.entity.Address;
 import com.jmk.user.entity.Identity;
 import com.jmk.user.entity.Module;
@@ -39,7 +39,7 @@ public class UserRepositoryTest {
 		user.setUsername("rajivbansal2981");
 		user.setPassword("rajiv");
 		user.setDisplayName("Rajiv Bansal");
-		user.setEmailSent(MessageSent.N);
+		user.setEmailSent(MessageStatus.WAITING_FOR_RECEIPT);
 		user.setCreatedOn(LocalDateTime.now());
 	//	user.setGroupId(Group.BJJD.name());
 		user.setWhenModified(LocalDateTime.now());

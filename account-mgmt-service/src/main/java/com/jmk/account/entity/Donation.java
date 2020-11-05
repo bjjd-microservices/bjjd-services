@@ -18,6 +18,7 @@ import javax.persistence.Version;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jmk.account.enums.DonorType;
 import com.jmk.account.enums.PaymentMode;
+import com.jmk.enums.MessageStatus;
 import com.jmk.enums.Status;
 
 /**
@@ -89,6 +90,10 @@ public class Donation {
 
 	@Column(name = "received_by")
 	private String receivedBy = null;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name="sms_Sent")
+	private MessageStatus smsSent=null;
 
 	@Column(name = "description")
 	private String description = null;
@@ -595,8 +600,21 @@ public class Donation {
 	public void setVersion(Long version) {
 		this.version = version;
 	}
+	
+	
+	/**
+	 * @return the smsSent
+	 */
+	public MessageStatus getSmsSent() {
+		return smsSent;
+	}
 
-
+	/**
+	 * @param smsSent the smsSent to set
+	 */
+	public void setSmsSent(MessageStatus smsSent) {
+		this.smsSent = smsSent;
+	}
 
 	@Override
 	public boolean equals(java.lang.Object o) {

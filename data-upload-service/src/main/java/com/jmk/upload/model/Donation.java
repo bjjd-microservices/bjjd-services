@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.jmk.account.enums.DonorType;
 import com.jmk.account.enums.PaymentMode;
+import com.jmk.enums.MessageStatus;
 import com.jmk.enums.Status;
 
 /**
@@ -61,6 +62,8 @@ public class Donation extends Base {
 	private String receivedBy = null;
 
 	private String description = null;
+	
+	private MessageStatus smsSent=null;
 
 	private String remarks = null;
 
@@ -470,6 +473,20 @@ public class Donation extends Base {
 	 */
 	public void setAmountDepositedInToBank(String amountDepositedInToBank) {
 		this.amountDepositedInToBank = amountDepositedInToBank;
+	}
+	
+	/**
+	 * @return the smsSent
+	 */
+	public MessageStatus getSmsSent() {
+		return smsSent;
+	}
+
+	/**
+	 * @param smsSent the smsSent to set
+	 */
+	public void setSmsSent(MessageStatus smsSent) {
+		this.smsSent = smsSent;
 	}
 
 	/*

@@ -20,7 +20,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
-import com.jmk.enums.MessageSent;
+import com.jmk.enums.MessageStatus;
 import com.jmk.enums.Status;
 
 @Entity
@@ -54,11 +54,11 @@ public class User {
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name="sms_Sent")
-	private MessageSent smsSent=null;
+	private MessageStatus smsSent=null;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name="email_Sent")
-	private MessageSent emailSent=null;
+	private MessageStatus emailSent=null;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name="status")
@@ -160,19 +160,19 @@ public class User {
 		this.failAttempt = failAttempt;
 	}
 
-	public MessageSent getSmsSent() {
+	public MessageStatus getSmsSent() {
 		return smsSent;
 	}
 
-	public void setSmsSent(MessageSent smsSent) {
+	public void setSmsSent(MessageStatus smsSent) {
 		this.smsSent = smsSent;
 	}
 
-	public MessageSent getEmailSent() {
+	public MessageStatus getEmailSent() {
 		return emailSent;
 	}
 
-	public void setEmailSent(MessageSent emailSent) {
+	public void setEmailSent(MessageStatus emailSent) {
 		this.emailSent = emailSent;
 	}
 
