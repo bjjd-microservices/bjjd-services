@@ -20,7 +20,11 @@ public class ExcelSheetTemplate implements Serializable{
 	
 	private int headerRowsSize;
 	
-	private String validator;
+	private int processRowsPerThread;
+	
+	private String templateClass;
+	
+	private String validatorClass;
 	
 	private List<ColumnTemplate> columnTemplates=new ArrayList<>();
 	
@@ -106,20 +110,47 @@ public class ExcelSheetTemplate implements Serializable{
 	}
 
 	/**
-	 * @return the validator
+	 * @return the validatorClass
 	 */
-	public String getValidator() {
-		return validator;
+	public String getValidatorClass() {
+		return validatorClass;
 	}
 
 	/**
-	 * @param validator the validator to set
+	 * @param validatorClass the validatorClass to set
 	 */
-	public void setValidator(String validator) {
-		this.validator = validator;
+	public void setValidatorClass(String validatorClass) {
+		this.validatorClass = validatorClass;
 	}
-	
-	
+
+
+	/**
+	 * @return the templateClass
+	 */
+	public String getTemplateClass() {
+		return templateClass;
+	}
+
+	/**
+	 * @param templateClass the templateClass to set
+	 */
+	public void setTemplateClass(String templateClass) {
+		this.templateClass = templateClass;
+	}
+
+	/**
+	 * @return the processRowsPerThread
+	 */
+	public int getProcessRowsPerThread() {
+		return processRowsPerThread;
+	}
+
+	/**
+	 * @param processRowsPerThread the processRowsPerThread to set
+	 */
+	public void setProcessRowsPerThread(int processRowsPerThread) {
+		this.processRowsPerThread = processRowsPerThread;
+	}
 
 	public ColumnTemplate getColumnTemplateByPos(int pos){
 		initColumnTemplatesMap();

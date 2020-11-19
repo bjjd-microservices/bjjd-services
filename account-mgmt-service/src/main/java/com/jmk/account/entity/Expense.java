@@ -30,14 +30,14 @@ public class Expense {
 	@Column(name="voucher_no")
 	private Long voucherNo;
 
-	@Column(name = "expenseDate")
-	private LocalDate expenseDate = null;
+	@Column(name = "date")
+	private LocalDate date = null;
 	
-	@Column(name="expense_category")
-	private String expenseCategory=null;
+	@Column(name="category")
+	private String category=null;
 	
-	@Column(name="expense_item")
-	private String expenseItem=null;
+	@Column(name="item")
+	private String item=null;
 
 	@Column(name = "description")
 	private String description = null;
@@ -51,9 +51,15 @@ public class Expense {
 	
 	@Column(name="payment_mode_reference")
 	private String paymentModeReference;
+	
+	@Column(name="withdrawn_from_bank")
+	private String withdrawnFromBank;
 
 	@Column(name = "project_id")
 	private Long projectId = null;
+	
+	@Column(name="projectCode")
+	private String projectCode=null;
 
 	@Column(name = "project_name")
 	private String projectName = null;
@@ -65,7 +71,7 @@ public class Expense {
 	private String remarks = null;
 
 	@Column(name = "approved_by")
-	private Long approvedBy = null;
+	private String approvedBy = null;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status")
@@ -104,14 +110,14 @@ public class Expense {
 	 * @return the expenseDate
 	 */
 	public LocalDate getExpenseDate() {
-		return expenseDate;
+		return date;
 	}
 
 	/**
 	 * @param expenseDate the expenseDate to set
 	 */
 	public void setExpenseDate(LocalDate expenseDate) {
-		this.expenseDate = expenseDate;
+		this.date = expenseDate;
 	}
 
 	/**
@@ -229,14 +235,14 @@ public class Expense {
 	/**
 	 * @return the approvedBy
 	 */
-	public Long getApprovedBy() {
+	public String getApprovedBy() {
 		return approvedBy;
 	}
 
 	/**
 	 * @param approvedBy the approvedBy to set
 	 */
-	public void setApprovedBy(Long approvedBy) {
+	public void setApprovedBy(String approvedBy) {
 		this.approvedBy = approvedBy;
 	}
 
@@ -252,6 +258,20 @@ public class Expense {
 	 */
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+
+	/**
+	 * @return the projectCode
+	 */
+	public String getProjectCode() {
+		return projectCode;
+	}
+
+	/**
+	 * @param projectCode the projectCode to set
+	 */
+	public void setProjectCode(String projectCode) {
+		this.projectCode = projectCode;
 	}
 
 	/**
@@ -326,42 +346,73 @@ public class Expense {
 
 
 	/**
-	 * Convert the given object to string with each line indented by 4 spaces
-	 * (except the first line).
-	 */
-	private String toIndentedString(java.lang.Object o) {
-		if (o == null) {
-			return "null";
-		}
-		return o.toString().replace("\n", "\n    ");
-	}
-
-	/**
 	 * @return the expenseCategory
 	 */
 	public String getExpenseCategory() {
-		return expenseCategory;
+		return category;
 	}
 
 	/**
 	 * @param expenseCategory the expenseCategory to set
 	 */
 	public void setExpenseCategory(String expenseCategory) {
-		this.expenseCategory = expenseCategory;
+		this.category = expenseCategory;
 	}
 
 	/**
-	 * @return the expenseItem
+	 * @return the withdrawnFromBank
 	 */
-	public String getExpenseItem() {
-		return expenseItem;
+	public String getWithdrawnFromBank() {
+		return withdrawnFromBank;
 	}
 
 	/**
-	 * @param expenseItem the expenseItem to set
+	 * @param withdrawnFromBank the withdrawnFromBank to set
 	 */
-	public void setExpenseItem(String expenseItem) {
-		this.expenseItem = expenseItem;
+	public void setWithdrawnFromBank(String withdrawnFromBank) {
+		this.withdrawnFromBank = withdrawnFromBank;
+	}
+
+	/**
+	 * @return the date
+	 */
+	public LocalDate getDate() {
+		return date;
+	}
+
+	/**
+	 * @param date the date to set
+	 */
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
+	/**
+	 * @return the category
+	 */
+	public String getCategory() {
+		return category;
+	}
+
+	/**
+	 * @param category the category to set
+	 */
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	/**
+	 * @return the item
+	 */
+	public String getItem() {
+		return item;
+	}
+
+	/**
+	 * @param item the item to set
+	 */
+	public void setItem(String item) {
+		this.item = item;
 	}
 
 	/* (non-Javadoc)
@@ -369,8 +420,8 @@ public class Expense {
 	 */
 	@Override
 	public String toString() {
-		return "Expense [id=" + id + ", expenseDate=" + expenseDate + ", expenseCategory=" + expenseCategory
-				+ ", expenseItem=" + expenseItem + ", description=" + description + ", amount=" + amount
+		return "Expense [id=" + id + ", expenseDate=" + date + ", expenseCategory=" + category
+				+ ", expenseItem=" + item + ", description=" + description + ", amount=" + amount
 				+ ", paymentMode=" + paymentMode + ", paymentModeReference=" + paymentModeReference + ", projectId="
 				+ projectId + ", projectName=" + projectName + ", paidTo=" + paidTo + ", remarks=" + remarks
 				+ ", approvedBy=" + approvedBy + ", status=" + status + ", groupId=" + groupId + ", createdBy="

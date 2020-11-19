@@ -22,12 +22,11 @@ import io.swagger.annotations.ApiModelProperty;
  * Expense
  */
 @XmlRootElement
-public class Expense extends Base{
-	
+public class Expense extends Base {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5646366654415141468L;
+	private static final long serialVersionUID = 3084474093990281894L;
 
 	@JsonProperty("id")
 	private Long id = null;
@@ -35,14 +34,14 @@ public class Expense extends Base{
 	@JsonProperty("voucherNo")
 	private Long voucherNo;
 
-	@JsonProperty("expenseDate")
-	private LocalDate expenseDate = null;
+	@JsonProperty("date")
+	private LocalDate date = null;
 	
-	@JsonProperty("expenseCategory")
-	private String expenseCategory=null;
+	@JsonProperty("category")
+	private String category=null;
 	
-	@JsonProperty("expenseItem")
-	private String expenseItem=null; 
+	@JsonProperty("item")
+	private String item=null; 
 
 	@JsonProperty("description")
 	private String description = null;
@@ -55,9 +54,15 @@ public class Expense extends Base{
 
 	@JsonProperty("paymentModeReference")
 	private String paymentModeReference;
+	
+	@JsonProperty("withdrawnFromBank")
+	private String withdrawnFromBank;
 
 	@JsonProperty("projectId")
 	private Long projectId = null;
+	
+	@JsonProperty("projectCode")
+	private String projectCode=null;
 
 	@JsonProperty("projectName")
 	private String projectName = null;
@@ -69,7 +74,7 @@ public class Expense extends Base{
 	private String remarks = null;
 
 	@JsonProperty("approvedBy")
-	private Long approvedBy = null;
+	private String approvedBy = null;
 
 	@JsonProperty("status")
 	private Status status = null;
@@ -194,8 +199,22 @@ public class Expense extends Base{
 	}
 
 	public Expense expenseDate(LocalDate expenseDate) {
-		this.expenseDate = expenseDate;
+		this.date = expenseDate;
 		return this;
+	}
+
+	/**
+	 * @return the projectCode
+	 */
+	public String getProjectCode() {
+		return projectCode;
+	}
+
+	/**
+	 * @param projectCode the projectCode to set
+	 */
+	public void setProjectCode(String projectCode) {
+		this.projectCode = projectCode;
 	}
 
 	/**
@@ -208,16 +227,72 @@ public class Expense extends Base{
 	@Valid
 
 	public LocalDate getExpenseDate() {
-		return expenseDate;
+		return date;
 	}
 
 	public void setExpenseDate(LocalDate expenseDate) {
-		this.expenseDate = expenseDate;
+		this.date = expenseDate;
 	}
 
 	public Expense description(String description) {
 		this.description = description;
 		return this;
+	}
+	
+	/**
+	 * @return the date
+	 */
+	public LocalDate getDate() {
+		return date;
+	}
+
+	/**
+	 * @param date the date to set
+	 */
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
+	/**
+	 * @return the category
+	 */
+	public String getCategory() {
+		return category;
+	}
+
+	/**
+	 * @param category the category to set
+	 */
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	/**
+	 * @return the item
+	 */
+	public String getItem() {
+		return item;
+	}
+
+	/**
+	 * @param item the item to set
+	 */
+	public void setItem(String item) {
+		this.item = item;
+	}
+
+	/**
+	 * @return the withdrawnFromBank
+	 */
+	public String getWithdrawnFromBank() {
+		return withdrawnFromBank;
+	}
+
+	/**
+	 * @param withdrawnFromBank the withdrawnFromBank to set
+	 */
+	public void setWithdrawnFromBank(String withdrawnFromBank) {
+		this.withdrawnFromBank = withdrawnFromBank;
 	}
 
 	/**
@@ -343,7 +418,7 @@ public class Expense extends Base{
 		this.remarks = remarks;
 	}
 
-	public Expense approvedBy(Long approvedBy) {
+	public Expense approvedBy(String approvedBy) {
 		this.approvedBy = approvedBy;
 		return this;
 	}
@@ -355,11 +430,11 @@ public class Expense extends Base{
 	 **/
 	@ApiModelProperty(value = "User Group")
 
-	public Long getApprovedBy() {
+	public String getApprovedBy() {
 		return approvedBy;
 	}
 
-	public void setApprovedBy(Long approvedBy) {
+	public void setApprovedBy(String approvedBy) {
 		this.approvedBy = approvedBy;
 	}
 
@@ -412,7 +487,7 @@ public class Expense extends Base{
 			return false;
 		}
 		Expense expense = (Expense) o;
-		return Objects.equals(this.id, expense.id) && Objects.equals(this.expenseDate, expense.expenseDate)
+		return Objects.equals(this.id, expense.id) && Objects.equals(this.date, expense.date)
 				&& Objects.equals(this.description, expense.description) && Objects.equals(this.amount, expense.amount)
 				&& Objects.equals(this.projectId, expense.projectId)
 				&& Objects.equals(this.projectName, expense.projectName) && Objects.equals(this.paidTo, expense.paidTo)
@@ -422,28 +497,26 @@ public class Expense extends Base{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, expenseDate, description, amount, projectId, projectName, paidTo, remarks, approvedBy,
+		return Objects.hash(id, date, description, amount, projectId, projectName, paidTo, remarks, approvedBy,
 				status, groupId);
 	}
+	
+	
 
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("class Expense {\n");
-
-		sb.append("    id: ").append(toIndentedString(id)).append("\n");
-		sb.append("    expenseDate: ").append(toIndentedString(expenseDate)).append("\n");
-		sb.append("    description: ").append(toIndentedString(description)).append("\n");
-		sb.append("    amount: ").append(toIndentedString(amount)).append("\n");
-		sb.append("    projectId: ").append(toIndentedString(projectId)).append("\n");
-		sb.append("    projectName: ").append(toIndentedString(projectName)).append("\n");
-		sb.append("    paidTo: ").append(toIndentedString(paidTo)).append("\n");
-		sb.append("    remarks: ").append(toIndentedString(remarks)).append("\n");
-		sb.append("    approvedBy: ").append(toIndentedString(approvedBy)).append("\n");
-		sb.append("    status: ").append(toIndentedString(status)).append("\n");
-		sb.append("    groupId: ").append(toIndentedString(groupId)).append("\n");
-		sb.append("}");
-		return sb.toString();
+		return "Expense [id=" + id + ", voucherNo=" + voucherNo + ", date=" + date + ", category=" + category
+				+ ", item=" + item + ", description=" + description + ", amount=" + amount + ", paymentMode="
+				+ paymentMode + ", paymentModeReference=" + paymentModeReference + ", withdrawnFromBank="
+				+ withdrawnFromBank + ", projectId=" + projectId + ", projectCode=" + projectCode + ", projectName="
+				+ projectName + ", paidTo=" + paidTo + ", remarks=" + remarks + ", approvedBy=" + approvedBy
+				+ ", status=" + status + ", groupId=" + groupId + ", createdBy=" + createdBy + ", createdOn="
+				+ createdOn + ", whenModified=" + whenModified + ", version=" + version + "]";
 	}
 
 	/**
@@ -461,28 +534,28 @@ public class Expense extends Base{
 	 * @return the expenseCategory
 	 */
 	public String getExpenseCategory() {
-		return expenseCategory;
+		return category;
 	}
 
 	/**
 	 * @param expenseCategory the expenseCategory to set
 	 */
 	public void setExpenseCategory(String expenseCategory) {
-		this.expenseCategory = expenseCategory;
+		this.category = expenseCategory;
 	}
 
 	/**
 	 * @return the expenseItem
 	 */
 	public String getExpenseItem() {
-		return expenseItem;
+		return item;
 	}
 
 	/**
 	 * @param expenseItem the expenseItem to set
 	 */
 	public void setExpenseItem(String expenseItem) {
-		this.expenseItem = expenseItem;
+		this.item = expenseItem;
 	}
 
 	/**

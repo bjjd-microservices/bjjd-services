@@ -48,7 +48,7 @@ public interface ExpenseApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    ResponseEntity<Void> saveExpenses(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Expense> body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
+    ResponseEntity<List<Expense>> saveExpenses(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Expense> body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
     
     @ApiOperation(value = "Expense Deletion Service based on the expense id", nickname = "deleteExpenseById", notes = "Expense Deletion Service based on the expense id", tags={ "ExpenseService", })
     @ApiResponses(value = { 

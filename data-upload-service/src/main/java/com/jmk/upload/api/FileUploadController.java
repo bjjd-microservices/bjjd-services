@@ -3,6 +3,8 @@ package com.jmk.upload.api;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,8 @@ import com.jmk.upload.service.DataValidationService;
 @RestController
 @RequestMapping(value="/upload")
 public class FileUploadController {
+	
+	private static final Logger LOGGER=LoggerFactory.getLogger(FileUploadController.class);
 
 	@Autowired
 	private DataStorageService dataStorageService;
@@ -38,13 +42,14 @@ public class FileUploadController {
 		System.out.println("File type: "+file.getContentType());
 		ValidationResult validationResult=dataValidationService.validate(file);
 		if(Result.SUCCESS.equals(validationResult.getResult())) {
-			System.out.println(validationResult.getSheetResultMapping());
+			LOGGER.info("Excel File Processing Results : "+validationResult.getSheetResultMapping());
 			Map<String,List<? extends Object>> resultSheetMapping=dataStorageService.storeData(validationResult.getSheetResultMapping());
 			uploadFileResponse.setResultSheetMapping(resultSheetMapping);
 		}else if(Result.FAILURE.equals(validationResult.getResult())){
 			ExcelSheetValidationError excelSheetValidationError=new ExcelSheetValidationError();
 			ApiError apiError=new ApiError(HttpStatus.BAD_REQUEST);
 			apiError.addSubError(excelSheetValidationError);
+			LOGGER.error("Validation Errors in Excel Sheet: "+file.getOriginalFilename());
 			apiError.setMessage("Validation Errors in Excel Sheet: "+file.getOriginalFilename());
 			validationResult.getSheetResultMapping().entrySet().stream().forEach(entry->entry.getValue().stream().forEach(base->excelSheetValidationError.addSheetRowErrors(entry.getKey(), base.getExcelSheetRowErrors())));
 			throw new ExcelSheetValidationException(apiError);

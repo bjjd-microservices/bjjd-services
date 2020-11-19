@@ -16,8 +16,12 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jmk.darshan.enums.VisitorType;
 import com.jmk.darshan.model.Darshan;
 import com.jmk.darshan.service.DarshanMgmtService;
+import com.jmk.darshan.util.VisitorCreator;
+import com.jmk.darshan.validator.RequestValidator;
+import com.jmk.people.model.Devotee;
 
 import io.swagger.annotations.ApiParam;
 
@@ -26,11 +30,17 @@ import io.swagger.annotations.ApiParam;
 @RestController
 public class DarshanApiController implements DarshanApi {
 
-	private static final Logger log = LoggerFactory.getLogger(DarshanApiController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(DarshanApiController.class);
 
 	private final ObjectMapper objectMapper;
 
 	private final HttpServletRequest request;
+	
+	@Autowired
+	private RequestValidator requestValidator;
+	
+	@Autowired
+	private VisitorCreator visitorCreator;
 
 	@Autowired
 	private DarshanMgmtService darshanMgmtService;
@@ -41,8 +51,7 @@ public class DarshanApiController implements DarshanApi {
 		this.request = request;
 	}
 
-	public ResponseEntity<Void> deleteDarshanById(
-			@ApiParam(value = "Darshan Id", required = true) @PathVariable("id") Long id) {
+	public ResponseEntity<Void> deleteDarshanById(@ApiParam(value = "Darshan Id", required = true) @PathVariable("id") Long id) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
@@ -52,8 +61,7 @@ public class DarshanApiController implements DarshanApi {
 		return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-	public ResponseEntity<Darshan> findDarshanDetailsById(
-			@ApiParam(value = "Darshan Id", required = true) @PathVariable("id") Long id) {
+	public ResponseEntity<Darshan> findDarshanDetailsById(@ApiParam(value = "Darshan Id", required = true) @PathVariable("id") Long id) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
@@ -63,20 +71,25 @@ public class DarshanApiController implements DarshanApi {
 		return new ResponseEntity<Darshan>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-	public ResponseEntity<Darshan> saveDarshan(
-			@ApiParam(value = "", required = true) @Valid @RequestBody Darshan darshan,
+	public ResponseEntity<Darshan> saveDarshan(@ApiParam(value = "", required = true) @Valid @RequestBody Darshan darshan,
 			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
-			darshan = darshanMgmtService.saveDarshan(darshan);
+
+			if (requestValidator.validate(darshan)) {
+				if (VisitorType.DEVOTEE.equals(darshan.getVisitorType()) && darshan.getVisitorId() == null) {
+					Devotee devotee = visitorCreator.createDevotee(darshan);
+					darshan.setVisitorId(devotee.getId());
+				}
+				darshan = darshanMgmtService.saveDarshan(darshan);
+			}
 			return new ResponseEntity<Darshan>(darshan, HttpStatus.OK);
 		}
 		return new ResponseEntity<Darshan>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-	public ResponseEntity<List<Darshan>> saveDarshans(
-			@ApiParam(value = "", required = true) @Valid @RequestBody List<Darshan> darshans,
+	public ResponseEntity<List<Darshan>> saveDarshans(@ApiParam(value = "", required = true) @Valid @RequestBody List<Darshan> darshans,
 			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")

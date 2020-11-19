@@ -1,6 +1,8 @@
 package com.jmk.account.api;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -23,11 +25,10 @@ import com.jmk.account.util.RequestValidator;
 
 import io.swagger.annotations.ApiParam;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-04-05T20:28:14.461+05:30")
-
 @RestController
 public class ExpenseApiController implements ExpenseApi {
 
-    private static final Logger log = LoggerFactory.getLogger(ExpenseApiController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExpenseApiController.class);
 
     private final HttpServletRequest request;
     
@@ -49,21 +50,23 @@ public class ExpenseApiController implements ExpenseApi {
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
 			if (validator.validate(expense)) {
+				enrichCommonDonationDetails(expense);
 				expense = expenseService.saveExpense(expense);
 				return new ResponseEntity<Expense>(expense, HttpStatus.OK);
 			}
 		}
-		return new ResponseEntity<Expense>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<Expense>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-    public ResponseEntity<Void> saveExpenses(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Expense> expenses,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel) {
+    public ResponseEntity<List<Expense>> saveExpenses(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Expense> expenses,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel) {
     	String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
 			expenses = expenseService.saveExpenses(expenses);
-			return new ResponseEntity<>(HttpStatus.OK);
+			expenses=expenses.stream().map(expense->enrichCommonDonationDetails(expense)).collect(Collectors.toList());
+			return new ResponseEntity<List<Expense>>(expenses,HttpStatus.OK);
 		}
-        return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<List<Expense>>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
     
     public ResponseEntity<Void> deleteExpenseById(
@@ -95,4 +98,14 @@ public class ExpenseApiController implements ExpenseApi {
 
 		return new ResponseEntity<Expense>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+	
+	private Expense enrichCommonDonationDetails(Expense expense) {
+		if (expense.getId() == null) {
+			expense.setCreatedOn(LocalDateTime.now());
+		}
+		expense.setWhenModified(LocalDateTime.now());
+		return expense;
+	}
 }
+
+

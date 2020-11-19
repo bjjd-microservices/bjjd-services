@@ -3,7 +3,9 @@
       "templateId":1,
       "templateName":"Project",
       "headerRowsSize":1,
-      "validator":"com.jmk.upload.validator.ProjectValidator",
+      "processRowsPerThread":100,
+      "templateClass":"com.jmk.upload.model.Project",
+      "validatorClass":"com.jmk.upload.validator.ProjectValidator",
       "columnTemplates":[
          {
             "id":1,
@@ -67,7 +69,9 @@
       "templateId":2,
       "templateName":"Donation",
       "headerRowsSize":2,
-      "validator":"com.jmk.upload.validator.DonationValidator",
+      "processRowsPerThread":100,
+      "templateClass":"com.jmk.upload.model.Donation",
+      "validatorClass":"com.jmk.upload.validator.DonationValidator",
       "columnTemplates":[
          {
             "id":1,
@@ -198,6 +202,121 @@
           {
             "id":19,
             "pos":18,
+            "sheetColumnName":"GroupId",
+            "beanPropertyName":"groupId",
+            "type":"LONG"
+         }
+      ]
+   },
+  "Expense":{
+      "templateId":3,
+      "templateName":"Expense",
+      "headerRowsSize":2,
+      "processRowsPerThread":100,
+      "templateClass":"com.jmk.upload.model.Expense",
+      "validatorClass":"com.jmk.upload.validator.ExpenseValidator",
+      "columnTemplates":[
+         {
+            "id":1,
+            "pos":0,
+            "sheetColumnName":"Date",
+            "beanPropertyName":"date",
+            "type":"DATE"
+         },
+         {
+            "id":2,
+            "pos":1,
+            "sheetColumnName":"VoucherNo",
+            "beanPropertyName":"voucherNo",
+            "type":"INTEGER"
+         },
+         {
+            "id":3,
+            "pos":2,
+            "sheetColumnName":"Category",
+            "beanPropertyName":"category",
+            "type":"VARCHAR"
+         },
+		 {
+            "id":4,
+            "pos":3,
+            "sheetColumnName":"Item",
+            "beanPropertyName":"item",
+            "type":"VARCHAR"
+         },
+		 {
+            "id":5,
+            "pos":4,
+            "sheetColumnName":"Description",
+            "beanPropertyName":"description",
+            "type":"VARCHAR"
+         },
+		{
+            "id":6,
+            "pos":5,
+            "sheetColumnName":"Amount",
+            "beanPropertyName":"amount",
+            "type":"DECIMAL"
+         },
+		{ 
+            "id":7,
+            "pos":6,
+            "sheetColumnName":"PaymentMode",
+            "beanPropertyName":"paymentMode",
+            "type":"ENUMERATION"
+         },
+         { 
+            "id":8,
+            "pos":7,
+            "sheetColumnName":"PaymentModeReference",
+            "beanPropertyName":"paymentModeReference",
+            "type":"VARCHAR"
+         },
+         { 
+            "id":9,
+            "pos":8,
+            "sheetColumnName":"WithdrawnFromBank",
+            "beanPropertyName":"withdrawnFromBank",
+            "type":"VARCHAR"
+         },
+          { 
+            "id":10,
+            "pos":9,
+            "sheetColumnName":"ProjectCode",
+            "beanPropertyName":"projectCode",
+            "type":"VARCHAR"
+         },
+         {
+            "id":11,
+            "pos":10,
+            "sheetColumnName":"ProjectName",
+            "beanPropertyName":"projectName",
+            "type":"VARCHAR"
+         },
+         {
+            "id":12,
+            "pos":11,
+            "sheetColumnName":"PaidTo",
+            "beanPropertyName":"paidTo",
+            "type":"VARCHAR"
+         },
+          {
+            "id":13,
+            "pos":12,
+            "sheetColumnName":"ApprovedBy",
+            "beanPropertyName":"approvedBy",
+            "type":"VARCHAR"
+         },
+          {
+            "id":14,
+            "pos":13,
+            "sheetColumnName":"Remarks",
+            "beanPropertyName":"remarks",
+            "type":"VARCHAR"
+         },
+          {
+            "id":15,
+            "pos":14,
             "sheetColumnName":"GroupId",
             "beanPropertyName":"groupId",
             "type":"LONG"

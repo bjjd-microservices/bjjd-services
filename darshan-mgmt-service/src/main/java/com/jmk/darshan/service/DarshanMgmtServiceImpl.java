@@ -8,11 +8,13 @@ import java.util.stream.StreamSupport;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.jmk.darshan.model.Darshan;
 import com.jmk.darshan.repository.DarshanRepository;
 import com.jmk.eh.exception.EntityNotFoundException;
 
+@Service
 public class DarshanMgmtServiceImpl implements DarshanMgmtService{
 	
 	@Autowired
@@ -59,3 +61,4 @@ public class DarshanMgmtServiceImpl implements DarshanMgmtService{
 	}
 	
 }
+

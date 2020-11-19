@@ -30,6 +30,7 @@ public final class ExcelFileReader {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public static <T extends Base> List<T> readExcelFile(ExcelFile excelFile, Limit limit, boolean hasHeaderRow,int headerRowsSize) {
 		List<T> objectList = new ArrayList<>();
 		BindException bindException;
@@ -79,6 +80,10 @@ public final class ExcelFileReader {
 						case LONG:
 							BeanUtils.setProperty(object, columnTemplate.getBeanPropertyName(),
 									getLongCellValue(row.getCell(pos), bindException, columnTemplate));
+							break;
+						case INTEGER:
+							BeanUtils.setProperty(object, columnTemplate.getBeanPropertyName(),
+									getIntegerCellValue(row.getCell(pos), bindException, columnTemplate));
 							break;
 						case ENUMERATION:
 							BeanUtils.setProperty(object, columnTemplate.getBeanPropertyName(),
@@ -168,6 +173,7 @@ public final class ExcelFileReader {
 	 * @param columnTemplate
 	 * @return
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private static Enum getEnumeratedCellValue(Cell cell,Object object, Errors errors, ColumnTemplate columnTemplate) {
 		Enum rtrnVal = null;
 
@@ -220,6 +226,35 @@ public final class ExcelFileReader {
 		return rtrnVal;
 	}
 
+	/**
+	 * Get the decimal value
+	 * 
+	 * @param cell
+	 * @param errors
+	 * @param columnTemplate
+	 * @return
+	 */
+	private static Integer getIntegerCellValue(Cell cell, Errors errors, ColumnTemplate columnTemplate) {
+		Integer rtrnVal = 0;
+		try {
+			if (cell != null) {
+				if (cell.toString().trim().length() == 0)
+					return rtrnVal;
+				else if (cell.getCellType() == CellType.NUMERIC) {
+					Double doubleValue = Double.valueOf(cell.getNumericCellValue());
+					return rtrnVal = doubleValue.intValue();
+				}
+			}
+		} catch (Exception exception) {
+			log.error(exception.getMessage());
+			errors.rejectValue(columnTemplate.getBeanPropertyName(),
+					ExcelFileErrorType.INVALID_LONG_VALUE.getErrorType(), cell.toString());
+		}
+
+		return rtrnVal;
+	}
+
+	
 	/**
 	 * Get the decimal value
 	 * 

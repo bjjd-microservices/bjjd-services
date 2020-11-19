@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -31,10 +30,13 @@ public class Darshan {
 	private VisitorType visitorType = null;
 
 	@JsonProperty("visitorId")
-	private String visitorId = null;
+	private Long visitorId = null;
 
 	@JsonProperty("visitorName")
 	private String visitorName = null;
+	
+	@JsonProperty("visitor_addressline")
+	private String visitorAddressLine=null;
 
 	@JsonProperty("visitorCity")
 	private String visitorCity = null;
@@ -106,9 +108,6 @@ public class Darshan {
 	 * @return visitingDate
 	 **/
 	@ApiModelProperty(value = "Visiting date")
-
-	@Valid
-
 	public LocalDate getVisitingDate() {
 		return visitingDate;
 	}
@@ -137,7 +136,7 @@ public class Darshan {
 		this.visitorType = visitorType;
 	}
 
-	public Darshan visitorId(String visitorId) {
+	public Darshan visitorId(Long visitorId) {
 		this.visitorId = visitorId;
 		return this;
 	}
@@ -148,13 +147,11 @@ public class Darshan {
 	 * @return visitorId
 	 **/
 	@ApiModelProperty(value = "Visitor Id")
-
-	@Size(min = 1, max = 50)
-	public String getVisitorId() {
+	public Long getVisitorId() {
 		return visitorId;
 	}
 
-	public void setVisitorId(String visitorId) {
+	public void setVisitorId(Long visitorId) {
 		this.visitorId = visitorId;
 	}
 
@@ -191,7 +188,6 @@ public class Darshan {
 	 * @return visitorCity
 	 **/
 	@ApiModelProperty(value = "Visitor City")
-
 	@Size(min = 1, max = 255)
 	public String getVisitorCity() {
 		return visitorCity;
@@ -254,8 +250,6 @@ public class Darshan {
 	 * @return reference
 	 **/
 	@ApiModelProperty(value = "Visitor Reference")
-
-	@Size(min = 1, max = 50)
 	public String getReference() {
 		return reference;
 	}
@@ -307,6 +301,62 @@ public class Darshan {
 	public Darshan totalKids(Integer totalKids) {
 		this.totalKids = totalKids;
 		return this;
+	}
+	
+	/**
+	 * @return the createdBy
+	 */
+	public Long getCreatedBy() {
+		return createdBy;
+	}
+
+	/**
+	 * @param createdBy the createdBy to set
+	 */
+	public void setCreatedBy(Long createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	/**
+	 * @return the createdOn
+	 */
+	public LocalDateTime getCreatedOn() {
+		return createdOn;
+	}
+
+	/**
+	 * @param createdOn the createdOn to set
+	 */
+	public void setCreatedOn(LocalDateTime createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	/**
+	 * @return the whenModified
+	 */
+	public LocalDateTime getWhenModified() {
+		return whenModified;
+	}
+
+	/**
+	 * @param whenModified the whenModified to set
+	 */
+	public void setWhenModified(LocalDateTime whenModified) {
+		this.whenModified = whenModified;
+	}
+
+	/**
+	 * @return the version
+	 */
+	public Long getVersion() {
+		return version;
+	}
+
+	/**
+	 * @param version the version to set
+	 */
+	public void setVersion(Long version) {
+		this.version = version;
 	}
 
 	/**
@@ -362,6 +412,20 @@ public class Darshan {
 
 	public void setGroupId(Integer groupId) {
 		this.groupId = groupId;
+	}
+	
+	/**
+	 * @return the visitorAddressLine
+	 */
+	public String getVisitorAddressLine() {
+		return visitorAddressLine;
+	}
+
+	/**
+	 * @param visitorAddressLine the visitorAddressLine to set
+	 */
+	public void setVisitorAddressLine(String visitorAddressLine) {
+		this.visitorAddressLine = visitorAddressLine;
 	}
 
 	@Override

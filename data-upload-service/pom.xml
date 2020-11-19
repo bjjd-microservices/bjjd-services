@@ -54,19 +54,6 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 				
-		<!-- Spring Boot starter cache -->
-		<!-- <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-cache</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>net.sf.ehcache</groupId>
-            <artifactId>ehcache</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.cache</groupId>
-            <artifactId>cache-api</artifactId>
-        </dependency> -->
 		<!-- Starter for using Spring Data JPA with Hibernate to store and retrieve data in a relational database. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -136,5 +123,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

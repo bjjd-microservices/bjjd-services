@@ -1,0 +1,21 @@
+CREATE TABLE `darshan` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `created_by` bigint(20) DEFAULT NULL,
+  `created_on` datetime(6) DEFAULT NULL,
+  `group_id` int(11) DEFAULT NULL,
+  `reference` varchar(50) DEFAULT NULL,
+  `total_kids` int(11) DEFAULT NULL,
+  `total_men` int(11) DEFAULT NULL,
+  `total_visitors` int(11) DEFAULT NULL,
+  `total_women` int(11) DEFAULT NULL,
+  `version` bigint(20) DEFAULT NULL,
+  `visiting_date` date DEFAULT NULL,
+  `visitor_city` varchar(255) DEFAULT NULL,
+  `visitor_id` varchar(50) DEFAULT NULL,
+  `visitor_mobileno` varchar(15) DEFAULT NULL,
+  `visitor_name` varchar(255) NOT NULL,
+  `visitor_state` varchar(250) DEFAULT NULL,
+  `visitor_type` varchar(255) DEFAULT NULL,
+  `when_modified` datetime(6) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

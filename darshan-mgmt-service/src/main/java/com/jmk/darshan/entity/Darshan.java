@@ -13,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -40,10 +39,13 @@ public class Darshan {
 	private VisitorType visitorType = null;
 
 	@Column(name = "visitor_id")
-	private String visitorId = null;
+	private Long visitorId = null;
 
 	@Column(name = "visitor_name")
 	private String visitorName = null;
+	
+	@Column(name="visitor_addressline")
+	private String visitorAddressLine=null;
 
 	@Column(name = "visitor_city")
 	private String visitorCity = null;
@@ -109,15 +111,6 @@ public class Darshan {
 		return this;
 	}
 
-	/**
-	 * Visiting date
-	 * 
-	 * @return visitingDate
-	 **/
-	@ApiModelProperty(value = "Visiting date")
-
-	@Valid
-
 	public LocalDate getVisitingDate() {
 		return visitingDate;
 	}
@@ -146,7 +139,7 @@ public class Darshan {
 		this.visitorType = visitorType;
 	}
 
-	public Darshan visitorId(String visitorId) {
+	public Darshan visitorId(Long visitorId) {
 		this.visitorId = visitorId;
 		return this;
 	}
@@ -156,14 +149,11 @@ public class Darshan {
 	 * 
 	 * @return visitorId
 	 **/
-	@ApiModelProperty(value = "Visitor Id")
-
-	@Size(min = 1, max = 50)
-	public String getVisitorId() {
+	public Long getVisitorId() {
 		return visitorId;
 	}
 
-	public void setVisitorId(String visitorId) {
+	public void setVisitorId(Long visitorId) {
 		this.visitorId = visitorId;
 	}
 
@@ -358,6 +348,64 @@ public class Darshan {
 		return this;
 	}
 
+	
+	
+	/**
+	 * @return the createdBy
+	 */
+	public Long getCreatedBy() {
+		return createdBy;
+	}
+
+	/**
+	 * @param createdBy the createdBy to set
+	 */
+	public void setCreatedBy(Long createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	/**
+	 * @return the createdOn
+	 */
+	public LocalDateTime getCreatedOn() {
+		return createdOn;
+	}
+
+	/**
+	 * @param createdOn the createdOn to set
+	 */
+	public void setCreatedOn(LocalDateTime createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	/**
+	 * @return the whenModified
+	 */
+	public LocalDateTime getWhenModified() {
+		return whenModified;
+	}
+
+	/**
+	 * @param whenModified the whenModified to set
+	 */
+	public void setWhenModified(LocalDateTime whenModified) {
+		this.whenModified = whenModified;
+	}
+
+	/**
+	 * @return the version
+	 */
+	public Long getVersion() {
+		return version;
+	}
+
+	/**
+	 * @param version the version to set
+	 */
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+
 	/**
 	 * User Group
 	 * 
@@ -371,6 +419,20 @@ public class Darshan {
 
 	public void setGroupId(Integer groupId) {
 		this.groupId = groupId;
+	}
+	
+	/**
+	 * @return the visitorAddressLine
+	 */
+	public String getVisitorAddressLine() {
+		return visitorAddressLine;
+	}
+
+	/**
+	 * @param visitorAddressLine the visitorAddressLine to set
+	 */
+	public void setVisitorAddressLine(String visitorAddressLine) {
+		this.visitorAddressLine = visitorAddressLine;
 	}
 
 	@Override

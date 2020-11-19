@@ -25,6 +25,7 @@ import java.util.List;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-05-12T00:51:00.325+05:30")
 
 @Api(value = "darshan", description = "the darshan API")
+@RequestMapping(value = "/darshan")
 public interface DarshanApi {
 
     @ApiOperation(value = "Darshan Deletion Service based on the darshan id", nickname = "deleteDarshanById", notes = "Darshan Deletion Service based on the darshan id", tags={ "DarshanMgmt", })
@@ -33,12 +34,8 @@ public interface DarshanApi {
         @ApiResponse(code = 400, message = "Invalid User id supplied"),
         @ApiResponse(code = 404, message = "Darshan Id not found"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/darshan/{id}",
-        produces = { "application/json" }, 
-        consumes = { "application/json" },
-        method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}",produces = { "application/json" }, consumes = { "application/json" }, method = RequestMethod.DELETE)
     ResponseEntity<Void> deleteDarshanById(@ApiParam(value = "Darshan Id",required=true) @PathVariable("id") Long id);
-
 
     @ApiOperation(value = "Find Darshan Details based on the darshan id", nickname = "findDarshanDetailsById", notes = "Find Darshan Details based on the darshan id", response = Darshan.class, tags={ "DarshanMgmt", })
     @ApiResponses(value = { 
@@ -46,35 +43,32 @@ public interface DarshanApi {
         @ApiResponse(code = 400, message = "Invalid Darshan name and password supplied"),
         @ApiResponse(code = 404, message = "Darshan not found or inactive"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/darshan/{id}",
+    @RequestMapping(value = "/{id}",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.GET)
     ResponseEntity<Darshan> findDarshanDetailsById(@ApiParam(value = "Darshan Id",required=true) @PathVariable("id") Long id);
-
 
     @ApiOperation(value = "Darshan Saving Service", nickname = "saveDarshan", notes = "Darshan Saving Service", response = Darshan.class, tags={ "DarshanMgmt", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = Darshan.class),
         @ApiResponse(code = 400, message = "Bad Request"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/darshan",
+    @RequestMapping(value = "/",
         produces = { "application/json", "application/xml" }, 
         consumes = { "application/json", "application/xml" },
         method = RequestMethod.POST)
-    ResponseEntity<Darshan> saveDarshan(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Darshan body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
-
+    ResponseEntity<Darshan> saveDarshan(@ApiParam(value = "darshanRequest" ,required=true )  @Valid @RequestBody Darshan darshan,@ApiParam(value = "xChannel" ) @RequestHeader(value="xChannel", required=false) String xChannel);
 
     @ApiOperation(value = "Darshan saving with input arrays Service", nickname = "saveDarshansWithArrayInput", notes = "Darshan Finding Service", tags={ "DarshanMgmt", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Successfully found"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/darshan/createWithArray",
+    @RequestMapping(value = "/createWithArray",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)
     ResponseEntity<List<Darshan>> saveDarshans(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Darshan> body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
-
 
     @ApiOperation(value = "Update Darshan Details based on the darshan id", nickname = "updateDarshanById", notes = "Update Darshan Details based on the darshan id", response = Darshan.class, tags={ "DarshanMgmt", })
     @ApiResponses(value = { 
@@ -82,7 +76,7 @@ public interface DarshanApi {
         @ApiResponse(code = 400, message = "Invalid Darshan name supplied"),
         @ApiResponse(code = 404, message = "Darshan not found or inactive"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/darshan/{id}",
+    @RequestMapping(value = "/{id}",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.PUT)

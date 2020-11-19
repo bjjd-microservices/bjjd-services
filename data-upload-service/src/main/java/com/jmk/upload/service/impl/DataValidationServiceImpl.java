@@ -12,21 +12,19 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.Validator;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jmk.enums.Result;
 import com.jmk.upload.excel.processor.ExcelFileParallelProcessor;
 import com.jmk.upload.model.Base;
-import com.jmk.upload.model.Donation;
 import com.jmk.upload.model.ExcelFile;
-import com.jmk.upload.model.Project;
 import com.jmk.upload.model.ValidationResult;
 import com.jmk.upload.service.DataValidationService;
 import com.jmk.upload.template.ExcelSheetTemplate;
 import com.jmk.upload.template.handler.ExcelSheetTemplateHandler;
-import com.jmk.upload.validator.DonationValidator;
-import com.jmk.upload.validator.ProjectValidator;
 
 @Component
 public class DataValidationServiceImpl implements DataValidationService {
@@ -38,11 +36,9 @@ public class DataValidationServiceImpl implements DataValidationService {
 	private ExcelSheetTemplateHandler fileTemplateHandler;
 
 	@Autowired
-	private ProjectValidator projectValidator;
-
-	@Autowired
-	private DonationValidator donationValidtor;
-
+	private ApplicationContext applicationContext;
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	public ValidationResult validate(MultipartFile file) {
 		ValidationResult validationResult = null;
@@ -55,24 +51,16 @@ public class DataValidationServiceImpl implements DataValidationService {
 			Iterator<Sheet> sheetIterator = workbook.sheetIterator();
 			while (sheetIterator.hasNext()) {
 				Sheet sheet = sheetIterator.next();
-				ExcelSheetTemplate sheetTemplate=null;
-				switch (sheet.getSheetName()) {
-				case "Donation":
-					sheetTemplate=sheetTemplateMapping.get("Donation");
-					excelFile = new ExcelFile(sheet, true,sheetTemplate.getHeaderRowsSize(), 100, sheetTemplate, Donation.class,
-							donationValidtor);
+				ExcelSheetTemplate excelSheetTemplate=sheetTemplateMapping.get(sheet.getSheetName());
+					try {
+						excelFile = new ExcelFile(sheet, true,excelSheetTemplate.getHeaderRowsSize(), excelSheetTemplate.getProcessRowsPerThread(), excelSheetTemplate, (Class<? extends Base>) Class.forName(excelSheetTemplate.getTemplateClass()),
+								(Validator)getBean(Class.forName(excelSheetTemplate.getValidatorClass())));
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					}
 					objectList = excelFileParallelProcessor.readExcelinParallel(excelFile);
 					sheetResultMapping.put(sheet.getSheetName(), objectList);
-					break;
-				case "Project":
-					sheetTemplate=sheetTemplateMapping.get("Project");
-					excelFile = new ExcelFile(sheet, true, sheetTemplate.getHeaderRowsSize(),100, sheetTemplate, Project.class,
-							projectValidator);
-					objectList = excelFileParallelProcessor.readExcelinParallel(excelFile);
-					sheetResultMapping.put(sheet.getSheetName(), objectList);
-					break;
-				default:
-				}
+
 			}
 			validationResult = processResult(sheetResultMapping);
 		} catch (IOException e) {
@@ -113,4 +101,9 @@ public class DataValidationServiceImpl implements DataValidationService {
 		return validationResult;
 
 	}
+	
+	public <T extends Object> T getBean(Class<T> beanClass){
+		return applicationContext.getBean(beanClass);
+	}
+
 }
