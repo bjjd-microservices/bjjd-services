@@ -23,46 +23,28 @@ import com.jmk.upload.template.ColumnTemplate;
 import com.jmk.upload.template.ExcelSheetTemplate;
 
 public final class ExcelFileReader {
-
-	private final static Logger log = LoggerFactory.getLogger(ExcelFileParallelProcessor.class);
-
-	private ExcelFileReader() {
-
-	}
-
-	@SuppressWarnings("unchecked")
+	private final static Logger LOGGER = LoggerFactory.getLogger(ExcelFileParallelProcessor.class);
 	public static <T extends Base> List<T> readExcelFile(ExcelFile excelFile, Limit limit, boolean hasHeaderRow,int headerRowsSize) {
 		List<T> objectList = new ArrayList<>();
-		BindException bindException;
 		T object;
-		ColumnTemplate columnTemplate;
 		int startRow = limit.getStartRow();
 		int endRow = limit.getEndRow();
 		ExcelSheetTemplate fileTemplate = excelFile.getFileTemplate();
 		try {
-			// Sheet sheet = workbook.getSheetAt(0);
 			if (limit.getStartRow() == -1 && limit.getEndRow() == -1) {
 				startRow = excelFile.getSheet().getFirstRowNum();
 				endRow = excelFile.getSheet().getLastRowNum();
 			}
-
 			for (int currRow = startRow; currRow <= endRow; currRow++) {
 				object = (T) excelFile.getClazz().newInstance();
-
 				Row row = (Row) excelFile.getSheet().getRow(currRow);
-				bindException = new BindException(object, "" + row.getRowNum());
-
+				BindException bindException = new BindException(object, "" + row.getRowNum());
 				if (hasHeaderRow && row.getRowNum() < headerRowsSize) {
 					continue;// just skip the row if row number 0 if header row is true
 				}
-
-				/*
-				 * Dynamically calculate positions based on Column Name and Bean Name if needed
-				 * to not use static pos from conf
-				 */
-				
+				// Dynamically calculate positions based on Column Name and Bean Name if needed  to not use static pos from conf
 				for (Integer pos : fileTemplate.getColumnTemplatesMap().keySet()) {
-					columnTemplate = fileTemplate.getColumnTemplatesMap().get(pos);
+					ColumnTemplate columnTemplate = fileTemplate.getColumnTemplatesMap().get(pos);
 					if (row.getCell(pos) != null) {
 						switch (ExcelDataType.valueOf(columnTemplate.getType())) {
 						case DATE:
@@ -97,7 +79,6 @@ public final class ExcelFileReader {
 
 				}
 				object.setRow(row.getRowNum() + 1);
-
 				if (excelFile.getValidator() != null) {
 					excelFile.getValidator().validate(object, bindException);
 				}
@@ -106,7 +87,7 @@ public final class ExcelFileReader {
 
 			}
 		} catch (Exception e) {
-			log.error("File contain some invalid values" + e.getMessage());
+			LOGGER.error("File contain some invalid values" + e.getMessage());
 			e.printStackTrace();
 		}
 
@@ -127,7 +108,7 @@ public final class ExcelFileReader {
 			try {
 				localDate = cell.getLocalDateTimeCellValue().toLocalDate();
 			} catch (IllegalStateException | NumberFormatException e) {
-				log.error(e.getMessage());
+				LOGGER.error(e.getMessage());
 				errors.rejectValue(columnTemplate.getBeanPropertyName(),
 						ExcelFileErrorType.INVALID_DATE_VALUE.getErrorType(),new Object[] {cell}, cell.toString());
 			}
@@ -157,7 +138,7 @@ public final class ExcelFileReader {
 				}
 			}
 		} catch (Exception exception) {
-			log.error(exception.getMessage());
+			LOGGER.error(exception.getMessage());
 			exception.printStackTrace();
 			errors.rejectValue(columnTemplate.getBeanPropertyName(),
 					ExcelFileErrorType.INVALID_STRING_VALUE.getErrorType(), cell.toString());
@@ -189,7 +170,7 @@ public final class ExcelFileReader {
 				} 
 			}
 		} catch (Exception exception) {
-			log.error(exception.getMessage());
+			LOGGER.error(exception.getMessage());
 			exception.printStackTrace();
 			errors.rejectValue(columnTemplate.getBeanPropertyName(),
 					ExcelFileErrorType.INVALID_STRING_VALUE.getErrorType(), cell.toString());
@@ -218,7 +199,7 @@ public final class ExcelFileReader {
 				}
 			}
 		} catch (Exception exception) {
-			log.error(exception.getMessage());
+			LOGGER.error(exception.getMessage());
 			errors.rejectValue(columnTemplate.getBeanPropertyName(),
 					ExcelFileErrorType.INVALID_DECIMAL_VALUE.getErrorType(), cell.toString());
 		}
@@ -246,7 +227,7 @@ public final class ExcelFileReader {
 				}
 			}
 		} catch (Exception exception) {
-			log.error(exception.getMessage());
+			LOGGER.error(exception.getMessage());
 			errors.rejectValue(columnTemplate.getBeanPropertyName(),
 					ExcelFileErrorType.INVALID_LONG_VALUE.getErrorType(), cell.toString());
 		}
@@ -275,7 +256,7 @@ public final class ExcelFileReader {
 				}
 			}
 		} catch (Exception exception) {
-			log.error(exception.getMessage());
+			LOGGER.error(exception.getMessage());
 			errors.rejectValue(columnTemplate.getBeanPropertyName(),
 					ExcelFileErrorType.INVALID_LONG_VALUE.getErrorType(), cell.toString());
 		}
@@ -304,7 +285,7 @@ public final class ExcelFileReader {
 				}
 			}
 		} catch (IllegalStateException exception) {
-			log.error(exception.getMessage());
+			LOGGER.error(exception.getMessage());
 			errors.rejectValue(columnTemplate.getBeanPropertyName(),
 					ExcelFileErrorType.INVALID_DECIMAL_VALUE.getErrorType(), cell.toString());
 		}

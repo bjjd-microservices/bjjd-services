@@ -22,8 +22,8 @@ public class UserModelUtility {
 	public static User createUserModel() {
 		User user=new User();
 		user.username("rajivbansal2981").password("Rajiv@379").displayName("Rajiv Bansal");
-		user.setEmailSent(MessageStatus.WAITING_FOR_RECEIPT);
-		user.setSmsSent(MessageStatus.WAITING_FOR_RECEIPT);
+		user.setEmailSent(MessageStatus.N);
+		user.setSmsSent(MessageStatus.N);
 		user.setStatus(Status.A);
 		user.setCreatedOn(LocalDateTime.now());
 		user.setGroupId(Group.BJJD.getGroupId());

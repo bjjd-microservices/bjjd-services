@@ -62,6 +62,7 @@ public class DarshanApiTest {
 		String jsonDarshan=null;
 		try {
 			jsonDarshan=objectMapper.writeValueAsString(darshan);
+			System.out.print(jsonDarshan);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
@@ -77,3 +78,4 @@ public class DarshanApiTest {
 	}
 
 }
+

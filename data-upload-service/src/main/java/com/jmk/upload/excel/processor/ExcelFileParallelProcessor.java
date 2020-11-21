@@ -33,7 +33,7 @@ public class ExcelFileParallelProcessor {
 				return ExcelFileReader.readExcelFile(excelFile, excelFile.getSheetThreads().get(i),i==1,excelFile.getHeaderRowsSize());
 			}));
 		} 
-		log.info("List assembling the results...");
+		log.info("List assembling the excelf file processing results...");
 		
 		for(Future<List<? extends Base>> result:results) {
 			try {
@@ -48,16 +48,14 @@ public class ExcelFileParallelProcessor {
 	
 	@Override
 	protected void finalize() throws Throwable {
-		// TODO Auto-generated method stub
 		super.finalize();
 		try {
 			executorService.shutdown();
 			}
 		 	catch (Exception e) {
-			// TODO: handle exception
 		 		log.info(e.getMessage());
-		 		e.printStackTrace();
 		 	}
 	}
 
 }
+

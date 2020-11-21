@@ -9,3 +9,4 @@ public interface DataValidationService {
 	public ValidationResult validate(MultipartFile file);
 
 }
+

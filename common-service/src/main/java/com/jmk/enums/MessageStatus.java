@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum MessageStatus {
-	SENT("Sent"), WAITING_FOR_RECEIPT("WaitingForReceipt");
+	Y("Y"),N("N");
 
 	private String value;
 

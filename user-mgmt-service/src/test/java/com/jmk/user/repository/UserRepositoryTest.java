@@ -1,6 +1,5 @@
 package com.jmk.user.repository;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -39,7 +38,7 @@ public class UserRepositoryTest {
 		user.setUsername("rajivbansal2981");
 		user.setPassword("rajiv");
 		user.setDisplayName("Rajiv Bansal");
-		user.setEmailSent(MessageStatus.WAITING_FOR_RECEIPT);
+		user.setEmailSent(MessageStatus.N);
 		user.setCreatedOn(LocalDateTime.now());
 	//	user.setGroupId(Group.BJJD.name());
 		user.setWhenModified(LocalDateTime.now());

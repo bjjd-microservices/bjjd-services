@@ -20,7 +20,7 @@ public class ExcelFile implements Serializable{
 	
 	private boolean hasHeader;
 	
-	int rowsPerThread=100;
+	private int rowsPerThread=100;
 	
 	private ExcelSheetTemplate fileTemplate;
 	

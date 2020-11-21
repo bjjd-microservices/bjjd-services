@@ -31,6 +31,28 @@ public class ExcelSheetTemplate implements Serializable{
 	private Map<Integer, ColumnTemplate> columnTemplatesMap;
 	
 	/**
+	 * To get the ColumnTemplate by its position
+	 * @param pos
+	 * @return
+	 */
+	public ColumnTemplate getColumnTemplateByPos(int pos){
+		initColumnTemplatesMap();
+		return columnTemplatesMap.get(pos);
+	}
+	
+	/**
+	 * Initializing the column templates
+	 */
+	private void initColumnTemplatesMap(){
+		if(columnTemplatesMap==null && columnTemplates.size()>0){
+			columnTemplatesMap = new TreeMap<Integer, ColumnTemplate>();
+			for(ColumnTemplate columnTemplate : columnTemplates){
+				columnTemplatesMap.put(columnTemplate.getPos(), columnTemplate);
+			}
+		}
+	}
+	
+	/**
 	 * @return the templateId
 	 */
 	public long getTemplateId() {
@@ -152,18 +174,7 @@ public class ExcelSheetTemplate implements Serializable{
 		this.processRowsPerThread = processRowsPerThread;
 	}
 
-	public ColumnTemplate getColumnTemplateByPos(int pos){
-		initColumnTemplatesMap();
-		return columnTemplatesMap.get(pos);
-	}
-	private void initColumnTemplatesMap(){
-		if(columnTemplatesMap==null && columnTemplates.size()>0){
-			columnTemplatesMap = new TreeMap<Integer, ColumnTemplate>();
-			for(ColumnTemplate columnTemplate : columnTemplates){
-				columnTemplatesMap.put(columnTemplate.getPos(), columnTemplate);
-			}
-		}
-	}
+
 	
 
 }
