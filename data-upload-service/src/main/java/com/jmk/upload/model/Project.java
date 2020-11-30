@@ -38,6 +38,8 @@ public class Project extends Base{
 	
 	private LocalDateTime createdOn=null;
 	
+	private Long modifiedBy = null;
+	
 	private LocalDateTime whenModified=null;
 	
 	private Long version=null;
@@ -194,6 +196,20 @@ public class Project extends Base{
 	 */
 	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
+	}
+	
+	/**
+	 * @return the modifiedBy
+	 */
+	public Long getModifiedBy() {
+		return modifiedBy;
+	}
+
+	/**
+	 * @param modifiedBy the modifiedBy to set
+	 */
+	public void setModifiedBy(Long modifiedBy) {
+		this.modifiedBy = modifiedBy;
 	}
 
 	/**

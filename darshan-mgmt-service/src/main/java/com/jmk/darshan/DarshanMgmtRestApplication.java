@@ -12,7 +12,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableSwagger2
 @EnableJpaRepositories
-@EnableFeignClients
+@EnableFeignClients(basePackages = "com.jmk")
 @EnableEurekaClient
 @ComponentScan(basePackages = "com.jmk")
 public class DarshanMgmtRestApplication {

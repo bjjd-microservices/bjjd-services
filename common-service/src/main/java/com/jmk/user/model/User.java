@@ -76,6 +76,9 @@ public class User {
 
 	@JsonProperty("createdOn")
 	private LocalDateTime createdOn = null;
+	
+	@JsonProperty("modifiedBy")
+	private Long modifiedBy = null;
 
 	@JsonProperty("whenModified")
 	private LocalDateTime whenModified = null;
@@ -376,15 +379,26 @@ public class User {
 		return this;
 	}
 	
-	
-	
-
 	public Set<Address> getAddresses() {
 		return addresses;
 	}
 
 	public void setAddresses(Set<Address> addresses) {
 		this.addresses = addresses;
+	}
+
+	/**
+	 * @return the modifiedBy
+	 */
+	public Long getModifiedBy() {
+		return modifiedBy;
+	}
+
+	/**
+	 * @param modifiedBy the modifiedBy to set
+	 */
+	public void setModifiedBy(Long modifiedBy) {
+		this.modifiedBy = modifiedBy;
 	}
 
 	/**

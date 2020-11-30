@@ -1,10 +1,13 @@
 package com.jmk.darshan.api;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +19,14 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jmk.cache.UserCache;
 import com.jmk.darshan.enums.VisitorType;
 import com.jmk.darshan.model.Darshan;
 import com.jmk.darshan.service.DarshanMgmtService;
 import com.jmk.darshan.util.VisitorCreator;
 import com.jmk.darshan.validator.RequestValidator;
 import com.jmk.people.model.Devotee;
+import com.jmk.user.model.User;
 
 import io.swagger.annotations.ApiParam;
 
@@ -29,12 +34,13 @@ import io.swagger.annotations.ApiParam;
 
 @RestController
 public class DarshanApiController implements DarshanApi {
-
+	
 	private static final Logger LOGGER = LoggerFactory.getLogger(DarshanApiController.class);
-
 	private final ObjectMapper objectMapper;
-
 	private final HttpServletRequest request;
+	
+	@Autowired
+	private UserCache userCache;
 	
 	@Autowired
 	private RequestValidator requestValidator;
@@ -50,6 +56,48 @@ public class DarshanApiController implements DarshanApi {
 		this.objectMapper = objectMapper;
 		this.request = request;
 	}
+	
+	public ResponseEntity<Darshan> saveDarshan(@ApiParam(value = "", required = true) @Valid @RequestBody Darshan darshan,
+			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel) {
+		String accept = request.getHeader("Accept");
+		String username=request.getHeader("username");
+		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
+				|| accept.contains("*")) {
+			if (requestValidator.validate(darshan)) {
+				if (VisitorType.DEVOTEE.equals(darshan.getVisitorType()) && darshan.getVisitorId() == null) {
+					Devotee devotee = visitorCreator.createDevotee(darshan);
+					darshan.setVisitorId(devotee.getId());
+				}
+				if(StringUtils.isNotBlank(username)) {
+					enrichCommonDonationDetails(darshan,userCache.getUserByUsername(username));
+				}
+				darshan = darshanMgmtService.saveDarshan(darshan);
+			}
+			return new ResponseEntity<Darshan>(darshan, HttpStatus.OK);
+		}
+		return new ResponseEntity<Darshan>(HttpStatus.NOT_IMPLEMENTED);
+	}
+	
+	public ResponseEntity<List<Darshan>> saveDarshans(@ApiParam(value = "", required = true) @Valid @RequestBody List<Darshan> darshans,
+			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel) {
+		String accept = request.getHeader("Accept");
+		String username = request.getHeader("username");
+
+		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
+				|| accept.contains("*")) {
+			if (StringUtils.isNotBlank(username)) {
+				final User user = userCache.getUserByUsername(username);
+				darshans = darshans.stream().map(darshan -> enrichCommonDonationDetails(darshan, user))
+						.collect(Collectors.toList());
+			}
+			darshans = darshanMgmtService.saveDarshans(darshans);
+			if (darshans != null) {
+				return new ResponseEntity<List<Darshan>>(darshans, HttpStatus.OK);
+			}
+		}
+		return new ResponseEntity<List<Darshan>>(HttpStatus.NOT_IMPLEMENTED);
+	}
+
 
 	public ResponseEntity<Void> deleteDarshanById(@ApiParam(value = "Darshan Id", required = true) @PathVariable("id") Long id) {
 		String accept = request.getHeader("Accept");
@@ -60,6 +108,8 @@ public class DarshanApiController implements DarshanApi {
 		}
 		return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
 	}
+	
+	
 
 	public ResponseEntity<Darshan> findDarshanDetailsById(@ApiParam(value = "Darshan Id", required = true) @PathVariable("id") Long id) {
 		String accept = request.getHeader("Accept");
@@ -71,47 +121,31 @@ public class DarshanApiController implements DarshanApi {
 		return new ResponseEntity<Darshan>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-	public ResponseEntity<Darshan> saveDarshan(@ApiParam(value = "", required = true) @Valid @RequestBody Darshan darshan,
-			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel) {
-		String accept = request.getHeader("Accept");
-		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
-				|| accept.contains("*")) {
-
-			if (requestValidator.validate(darshan)) {
-				if (VisitorType.DEVOTEE.equals(darshan.getVisitorType()) && darshan.getVisitorId() == null) {
-					Devotee devotee = visitorCreator.createDevotee(darshan);
-					darshan.setVisitorId(devotee.getId());
-				}
-				darshan = darshanMgmtService.saveDarshan(darshan);
-			}
-			return new ResponseEntity<Darshan>(darshan, HttpStatus.OK);
-		}
-		return new ResponseEntity<Darshan>(HttpStatus.NOT_IMPLEMENTED);
-	}
-
-	public ResponseEntity<List<Darshan>> saveDarshans(@ApiParam(value = "", required = true) @Valid @RequestBody List<Darshan> darshans,
-			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel) {
-		String accept = request.getHeader("Accept");
-		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
-				|| accept.contains("*")) {
-			darshans = darshanMgmtService.saveDarshans(darshans);
-			if (darshans != null) {
-				return new ResponseEntity<List<Darshan>>(darshans, HttpStatus.OK);
-			}
-		}
-		return new ResponseEntity<List<Darshan>>(HttpStatus.NOT_IMPLEMENTED);
-	}
-
 	public ResponseEntity<Darshan> updateDarshanById(
 			@ApiParam(value = "Darshan Id", required = true) @PathVariable("id") Long id,
 			@ApiParam(value = "", required = true) @Valid @RequestBody Darshan darshan) {
 		String accept = request.getHeader("Accept");
+		String username=request.getHeader("username");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
+			if(StringUtils.isNotBlank(username)) {
+				enrichCommonDonationDetails(darshan,userCache.getUserByUsername(username));
+			}
 			darshan = darshanMgmtService.saveDarshan(darshan);
 			return new ResponseEntity<Darshan>(darshan, HttpStatus.OK);
 		}
 		return new ResponseEntity<Darshan>(HttpStatus.NOT_IMPLEMENTED);
+	}
+	
+	private Darshan enrichCommonDonationDetails(Darshan darshan,User user) {
+		if (darshan.getId() == null) {
+			darshan.setCreatedOn(LocalDateTime.now());
+			darshan.setCreatedBy(user.getId());
+			darshan.setGroupId(user.getGroupId());
+		}
+		darshan.setWhenModified(LocalDateTime.now());
+		darshan.setModifiedBy(user.getId());
+		return darshan;
 	}
 
 }

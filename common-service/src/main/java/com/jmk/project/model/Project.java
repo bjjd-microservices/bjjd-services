@@ -56,6 +56,9 @@ public class Project {
 	@JsonProperty
 	private LocalDateTime createdOn=null;
 	
+	@JsonProperty("modifiedBy")
+	private Long modifiedBy = null;
+	
 	@JsonProperty
 	private LocalDateTime whenModified=null;
 	
@@ -178,6 +181,20 @@ public class Project {
 
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+
+	/**
+	 * @return the modifiedBy
+	 */
+	public Long getModifiedBy() {
+		return modifiedBy;
+	}
+
+	/**
+	 * @param modifiedBy the modifiedBy to set
+	 */
+	public void setModifiedBy(Long modifiedBy) {
+		this.modifiedBy = modifiedBy;
 	}
 
 	/**

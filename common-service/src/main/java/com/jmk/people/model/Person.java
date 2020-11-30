@@ -81,6 +81,9 @@ public class Person {
 
 	@JsonProperty
 	private LocalDateTime createdOn = null;
+	
+	@JsonProperty("modifiedBy")
+	private Long modifiedBy = null;
 
 	@JsonProperty
 	private LocalDateTime whenModified = null;
@@ -445,6 +448,34 @@ public class Person {
 
 	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
+	}
+	
+	/**
+	 * @return the username
+	 */
+	public String getUsername() {
+		return username;
+	}
+
+	/**
+	 * @param username the username to set
+	 */
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	/**
+	 * @return the modifiedBy
+	 */
+	public Long getModifiedBy() {
+		return modifiedBy;
+	}
+
+	/**
+	 * @param modifiedBy the modifiedBy to set
+	 */
+	public void setModifiedBy(Long modifiedBy) {
+		this.modifiedBy = modifiedBy;
 	}
 
 	public LocalDateTime getWhenModified() {

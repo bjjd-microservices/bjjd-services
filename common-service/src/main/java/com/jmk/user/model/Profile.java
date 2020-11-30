@@ -64,6 +64,9 @@ public class Profile {
 
 	@JsonProperty("createdOn")
 	private LocalDateTime createdOn = null;
+	
+	@JsonProperty("modifiedBy")
+	private Long modifiedBy = null;
 
 	@JsonProperty("whenModified")
 	private LocalDateTime whenModified = null;
@@ -372,6 +375,20 @@ public class Profile {
 	public Profile groupId(Integer groupId) {
 		this.groupId = groupId;
 		return this;
+	}
+
+	/**
+	 * @return the modifiedBy
+	 */
+	public Long getModifiedBy() {
+		return modifiedBy;
+	}
+
+	/**
+	 * @param modifiedBy the modifiedBy to set
+	 */
+	public void setModifiedBy(Long modifiedBy) {
+		this.modifiedBy = modifiedBy;
 	}
 
 	/**
