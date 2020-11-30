@@ -57,6 +57,9 @@ public class Identity {
 	@Column(name="created_on")
 	private LocalDateTime createdOn=null;
 	
+	@Column(name="modified_by")
+	private Long modifiedBy = null;
+	
 	@Column(name="when_modified")
 	private LocalDateTime whenModified=null;
 	
@@ -203,6 +206,20 @@ public class Identity {
 	 */
 	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
+	}
+	
+	/**
+	 * @return the modifiedBy
+	 */
+	public Long getModifiedBy() {
+		return modifiedBy;
+	}
+
+	/**
+	 * @param modifiedBy the modifiedBy to set
+	 */
+	public void setModifiedBy(Long modifiedBy) {
+		this.modifiedBy = modifiedBy;
 	}
 
 	/**

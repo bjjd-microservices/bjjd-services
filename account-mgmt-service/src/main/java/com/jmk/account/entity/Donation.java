@@ -114,6 +114,9 @@ public class Donation {
 	@Column(name="created_on")
 	private LocalDateTime createdOn=null;
 	
+	@Column(name="modified_by")
+	private Long modifiedBy = null;
+	
 	@Column(name="when_modified")
 	private LocalDateTime whenModified=null;
 	
@@ -614,6 +617,20 @@ public class Donation {
 	 */
 	public void setSmsSent(MessageStatus smsSent) {
 		this.smsSent = smsSent;
+	}
+	
+	/**
+	 * @return the modifiedBy
+	 */
+	public Long getModifiedBy() {
+		return modifiedBy;
+	}
+
+	/**
+	 * @param modifiedBy the modifiedBy to set
+	 */
+	public void setModifiedBy(Long modifiedBy) {
+		this.modifiedBy = modifiedBy;
 	}
 
 	@Override

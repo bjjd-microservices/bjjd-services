@@ -80,6 +80,9 @@ public class Darshan {
 	@Column(name="created_on")
 	private LocalDateTime createdOn=null;
 	
+	@Column(name="modified_by")
+	private Long modifiedBy = null;
+	
 	@Column(name="when_modified")
 	private LocalDateTime whenModified=null;
 	
@@ -433,6 +436,20 @@ public class Darshan {
 	 */
 	public void setVisitorAddressLine(String visitorAddressLine) {
 		this.visitorAddressLine = visitorAddressLine;
+	}
+	
+	/**
+	 * @return the modifiedBy
+	 */
+	public Long getModifiedBy() {
+		return modifiedBy;
+	}
+
+	/**
+	 * @param modifiedBy the modifiedBy to set
+	 */
+	public void setModifiedBy(Long modifiedBy) {
+		this.modifiedBy = modifiedBy;
 	}
 
 	@Override

@@ -55,6 +55,9 @@ public class Address {
 	private Long createdBy = null;
 
 	@JsonProperty
+	private Long modifiedBy = null;
+	
+	@JsonProperty
 	private LocalDateTime createdOn = null;
 
 	@JsonProperty
@@ -120,6 +123,20 @@ public class Address {
 
 	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
+	}
+	
+	/**
+	 * @return the modifiedBy
+	 */
+	public Long getModifiedBy() {
+		return modifiedBy;
+	}
+
+	/**
+	 * @param modifiedBy the modifiedBy to set
+	 */
+	public void setModifiedBy(Long modifiedBy) {
+		this.modifiedBy = modifiedBy;
 	}
 
 	public LocalDateTime getWhenModified() {

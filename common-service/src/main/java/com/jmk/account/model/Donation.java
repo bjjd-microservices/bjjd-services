@@ -112,6 +112,9 @@ public class Donation {
 	private LocalDateTime createdOn = null;
 
 	@JsonProperty
+	private Long modifiedBy = null;
+	
+	@JsonProperty
 	private LocalDateTime whenModified = null;
 
 	@JsonProperty
@@ -622,6 +625,20 @@ public class Donation {
 	}
 
 	/**
+	 * @return the modifiedBy
+	 */
+	public Long getModifiedBy() {
+		return modifiedBy;
+	}
+
+	/**
+	 * @param modifiedBy the modifiedBy to set
+	 */
+	public void setModifiedBy(Long modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	/**
 	 * User Group
 	 * 
 	 * @return groupId
@@ -636,6 +653,8 @@ public class Donation {
 		this.groupId = groupId;
 	}
 
+	
+	
 	@Override
 	public boolean equals(java.lang.Object o) {
 		if (this == o) {

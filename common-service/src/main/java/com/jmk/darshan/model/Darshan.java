@@ -70,6 +70,8 @@ public class Darshan {
 
 	@JsonProperty
 	private LocalDateTime createdOn = null;
+	
+	private Long modifiedBy = null;
 
 	@JsonProperty
 	private LocalDateTime whenModified = null;
@@ -426,6 +428,22 @@ public class Darshan {
 	 */
 	public void setVisitorAddressLine(String visitorAddressLine) {
 		this.visitorAddressLine = visitorAddressLine;
+	}
+	
+	
+
+	/**
+	 * @return the modifiedBy
+	 */
+	public Long getModifiedBy() {
+		return modifiedBy;
+	}
+
+	/**
+	 * @param modifiedBy the modifiedBy to set
+	 */
+	public void setModifiedBy(Long modifiedBy) {
+		this.modifiedBy = modifiedBy;
 	}
 
 	@Override

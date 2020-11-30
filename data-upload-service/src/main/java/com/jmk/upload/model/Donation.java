@@ -74,6 +74,8 @@ public class Donation extends Base {
 	private Long createdBy = null;
 
 	private LocalDateTime createdOn = null;
+	
+	private Long modifiedBy = null;
 
 	private LocalDateTime whenModified = null;
 
@@ -487,6 +489,20 @@ public class Donation extends Base {
 	 */
 	public void setSmsSent(MessageStatus smsSent) {
 		this.smsSent = smsSent;
+	}
+	
+	/**
+	 * @return the modifiedBy
+	 */
+	public Long getModifiedBy() {
+		return modifiedBy;
+	}
+
+	/**
+	 * @param modifiedBy the modifiedBy to set
+	 */
+	public void setModifiedBy(Long modifiedBy) {
+		this.modifiedBy = modifiedBy;
 	}
 
 	/*

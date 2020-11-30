@@ -44,6 +44,9 @@ public class Identity {
 
 	@JsonProperty("createdOn")
 	private LocalDateTime createdOn = null;
+	
+	@JsonProperty("modifiedBy")
+	private Long modifiedBy = null;
 
 	@JsonProperty("whenModified")
 	private LocalDateTime whenModified = null;
@@ -275,6 +278,26 @@ public class Identity {
 	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
 	}
+
+	
+	
+	/**
+	 * @return the modifiedBy
+	 */
+	public Long getModifiedBy() {
+		return modifiedBy;
+	}
+
+
+
+	/**
+	 * @param modifiedBy the modifiedBy to set
+	 */
+	public void setModifiedBy(Long modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+
 
 	public LocalDateTime getWhenModified() {
 		return whenModified;

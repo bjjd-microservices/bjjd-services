@@ -87,6 +87,8 @@ public class Expense extends Base {
 
 	@JsonProperty
 	private LocalDateTime createdOn = null;
+	
+	private Long modifiedBy = null;
 
 	@JsonProperty
 	private LocalDateTime whenModified = null;
@@ -476,6 +478,22 @@ public class Expense extends Base {
 
 	public void setGroupId(Integer groupId) {
 		this.groupId = groupId;
+	}
+	
+	
+
+	/**
+	 * @return the modifiedBy
+	 */
+	public Long getModifiedBy() {
+		return modifiedBy;
+	}
+
+	/**
+	 * @param modifiedBy the modifiedBy to set
+	 */
+	public void setModifiedBy(Long modifiedBy) {
+		this.modifiedBy = modifiedBy;
 	}
 
 	@Override
