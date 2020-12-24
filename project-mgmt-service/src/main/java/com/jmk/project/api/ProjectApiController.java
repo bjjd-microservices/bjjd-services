@@ -1,10 +1,13 @@
 package com.jmk.project.api;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +20,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jmk.account.model.Expense;
+import com.jmk.cache.UserCache;
 import com.jmk.enums.Status;
 import com.jmk.project.model.Project;
 import com.jmk.project.service.ProjectMgmtService;
+import com.jmk.user.model.User;
 
 import io.swagger.annotations.ApiParam;
 
@@ -31,6 +37,9 @@ public class ProjectApiController implements ProjectApi {
 	private static final Logger log = LoggerFactory.getLogger(ProjectApiController.class);
 
 	private final HttpServletRequest request;
+	
+	@Autowired
+	private UserCache userCache;
 
 	@Autowired
 	private ProjectMgmtService projectMgmtService;
@@ -44,8 +53,12 @@ public class ProjectApiController implements ProjectApi {
 			@ApiParam(value = "", required = true) @Valid @RequestBody Project project,
 			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel) {
 		String accept = request.getHeader("Accept");
+		String username=request.getHeader("username");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
+			if(StringUtils.isNotBlank(username)) {
+				enrichCommonDetails(project,userCache.getUserByUsername(username));
+			}
 			project = projectMgmtService.saveProject(project);
 			return new ResponseEntity<Project>(project, HttpStatus.OK);
 		}
@@ -58,7 +71,13 @@ public class ProjectApiController implements ProjectApi {
 			@ApiParam(value = "", required = true) @Valid @RequestBody List<Project> projects,
 			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel) {
 		String accept = request.getHeader("Accept");
+		String username=request.getHeader("username");
 		 if (accept != null && accept.contains("application/json") || accept.contains("application/xml")) {
+			 if (StringUtils.isNotBlank(username)) {
+					final User user = userCache.getUserByUsername(username);
+					projects = projects.stream().map(project -> enrichCommonDetails(project, user))
+							.collect(Collectors.toList());
+				}
 			 projects=projectMgmtService.saveProjects(projects);
         	 if(projects!=null) {
         		 return new ResponseEntity<List<Project>>(projects,HttpStatus.OK);
@@ -111,13 +130,28 @@ public class ProjectApiController implements ProjectApi {
 			@ApiParam(value = "Project Id", required = true) @PathVariable("id") Long id,
 			@ApiParam(value = "", required = true) @Valid @RequestBody Project project) {
 		String accept = request.getHeader("Accept");
+		String username=request.getHeader("username");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
+			if(StringUtils.isNotBlank(username)) {
+				enrichCommonDetails(project,userCache.getUserByUsername(username));
+			}
 			project = projectMgmtService.saveProject(project);
 			return new ResponseEntity<Project>(project, HttpStatus.OK);
 		}
 
 		return new ResponseEntity<Project>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	private Project enrichCommonDetails(Project project,User user) {
+		if (project.getId() == null) {
+			project.setCreatedOn(LocalDateTime.now());
+			project.setCreatedBy(user.getId());
+			project.setGroupId(user.getGroupId());
+		}
+		project.setWhenModified(LocalDateTime.now());
+		project.setModifiedBy(user.getId());
+		return project;
 	}
 
 }

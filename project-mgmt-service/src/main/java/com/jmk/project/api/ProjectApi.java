@@ -42,11 +42,11 @@ public interface ProjectApi {
     ResponseEntity<Project> createProject(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Project body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
 
 
-    @ApiOperation(value = "Project Creation with input arrays Service", nickname = "createProjectsWithArrayInput", notes = "Project Finding Service", tags={ "ProjectMgmt", })
+    @ApiOperation(value = "Project Creation with input arrays Service", nickname = "createProjects", notes = "Project Finding Service", tags={ "ProjectMgmt", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Successfully found"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/createWithArray",
+    @RequestMapping(value = "/createProjects",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)
