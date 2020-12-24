@@ -1,5 +1,7 @@
 package com.jmk.darshan.feign.client;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.cloud.openfeign.FeignClient;
@@ -17,6 +19,9 @@ public interface MessageSenderServiceClient {
 
 	@PostMapping(value="/api/message-sender-service/message/send-message/",produces="application/json",consumes="application/json")
 	public ResponseEntity<String> sendMessage(@Valid @RequestBody Message message);
+	
+	@PostMapping(value="/api/message-sender-service/message/send-messages/",produces="application/json",consumes="application/json")
+	public ResponseEntity<String> sendMessages(@Valid @RequestBody List<Message> messages);
 	
 }
 

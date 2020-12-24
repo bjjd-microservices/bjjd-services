@@ -26,7 +26,6 @@ import com.jmk.darshan.model.Darshan;
 import com.jmk.darshan.service.DarshanMgmtService;
 import com.jmk.darshan.util.VisitorCreator;
 import com.jmk.darshan.validator.RequestValidator;
-import com.jmk.messaging.model.Message;
 import com.jmk.messaging.util.MessageBuilder;
 import com.jmk.people.model.Devotee;
 import com.jmk.user.model.User;
@@ -43,7 +42,7 @@ public class DarshanApiController implements DarshanApi {
 	private final HttpServletRequest request;
 	
 	@Autowired
-	private MessageSenderServiceClient messageSenderClient;
+	private MessageSenderServiceClient messageSenderService;
 	
 	@Autowired
 	private UserCache userCache;
@@ -77,7 +76,7 @@ public class DarshanApiController implements DarshanApi {
 					enrichCommonDetails(darshan,userCache.getUserByUsername(username));
 				}
 				darshan = darshanMgmtService.saveDarshan(darshan);
-				messageSenderClient.sendMessage(MessageBuilder.build(darshan));
+				messageSenderService.sendMessage(MessageBuilder.build(darshan));
 			}
 			return new ResponseEntity<Darshan>(darshan, HttpStatus.OK);
 		}
@@ -98,6 +97,7 @@ public class DarshanApiController implements DarshanApi {
 			}
 			darshans = darshanMgmtService.saveDarshans(darshans);
 			if (darshans != null) {
+				messageSenderService.sendMessages(darshans.stream().map(darshan->MessageBuilder.build(darshan)).collect(Collectors.toList()));
 				return new ResponseEntity<List<Darshan>>(darshans, HttpStatus.OK);
 			}
 		}
