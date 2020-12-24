@@ -21,10 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jmk.cache.UserCache;
 import com.jmk.darshan.enums.VisitorType;
+import com.jmk.darshan.feign.client.MessageSenderServiceClient;
 import com.jmk.darshan.model.Darshan;
 import com.jmk.darshan.service.DarshanMgmtService;
 import com.jmk.darshan.util.VisitorCreator;
 import com.jmk.darshan.validator.RequestValidator;
+import com.jmk.messaging.model.Message;
+import com.jmk.messaging.util.MessageBuilder;
 import com.jmk.people.model.Devotee;
 import com.jmk.user.model.User;
 
@@ -40,6 +43,9 @@ public class DarshanApiController implements DarshanApi {
 	private final HttpServletRequest request;
 	
 	@Autowired
+	private MessageSenderServiceClient messageSenderClient;
+	
+	@Autowired
 	private UserCache userCache;
 	
 	@Autowired
@@ -47,11 +53,10 @@ public class DarshanApiController implements DarshanApi {
 	
 	@Autowired
 	private VisitorCreator visitorCreator;
-
+	
 	@Autowired
 	private DarshanMgmtService darshanMgmtService;
 
-	@org.springframework.beans.factory.annotation.Autowired
 	public DarshanApiController(ObjectMapper objectMapper, HttpServletRequest request) {
 		this.objectMapper = objectMapper;
 		this.request = request;
@@ -69,9 +74,10 @@ public class DarshanApiController implements DarshanApi {
 					darshan.setVisitorId(devotee.getId());
 				}
 				if(StringUtils.isNotBlank(username)) {
-					enrichCommonDonationDetails(darshan,userCache.getUserByUsername(username));
+					enrichCommonDetails(darshan,userCache.getUserByUsername(username));
 				}
 				darshan = darshanMgmtService.saveDarshan(darshan);
+				messageSenderClient.sendMessage(MessageBuilder.build(darshan));
 			}
 			return new ResponseEntity<Darshan>(darshan, HttpStatus.OK);
 		}
@@ -87,7 +93,7 @@ public class DarshanApiController implements DarshanApi {
 				|| accept.contains("*")) {
 			if (StringUtils.isNotBlank(username)) {
 				final User user = userCache.getUserByUsername(username);
-				darshans = darshans.stream().map(darshan -> enrichCommonDonationDetails(darshan, user))
+				darshans = darshans.stream().map(darshan -> enrichCommonDetails(darshan, user))
 						.collect(Collectors.toList());
 			}
 			darshans = darshanMgmtService.saveDarshans(darshans);
@@ -129,7 +135,7 @@ public class DarshanApiController implements DarshanApi {
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
 			if(StringUtils.isNotBlank(username)) {
-				enrichCommonDonationDetails(darshan,userCache.getUserByUsername(username));
+				enrichCommonDetails(darshan,userCache.getUserByUsername(username));
 			}
 			darshan = darshanMgmtService.saveDarshan(darshan);
 			return new ResponseEntity<Darshan>(darshan, HttpStatus.OK);
@@ -137,7 +143,7 @@ public class DarshanApiController implements DarshanApi {
 		return new ResponseEntity<Darshan>(HttpStatus.NOT_IMPLEMENTED);
 	}
 	
-	private Darshan enrichCommonDonationDetails(Darshan darshan,User user) {
+	private Darshan enrichCommonDetails(Darshan darshan,User user) {
 		if (darshan.getId() == null) {
 			darshan.setCreatedOn(LocalDateTime.now());
 			darshan.setCreatedBy(user.getId());
