@@ -25,11 +25,6 @@ public class KafkaConsumerConfig {
 
 	  @Bean
 	public Map<String, Object> consumerConfigs() {
-		/*JsonDeserializer<Message> deserializer = new JsonDeserializer<>(Message.class);
-		deserializer.setRemoveTypeHeaders(false);
-		deserializer.addTrustedPackages("*");
-		deserializer.setUseTypeMapperForKey(true);
-		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, deserializer);*/
 		Map<String, Object> props = new HashMap<>();
 		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 		props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");

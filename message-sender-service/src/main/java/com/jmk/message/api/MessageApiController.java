@@ -27,7 +27,6 @@ public class MessageApiController implements MessageApi{
 
 	@Override
 	public ResponseEntity<List<Darshan>> sendMessages(@RequestBody List<Message> messages,@RequestHeader(value="xChannel", required=false) String xChannel) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
