@@ -1,0 +1,4 @@
+https://reflectoring.io/spring-boot-kafka/
+https://www.javainuse.com/spring/spring-boot-apache-kafka-hello-world
+https://dzone.com/articles/magic-of-kafka-with-spring-boot
+https://www.tutorialspoint.com/spring_boot/spring_boot_apache_kafka.htm

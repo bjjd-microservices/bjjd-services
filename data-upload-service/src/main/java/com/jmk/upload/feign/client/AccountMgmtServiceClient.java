@@ -13,10 +13,10 @@ import com.jmk.account.model.Expense;
 @FeignClient(name="account-mgmt-service")
 public interface AccountMgmtServiceClient {
 	
-	@PostMapping(value="/api/account-mgmt-service/donation/saveWithArray",produces="application/json",consumes="application/json")
+	@PostMapping(value="/api/account-mgmt-service/donation/saveDonations",produces="application/json",consumes="application/json")
 	ResponseEntity<List<Donation>> saveDonations(@RequestBody List<Donation> donations);
 	
-	@PostMapping(value="/api/account-mgmt-service/expense/saveWithArray",produces="application/json",consumes="application/json")
+	@PostMapping(value="/api/account-mgmt-service/expense/saveExpenses",produces="application/json",consumes="application/json")
 	ResponseEntity<List<Expense>> saveExpenses(@RequestBody List<Expense> expenses);
 
 	   

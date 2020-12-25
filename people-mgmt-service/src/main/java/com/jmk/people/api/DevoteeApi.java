@@ -41,17 +41,15 @@ public interface DevoteeApi {
         method = RequestMethod.POST)
     ResponseEntity<Devotee> createDevotee(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Devotee body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
 
-
     @ApiOperation(value = "Devotee Creation with input arrays Service", nickname = "createDevoteesWithArrayInput", notes = "Devotee Finding Service", tags={ "DevoteeMgmtServiceApi", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Successfully found"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/createWithArray",
+    @RequestMapping(value = "/createDevotees",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    ResponseEntity<Void> createDevoteesWithArrayInput(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Devotee> body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel) ;
-
+    public ResponseEntity<List<Devotee>> createDevotees(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Devotee> body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel) ;
 
     @ApiOperation(value = "Devotee Deletion Service based on the devotee id", nickname = "deleteDevoteeById", notes = "Devotee Deletion Service based on the devotee id", tags={ "DevoteeMgmtServiceApi", })
     @ApiResponses(value = { 
@@ -65,7 +63,6 @@ public interface DevoteeApi {
         method = RequestMethod.DELETE)
     ResponseEntity<Void> deleteDevoteeById(@ApiParam(value = "Devotee Id",required=true) @PathVariable("id") Long id) ;
 
-
     @ApiOperation(value = "Find all the devotees by status", nickname = "findDevoteeByMobileNumber", notes = "Find all the devotees by status", response = Devotee.class, tags={ "DevoteeMgmtServiceApi", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Successfully found", response = Devotee.class),
@@ -77,7 +74,6 @@ public interface DevoteeApi {
         consumes = { "application/json", "application/xml" },
         method = RequestMethod.GET)
     ResponseEntity<Devotee> findDevoteeByMobileNumber(@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel,@ApiParam(value = "") @Valid @RequestParam(value = "mobileNo", required = true) String mobileNo);
-
 
     @ApiOperation(value = "Find Devotee Details based on the devotee id", nickname = "findDevoteeDetailsById", notes = "Find Devotee Details based on the devotee id", response = Devotee.class, tags={ "DevoteeMgmtServiceApi", })
     @ApiResponses(value = { 
@@ -91,7 +87,6 @@ public interface DevoteeApi {
         method = RequestMethod.GET)
     ResponseEntity<Devotee> findDevoteeDetailsById(@ApiParam(value = "Devotee Id",required=true) @PathVariable("id") Long id) ;
 
-
     @ApiOperation(value = "Find all the devotees by status", nickname = "findDevoteesByStatus", notes = "Find all the devotees by status", response = Devotee.class, responseContainer = "List", tags={ "DevoteeMgmtServiceApi", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = Devotee.class, responseContainer = "List"),
@@ -102,7 +97,6 @@ public interface DevoteeApi {
         consumes = { "application/json", "application/xml" },
         method = RequestMethod.GET)
     ResponseEntity<List<Devotee>> findDevoteesByStatus(@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel,@ApiParam(value = "The status to restrict the results to.  If not provided, all records are returned", allowableValues = "A, I") @Valid @RequestParam(value = "status", required = false) String status) ;
-
 
     @ApiOperation(value = "Update Devotee Details based on the devotee id", nickname = "updateDevoteeById", notes = "Update Devotee Details based on the devotee id", response = Devotee.class, tags={ "DevoteeMgmtServiceApi", })
     @ApiResponses(value = { 
@@ -115,5 +109,4 @@ public interface DevoteeApi {
         consumes = { "application/json" },
         method = RequestMethod.PUT)
     ResponseEntity<Devotee> updateDevoteeById(@ApiParam(value = "Devotee Id",required=true) @PathVariable("id") Long id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Devotee body) ;
-
 }

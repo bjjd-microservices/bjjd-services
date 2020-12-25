@@ -46,11 +46,11 @@ public interface MemberApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Successfully found"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/createWithArray",
+    @RequestMapping(value = "/createMembers",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    ResponseEntity<Void> createMembersWithArrayInput(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Member> body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
+    ResponseEntity<List<Member>> createMembers(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Member> body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
 
 
     @ApiOperation(value = "Member Deletion Service based on the member id", nickname = "deleteMemberById", notes = "Member Deletion Service based on the member id", tags={ "MemberMgmtServiceApi", })
