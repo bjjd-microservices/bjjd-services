@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +19,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jmk.account.enums.DonorType;
+import com.jmk.account.feign.client.MessageSenderServiceClient;
 import com.jmk.account.model.Donation;
 import com.jmk.account.service.DonationService;
 import com.jmk.account.util.DonorCreator;
 import com.jmk.account.util.RequestValidator;
+import com.jmk.cache.UserCache;
+import com.jmk.messaging.util.MessageBuilder;
 import com.jmk.people.model.Devotee;
+import com.jmk.user.model.User;
 
 import io.swagger.annotations.ApiParam;
 
@@ -35,8 +40,14 @@ public class DonationApiController implements DonationApi {
 	@Autowired
 	private DonationService donationService;
 	
+	@Autowired
+	private MessageSenderServiceClient messageSenderService;
+	
 	@Resource(name="donationRequestValidator")
 	private RequestValidator<Donation> validator;
+	
+	@Autowired
+	private UserCache userCache;
 	
 	@Autowired
 	private DonorCreator donorCreator;
@@ -49,14 +60,18 @@ public class DonationApiController implements DonationApi {
 			@ApiParam(value = "", required = true) @Valid @RequestBody Donation donation,
 			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel) {
 		String accept = request.getHeader("Accept");
+		String username=request.getHeader("username");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
 			if (validator.validate(donation)) {
 				if (DonorType.DEVOTEE.equals(donation.getDonorType()) && donation.getDonorId() == null) {
 					Devotee devotee=donorCreator.createDevotee(donation);
 					donation.setDonorId(devotee.getId());
 				}
-				enrichCommonDonationDetails(donation);
+				if(StringUtils.isNotBlank(username)) {
+					enrichCommonDetails(donation,userCache.getUserByUsername(username));
+				}
 				donation = donationService.saveDonation(donation);
+				messageSenderService.sendMessage(MessageBuilder.build(donation));
 			}
 			return new ResponseEntity<Donation>(donation, HttpStatus.OK);
 		}
@@ -65,15 +80,21 @@ public class DonationApiController implements DonationApi {
 	
     public ResponseEntity<List<Donation>> saveDonations(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Donation> donations,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel) {
     	String accept = request.getHeader("Accept");
+    	String username=request.getHeader("username");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
 			for(Donation donation:donations) {
 				if (DonorType.DEVOTEE.equals(donation.getDonorType()) && donation.getDonorId() == null) {
 					Devotee devotee=donorCreator.createDevotee(donation);
 					donation.setDonorId(devotee.getId());
 				}
-				enrichCommonDonationDetails(donation);
+			}
+			if (StringUtils.isNotBlank(username)) {
+				final User user = userCache.getUserByUsername(username);
+				donations = donations.stream().map(donation -> enrichCommonDetails(donation, user))
+						.collect(Collectors.toList());
 			}
 			donations = donationService.saveDonations(donations);
+			messageSenderService.sendMessages(donations.stream().map(donation->MessageBuilder.build(donation)).collect(Collectors.toList()));
 			return new ResponseEntity<List<Donation>>(donations,HttpStatus.OK);
 		}
         return new ResponseEntity<List<Donation>>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -100,18 +121,25 @@ public class DonationApiController implements DonationApi {
 			@ApiParam(value = "Donation Id", required = true) @PathVariable("id") Long id,
 			@ApiParam(value = "", required = true) @Valid @RequestBody Donation donation) {
 		String accept = request.getHeader("Accept");
+		String username=request.getHeader("username");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
+			if(StringUtils.isNotBlank(username)) {
+				enrichCommonDetails(donation,userCache.getUserByUsername(username));
+			}
 			donation = donationService.saveDonation(donation);
 			return new ResponseEntity<Donation>(donation, HttpStatus.OK);
 		}
 		return new ResponseEntity<Donation>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	private Donation enrichCommonDonationDetails(Donation donation) {
+	private Donation enrichCommonDetails(Donation donation,User user) {
 		if (donation.getId() == null) {
 			donation.setCreatedOn(LocalDateTime.now());
+			donation.setCreatedBy(user.getId());
+			donation.setGroupId(user.getGroupId());
 		}
 		donation.setWhenModified(LocalDateTime.now());
+		donation.setModifiedBy(user.getId());
 		return donation;
 	}
 }

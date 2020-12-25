@@ -44,7 +44,7 @@ public interface DonationApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Successfully found"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/saveWithArray",
+    @RequestMapping(value = "/saveDonations",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)

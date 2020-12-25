@@ -13,7 +13,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @EnableEurekaClient
 @EnableJpaRepositories
-@EnableFeignClients
+@EnableFeignClients(basePackages = "com.jmk")
 @ComponentScan(basePackages = { "com.jmk" })
 public class AccountMgmtRestApplication {
 
@@ -22,3 +22,4 @@ public class AccountMgmtRestApplication {
     }
     
 }
+
