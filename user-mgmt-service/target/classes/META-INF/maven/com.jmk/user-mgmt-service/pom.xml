@@ -65,7 +65,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.13</version><!--$NO-MVN-MAN-VER$ -->
+			<version>8.0.22</version><!--$NO-MVN-MAN-VER$ -->
 		</dependency>
 		<dependency>
 			<groupId>javax.validation</groupId>
