@@ -12,3 +12,8 @@ https://medium.com/omarelgabrys-blog/microservices-with-spring-boot-intro-to-mic
 https://dzone.com/articles/securing-rest-services-with-oauth2-in-springboot-1
 https://itnext.io/microservices-with-spring-boot-and-spring-cloud-16d2c056ba12
 https://github.com/OmarElGabry/microservices-spring-boot
+
+Kubernetes
+1.https://www.callicoder.com/deploy-spring-mysql-react-nginx-kubernetes-persistent-volume-secret/
+2.https://piotrminkowski.com/2018/08/02/quick-guide-to-microservices-with-kubernetes-spring-boot-2-0-and-docker/
+	--https://github.com/piomin/sample-spring-microservices-kubernetes/tree/hybrid/kubernetes
