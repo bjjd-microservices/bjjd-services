@@ -169,11 +169,12 @@ public class CustomInstantDeserializer<T extends Temporal>
 
       case JsonTokenId.ID_NUMBER_INT: {
         long LocalDateTime = parser.getLongValue();
-        if (context.isEnabled(DeserializationFeature.READ_DATE_LocalDateTimeS_AS_NANOSECONDS)) {
-          return this.fromNanoseconds.apply(new FromDecimalArguments(
-              LocalDateTime, 0, this.getZone(context)
-          ));
-        }
+		/*
+		 * if (context.isEnabled(DeserializationFeature.
+		 * READ_DATE_LocalDateTimeS_AS_NANOSECONDS)) { return
+		 * this.fromNanoseconds.apply(new FromDecimalArguments(LocalDateTime, 0,
+		 * this.getZone(context))); }
+		 */
         return this.fromMilliseconds.apply(new FromIntegerArguments(
             LocalDateTime, this.getZone(context)
         ));
