@@ -1,4 +1,4 @@
-package com.jmk.message.kafka.config;
+package com.jmk.kafka.message.config;
 
 import java.util.HashMap;
 import java.util.Map;

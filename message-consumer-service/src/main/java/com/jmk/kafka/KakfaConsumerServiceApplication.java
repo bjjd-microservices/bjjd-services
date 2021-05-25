@@ -1,4 +1,4 @@
-package com.jmk.message;
+package com.jmk.kafka;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,10 +12,10 @@ import org.springframework.kafka.annotation.EnableKafka;
 @SpringBootApplication
 @ComponentScan(basePackages = "com.jmk")
 @EnableKafka
-public class MessageConsumerServiceApplication {
+public class KakfaConsumerServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MessageConsumerServiceApplication.class, args);
+		SpringApplication.run(KakfaConsumerServiceApplication.class, args);
 	}
 
 }

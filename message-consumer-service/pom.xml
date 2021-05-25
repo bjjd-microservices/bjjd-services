@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.jmk</groupId>
-	<artifactId>message-consumer-service</artifactId>
+	<artifactId>kafka-consumer-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>message-consumer-service</name>
+	<name>kafka-consumer-service</name>
 	<description>Message Consumer Service</description>
 	<properties>
 		<java.version>11</java.version>

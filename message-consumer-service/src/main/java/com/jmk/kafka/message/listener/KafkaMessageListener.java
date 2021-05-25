@@ -1,4 +1,4 @@
-package com.jmk.message.kafka.listener;
+package com.jmk.kafka.message.listener;
 
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;

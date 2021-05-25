@@ -9,25 +9,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jmk.darshan.model.Darshan;
-import com.jmk.message.sender.KafkaMessageSender;
+import com.jmk.message.sender.MessageSender;
 import com.jmk.messaging.model.Message;
 
 @RestController
 public class MessageApiController implements MessageApi{
 	
+//	@Autowired
+//	private KakfaMessageProducerServiceClient kafkaKakfaMessageProducerServiceClient;
+	
 	@Autowired
-	private KafkaMessageSender kafkaSender;
+	private MessageSender messageSender;
 
 	@Override
 	public ResponseEntity<String> sendMessage(@RequestBody Message message,@RequestHeader(value="xChannel", required=false) String xChannel) {
-		kafkaSender.sendMessage("topic-sms",message);
+//		kafkaKakfaMessageProducerServiceClient.sendMessage(message);
+		messageSender.sendMessage(message);
 		return new ResponseEntity<String>("Message has been sent",HttpStatus.OK);
 	}
 
 	@Override
-	public ResponseEntity<List<Darshan>> sendMessages(@RequestBody List<Message> messages,@RequestHeader(value="xChannel", required=false) String xChannel) {
-		return null;
+	public ResponseEntity<String> sendMessages(@RequestBody List<Message> messages,@RequestHeader(value="xChannel", required=false) String xChannel) {
+	//	kafkaKakfaMessageProducerServiceClient.sendMessages(messages);
+		return new ResponseEntity<String>("Message has been sent",HttpStatus.OK);
 	}
 	
 

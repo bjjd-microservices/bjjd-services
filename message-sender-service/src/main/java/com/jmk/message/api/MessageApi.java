@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.jmk.darshan.model.Darshan;
 import com.jmk.messaging.model.Message;
 
 @RequestMapping(value="/message")
@@ -24,6 +23,6 @@ public interface MessageApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    ResponseEntity<List<Darshan>> sendMessages(@RequestBody List<Message> messages,@RequestHeader(value="xChannel", required=false) String xChannel);
+    public ResponseEntity<String> sendMessages(@RequestBody List<Message> messages,@RequestHeader(value="xChannel", required=false) String xChannel);
 
 }
