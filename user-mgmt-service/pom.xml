@@ -12,7 +12,7 @@
     <artifactId>user-mgmt-service</artifactId>
     <packaging>jar</packaging>
     <name>user-mgmt-service</name>
-     <version>0.0.1-RELEASE</version>
+    <version>0.0.1-RELEASE</version>
     <properties>
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
@@ -129,6 +129,26 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+				 	<!-- <from>
+						<image>gcr.io/distroless/java:11</image>
+					</from>  -->
+					<!-- <to>
+						<image>registry.hub.docker.com/rajivbansal2981/message-sender-service</image>
+					</to> -->
+					<to>
+						<image>registry.hub.docker.com/rajivbansal2981/user-mgmt-service:0.0.1-RELEASE</image>
+						<auth>
+							<username>rajivbansal2981</username>
+							<password>rajiv379</password>
+						</auth>
+					</to>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

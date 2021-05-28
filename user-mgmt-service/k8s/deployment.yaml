@@ -27,7 +27,7 @@ spec:
         imagePullPolicy: IfNotPresent #Always
         ports:
           - name: http
-            containerPort: 5379 # The port that the container exposes
+            containerPort: 3379 # The port that the container exposes
           - name: multicast
             containerPort: 5701 # The port that Hazelcast exposes
         env:
@@ -79,4 +79,4 @@ spec:
    - name: hazelcast
      port: 5701
    - name: app
-     port: 5379
+     port: 3379
