@@ -12,7 +12,7 @@
     <artifactId>user-mgmt-service</artifactId>
     <packaging>jar</packaging>
     <name>user-mgmt-service</name>
-    <version>0.0.1-SNAPSHOT</version>
+     <version>0.0.1-RELEASE</version>
     <properties>
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
@@ -21,6 +21,7 @@
    		<hibernate.version>5.4.10.Final</hibernate.version>
    		<spring-cloud.version>Hoxton.SR4</spring-cloud.version>
         <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
+        <jmk-version>0.0.1-RELEASE</jmk-version>
     </properties>
 	<dependencies>
 		<dependency>
@@ -36,6 +37,28 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-config</artifactId>
 		</dependency>
+		<!-- Spring Boot starter cache -->
+		<!-- <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+		 --><dependency>
+			<groupId>com.hazelcast</groupId>
+			<artifactId>hazelcast</artifactId>
+			<version>4.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.hazelcast</groupId>
+			<artifactId>hazelcast-spring</artifactId>
+			<version>4.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.hazelcast/hazelcast-kubernetes -->
+		<dependency>
+		    <groupId>com.hazelcast</groupId>
+		    <artifactId>hazelcast-kubernetes</artifactId>
+		    <version>2.2.2</version>
+		</dependency>
+
 		<!-- Spring Cloud Netflix Eureka Client -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -74,7 +97,7 @@
 		<dependency>
 			<groupId>com.jmk</groupId>
 			<artifactId>common-service</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${jmk-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

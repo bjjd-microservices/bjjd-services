@@ -1,5 +1,6 @@
 package com.jmk.user.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -25,7 +26,11 @@ import com.jmk.enums.MaritalStatus;
  */
 @Entity
 @Table(name = "PROFILE")
-public class Profile {
+public class Profile implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id = null;

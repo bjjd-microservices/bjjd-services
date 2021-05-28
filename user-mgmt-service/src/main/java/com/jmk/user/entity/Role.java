@@ -1,5 +1,6 @@
 package com.jmk.user.entity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
@@ -27,7 +28,11 @@ import com.jmk.enums.Status;
  */
 @Entity
 @Table(name = "ROLE")
-public class Role {
+public class Role implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

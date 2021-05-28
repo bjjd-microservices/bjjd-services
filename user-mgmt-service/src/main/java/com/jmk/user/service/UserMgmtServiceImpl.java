@@ -10,6 +10,10 @@ import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import com.jmk.eh.exception.EntityNotFoundException;
@@ -29,6 +33,8 @@ public class UserMgmtServiceImpl implements UserMgmtService{
 	private ModelMapper modelMapper;
 
 	@Override
+	@Caching(put = { @CachePut(value = "usersCacheById", key = "#userModel.id"),
+			@CachePut(value = "usersCacheByUsername", key = "#userModel.username") })
 	public User saveUser(User userModel) {
 		com.jmk.user.entity.User userEntity=modelMapper.map(updateUserModel(userModel), com.jmk.user.entity.User.class);
 		userEntity=userRepository.save(userEntity);
@@ -37,15 +43,18 @@ public class UserMgmtServiceImpl implements UserMgmtService{
 	}
 
 	@Override
+	@Caching(evict = { @CacheEvict(value = "usersCacheById", key = "#id"),
+			@CacheEvict(value = "usersCacheByUsername", key = "#username") })
 	public void deleteUserById(Long id) {
 		userRepository.deleteById(id);
 	}
 
 	@Override
-	public User findUserDetailsByUserName(String userName) {
-		com.jmk.user.entity.User userEntity=userRepository.findByUsername(userName);
+	@Cacheable(value="usersCacheByUsername",key="#username",unless="#result == null")
+	public User findUserDetailsByUserName(String username) {
+		com.jmk.user.entity.User userEntity=userRepository.findByUsername(username);
 		if(userEntity==null) {
-			throw new EntityNotFoundException(User.class,"UserName",userName);
+			throw new EntityNotFoundException(User.class,"UserName",username);
 		}
 		User userModel=modelMapper.map(userEntity, User.class);
 		return userModel;
@@ -63,6 +72,7 @@ public class UserMgmtServiceImpl implements UserMgmtService{
 	}
 
 	@Override
+	@Cacheable(value="usersCacheById",key="#id",unless="#result == null")
 	public User findUserDetailsById(Long id) {
 		Optional<com.jmk.user.entity.User> optionalUser=userRepository.findById(id);
 		if(!optionalUser.isPresent()) {
@@ -82,6 +92,8 @@ public class UserMgmtServiceImpl implements UserMgmtService{
 
 	
 	@Override
+	@Caching(evict = { @CacheEvict(value = "usersCacheById", key = "#id"),
+			@CacheEvict(value = "usersCacheByUsername", key = "#username") })
 	public int deleteUserByUsername(String username) {
 		int userid=userRepository.deleteByUsername(username);
 		return userid;

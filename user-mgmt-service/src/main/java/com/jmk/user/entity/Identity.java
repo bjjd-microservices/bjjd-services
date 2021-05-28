@@ -1,5 +1,6 @@
 package com.jmk.user.entity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -22,7 +23,11 @@ import com.jmk.enums.DocumentType;
  */
 @Entity
 @Table(name = "IDENTITY")
-public class Identity {
+public class Identity implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
