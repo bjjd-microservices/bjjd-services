@@ -4,7 +4,7 @@ metadata:
   name: user-mgmt-service
   labels:
     app: user-mgmt-service
-  #namespace: defaul t
+  #namespace: default
 spec:
   replicas: 1
   minReadySeconds: 45
@@ -28,6 +28,8 @@ spec:
         ports:
           - name: http
             containerPort: 5379 # The port that the container exposes
+          - name: multicast
+            containerPort: 5701 # The port that Hazelcast exposes
         env:
         - name: DB_HOSTNAME
           valueFrom:
@@ -54,6 +56,11 @@ spec:
              configMapKeyRef:
                  name: user-mgmt-service-configmap
                  key: database.port
+        - name: SPRING_ACTIVE_PROFILE
+          valueFrom: 
+             configMapKeyRef:
+                 name: user-mgmt-service-configmap
+                 key: spring.active.profile
       restartPolicy: Always
       terminationGracePeriodSeconds: 60
 ---
@@ -66,9 +73,10 @@ metadata:
   namespace: default
 spec:
   type: NodePort
-  ports:
-  - name: http
-    port: 5379
-    targetPort: 5379
   selector:
     app: user-mgmt-service
+  ports:
+   - name: hazelcast
+     port: 5701
+   - name: app
+     port: 5379
