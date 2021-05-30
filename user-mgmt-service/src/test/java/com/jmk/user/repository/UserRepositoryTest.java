@@ -26,7 +26,6 @@ import com.jmk.user.enums.Group;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Ignore
 public class UserRepositoryTest {
 	
 	@Autowired

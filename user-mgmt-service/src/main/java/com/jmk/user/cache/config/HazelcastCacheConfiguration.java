@@ -1,15 +1,12 @@
 package com.jmk.user.cache.config;
 
-import java.util.Arrays;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 
 import com.hazelcast.config.Config;
 import com.hazelcast.config.EvictionPolicy;
@@ -30,8 +27,8 @@ public class HazelcastCacheConfiguration {
 	
 	private static final String USERS_CACHE_BY_ID = "usersCacheById";
 
-	@Autowired
-	private Environment environment;
+	@Value("${spring.profiles.active}")
+	private String activeProfile;
 
 	/*
 	 * @PreDestroy public void destroy() { log.info("Closing Cache Manager");
@@ -57,6 +54,7 @@ public class HazelcastCacheConfiguration {
 		config.getNetworkConfig().setPort(5701);
 		config.getNetworkConfig().setPortAutoIncrement(true);
 
+
 		/*
 		 * Below two lines says multicast should be disable in kubernates because the
 		 * same thing can be done by enabling kubernetes config
@@ -70,7 +68,7 @@ public class HazelcastCacheConfiguration {
 		config.getNetworkConfig().getJoin().getKubernetesConfig().setEnabled(true);
 
 		// In development, remove multicast auto-configuration
-		if (Arrays.asList(environment.getActiveProfiles()).stream().anyMatch(value -> value.equals("dev"))) {
+		if (activeProfile.equals("dev")) {
 			System.setProperty("hazelcast.local.localAddress", "127.0.0.1");
 
 			config.getNetworkConfig().getJoin().getAwsConfig().setEnabled(false);

@@ -16,7 +16,6 @@ import junit.framework.Assert;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Ignore
 public class UserMgmtServiceTest {
 	
 	private User user;

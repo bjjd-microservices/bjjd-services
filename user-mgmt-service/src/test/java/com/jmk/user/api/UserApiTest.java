@@ -25,7 +25,6 @@ import com.jmk.user.model.User;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@Ignore
 public class UserApiTest {
 
 	@Autowired
