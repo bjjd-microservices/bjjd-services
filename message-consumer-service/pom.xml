@@ -10,15 +10,16 @@
 	</parent>
 	<groupId>com.jmk</groupId>
 	<artifactId>kafka-consumer-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1-RELEASE</version>
 	<name>kafka-consumer-service</name>
-	<description>Message Consumer Service</description>
+	<description>Kafka Consumer Service</description>
 	<properties>
 		<java.version>11</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
 		<spring-cloud.version>Hoxton.SR4</spring-cloud.version>
+		<jmk-version>0.0.1-RELEASE</jmk-version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -44,7 +45,7 @@
 		<dependency>
 			<groupId>com.jmk</groupId>
 			<artifactId>common-service</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${jmk-version}</version>
 		</dependency>
 		<!-- spring-boot-starter-test “Starter” -->
 		<dependency>
