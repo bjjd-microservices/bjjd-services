@@ -1,5 +1,6 @@
 package com.jmk.people.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -33,7 +34,11 @@ import com.jmk.enums.Status;
 @Table(name="PERSON")
 @Inheritance(strategy=InheritanceType.JOINED)
 @DiscriminatorColumn(name="person_type",discriminatorType=DiscriminatorType.STRING)//Optional to define the type of Person
-public class Person {
+public class Person implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

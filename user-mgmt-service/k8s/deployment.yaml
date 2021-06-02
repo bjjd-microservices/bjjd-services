@@ -24,7 +24,7 @@ spec:
       containers:
       - name: user-mgmt-service
         image: rajivbansal2981/user-mgmt-service:0.0.1-RELEASE
-        imagePullPolicy: IfNotPresent #Always
+        imagePullPolicy: Always #IfNotPresent
         ports:
           - name: http
             containerPort: 3379 # The port that the container exposes

@@ -33,16 +33,21 @@
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 		</dependency>
 		<!-- Spring Cloud Starter Config is required to connect config server -->
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-starter-config</artifactId>
+			</dependency>
+		<!-- Spring Cloud Netflix Eureka Client -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-config</artifactId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
 		<!-- Spring Boot starter cache -->
 		<!-- <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
-        </dependency>
-		 --><dependency>
+        </dependency> -->
+		<dependency>
 			<groupId>com.hazelcast</groupId>
 			<artifactId>hazelcast</artifactId>
 			<version>4.1</version>
@@ -59,11 +64,6 @@
 		    <version>2.2.2</version>
 		</dependency>
 
-		<!-- Spring Cloud Netflix Eureka Client -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-		</dependency>
 		<!--SpringFox dependencies -->
 		<dependency>
 			<groupId>io.springfox</groupId>
@@ -88,7 +88,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.22</version><!--$NO-MVN-MAN-VER$ -->
+			<version>8.0.25</version><!--$NO-MVN-MAN-VER$ -->
 		</dependency>
 		<dependency>
 			<groupId>javax.validation</groupId>
@@ -105,7 +105,7 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<dependencyManagement>
+	  <dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
@@ -135,13 +135,7 @@
 				<artifactId>jib-maven-plugin</artifactId>
 				<version>3.0.0</version>
 				<configuration>
-				 	<!-- <from>
-						<image>gcr.io/distroless/java:11</image>
-					</from>  -->
-					<!-- <to>
-						<image>registry.hub.docker.com/rajivbansal2981/message-sender-service</image>
-					</to> -->
-					<to>
+					 <to>
 						<image>registry.hub.docker.com/rajivbansal2981/user-mgmt-service:0.0.1-RELEASE</image>
 						<auth>
 							<username>rajivbansal2981</username>

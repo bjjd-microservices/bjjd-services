@@ -5,8 +5,8 @@ configMapGenerator:
   - database.name=users_db
   - database.port=3306
   - database.username=bjjd
-  - application.port=5379
-  - hazelcast.port=5379
+  - application.port=3379
+  - hazelcast.port=5701
   - spring.active.profile=prod
 secretGenerator:
 - name: user-mgmt-service-secrets
@@ -14,4 +14,4 @@ secretGenerator:
   - database.root.password=server_42_123 #My sql root password:bjjd
   - database.password=bjjd_379
 resources: #Adding the following yaml resources
-  - user-mgmt-service-deployment.yaml
+  - deployment.yaml

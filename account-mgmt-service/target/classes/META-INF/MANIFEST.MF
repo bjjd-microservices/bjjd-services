@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Built-By: rkbansal
 Build-Jdk: 15.0.2
 Implementation-Title: account-mgmt-service
-Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Version: 0.0.1-RELEASE
 Implementation-Vendor-Id: com.jmk
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-boot
  -starter-parent/account-mgmt-service

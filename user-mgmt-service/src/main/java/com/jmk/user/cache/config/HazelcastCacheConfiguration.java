@@ -29,6 +29,15 @@ public class HazelcastCacheConfiguration {
 
 	@Value("${spring.profiles.active}")
 	private String activeProfile;
+	
+	@Value("${spring.datasource.url}")
+	private String dbURL;
+	
+	@Value("${spring.datasource.username}")
+	private String dbUserName;
+	
+	@Value("${spring.datasource.password}")
+	private String dbPassword;
 
 	/*
 	 * @PreDestroy public void destroy() { log.info("Closing Cache Manager");
@@ -53,6 +62,10 @@ public class HazelcastCacheConfiguration {
 		config.setInstanceName("UserMgmtService");
 		config.getNetworkConfig().setPort(5701);
 		config.getNetworkConfig().setPortAutoIncrement(true);
+		
+		System.out.println("SQL Dialect Details : "+dbURL);
+		System.out.println("SQL Dialect Details : "+dbURL);
+		System.out.println("SQL Dialect Details : "+dbURL);
 
 
 		/*

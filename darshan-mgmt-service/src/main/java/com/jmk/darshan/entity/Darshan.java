@@ -1,5 +1,6 @@
 package com.jmk.darshan.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -25,7 +26,11 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @Entity
 @Table(name="DARSHAN")
-public class Darshan {
+public class Darshan implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

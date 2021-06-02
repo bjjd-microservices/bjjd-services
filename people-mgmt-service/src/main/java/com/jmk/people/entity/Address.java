@@ -1,5 +1,6 @@
 package com.jmk.people.entity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -23,7 +24,11 @@ import com.jmk.enums.AddressType;
  */
 @Entity
 @Table(name = "ADDRESS")
-public class Address {
+public class Address implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

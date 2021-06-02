@@ -12,7 +12,7 @@
     <artifactId>project-mgmt-service</artifactId>
     <packaging>jar</packaging>
     <name>project-mgmt-service</name>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1-RELEASE</version>
     <properties>
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
@@ -20,6 +20,7 @@
         <springfox-version>2.7.0</springfox-version>
         <spring-cloud.version>Hoxton.SR4</spring-cloud.version>
         <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
+        <jmk-version>0.0.1-RELEASE</jmk-version>
     </properties>
     <dependencies>
         <dependency>
@@ -64,12 +65,7 @@
 		<dependency>
   			<groupId>com.jmk</groupId>
 			<artifactId>common-service</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.jmk</groupId>
-			<artifactId>cache-service</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${jmk-version}</version>
 		</dependency>
        <!-- Starter for using Spring Data JPA with Hibernate to store and retrieve data in a relational database. -->
        	<dependency>

@@ -1,5 +1,6 @@
 package com.jmk.project.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -20,7 +21,11 @@ import com.jmk.enums.Status;
  */
 @Entity
 @Table(name = "PROJECT")
-public class Project {
+public class Project implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;

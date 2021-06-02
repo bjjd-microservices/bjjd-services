@@ -20,9 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jmk.account.model.Expense;
-import com.jmk.cache.UserCache;
 import com.jmk.enums.Status;
+import com.jmk.project.feign.client.UserMgmtServiceClient;
 import com.jmk.project.model.Project;
 import com.jmk.project.service.ProjectMgmtService;
 import com.jmk.user.model.User;
@@ -39,7 +38,7 @@ public class ProjectApiController implements ProjectApi {
 	private final HttpServletRequest request;
 	
 	@Autowired
-	private UserCache userCache;
+	private UserMgmtServiceClient userMgmtServiceClient;
 
 	@Autowired
 	private ProjectMgmtService projectMgmtService;
@@ -57,7 +56,8 @@ public class ProjectApiController implements ProjectApi {
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
 			if(StringUtils.isNotBlank(username)) {
-				enrichCommonDetails(project,userCache.getUserByUsername(username));
+				User user=userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
+				enrichCommonDetails(project,user);
 			}
 			project = projectMgmtService.saveProject(project);
 			return new ResponseEntity<Project>(project, HttpStatus.OK);
@@ -73,8 +73,8 @@ public class ProjectApiController implements ProjectApi {
 		String accept = request.getHeader("Accept");
 		String username=request.getHeader("username");
 		 if (accept != null && accept.contains("application/json") || accept.contains("application/xml")) {
-			 if (StringUtils.isNotBlank(username)) {
-					final User user = userCache.getUserByUsername(username);
+				if (StringUtils.isNotBlank(username)) {
+					User user = userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
 					projects = projects.stream().map(project -> enrichCommonDetails(project, user))
 							.collect(Collectors.toList());
 				}
@@ -134,7 +134,8 @@ public class ProjectApiController implements ProjectApi {
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
 			if(StringUtils.isNotBlank(username)) {
-				enrichCommonDetails(project,userCache.getUserByUsername(username));
+				User user=userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
+				enrichCommonDetails(project,user);
 			}
 			project = projectMgmtService.saveProject(project);
 			return new ResponseEntity<Project>(project, HttpStatus.OK);
