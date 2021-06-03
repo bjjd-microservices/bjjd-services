@@ -1,0 +1,16 @@
+configMapGenerator:
+- name: project-service-configmap
+  literals:
+  - database.hostname=project-service-mysql
+  - database.name=project_db
+  - database.port=3306
+  - database.username=project
+secretGenerator:
+- name: project-service-secrets
+  literals:
+  - database.root.password=bjjd #My sql root password
+  - database.password=project
+resources: #Adding the following yaml resources
+  - mysql-database-data-volume-persistentvolumeclaim.yaml
+  - mysql-deployment.yaml
+  - project-service-deployment.yaml

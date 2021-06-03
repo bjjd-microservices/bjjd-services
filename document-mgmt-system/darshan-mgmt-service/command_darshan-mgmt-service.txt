@@ -1,1 +1,1 @@
-java -jar swagger-codegen-cli-2.3.1.jar generate -i swagger-darshan-mgmt-service.yaml --api-package com.jmk.darshan.api --model-package com.jmk.darshan.model --group-id com.jmk --artifact-id darshan-mgmt-service --artifact-version 0.0.1-SNAPSHOT -l spring -o darshan-mgmt-service
+java -jar swagger-codegen-cli-2.3.1.jar generate -i swagger-darshan-service.yaml --api-package com.jmk.darshan.api --model-package com.jmk.darshan.model --group-id com.jmk --artifact-id darshan-service --artifact-version 0.0.1-SNAPSHOT -l spring -o darshan-service

@@ -10,13 +10,14 @@
 	</parent>
 	<groupId>com.jmk</groupId>
 	<artifactId>auth-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1-RELEASE</version>
 	<name>auth-service</name>
 	<description>Authentication Service is used for validating user credentials, and issuing tokens.</description>
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>Hoxton.SR4</spring-cloud.version>
         <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
+        <jmk-version>0.0.1-RELEASE</jmk-version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -52,9 +53,14 @@
 			<version>0.9.0</version>
 		</dependency>
 		<dependency>
+          <groupId>javax.xml.bind</groupId>
+          <artifactId>jaxb-api</artifactId>
+          <version>2.3.0</version>
+		</dependency>
+		<dependency>
   			<groupId>com.jmk</groupId>
 			<artifactId>common-service</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${jmk-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

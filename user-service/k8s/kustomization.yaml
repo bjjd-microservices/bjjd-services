@@ -1,0 +1,17 @@
+configMapGenerator:
+- name: user-service-configmap
+  literals:
+  - database.hostname=db-server.cznoz9bpqnlj.ap-south-1.rds.amazonaws.com
+  - database.name=users_db
+  - database.port=3306
+  - database.username=bjjd
+  - application.port=3379
+  - hazelcast.port=5701
+  - spring.active.profile=prod
+secretGenerator:
+- name: user-service-secrets
+  literals:
+  - database.root.password=server_42_123 #My sql root password:bjjd
+  - database.password=bjjd_379
+resources: #Adding the following yaml resources
+  - deployment.yaml

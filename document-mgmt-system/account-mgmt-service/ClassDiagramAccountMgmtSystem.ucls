@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.2.4" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="com.jmk.account.entity.Expense" project="account-mgmt-service" 
-    file="/account-mgmt-service/src/main/java/com/jmk/account/entity/Expense.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="1" language="java" name="com.jmk.account.entity.Expense" project="account-service" 
+    file="/account-service/src/main/java/com/jmk/account/entity/Expense.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="314" y="201"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -10,8 +10,8 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="com.jmk.account.entity.Donation" project="account-mgmt-service" 
-    file="/account-mgmt-service/src/main/java/com/jmk/account/entity/Donation.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="2" language="java" name="com.jmk.account.entity.Donation" project="account-service" 
+    file="/account-service/src/main/java/com/jmk/account/entity/Donation.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="786" y="245"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      

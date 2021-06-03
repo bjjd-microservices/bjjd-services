@@ -12,17 +12,17 @@ import com.jmk.people.model.Sevadar;
 /**
  * 
  */
-@FeignClient(name="people-mgmt-service",contextId="people-cache-service") //Service id of people management service
+@FeignClient(name="people-service",contextId="people-cache-service") //Service id of people management service
 public interface PeopleMgmtServiceClient {
 
-	@GetMapping(value="/api/people-mgmt-service/devotee/findByMobileNumber",produces="application/json",consumes="application/json")
+	@GetMapping(value="/api/people-service/devotee/findByMobileNumber",produces="application/json",consumes="application/json")
 	ResponseEntity<Devotee> findDevoteeByMobileNumber(@RequestParam("mobileNo") String mobileNo);
 	
-	@GetMapping(value="/api/people-mgmt-service/member/findByMobileNumber",produces="application/json",consumes="application/json")
+	@GetMapping(value="/api/people-service/member/findByMobileNumber",produces="application/json",consumes="application/json")
 	ResponseEntity<Member> findMemberByMobileNumber(@RequestParam("mobileNo") String mobileNo);
 
 	
-	@GetMapping(value="/api/people-mgmt-service/sevadar/findByMobileNumber",produces="application/json",consumes="application/json")
+	@GetMapping(value="/api/people-service/sevadar/findByMobileNumber",produces="application/json",consumes="application/json")
 	ResponseEntity<Sevadar> findSevadarByMobileNumber(@RequestParam("mobileNo") String mobileNo) ;
 			
 }

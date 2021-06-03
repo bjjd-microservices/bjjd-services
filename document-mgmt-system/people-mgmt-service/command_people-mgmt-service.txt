@@ -1,1 +1,1 @@
-java -jar swagger-codegen-cli-2.3.1.jar generate -i swagger-people-mgmt-service.yaml --api-package com.jmk.people.api --model-package com.jmk.people.model --group-id com.jmk --artifact-id people-mgmt-service --artifact-version 0.0.1-SNAPSHOT -l spring -o people-mgmt-service
+java -jar swagger-codegen-cli-2.3.1.jar generate -i swagger-people-service.yaml --api-package com.jmk.people.api --model-package com.jmk.people.model --group-id com.jmk --artifact-id people-service --artifact-version 0.0.1-SNAPSHOT -l spring -o people-service

@@ -4,7 +4,7 @@
       "version":"18.10.0",
       "title":"Darshan Management Service API"
    },
-   "basePath":"/api/darshan-mgmt-service",
+   "basePath":"/api/darshan-service",
    "tags":[
       {
          "name":"DarshanMgmt"

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.2.4" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="com.jmk.user.entity.User" project="user-mgmt-service" 
-    file="/user-mgmt-service/src/main/java/com/jmk/user/entity/User.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="1" language="java" name="com.jmk.user.entity.User" project="user-service" 
+    file="/user-service/src/main/java/com/jmk/user/entity/User.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="222" y="434"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -10,8 +10,8 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="com.jmk.user.entity.Address" project="user-mgmt-service" 
-    file="/user-mgmt-service/src/main/java/com/jmk/user/entity/Address.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="2" language="java" name="com.jmk.user.entity.Address" project="user-service" 
+    file="/user-service/src/main/java/com/jmk/user/entity/Address.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1160" y="454"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -19,8 +19,8 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="com.jmk.user.entity.Profile" project="user-mgmt-service" 
-    file="/user-mgmt-service/src/main/java/com/jmk/user/entity/Profile.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="3" language="java" name="com.jmk.user.entity.Profile" project="user-service" 
+    file="/user-service/src/main/java/com/jmk/user/entity/Profile.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="476" y="169"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -28,8 +28,8 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="com.jmk.user.entity.Module" project="user-mgmt-service" 
-    file="/user-mgmt-service/src/main/java/com/jmk/user/entity/Module.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="4" language="java" name="com.jmk.user.entity.Module" project="user-service" 
+    file="/user-service/src/main/java/com/jmk/user/entity/Module.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="876" y="612"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -37,8 +37,8 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="com.jmk.user.entity.Role" project="user-mgmt-service" 
-    file="/user-mgmt-service/src/main/java/com/jmk/user/entity/Role.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="5" language="java" name="com.jmk.user.entity.Role" project="user-service" 
+    file="/user-service/src/main/java/com/jmk/user/entity/Role.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="545" y="616"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -46,8 +46,8 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="com.jmk.user.entity.Identity" project="user-mgmt-service" 
-    file="/user-mgmt-service/src/main/java/com/jmk/user/entity/Identity.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="6" language="java" name="com.jmk.user.entity.Identity" project="user-service" 
+    file="/user-service/src/main/java/com/jmk/user/entity/Identity.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="937" y="256"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
