@@ -41,6 +41,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-kubernetes-all</artifactId>
 			<version>1.1.2.RELEASE</version>
 		</dependency>
@@ -105,7 +109,7 @@
 				<version>3.0.0</version>
 				<configuration>
 					<to>
-						<image>registry.hub.docker.com/rajivbansal2981/user-service:0.0.1-RELEASE</image>
+						<image>registry.hub.docker.com/rajivbansal2981/gateway-service:0.0.1-RELEASE</image>
 						<auth>
 							<username>rajivbansal2981</username>
 							<password>rajiv379</password>

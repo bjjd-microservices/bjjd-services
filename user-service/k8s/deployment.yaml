@@ -72,7 +72,7 @@ metadata:
     app: user-service
   namespace: default
 spec:
-  type: NodePort
+  type: ClusterIP #NodePort or LoadBalancer or ClusterIP
   selector:
     app: user-service
   ports:

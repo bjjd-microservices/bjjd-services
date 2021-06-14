@@ -1,0 +1,7 @@
+configMapGenerator:
+- name: auth-service-configmap
+  literals:
+  - application.port=2379
+  - spring.active.profile=prod
+resources: #Adding the following yaml resources
+  - deployment.yaml

@@ -45,7 +45,7 @@ metadata:
     app: gateway-service
   namespace: default
 spec:
-  type: NodePort
+  type: NodePort #NodePort or LoadBalancer or ClusterIP
   selector:
     app: gateway-service
   ports:

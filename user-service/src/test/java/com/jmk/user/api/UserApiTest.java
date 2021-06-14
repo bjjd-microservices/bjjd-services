@@ -49,6 +49,7 @@ public class UserApiTest {
 		System.out.println("Application Server Port: " + serverPort);
 		try {
 			jsonRequest = objectMapper.writeValueAsString(user);
+			System.out.println(jsonRequest);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
@@ -65,6 +66,7 @@ public class UserApiTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testFindUserDetailsByUsername() {
 		try {
 			ResultActions resultActions=mockMvc.perform( MockMvcRequestBuilders

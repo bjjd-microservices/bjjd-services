@@ -33,8 +33,8 @@ public class UserMgmtServiceImpl implements UserMgmtService{
 	private ModelMapper modelMapper;
 
 	@Override
-	@Caching(put = { @CachePut(value = "usersCacheById", key = "#userModel.id"),
-			@CachePut(value = "usersCacheByUsername", key = "#userModel.username") })
+	@Caching(put = { @CachePut(value = "usersCacheById", key = "#result.id"),
+			@CachePut(value = "usersCacheByUsername", key = "#result.username") })
 	public User saveUser(User userModel) {
 		com.jmk.user.entity.User userEntity=modelMapper.map(updateUserModel(userModel), com.jmk.user.entity.User.class);
 		userEntity=userRepository.save(userEntity);
