@@ -39,7 +39,6 @@ public class DonationApiController implements DonationApi {
 	
 	@Autowired
 	private DonationService donationService;
-	
 	@Autowired
 	private MessageSenderServiceClient messageSenderService;
 	
