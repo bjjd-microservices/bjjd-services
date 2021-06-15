@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jmk.account.enums.DonorType;
 import com.jmk.account.feign.client.MessageSenderServiceClient;
+import com.jmk.account.feign.client.UserMgmtServiceClient;
 import com.jmk.account.model.Donation;
 import com.jmk.account.service.DonationService;
 import com.jmk.account.util.DonorCreator;
 import com.jmk.account.util.RequestValidator;
-import com.jmk.cache.UserCache;
 import com.jmk.messaging.util.MessageBuilder;
 import com.jmk.people.model.Devotee;
 import com.jmk.user.model.User;
@@ -47,7 +47,8 @@ public class DonationApiController implements DonationApi {
 	private RequestValidator<Donation> validator;
 	
 	@Autowired
-	private UserCache userCache;
+	private UserMgmtServiceClient userMgmtServiceClient;
+
 	
 	@Autowired
 	private DonorCreator donorCreator;
@@ -68,7 +69,8 @@ public class DonationApiController implements DonationApi {
 					donation.setDonorId(devotee.getId());
 				}
 				if(StringUtils.isNotBlank(username)) {
-					enrichCommonDetails(donation,userCache.getUserByUsername(username));
+					User user=userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
+					enrichCommonDetails(donation,user);
 				}
 				donation = donationService.saveDonation(donation);
 				messageSenderService.sendMessage(MessageBuilder.build(donation));
@@ -89,7 +91,7 @@ public class DonationApiController implements DonationApi {
 				}
 			}
 			if (StringUtils.isNotBlank(username)) {
-				final User user = userCache.getUserByUsername(username);
+				final User user=userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
 				donations = donations.stream().map(donation -> enrichCommonDetails(donation, user))
 						.collect(Collectors.toList());
 			}
@@ -124,7 +126,8 @@ public class DonationApiController implements DonationApi {
 		String username=request.getHeader("username");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
 			if(StringUtils.isNotBlank(username)) {
-				enrichCommonDetails(donation,userCache.getUserByUsername(username));
+				User user=userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
+				enrichCommonDetails(donation,user);
 			}
 			donation = donationService.saveDonation(donation);
 			return new ResponseEntity<Donation>(donation, HttpStatus.OK);

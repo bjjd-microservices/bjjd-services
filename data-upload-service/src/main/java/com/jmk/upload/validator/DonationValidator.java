@@ -8,8 +8,6 @@ import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import com.jmk.account.enums.DonorType;
-import com.jmk.cache.PeopleCache;
-import com.jmk.cache.ProjectCache;
 import com.jmk.enums.AddressType;
 import com.jmk.enums.DocumentType;
 import com.jmk.enums.Status;
@@ -17,16 +15,18 @@ import com.jmk.people.model.Address;
 import com.jmk.people.model.Identity;
 import com.jmk.people.model.Person;
 import com.jmk.project.model.Project;
+import com.jmk.upload.feign.client.PeopleMgmtServiceClient;
+import com.jmk.upload.feign.client.ProjectMgmtServiceClient;
 import com.jmk.upload.model.Donation;
 
 @Component
 public class DonationValidator extends LocalValidatorFactoryBean implements Validator {
 	
 	@Autowired
-	private ProjectCache projectCache;
+	private ProjectMgmtServiceClient projectServiceClient;;
 	
 	@Autowired
-	private PeopleCache peopleCache;
+	private PeopleMgmtServiceClient peopleServiceClient;
 	
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -46,7 +46,7 @@ public class DonationValidator extends LocalValidatorFactoryBean implements Vali
 		if (StringUtils.isEmpty(donation.getProjectCode())) {
 				errors.rejectValue("projectCode", "project.code.required", "Project code is Required.");
 		}else {
-			Project project=projectCache.getProjectByCode(donation.getProjectCode());
+			Project project=projectServiceClient.findProjectByCode(donation.getProjectCode()).getBody();
 			if(project==null) {
 				errors.rejectValue("projectCode","project.code.notExist","Project Code does not exist.");
 			}else if(project.getStatus()!=Status.A){
@@ -75,13 +75,13 @@ public class DonationValidator extends LocalValidatorFactoryBean implements Vali
 			
 			switch(donorType) {
 			case MEMBER:
-				person=peopleCache.getMemberByMobile(donation.getDonorMobileNo());
+				person=peopleServiceClient.findMemberByMobileNumber(donation.getDonorMobileNo()).getBody();
 				break;
 			case SEVADAR:
-				person=peopleCache.getSevadarByMobile(donation.getDonorMobileNo());
+				person=peopleServiceClient.findSevadarByMobileNumber(donation.getDonorMobileNo()).getBody();
 				break;
 			case DEVOTEE:
-				person=peopleCache.getDevoteeByMobile(donation.getDonorMobileNo());
+				person=peopleServiceClient.findDevoteeByMobileNumber(donation.getDonorMobileNo()).getBody();
 				break;
 			default:
 			}

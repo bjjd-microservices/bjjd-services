@@ -7,14 +7,14 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
-import com.jmk.cache.ProjectCache;
+import com.jmk.upload.feign.client.ProjectMgmtServiceClient;
 import com.jmk.upload.model.Project;
 
 @Component
 public class ProjectValidator extends LocalValidatorFactoryBean implements Validator {
 
 	@Autowired
-	private ProjectCache projectCache;
+	private ProjectMgmtServiceClient projectServiceClient;
 
 	@Override
 	public boolean supports(Class<?> clazz) {
@@ -30,7 +30,7 @@ public class ProjectValidator extends LocalValidatorFactoryBean implements Valid
 			errors.rejectValue("name", "project.name.required", "Project Name is Required");
 		}
 		if (!StringUtils.isEmpty(project.getCode())) {
-			com.jmk.project.model.Project projectModel = projectCache.getProjectByCode(project.getCode());
+			com.jmk.project.model.Project projectModel = projectServiceClient.findProjectByCode(project.getCode()).getBody();
 			if (projectModel != null) {
 				errors.rejectValue("code", "project.code.exists", "Project Code already exists");
 			}

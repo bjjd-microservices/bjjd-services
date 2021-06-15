@@ -21,9 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jmk.cache.UserCache;
 import com.jmk.enums.Status;
-import com.jmk.people.model.Member;
+import com.jmk.people.feign.client.UserMgmtServiceClient;
 import com.jmk.people.model.Sevadar;
 import com.jmk.people.service.PersonMgmtService;
 import com.jmk.user.model.User;
@@ -41,7 +40,7 @@ public class SevadarApiController implements SevadarApi {
     private final HttpServletRequest request;
     
     @Autowired
-	private UserCache userCache;
+	private UserMgmtServiceClient userMgmtServiceClient;
     
     @Resource(name="sevadarMgmtService")
     private PersonMgmtService<Sevadar> personMgmtService;
@@ -58,7 +57,8 @@ public class SevadarApiController implements SevadarApi {
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
 			if (StringUtils.isNotBlank(username)) {
-				enrichCommonDetails(sevadar, userCache.getUserByUsername(username));
+				User user = userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
+				enrichCommonDetails(sevadar, user);
 			}
 			sevadar = personMgmtService.savePerson(sevadar);
 			return new ResponseEntity<Sevadar>(sevadar, HttpStatus.OK);
@@ -74,7 +74,8 @@ public class SevadarApiController implements SevadarApi {
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
 			if (StringUtils.isNotBlank(username)) {
-				final User user = userCache.getUserByUsername(username);
+				
+				final User user = userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
 				sevadars = sevadars.stream().map(sevadar -> enrichCommonDetails(sevadar, user))
 						.collect(Collectors.toList());
 			}
@@ -130,7 +131,8 @@ public class SevadarApiController implements SevadarApi {
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
 			if (StringUtils.isNotBlank(username)) {
-				enrichCommonDetails(sevadar, userCache.getUserByUsername(username));
+				User user = userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
+				enrichCommonDetails(sevadar, user);
 			}
 			sevadar = personMgmtService.savePerson(sevadar);
 			return new ResponseEntity<Sevadar>(sevadar, HttpStatus.OK);

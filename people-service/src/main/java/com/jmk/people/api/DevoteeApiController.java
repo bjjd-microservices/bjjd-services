@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jmk.cache.UserCache;
 import com.jmk.enums.Status;
+import com.jmk.people.feign.client.UserMgmtServiceClient;
 import com.jmk.people.model.Devotee;
 import com.jmk.people.service.PersonMgmtService;
 import com.jmk.user.model.User;
@@ -40,7 +40,7 @@ public class DevoteeApiController implements DevoteeApi {
     private final HttpServletRequest request;
     
     @Autowired
-	private UserCache userCache;
+	private UserMgmtServiceClient userMgmtServiceClient;
     
     @Resource(name="devoteeMgmtService")
     private PersonMgmtService<Devotee> personMgmtService;
@@ -58,7 +58,8 @@ public class DevoteeApiController implements DevoteeApi {
 		String username=request.getHeader("username");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
 			if(StringUtils.isNotBlank(username)) {
-				enrichCommonDetails(devotee,userCache.getUserByUsername(username));
+				User user = userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
+				enrichCommonDetails(devotee,user);
 			}
 			devotee = personMgmtService.savePerson(devotee);
 			return new ResponseEntity<Devotee>(devotee, HttpStatus.OK);
@@ -74,7 +75,7 @@ public class DevoteeApiController implements DevoteeApi {
 		String username = request.getHeader("username");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")) {
 			if (StringUtils.isNotBlank(username)) {
-				final User user = userCache.getUserByUsername(username);
+				final User user = userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
 				devotees = devotees.stream().map(devotee -> enrichCommonDetails(devotee, user))
 						.collect(Collectors.toList());
 			}
@@ -131,7 +132,8 @@ public class DevoteeApiController implements DevoteeApi {
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
 			if(StringUtils.isNotBlank(username)) {
-				enrichCommonDetails(devotee,userCache.getUserByUsername(username));
+				User user = userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
+				enrichCommonDetails(devotee,user);
 			}
 			devotee = personMgmtService.savePerson(devotee);
 			return new ResponseEntity<Devotee>(devotee, HttpStatus.OK);

@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jmk.cache.UserCache;
 import com.jmk.darshan.enums.VisitorType;
 import com.jmk.darshan.feign.client.MessageSenderServiceClient;
+import com.jmk.darshan.feign.client.UserMgmtServiceClient;
 import com.jmk.darshan.model.Darshan;
 import com.jmk.darshan.service.DarshanMgmtService;
 import com.jmk.darshan.util.VisitorCreator;
@@ -45,7 +45,7 @@ public class DarshanApiController implements DarshanApi {
 	private MessageSenderServiceClient messageSenderService;
 	
 	@Autowired
-	private UserCache userCache;
+	private UserMgmtServiceClient userMgmtServiceClient;
 	
 	@Autowired
 	private RequestValidator requestValidator;
@@ -73,7 +73,8 @@ public class DarshanApiController implements DarshanApi {
 					darshan.setVisitorId(devotee.getId());
 				}
 				if(StringUtils.isNotBlank(username)) {
-					enrichCommonDetails(darshan,userCache.getUserByUsername(username));
+					User user=userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
+					enrichCommonDetails(darshan,user);
 				}
 				darshan = darshanMgmtService.saveDarshan(darshan);
 				messageSenderService.sendMessage(MessageBuilder.build(darshan));
@@ -91,7 +92,7 @@ public class DarshanApiController implements DarshanApi {
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
 			if (StringUtils.isNotBlank(username)) {
-				final User user = userCache.getUserByUsername(username);
+				final User user=userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
 				darshans = darshans.stream().map(darshan -> enrichCommonDetails(darshan, user))
 						.collect(Collectors.toList());
 			}
@@ -135,7 +136,8 @@ public class DarshanApiController implements DarshanApi {
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
 			if(StringUtils.isNotBlank(username)) {
-				enrichCommonDetails(darshan,userCache.getUserByUsername(username));
+				User user=userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
+				enrichCommonDetails(darshan,user);
 			}
 			darshan = darshanMgmtService.saveDarshan(darshan);
 			return new ResponseEntity<Darshan>(darshan, HttpStatus.OK);

@@ -21,11 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jmk.account.feign.client.MessageSenderServiceClient;
-import com.jmk.account.model.Donation;
+import com.jmk.account.feign.client.UserMgmtServiceClient;
 import com.jmk.account.model.Expense;
 import com.jmk.account.service.ExpenseService;
 import com.jmk.account.util.RequestValidator;
-import com.jmk.cache.UserCache;
 import com.jmk.messaging.util.MessageBuilder;
 import com.jmk.user.model.User;
 
@@ -48,8 +47,7 @@ public class ExpenseApiController implements ExpenseApi {
     private RequestValidator<Expense> validator;
     
     @Autowired
-	private UserCache userCache;
-	
+	private UserMgmtServiceClient userMgmtServiceClient;
 
     @org.springframework.beans.factory.annotation.Autowired
     public ExpenseApiController(ObjectMapper objectMapper, HttpServletRequest request) {
@@ -65,7 +63,8 @@ public class ExpenseApiController implements ExpenseApi {
 				|| accept.contains("*")) {
 			if (validator.validate(expense)) {
 				if(StringUtils.isNotBlank(username)) {
-					enrichCommonDetails(expense,userCache.getUserByUsername(username));
+					User user=userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
+					enrichCommonDetails(expense,user);
 				}
 				expense = expenseService.saveExpense(expense);
 				messageSenderService.sendMessage(MessageBuilder.build(expense));
@@ -81,7 +80,7 @@ public class ExpenseApiController implements ExpenseApi {
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
 			if (StringUtils.isNotBlank(username)) {
-				final User user = userCache.getUserByUsername(username);
+				final User user=userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
 				expenses = expenses.stream().map(expense -> enrichCommonDetails(expense, user))
 						.collect(Collectors.toList());
 			}
@@ -117,7 +116,8 @@ public class ExpenseApiController implements ExpenseApi {
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
 			if(StringUtils.isNotBlank(username)) {
-				enrichCommonDetails(expense,userCache.getUserByUsername(username));
+				User user=userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
+				enrichCommonDetails(expense,user);
 			}
 			expense = expenseService.saveExpense(expense);
 			return new ResponseEntity<Expense>(expense, HttpStatus.OK);

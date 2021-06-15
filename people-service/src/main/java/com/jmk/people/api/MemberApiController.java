@@ -21,12 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jmk.cache.UserCache;
 import com.jmk.enums.Status;
-import com.jmk.people.model.Devotee;
+import com.jmk.people.feign.client.UserMgmtServiceClient;
 import com.jmk.people.model.Member;
 import com.jmk.people.service.PersonMgmtService;
-import com.jmk.project.model.Project;
 import com.jmk.user.model.User;
 
 import io.swagger.annotations.ApiParam;
@@ -41,7 +39,7 @@ public class MemberApiController implements MemberApi {
 	private final HttpServletRequest request;
 
 	@Autowired
-	private UserCache userCache;
+	private UserMgmtServiceClient userMgmtServiceClient;
 
 	@Resource(name = "memberMgmtService")
 	private PersonMgmtService<Member> personMgmtService;
@@ -58,7 +56,8 @@ public class MemberApiController implements MemberApi {
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
 			if (StringUtils.isNotBlank(username)) {
-				enrichCommonDetails(member, userCache.getUserByUsername(username));
+				User user = userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
+				enrichCommonDetails(member, user);
 			}
 			member = personMgmtService.savePerson(member);
 			return new ResponseEntity<Member>(member, HttpStatus.OK);
@@ -72,7 +71,7 @@ public class MemberApiController implements MemberApi {
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
 			if (StringUtils.isNotBlank(username)) {
-				final User user = userCache.getUserByUsername(username);
+				final User user = userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
 				members = members.stream().map(member -> enrichCommonDetails(member, user))
 						.collect(Collectors.toList());
 			}
@@ -138,7 +137,8 @@ public class MemberApiController implements MemberApi {
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
 			if (StringUtils.isNotBlank(username)) {
-				enrichCommonDetails(member, userCache.getUserByUsername(username));
+				User user = userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
+				enrichCommonDetails(member, user);
 			}
 			member = personMgmtService.savePerson(member);
 			return new ResponseEntity<Member>(member, HttpStatus.OK);

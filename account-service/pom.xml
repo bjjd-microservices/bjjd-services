@@ -67,11 +67,6 @@
 			<artifactId>common-service</artifactId>
 			<version>${jmk-version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.jmk</groupId>
-			<artifactId>cache-service</artifactId>
-			<version>${jmk-version}</version>
-		</dependency>
 		 <!-- Starter for using Spring Data JPA with Hibernate to store and retrieve data in a relational database. -->
        	<dependency>
 			<groupId>org.springframework.boot</groupId>
