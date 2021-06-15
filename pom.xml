@@ -37,6 +37,10 @@
 		<module>config-server</module>
 		<module>auth-service</module>
 		<module>gateway-service</module>
+		<!-- Additional Modules -->
+		<module>kafka-producer-service</module>
+		<module>kafka-consumer-service</module>
+		<module>cache-service</module>
 	</modules>
 	
 </project>
