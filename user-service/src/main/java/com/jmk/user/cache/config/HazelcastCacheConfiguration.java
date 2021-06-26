@@ -30,20 +30,7 @@ public class HazelcastCacheConfiguration {
 	@Value("${spring.profiles.active}")
 	private String activeProfile;
 	
-	@Value("${spring.datasource.url}")
-	private String dbURL;
-	
-	@Value("${spring.datasource.username}")
-	private String dbUserName;
-	
-	@Value("${spring.datasource.password}")
-	private String dbPassword;
-
-	/*
-	 * @PreDestroy public void destroy() { log.info("Closing Cache Manager");
-	 * Hazelcast.shutdownAll(); }
-	 * 
-	 */	@Bean
+	@Bean
 	public CacheManager cacheManager() {
 		return new HazelcastCacheManager(hazelcastInstance());
 	}

@@ -2,56 +2,18 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.2.4.RELEASE</version>
-		<relativePath /> <!-- lookup parent from repository -->
+		<groupId>com.jmk</groupId>
+		<artifactId>bjjd-microservices</artifactId>
+		<version>0.0.1-RELEASE</version>
 	</parent>
-	<groupId>com.jmk</groupId>
+	
 	<artifactId>project-service</artifactId>
 	<packaging>jar</packaging>
 	<name>project-service</name>
-	<version>0.0.1-RELEASE</version>
-	<properties>
-		<java.version>11</java.version>
-		<maven.compiler.source>${java.version}</maven.compiler.source>
-		<maven.compiler.target>${java.version}</maven.compiler.target>
-		<springfox-version>2.7.0</springfox-version>
-		<hibernate.version>5.4.10.Final</hibernate.version>
-		<spring-cloud.version>Hoxton.SR4</spring-cloud.version>
-		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
-		<jmk-version>0.0.1-RELEASE</jmk-version>
-	</properties>
+
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-		</dependency>
-		<!-- Spring Cloud Starter Config is required to connect config server -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-config</artifactId>
-		</dependency>
-		<!-- Spring Cloud Kubernetes -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-kubernetes-all</artifactId>
-			<version>1.1.2.RELEASE</version>
-		</dependency>
-		<!-- Spring Cloud Netflix Eureka Client -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
-		</dependency>
 			<!-- Cache dependencies -->
 		<dependency>
 			<groupId>com.hazelcast</groupId>
@@ -68,17 +30,6 @@
 			<groupId>com.hazelcast</groupId>
 			<artifactId>hazelcast-kubernetes</artifactId>
 			<version>2.2.2</version>
-		</dependency>
-		<!--SpringFox dependencies -->
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>${springfox-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>${springfox-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.joschi.jackson</groupId>
@@ -107,14 +58,7 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.25</version><!--$NO-MVN-MAN-VER$ -->
 		</dependency>
-		<!-- spring-boot-starter-test “Starter”, which imports both Spring Boot 
-			test modules as well as JUnit, AssertJ, Hamcrest, and a number of other useful 
-			libraries. -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+		
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>
@@ -128,23 +72,11 @@
 		</dependencies>
 	</dependencyManagement>
 	<build>
-		<sourceDirectory>src/main/java</sourceDirectory>
 		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 			<plugin>
 				<groupId>com.google.cloud.tools</groupId>
 				<artifactId>jib-maven-plugin</artifactId>
-				<version>3.0.0</version>
+				<version>${jib-maven-plugin.version}</version>
 				<configuration>
 					 <to>
 						<image>registry.hub.docker.com/rajivbansal2981/project-service:0.0.1-RELEASE</image>
@@ -157,21 +89,4 @@
 			</plugin>
 		</plugins>
 	</build>
-	<profiles>
-		<profile>
-			<id>dev</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<spring.profiles.active>dev</spring.profiles.active>
-			</properties>
-		</profile>
-		<profile>
-			<id>prod</id>
-			<properties>
-				<spring.profiles.active>prod</spring.profiles.active>
-			</properties>
-		</profile>
-	</profiles>
 </project>

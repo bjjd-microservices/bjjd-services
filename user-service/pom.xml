@@ -11,6 +11,7 @@
 	<artifactId>user-service</artifactId>
 	<packaging>jar</packaging>
 	<name>user-service</name>
+	<description>User Service</description>
 	
 	<dependencies>
 		<!-- Cache dependencies -->
@@ -66,7 +67,7 @@
 			<plugin>
 				<groupId>com.google.cloud.tools</groupId>
 				<artifactId>jib-maven-plugin</artifactId>
-				<version>3.0.0</version>
+				<version>${jib-maven-plugin.version}</version>
 				<configuration>
 					<to>
 						<image>registry.hub.docker.com/rajivbansal2981/user-service:0.0.1-RELEASE</image>

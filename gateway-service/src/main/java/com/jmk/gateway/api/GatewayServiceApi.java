@@ -16,7 +16,7 @@ import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 public class GatewayServiceApi {
 
 	@Autowired
-	ZuulProperties properties;
+	private ZuulProperties properties;
 
 	@Primary
 	@Bean
@@ -38,3 +38,4 @@ public class GatewayServiceApi {
 	}
 
 }
+

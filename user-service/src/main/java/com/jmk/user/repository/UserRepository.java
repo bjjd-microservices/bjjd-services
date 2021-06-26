@@ -12,3 +12,4 @@ public interface UserRepository extends CrudRepository<User,Long>{
 	//A derived delete query must start with deleteBy, followed by the name of the selection criteria
 	int deleteByUsername(String username);
 }
+

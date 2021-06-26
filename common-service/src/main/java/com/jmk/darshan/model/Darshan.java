@@ -14,12 +14,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jmk.darshan.enums.VisitorType;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Darshan
  */
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-05-12T00:51:00.325+05:30")
+@Getter
+@Setter
 public class Darshan implements Serializable{
 	/**
 	 * 
@@ -95,7 +99,6 @@ public class Darshan implements Serializable{
 	 * @return id
 	 **/
 	@ApiModelProperty(value = "Darshan id")
-
 	public Long getId() {
 		return id;
 	}

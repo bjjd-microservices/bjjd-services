@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jmk.account.model.Donation;
 import com.jmk.user.model.User;
-import com.jmk.user.service.UserMgmtService;
+import com.jmk.user.service.UserService;
 
 import io.swagger.annotations.ApiParam;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-11-27T08:54:51.282+05:30")
@@ -37,7 +37,7 @@ public class UserApiController implements UserApi {
     private final ObjectMapper objectMapper;
     
     @Autowired
-    private UserMgmtService userMgmtService;
+    private UserService userService;
     
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -55,7 +55,7 @@ public class UserApiController implements UserApi {
          if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
         	 	 user.setPassword(passwordEncoder.encode(user.getPassword()));
         	 	enrichCommonUserDetails(user);
-             	 user=userMgmtService.saveUser(user);
+             	 user=userService.saveUser(user);
                  return new ResponseEntity<User>(user,HttpStatus.OK);
          }
 
@@ -67,7 +67,7 @@ public class UserApiController implements UserApi {
     	String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
         	users=users.stream().map(user->enrichCommonUserDetails(user)).collect(Collectors.toList());
-        	users=userMgmtService.saveUsers(users);
+        	users=userService.saveUsers(users);
         	 if(users!=null) {
         		 return new ResponseEntity<>(HttpStatus.OK);
         	 }
@@ -77,12 +77,12 @@ public class UserApiController implements UserApi {
     }
 
     public ResponseEntity<Void> deleteUserByUsername(@ApiParam(value = "Username",required=true) @PathVariable("username") String username) {
-        int userid=userMgmtService.deleteUserByUsername(username);
+        int userid=userService.deleteUserByUsername(username);
         return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     public ResponseEntity<Void> deleteUserById(@ApiParam(value = "User Id",required=true) @PathVariable("id") Long id) {
-         userMgmtService.deleteUserById(id);
+         userService.deleteUserById(id);
          //Below return statement is the correct way to handle the delete request
          return ResponseEntity.noContent().build();
     }
@@ -90,7 +90,7 @@ public class UserApiController implements UserApi {
     public ResponseEntity<User> findUserDetailsById(@ApiParam(value = "User Id",required=true) @PathVariable("id") Long id) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
-            	User user=userMgmtService.findUserDetailsById(id);
+            	User user=userService.findUserDetailsById(id);
                 return new ResponseEntity<User>(user, HttpStatus.OK);
         }
         return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -103,7 +103,7 @@ public class UserApiController implements UserApi {
 			@ApiParam(value = "username") @Valid @RequestParam(value = "username", required = false) String username) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
-			User user = userMgmtService.findUserDetailsByUserName(username);
+			User user = userService.findUserDetailsByUserName(username);
 			return new ResponseEntity<User>(user, HttpStatus.OK);
 		}
 
@@ -113,7 +113,7 @@ public class UserApiController implements UserApi {
 	public ResponseEntity<User> loginUser(@NotNull @Size(min=3,max=36) @ApiParam(value = "username to be find", required = true) @Valid @RequestParam(value = "username", required = true) String username,@NotNull @Size(min=3,max=36) @ApiParam(value = "password of the user", required = true) @Valid @RequestParam(value = "password", required = true) String password) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
-			User user = userMgmtService.findUserDetailsByUserName(username);
+			User user = userService.findUserDetailsByUserName(username);
 			return new ResponseEntity<User>(user, HttpStatus.OK);
 		}
 
@@ -128,7 +128,7 @@ public class UserApiController implements UserApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
         	enrichCommonUserDetails(user);
-        	user=userMgmtService.saveUser(user);
+        	user=userService.saveUser(user);
             return new ResponseEntity<User>(user,HttpStatus.OK);
         }
 
@@ -139,7 +139,7 @@ public class UserApiController implements UserApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
         		enrichCommonUserDetails(user);
-            	user=userMgmtService.saveUser(user);
+            	user=userService.saveUser(user);
             	return new ResponseEntity<User>(user,HttpStatus.OK);
         }
 

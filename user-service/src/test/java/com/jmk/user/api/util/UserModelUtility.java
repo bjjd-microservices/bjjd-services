@@ -21,7 +21,9 @@ public class UserModelUtility {
 	
 	public static User createUserModel() {
 		User user=new User();
-		user.username("rajivbansal2981").password("Rajiv@379").displayName("Rajiv Bansal");
+		user.setUsername("rajivbansal2981");
+		user.setPassword("Rajiv@379");
+		user.setDisplayName("Rajiv Bansal");
 		user.setEmailSent(MessageStatus.N);
 		user.setSmsSent(MessageStatus.N);
 		user.setStatus(Status.A);

@@ -4,7 +4,6 @@ metadata:
   name: user-service
   labels:
     app: user-service
-  #namespace: default
 spec:
   replicas: 1
   minReadySeconds: 45
@@ -70,9 +69,8 @@ metadata:
   name: user-service
   labels: #PODS
     app: user-service
-  namespace: default
 spec:
-  type: ClusterIP #NodePort or LoadBalancer or ClusterIP
+  type: LoadBalancer #NodePort or LoadBalancer or ClusterIP
   selector:
     app: user-service
   ports:

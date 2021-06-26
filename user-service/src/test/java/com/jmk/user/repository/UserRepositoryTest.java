@@ -7,7 +7,6 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +42,7 @@ public class UserRepositoryTest {
 		user.setCreatedOn(LocalDateTime.now());
 	//	user.setGroupId(Group.BJJD.name());
 		user.setWhenModified(LocalDateTime.now());
+		
 		
 		Set<Identity> identities=new HashSet<>();
 		

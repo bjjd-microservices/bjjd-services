@@ -12,18 +12,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.jmk.auth.feign.client.UserMgmtServiceClient;
+import com.jmk.auth.feign.client.UserServiceClient;
 import com.jmk.user.model.User;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
-	private UserMgmtServiceClient userMgmtServiceClient;
+	private UserServiceClient userServiceClient;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		ResponseEntity<User> responseEntity = userMgmtServiceClient.findUserDetailsByUserName(username);
+		ResponseEntity<User> responseEntity = userServiceClient.findUserDetailsByUserName(username);
 
 		User appUser = responseEntity.getBody();
 		if (appUser != null) {
@@ -50,3 +50,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	}
 
 }
+

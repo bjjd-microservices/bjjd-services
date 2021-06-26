@@ -24,7 +24,7 @@ spec:
       containers:
       - name: gateway-service
         image: rajivbansal2981/gateway-service:0.0.1-RELEASE
-        imagePullPolicy: Always #IfNotPresent
+        imagePullPolicy: IfNotPresent #IfNotPresent or Always
         ports:
           - name: http
             containerPort: 1379 # The port that the container exposes
@@ -49,5 +49,6 @@ spec:
   selector:
     app: gateway-service
   ports:
-   - name: app
+   - name: http
      port: 1379
+     targetPort: 1379

@@ -21,6 +21,7 @@
 		<hibernate.version>5.4.10.Final</hibernate.version>
 		<spring-cloud.version>Hoxton.SR4</spring-cloud.version>
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
+		<jib-maven-plugin.version>3.1.1</jib-maven-plugin.version>
 		<jmk-version>0.0.1-RELEASE</jmk-version>
 	</properties>
 	
@@ -34,6 +35,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 		</dependency>
+	<!-- Actuator is mainly used to expose operational information about the 
+		running application — health, metrics, info, dump, env, etc. -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
 		
 		<!-- Spring Cloud Starter Dependencies -->
 		<!-- Spring Cloud Starter Config is required to connect config server -->
@@ -45,12 +52,32 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-kubernetes-all</artifactId>
-			<version>1.1.2.RELEASE</version>
+			<!-- <version>1.1.2.RELEASE</version> -->
 		</dependency>
 		<!-- Distributed Logging Api -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-sleuth</artifactId>
+		</dependency>
+		<!-- Spring Hystrix : Circuit Breaker-->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+		</dependency>
+		<!-- Spring Open Feign Client -->		
+		<dependency>
+    		<groupId>org.springframework.cloud</groupId>
+    		<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
+			<!-- Spring Cloud Netflix Eureka Client -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+		<!-- Spring Netflix ribbon LoadBalancer -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
 		</dependency>
 		
 		<!--SpringFox dependencies -->
@@ -74,9 +101,12 @@
 		<dependency>
 		    <groupId>org.projectlombok</groupId>
 		    <artifactId>lombok</artifactId>
-		    <scope>provided</scope>
+		    <scope>compile</scope>
 		</dependency>
 		
+		<!-- spring-boot-starter-test “Starter”, which imports both Spring Boot 
+			test modules as well as JUnit, AssertJ, Hamcrest, and a number of other useful 
+			libraries. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
