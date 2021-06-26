@@ -9,10 +9,10 @@ com\jmk\user\swagger\configuration\CustomInstantDeserializer$4.class
 com\jmk\user\entity\Address.class
 com\jmk\user\entity\Profile.class
 com\jmk\user\api\UserApi.class
+com\jmk\user\service\UserService.class
 com\jmk\user\swagger\configuration\CustomInstantDeserializer$1.class
 com\jmk\user\entity\Identity.class
 com\jmk\user\repository\UserRepository.class
-com\jmk\user\service\UserMgmtServiceImpl.class
 com\jmk\user\swagger\configuration\CustomInstantDeserializer$6.class
 com\jmk\user\enums\Group.class
 com\jmk\user\swagger\configuration\CustomInstantDeserializer$10.class
@@ -22,11 +22,11 @@ com\jmk\user\swagger\configuration\CustomInstantDeserializer$8.class
 com\jmk\user\swagger\configuration\CustomInstantDeserializer$FromDecimalArguments.class
 com\jmk\user\entity\Role.class
 com\jmk\user\api\ApiResponseMessage.class
+com\jmk\user\service\UserServiceImpl.class
 com\jmk\user\swagger\configuration\CustomInstantDeserializer$3.class
 com\jmk\user\cache\config\HazelcastCacheConfiguration.class
 com\jmk\user\UserServiceApplication.class
 com\jmk\user\swagger\configuration\CustomInstantDeserializer$FromIntegerArguments.class
-com\jmk\user\service\UserMgmtService.class
 com\jmk\user\swagger\configuration\SwaggerDocumentationConfig.class
 com\jmk\user\swagger\configuration\CustomInstantDeserializer.class
 com\jmk\user\api\ApiOriginFilter.class

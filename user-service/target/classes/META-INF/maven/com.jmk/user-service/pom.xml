@@ -8,52 +8,20 @@
 		<version>0.0.1-RELEASE</version>
 	</parent>
 	
-	<groupId>com.jmk</groupId>
 	<artifactId>user-service</artifactId>
 	<packaging>jar</packaging>
 	<name>user-service</name>
-	<properties>
-		<java.version>11</java.version>
-		<maven.compiler.source>${java.version}</maven.compiler.source>
-		<maven.compiler.target>${java.version}</maven.compiler.target>
-		<springfox-version>2.7.0</springfox-version>
-		<hibernate.version>5.4.10.Final</hibernate.version>
-		<spring-cloud.version>Hoxton.SR4</spring-cloud.version>
-		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
-		<jmk-version>0.0.1-RELEASE</jmk-version>
-	</properties>
+	<description>User Service</description>
+	
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-		</dependency>
-		<!-- Spring Cloud Starter Config is required to connect config server -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-config</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-kubernetes-all</artifactId>
-			<version>1.1.2.RELEASE</version>
-		</dependency>
-		<!-- Spring Cloud Netflix Eureka Client -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
-		</dependency>
-		<!-- Spring Boot starter cache -->
-		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-cache</artifactId> 
-			</dependency> -->
 		<!-- Cache dependencies -->
+		<!-- Spring Boot starter cache -->
+		<!-- 
+			<dependency> 
+				<groupId>org.springframework.boot</groupId> 
+				<artifactId>spring-boot-starter-cache</artifactId> 
+			</dependency> 
+		-->
 		<dependency>
 			<groupId>com.hazelcast</groupId>
 			<artifactId>hazelcast</artifactId>
@@ -71,22 +39,6 @@
 			<version>2.2.2</version>
 		</dependency>
 
-		<!--SpringFox dependencies -->
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>${springfox-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>${springfox-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.github.joschi.jackson</groupId>
-			<artifactId>jackson-datatype-threetenbp</artifactId>
-			<version>2.6.4</version>
-		</dependency>
 		<!-- Starter for using Spring Data JPA with Hibernate -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -101,52 +53,21 @@
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 		</dependency>
-		<!-- Distributed Logging Api -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-sleuth</artifactId>
-		</dependency>
+		
 		<!-- Internal API Dependency -->
 		<dependency>
 			<groupId>com.jmk</groupId>
 			<artifactId>common-service</artifactId>
 			<version>${jmk-version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
+	
 	<build>
-		<sourceDirectory>src/main/java</sourceDirectory>
 		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 			<plugin>
 				<groupId>com.google.cloud.tools</groupId>
 				<artifactId>jib-maven-plugin</artifactId>
-				<version>3.0.0</version>
+				<version>${jib-maven-plugin.version}</version>
 				<configuration>
 					<to>
 						<image>registry.hub.docker.com/rajivbansal2981/user-service:0.0.1-RELEASE</image>
@@ -159,21 +80,4 @@
 			</plugin>
 		</plugins>
 	</build>
-	<profiles>
-		<profile>
-			<id>dev</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<spring.profiles.active>dev</spring.profiles.active>
-			</properties>
-		</profile>
-		<profile>
-			<id>prod</id>
-			<properties>
-				<spring.profiles.active>prod</spring.profiles.active>
-			</properties>
-		</profile>
-	</profiles>
 </project>
