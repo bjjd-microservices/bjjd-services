@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.jmk</groupId>
 		<artifactId>bjjd-microservices</artifactId>
-		<version>0.0.1-RELEASE</version>
+		<version>0.0.1.RELEASE</version>
 	</parent>
 	
 	<artifactId>project-service</artifactId>
@@ -79,7 +79,7 @@
 				<version>${jib-maven-plugin.version}</version>
 				<configuration>
 					 <to>
-						<image>registry.hub.docker.com/rajivbansal2981/project-service:0.0.1-RELEASE</image>
+						<image>registry.hub.docker.com/rajivbansal2981/project-service:0.0.1.RELEASE</image>
 						<auth>
 							<username>rajivbansal2981</username>
 							<password>rajiv379</password>

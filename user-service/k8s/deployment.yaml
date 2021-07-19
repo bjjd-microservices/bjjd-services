@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: user-service
-        image: rajivbansal2981/user-service:0.0.1-RELEASE
+        image: rajivbansal2981/user-service:0.0.1.RELEASE
         imagePullPolicy: Always #IfNotPresent
         ports:
           - name: http
@@ -70,7 +70,7 @@ metadata:
   labels: #PODS
     app: user-service
 spec:
-  type: LoadBalancer #NodePort or LoadBalancer or ClusterIP
+  type: ClusterIP #NodePort or LoadBalancer or ClusterIP
   selector:
     app: user-service
   ports:

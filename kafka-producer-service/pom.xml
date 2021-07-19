@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.jmk</groupId>
 	<artifactId>kafka-producer-service</artifactId>
-	<version>0.0.1-RELEASE</version>
+	<version>0.0.1.RELEASE</version>
 	<name>kafka-producer-service</name>
 	<description>Kafka Producer Service</description>
 	<properties>
@@ -19,7 +19,7 @@
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
 		<spring-cloud.version>Hoxton.SR4</spring-cloud.version>
-		<jmk-version>0.0.1-RELEASE</jmk-version>
+		<jmk-version>0.0.1.RELEASE</jmk-version>
 	</properties>
 	<dependencies>
 		<dependency>

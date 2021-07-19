@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   project-service:
-    image: rajivbansal2981/project-service:0.0.1-RELEASE
+    image: rajivbansal2981/project-service:0.0.1.RELEASE
     #build:
       #context: .
       #dockerfile: Dockerfile

@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: project-service
-        image: rajivbansal2981/project-service:0.0.1-RELEASE
+        image: rajivbansal2981/project-service:0.0.1.RELEASE
         imagePullPolicy: Always #IfNotPresent
         ports:
           - name: http
@@ -67,7 +67,7 @@ metadata:
     app: project-service
   namespace: default
 spec:
-  type: ClusterIP #NodePort or LoadBalancer
+  type: ClusterIP #NodePort or LoadBalancer or ClusterIP
   selector:
     app: project-service
   ports:

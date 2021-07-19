@@ -94,7 +94,7 @@ public interface UserApi {
 			"application/json" }, method = RequestMethod.GET)
 	ResponseEntity<User> findUserDetailsByUserName(
 			@ApiParam(value = "xChannel") @RequestHeader(value = "xChannel", required = false) String xChannel,
-			@ApiParam(value = "username") @Valid @RequestParam(value = "username", required = false) String username);
+			@ApiParam(value = "username") @Valid @RequestParam(value = "username", required = true) String username);
 
 	@ApiOperation(value = "User Login Service", nickname = "loginUser", notes = "User Finding Service", response = User.class, tags = {
 			"UserMgmt", })

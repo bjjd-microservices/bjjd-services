@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: gateway-service
-        image: rajivbansal2981/gateway-service:0.0.1-RELEASE
+        image: rajivbansal2981/gateway-service:0.0.1.RELEASE
         imagePullPolicy: IfNotPresent #IfNotPresent or Always
         ports:
           - name: http
@@ -45,7 +45,7 @@ metadata:
     app: gateway-service
   namespace: default
 spec:
-  type: NodePort #NodePort or LoadBalancer or ClusterIP
+  type: LoadBalancer #NodePort or LoadBalancer or ClusterIP
   selector:
     app: gateway-service
   ports:

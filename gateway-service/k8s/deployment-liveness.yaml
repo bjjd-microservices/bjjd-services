@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: gateway-service
-        image: rajivbansal2981/gateway-service:0.0.1-RELEASE
+        image: rajivbansal2981/gateway-service:0.0.1.RELEASE
         imagePullPolicy: Always #IfNotPresent
         ports:
           - name: http

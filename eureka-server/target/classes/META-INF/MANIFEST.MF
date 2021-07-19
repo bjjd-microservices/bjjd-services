@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Built-By: rkbansal
 Build-Jdk: 15.0.2
 Implementation-Title: eureka-server
-Implementation-Version: 0.0.1-RELEASE
+Implementation-Version: 0.0.1.RELEASE
 Implementation-Vendor-Id: com.jmk
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-boot
  -starter-parent/eureka-server

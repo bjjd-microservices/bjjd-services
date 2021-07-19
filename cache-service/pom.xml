@@ -10,14 +10,14 @@
 	</parent>
 	<groupId>com.jmk</groupId>
 	<artifactId>cache-service</artifactId>
-	<version>0.0.1-RELEASE</version>
+	<version>0.0.1.RELEASE</version>
 	<name>cache-service</name>
 	<description>cache-service</description>
 	<properties>
 		<java.version>11</java.version>
 		 <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
 		 <spring-cloud.version>Hoxton.SR4</spring-cloud.version>
-		 <jmk-version>0.0.1-RELEASE</jmk-version>
+		 <jmk-version>0.0.1.RELEASE</jmk-version>
 	</properties>
 	<dependencies>
 		<dependency>
