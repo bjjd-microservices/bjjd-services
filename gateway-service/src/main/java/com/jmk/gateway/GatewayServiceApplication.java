@@ -38,7 +38,7 @@ public class GatewayServiceApplication {
 	}
 	
 	@Autowired
-	DiscoveryClient client;
+	private DiscoveryClient client;
 
 	@PostConstruct
 	public void init() {

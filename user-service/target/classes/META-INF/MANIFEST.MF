@@ -4,7 +4,7 @@ Build-Jdk: 15.0.2
 Implementation-Title: user-service
 Implementation-Version: 0.0.1.RELEASE
 Implementation-Vendor-Id: com.jmk
-Implementation-URL: https://projects.spring.io/spring-boot/#/spring-boot
- -starter-parent/bjjd-microservices/user-service
+Implementation-URL: https://spring.io/projects/spring-boot/bjjd-microser
+ vices/user-service
 Created-By: Maven Integration for Eclipse
 
