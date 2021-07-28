@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
-Built-By: rkbansal
-Build-Jdk: 15.0.2
+Built-By: rajivbansal2981
+Build-Jdk: 16.0.2
 Implementation-Title: member-service
 Implementation-Version: 0.0.1-RELEASE
 Implementation-Vendor-Id: org.jmk.bjjd

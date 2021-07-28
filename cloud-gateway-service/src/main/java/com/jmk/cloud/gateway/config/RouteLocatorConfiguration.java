@@ -19,5 +19,7 @@ public class RouteLocatorConfiguration {
 				id("project-service"))
 				.build();
 	}
+	
+	
 }
 
