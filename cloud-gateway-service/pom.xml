@@ -34,12 +34,24 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 		
+		<!-- Spring Cloud Starter Config is required to connect config server -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+		
+		<!-- Spring Cloud Netflix Eureka Client -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-gateway</artifactId>
 		</dependency>
-	
-		<!-- OAUTH2.0 CLIENT LIBRARIES -->
+		
+		<!-- OAUTH2.0 CLIENT LIBRARIES: Start -->
 		<!-- Starter for using Spring Security's OAuth2/OpenID Connect client features -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -58,18 +70,18 @@
 			<artifactId>spring-security-oauth2-jose</artifactId>
 		</dependency>
 		
-			<!-- Spring Cloud Netflix Eureka Client -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+			<artifactId>spring-cloud-starter-security</artifactId>
 		</dependency>
-		
+		<!-- OAUTH2.0 CLIENT LIBRARIES: Ends -->
+	
 		<!-- Distributed Logging Api -->
-		<dependency>
+		 <dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-sleuth</artifactId>
 		</dependency>
-		
+
 		<!-- Zipkin:distributed tracing system which provides a UI to see the traces -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>

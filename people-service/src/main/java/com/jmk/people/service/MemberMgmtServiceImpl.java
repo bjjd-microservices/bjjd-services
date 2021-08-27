@@ -6,11 +6,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import javax.transaction.Transactional;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.jmk.eh.exception.EntityNotFoundException;
 import com.jmk.enums.Status;
@@ -29,6 +32,8 @@ public class MemberMgmtServiceImpl implements PersonMgmtService<Member> {
 	private ModelMapper mapper;
 
 	@Override
+	@CachePut(value = "memberCacheByMobileNo", key = "#memberModel.mobileNo")
+	@Transactional(isolation=Isolation.READ_COMMITTED)
 	public Member savePerson(Member memberModel) {
 		com.jmk.people.entity.Member memberEntity=mapModelToEntity(mapper,memberModel,com.jmk.people.entity.Member.class);
 		memberEntity=repository.save(memberEntity);
@@ -47,6 +52,7 @@ public class MemberMgmtServiceImpl implements PersonMgmtService<Member> {
 	}
 
 	@Override
+	@CacheEvict(value = "memberCacheByMobileNo", key = "#mobileNo")
 	public void deletePersonById(Long id) {
 		repository.deleteById(id);
 	}
@@ -68,6 +74,7 @@ public class MemberMgmtServiceImpl implements PersonMgmtService<Member> {
 	}
 
 	@Override
+	@Cacheable(value="memberCacheByMobileNo",key="#mobileNo",unless="#result == null")
 	public Member findPersonByMobileNumber(String mobileNumber) {
 		Member memberModel = null;
 		com.jmk.people.entity.Member memberEntity = repository.findPersonByTypeAndMobileNo(PersonType.MEMBER.getType(),

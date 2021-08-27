@@ -1,0 +1,7 @@
+apiVersion: v1
+# This is the version number of the application being deployed.
+appVersion: 0.0.1.RELEASE
+name: darshan-service
+description: A Helm chart for Kubernetes
+# This is the chart version. This version number should be incremented each time you make changes
+version: 0.1.0

@@ -41,7 +41,8 @@ public class HazelcastCacheConfiguration {
 	 * @PreDestroy public void destroy() { log.info("Closing Cache Manager");
 	 * Hazelcast.shutdownAll(); }
 	 * 
-	 */	@Bean
+	 */	
+	@Bean
 	public CacheManager cacheManager() {
 		return new HazelcastCacheManager(hazelcastInstance());
 	}

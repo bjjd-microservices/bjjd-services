@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: bjjd-system
+configMapGenerator:
+- name: account-service-configmap
+  literals:
+  - database.hostname=db-server.cznoz9bpqnlj.ap-south-1.rds.amazonaws.com
+  - database.name=account_db
+  - database.port=3306
+  - database.username=bjjd
+  - application.port=7379
+  - spring.active.profile=prod
+secretGenerator:
+- name: account-service-secrets
+  literals:
+  - database.root.password=server_42_123 #My sql root password:bjjd
+  - database.password=bjjd_379
+resources: #Adding the following yaml resources
+  - deployment.yaml

@@ -8,6 +8,9 @@ import java.util.stream.StreamSupport;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.jmk.eh.exception.EntityNotFoundException;
@@ -27,6 +30,7 @@ public class DevoteeMgmtServiceImpl implements PersonMgmtService<Devotee> {
 	private ModelMapper mapper;
 	
 	@Override
+	@CachePut(value = "devoteeCacheByMobileNo", key = "#devoteeModel.mobileNo")
 	public Devotee savePerson(Devotee devoteeModel) {
 		com.jmk.people.entity.Devotee devoteeEntity=mapModelToEntity(mapper,devoteeModel, com.jmk.people.entity.Devotee.class);
 		devoteeEntity=repository.save(devoteeEntity);
@@ -45,6 +49,7 @@ public class DevoteeMgmtServiceImpl implements PersonMgmtService<Devotee> {
 	}
 
 	@Override
+	@CacheEvict(value = "devoteeCacheByMobileNo", key = "#mobileNo")
 	public void deletePersonById(Long id) {
 		repository.deleteById(id);
 	}
@@ -66,10 +71,11 @@ public class DevoteeMgmtServiceImpl implements PersonMgmtService<Devotee> {
 	}
 
 	@Override
-	public Devotee findPersonByMobileNumber(String mobileNumber) {
+	@Cacheable(value="devoteeCacheByMobileNo",key="#mobileNo",unless="#result == null")
+	public Devotee findPersonByMobileNumber(String mobileNo) {
 		Devotee devoteeModel = null;
 		com.jmk.people.entity.Devotee devoteeEntity = repository
-				.findPersonByTypeAndMobileNo(PersonType.DEVOTEE.getType(), mobileNumber);
+				.findPersonByTypeAndMobileNo(PersonType.DEVOTEE.getType(), mobileNo);
 		if (devoteeEntity != null) {
 			devoteeModel = mapEntityToModel(mapper, devoteeEntity, Devotee.class);
 		}

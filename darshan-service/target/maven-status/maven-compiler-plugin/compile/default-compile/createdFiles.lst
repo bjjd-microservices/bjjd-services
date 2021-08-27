@@ -1,6 +1,6 @@
 com\jmk\darshan\validator\DarshanRequestValidator.class
 com\jmk\swagger\configuration\CustomInstantDeserializer$5.class
-com\jmk\darshan\cache\client\config\ClientCacheConfig.class
+com\jmk\darshan\ribbon\config\RibbonConfiguration.class
 com\jmk\swagger\configuration\CustomInstantDeserializer$12.class
 com\jmk\darshan\service\DarshanMgmtServiceImpl.class
 com\jmk\swagger\RFC3339DateFormat.class

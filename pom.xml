@@ -55,12 +55,6 @@
 			<artifactId>spring-cloud-starter-sleuth</artifactId>
 		</dependency>
 		
-		<!-- Zipkin:distributed tracing system which provides a UI to see the traces -->
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-zipkin</artifactId>
-		</dependency>
-		
 		<!-- Spring Hystrix : Circuit Breaker-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -106,11 +100,6 @@
 		    <scope>compile</scope>
 		</dependency>
 		
-		<dependency>
-			<groupId>net.logstash.logback</groupId>
-			<artifactId>logstash-logback-encoder</artifactId>
-			<version>6.6</version>
-		</dependency>
 		
 		<!-- spring-boot-starter-test “Starter”, which imports both Spring Boot 
 			test modules as well as JUnit, AssertJ, Hamcrest, and a number of other useful 
@@ -149,7 +138,18 @@
 		<properties>
 			<spring.profiles.active>dev</spring.profiles.active>
 		</properties>
-		<!-- Spring Cloud Starter Kubernetes is required for Kubernetes -->
+		<dependencies>
+			<dependency>
+				<groupId>net.logstash.logback</groupId>
+				<artifactId>logstash-logback-encoder</artifactId>
+				<version>6.6</version>
+			</dependency>
+			<!-- Zipkin:distributed tracing system which provides a UI to see the traces -->
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-starter-zipkin</artifactId>
+			</dependency>
+		</dependencies>
 	</profile>
 	<profile>
 		<id>prod</id>

@@ -1,0 +1,7 @@
+name: cloud-gateway-service
+namespace: bjjd-system
+configmap: cloud-gateway-service-configmap
+image: rajivbansal2981/cloud-gateway-service:0.0.1.RELEASE
+port: 8080
+servicetype: LoadBalancer
+replicas: 1

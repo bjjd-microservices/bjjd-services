@@ -8,6 +8,9 @@ import java.util.stream.StreamSupport;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.jmk.enums.Status;
@@ -25,6 +28,7 @@ public class SevadarMgmtServiceImpl implements PersonMgmtService<Sevadar>{
 	private ModelMapper mapper;
 
 	@Override
+	@CachePut(value = "sevadarCacheByMobileNo", key = "#sevadarModel.mobileNo")
 	public Sevadar savePerson(Sevadar sevadarModel) {
 		com.jmk.people.entity.Sevadar sevadarEntity=mapModelToEntity(mapper,sevadarModel,com.jmk.people.entity.Sevadar.class);
 		sevadarEntity=repository.save(sevadarEntity);
@@ -40,6 +44,7 @@ public class SevadarMgmtServiceImpl implements PersonMgmtService<Sevadar>{
 	}
 
 	@Override
+	@CacheEvict(value = "sevadarCacheByMobileNo", key = "#mobileNo")
 	public void deletePersonById(Long id) {
 		repository.deleteById(id);
 	}
@@ -61,6 +66,7 @@ public class SevadarMgmtServiceImpl implements PersonMgmtService<Sevadar>{
 	}
 
 	@Override
+	@Cacheable(value="sevadarCacheByMobileNo",key="#mobileNo",unless="#result == null")
 	public Sevadar findPersonByMobileNumber(String mobileNumber) {
 		Sevadar sevadarModel = null;
 		com.jmk.people.entity.Sevadar sevadarEntity = repository

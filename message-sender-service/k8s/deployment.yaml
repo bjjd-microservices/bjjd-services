@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: message-sender-service
+  labels:
+    app: message-sender-service
+  #namespace: default
+spec:
+  replicas: 1
+  minReadySeconds: 45
+  selector:
+    matchLabels:
+      app: message-sender-service
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: message-sender-service
+    spec:
+      containers:
+      - name: message-sender-service
+        image: rajivbansal2981/message-sender-service:0.0.1.RELEASE
+        imagePullPolicy: Always #IfNotPresent
+        ports:
+          - name: http
+            containerPort: 2379 # The port that the container exposes
+        env:
+        - name: SPRING_ACTIVE_PROFILE
+          valueFrom: 
+             configMapKeyRef:
+                 name: message-sender-service-configmap
+                 key: spring.active.profile
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 60
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: message-sender-service
+  labels: #PODS
+    app: message-sender-service
+  namespace: default
+spec:
+  type: ClusterIP #NodePort or LoadBalancer or ClusterIP
+  selector:
+    app: message-sender-service
+  ports:
+   - name: app
+     port: 2379

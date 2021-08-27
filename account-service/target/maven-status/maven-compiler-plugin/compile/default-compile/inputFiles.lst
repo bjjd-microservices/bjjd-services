@@ -22,6 +22,7 @@ C:\Users\rajivbansal2981\git\bjjd-microservices\account-service\src\main\java\co
 C:\Users\rajivbansal2981\git\bjjd-microservices\account-service\src\main\java\com\jmk\account\api\DonationApi.java
 C:\Users\rajivbansal2981\git\bjjd-microservices\account-service\src\main\java\com\jmk\account\service\DonationService.java
 C:\Users\rajivbansal2981\git\bjjd-microservices\account-service\src\main\java\com\jmk\account\api\DonationApiController.java
+C:\Users\rajivbansal2981\git\bjjd-microservices\account-service\src\main\java\com\jmk\account\ribbon\config\RibbonConfiguration.java
 C:\Users\rajivbansal2981\git\bjjd-microservices\account-service\src\main\java\com\jmk\account\api\ApiException.java
 C:\Users\rajivbansal2981\git\bjjd-microservices\account-service\src\main\java\com\jmk\account\util\DonationRequestValidator.java
 C:\Users\rajivbansal2981\git\bjjd-microservices\account-service\src\main\java\com\jmk\account\repository\ExpenseRepository.java

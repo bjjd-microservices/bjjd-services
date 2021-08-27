@@ -70,7 +70,7 @@
 				<version>${jib-maven-plugin.version}</version>
 				<configuration>
 					<to>
-						<image>registry.hub.docker.com/rajivbansal2981/user-service:0.0.1.RELEASE</image>
+						<image>registry.hub.docker.com/rajivbansal2981/user-service:${jmk-version}</image>
 						<auth>
 							<username>rajivbansal2981</username>
 							<password>rajiv379</password>

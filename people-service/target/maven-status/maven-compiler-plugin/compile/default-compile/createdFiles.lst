@@ -15,8 +15,10 @@ com\jmk\people\entity\Address.class
 com\jmk\people\swagger\configuration\SwaggerDocumentationConfig.class
 com\jmk\people\entity\Identity.class
 com\jmk\people\swagger\configuration\CustomInstantDeserializer$8.class
+com\jmk\people\ribbon\config\RibbonConfiguration.class
 com\jmk\people\swagger\RFC3339DateFormat.class
 com\jmk\people\swagger\configuration\CustomInstantDeserializer$10.class
+com\jmk\people\cache\config\HazelcastCacheConfiguration.class
 com\jmk\people\service\PersonMgmtService.class
 com\jmk\people\api\ApiResponseMessage.class
 com\jmk\people\swagger\configuration\CustomInstantDeserializer$7.class

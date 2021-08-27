@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: darshan-service
+  labels:
+    app: darshan-service
+  #namespace: default
+spec:
+  replicas: 1
+  minReadySeconds: 45
+  selector:
+    matchLabels:
+      app: darshan-service
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: darshan-service
+    spec:
+      containers:
+      - name: darshan-service
+        image: rajivbansal2981/darshan-service:0.0.1.RELEASE
+        imagePullPolicy: Always #IfNotPresent
+        ports:
+          - name: http
+            containerPort: 4379 # The port that the container exposes
+        env:
+        - name: DB_HOSTNAME
+          valueFrom:
+             configMapKeyRef:
+              name: darshan-service-configmap
+              key: database.hostname #MySQL db host name
+        - name: DB_NAME
+          valueFrom: 
+             configMapKeyRef:
+                 name: darshan-service-configmap
+                 key: database.name
+        - name: DB_USERNAME
+          valueFrom: 
+             configMapKeyRef:
+                 name: darshan-service-configmap
+                 key: database.username
+        - name: DB_PASSWORD
+          valueFrom:
+             secretKeyRef:
+                name: darshan-service-secrets
+                key: database.password
+        - name: DB_PORT
+          valueFrom: 
+             configMapKeyRef:
+                 name: darshan-service-configmap
+                 key: database.port
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 60
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: darshan-service
+  labels: #PODS
+    app: darshan-service
+  namespace: default
+spec:
+  type: ClusterIP #NodePort or LoadBalancer or ClusterIP
+  selector:
+    app: darshan-service
+  ports:
+   - name: app
+     port: 4379

@@ -1,6 +1,7 @@
 com\jmk\account\feign\client\UserMgmtServiceClient.class
 com\jmk\account\swagger\configuration\CustomInstantDeserializer.class
 com\jmk\account\swagger\configuration\JacksonConfiguration.class
+com\jmk\account\ribbon\config\RibbonConfiguration.class
 com\jmk\account\service\DonationServiceImpl.class
 com\jmk\account\swagger\configuration\CustomInstantDeserializer$12.class
 com\jmk\account\feign\client\ProjectMgmtServiceClient.class

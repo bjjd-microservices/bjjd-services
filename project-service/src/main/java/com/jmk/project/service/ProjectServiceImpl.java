@@ -36,7 +36,6 @@ public class ProjectServiceImpl  implements ProjectService {
 		return projectModel;
 	}
 
-
 	@Override
 	@Cacheable(value="projectCacheByCode",key="#code",unless="#result == null")
 	public Project findProjectByCode(String code) {

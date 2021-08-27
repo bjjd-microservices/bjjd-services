@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import ch.qos.logback.classic.AsyncAppender;
 import ch.qos.logback.classic.LoggerContext;
@@ -25,6 +26,7 @@ import net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder;
 @Configuration
 @EnableConfigurationProperties
 @RefreshScope
+@Profile("dev")
 public class LogbackConfiguration {
 	private static final String LOGSTASH_APPENDER_NAME = "LOGSTASH";
 	private static final String ASYNC_LOGSTASH_APPENDER_NAME = "ASYNC_LOGSTASH";

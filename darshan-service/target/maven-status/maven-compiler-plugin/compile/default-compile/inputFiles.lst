@@ -17,7 +17,7 @@ C:\Users\rajivbansal2981\git\bjjd-microservices\darshan-service\src\main\java\co
 C:\Users\rajivbansal2981\git\bjjd-microservices\darshan-service\src\main\java\com\jmk\darshan\api\ApiException.java
 C:\Users\rajivbansal2981\git\bjjd-microservices\darshan-service\src\main\java\com\jmk\darshan\validator\DarshanRequestValidator.java
 C:\Users\rajivbansal2981\git\bjjd-microservices\darshan-service\src\main\java\com\jmk\darshan\api\ApiOriginFilter.java
+C:\Users\rajivbansal2981\git\bjjd-microservices\darshan-service\src\main\java\com\jmk\darshan\ribbon\config\RibbonConfiguration.java
 C:\Users\rajivbansal2981\git\bjjd-microservices\darshan-service\src\main\java\com\jmk\swagger\RFC3339DateFormat.java
 C:\Users\rajivbansal2981\git\bjjd-microservices\darshan-service\src\main\java\com\jmk\darshan\api\ApiResponseMessage.java
 C:\Users\rajivbansal2981\git\bjjd-microservices\darshan-service\src\main\java\com\jmk\swagger\configuration\CustomInstantDeserializer.java
-C:\Users\rajivbansal2981\git\bjjd-microservices\darshan-service\src\main\java\com\jmk\darshan\cache\client\config\ClientCacheConfig.java

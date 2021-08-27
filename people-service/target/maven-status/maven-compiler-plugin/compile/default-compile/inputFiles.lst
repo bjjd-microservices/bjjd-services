@@ -1,5 +1,6 @@
 C:\Users\rajivbansal2981\git\bjjd-microservices\people-service\src\main\java\com\jmk\people\service\SevadarMgmtServiceImpl.java
 C:\Users\rajivbansal2981\git\bjjd-microservices\people-service\src\main\java\com\jmk\people\api\ApiException.java
+C:\Users\rajivbansal2981\git\bjjd-microservices\people-service\src\main\java\com\jmk\people\ribbon\config\RibbonConfiguration.java
 C:\Users\rajivbansal2981\git\bjjd-microservices\people-service\src\main\java\com\jmk\people\swagger\configuration\SwaggerDocumentationConfig.java
 C:\Users\rajivbansal2981\git\bjjd-microservices\people-service\src\main\java\com\jmk\people\api\DevoteeApi.java
 C:\Users\rajivbansal2981\git\bjjd-microservices\people-service\src\main\java\com\jmk\people\entity\Devotee.java
@@ -16,6 +17,7 @@ C:\Users\rajivbansal2981\git\bjjd-microservices\people-service\src\main\java\com
 C:\Users\rajivbansal2981\git\bjjd-microservices\people-service\src\main\java\com\jmk\people\api\MemberApiController.java
 C:\Users\rajivbansal2981\git\bjjd-microservices\people-service\src\main\java\com\jmk\people\entity\Person.java
 C:\Users\rajivbansal2981\git\bjjd-microservices\people-service\src\main\java\com\jmk\people\entity\Identity.java
+C:\Users\rajivbansal2981\git\bjjd-microservices\people-service\src\main\java\com\jmk\people\cache\config\HazelcastCacheConfiguration.java
 C:\Users\rajivbansal2981\git\bjjd-microservices\people-service\src\main\java\com\jmk\people\entity\Member.java
 C:\Users\rajivbansal2981\git\bjjd-microservices\people-service\src\main\java\com\jmk\people\service\DevoteeMgmtServiceImpl.java
 C:\Users\rajivbansal2981\git\bjjd-microservices\people-service\src\main\java\com\jmk\people\api\MemberApi.java

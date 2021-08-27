@@ -1,0 +1,7 @@
+name: message-sender-service
+namespace: bjjd-system
+configmap: message-sender-service-configmap
+image: rajivbansal2981/message-sender-service:0.0.1.RELEASE
+port: 9379
+servicetype: ClusterIP
+replicas: 1

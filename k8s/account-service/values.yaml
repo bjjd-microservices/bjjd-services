@@ -1,0 +1,8 @@
+name: account-service
+namespace: bjjd-system
+configmap: account-service-configmap
+secret: account-service-secrets
+image: rajivbansal2981/account-service:0.0.1.RELEASE
+port: 7379
+servicetype: ClusterIP
+replicas: 1
