@@ -32,11 +32,8 @@ import io.swagger.annotations.ApiParam;
 
 @RestController
 public class SevadarApiController implements SevadarApi {
-
     private static final Logger log = LoggerFactory.getLogger(SevadarApiController.class);
-
     private final ObjectMapper objectMapper;
-
     private final HttpServletRequest request;
     
     @Autowired

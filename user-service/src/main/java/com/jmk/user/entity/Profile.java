@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,10 +21,19 @@ import javax.persistence.Version;
 
 import com.jmk.enums.Gender;
 import com.jmk.enums.MaritalStatus;
+import com.jmk.enums.MessageStatus;
+import com.jmk.enums.Status;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Profile
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "PROFILE")
 public class Profile implements Serializable{
@@ -89,212 +99,4 @@ public class Profile implements Serializable{
 	@Version
 	private Long version = 1L;
 	
-	@Override
-	public boolean equals(java.lang.Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
-		Profile profile = (Profile) o;
-		return Objects.equals(this.id, profile.id) && Objects.equals(this.firstName, profile.firstName)
-				&& Objects.equals(this.lastName, profile.lastName)
-				&& Objects.equals(this.dateOfBirth, profile.dateOfBirth) && Objects.equals(this.gender, profile.gender)
-				&& Objects.equals(this.maritalStatus, profile.maritalStatus)
-				&& Objects.equals(this.emailId, profile.emailId) && Objects.equals(this.photoId, profile.photoId)
-				&& Objects.equals(this.mobileNo, profile.mobileNo)
-				&& Objects.equals(this.altMobileNo, profile.altMobileNo)
-				&& Objects.equals(this.userType, profile.userType) && Objects.equals(this.groupId, profile.groupId);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, firstName, lastName, dateOfBirth, gender, maritalStatus, emailId, photoId, mobileNo,
-				altMobileNo, userType, groupId);
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("class Profile {\n");
-
-		sb.append("    id: ").append(toIndentedString(id)).append("\n");
-		sb.append("    firstName: ").append(toIndentedString(firstName)).append("\n");
-		sb.append("    lastName: ").append(toIndentedString(lastName)).append("\n");
-		sb.append("    dateOfBirth: ").append(toIndentedString(dateOfBirth)).append("\n");
-		sb.append("    gender: ").append(toIndentedString(gender)).append("\n");
-		sb.append("    maritalStatus: ").append(toIndentedString(maritalStatus)).append("\n");
-		sb.append("    emailId: ").append(toIndentedString(emailId)).append("\n");
-		sb.append("    photoId: ").append(toIndentedString(photoId)).append("\n");
-		sb.append("    mobileNo: ").append(toIndentedString(mobileNo)).append("\n");
-		sb.append("    altMobileNo: ").append(toIndentedString(altMobileNo)).append("\n");
-		sb.append("    userType: ").append(toIndentedString(userType)).append("\n");
-		sb.append("    groupId: ").append(toIndentedString(groupId)).append("\n");
-		sb.append("}");
-		return sb.toString();
-	}
-
-	/**
-	 * Convert the given object to string with each line indented by 4 spaces
-	 * (except the first line).
-	 */
-	private String toIndentedString(java.lang.Object o) {
-		if (o == null) {
-			return "null";
-		}
-		return o.toString().replace("\n", "\n    ");
-
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public LocalDate getDateOfBirth() {
-		return dateOfBirth;
-	}
-
-	public void setDateOfBirth(LocalDate dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
-
-	public Gender getGender() {
-		return gender;
-	}
-
-	public void setGender(Gender gender) {
-		this.gender = gender;
-	}
-
-	public MaritalStatus getMaritalStatus() {
-		return maritalStatus;
-	}
-
-	public void setMaritalStatus(MaritalStatus maritalStatus) {
-		this.maritalStatus = maritalStatus;
-	}
-
-	public String getEmailId() {
-		return emailId;
-	}
-
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
-	}
-
-	public String getPhotoId() {
-		return photoId;
-	}
-
-	public void setPhotoId(String photoId) {
-		this.photoId = photoId;
-	}
-
-	public String getMobileNo() {
-		return mobileNo;
-	}
-
-	public void setMobileNo(String mobileNo) {
-		this.mobileNo = mobileNo;
-	}
-
-	public String getAltMobileNo() {
-		return altMobileNo;
-	}
-
-	public void setAltMobileNo(String altMobileNo) {
-		this.altMobileNo = altMobileNo;
-	}
-
-	public String getUserType() {
-		return userType;
-	}
-
-	public void setUserType(String userType) {
-		this.userType = userType;
-	}
-
-	public Integer getGroupId() {
-		return groupId;
-	}
-
-	public void setGroupId(Integer groupId) {
-		this.groupId = groupId;
-	}
-
-	public Long getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(Long createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public LocalDateTime getCreatedOn() {
-		return createdOn;
-	}
-
-	public void setCreatedOn(LocalDateTime createdOn) {
-		this.createdOn = createdOn;
-	}
-	
-	/**
-	 * @return the modifiedBy
-	 */
-	public Long getModifiedBy() {
-		return modifiedBy;
-	}
-
-	/**
-	 * @param modifiedBy the modifiedBy to set
-	 */
-	public void setModifiedBy(Long modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	public LocalDateTime getWhenModified() {
-		return whenModified;
-	}
-
-	public void setWhenModified(LocalDateTime whenModified) {
-		this.whenModified = whenModified;
-	}
-
-	public Long getVersion() {
-		return version;
-	}
-
-	public void setVersion(Long version) {
-		this.version = version;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
 }

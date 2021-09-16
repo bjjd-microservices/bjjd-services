@@ -16,9 +16,16 @@ import javax.persistence.Version;
 
 import com.jmk.enums.Status;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * Project
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "PROJECT")
 public class Project implements Serializable{
@@ -74,136 +81,4 @@ public class Project implements Serializable{
 	@Version
 	private Long version=null;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getManager() {
-		return manager;
-	}
-
-	public void setManager(String manager) {
-		this.manager = manager;
-	}
-
-	public LocalDate getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(LocalDate startDate) {
-		this.startDate = startDate;
-	}
-
-	public LocalDate getCompletionDate() {
-		return completionDate;
-	}
-
-	public void setCompletionDate(LocalDate completionDate) {
-		this.completionDate = completionDate;
-	}
-
-	public String getPhotoId() {
-		return photoId;
-	}
-
-	public void setPhotoId(String photoId) {
-		this.photoId = photoId;
-	}
-	
-	/**
-	 * @return the code
-	 */
-	public String getCode() {
-		return code;
-	}
-
-	/**
-	 * @param code the code to set
-	 */
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-
-	public Integer getGroupId() {
-		return groupId;
-	}
-
-	public void setGroupId(Integer groupId) {
-		this.groupId = groupId;
-	}
-
-	public Long getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(Long createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public LocalDateTime getCreatedOn() {
-		return createdOn;
-	}
-
-	public void setCreatedOn(LocalDateTime createdOn) {
-		this.createdOn = createdOn;
-	}
-	
-	/**
-	 * @return the modifiedBy
-	 */
-	public Long getModifiedBy() {
-		return modifiedBy;
-	}
-
-	/**
-	 * @param modifiedBy the modifiedBy to set
-	 */
-	public void setModifiedBy(Long modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	public LocalDateTime getWhenModified() {
-		return whenModified;
-	}
-
-	public void setWhenModified(LocalDateTime whenModified) {
-		this.whenModified = whenModified;
-	}
-
-	public Long getVersion() {
-		return version;
-	}
-
-	public void setVersion(Long version) {
-		this.version = version;
-	}
-	
 }

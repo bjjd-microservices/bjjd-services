@@ -1,5 +1,4 @@
 package com.jmk.people.api;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,11 +31,8 @@ import io.swagger.annotations.ApiParam;
 
 @RestController
 public class DevoteeApiController implements DevoteeApi {
-
     private static final Logger log = LoggerFactory.getLogger(DevoteeApiController.class);
-
     private final ObjectMapper objectMapper;
-
     private final HttpServletRequest request;
     
     @Autowired

@@ -10,3 +10,4 @@ public interface PersonRepository<T extends Person> extends CrudRepository<T,Lon
 	T findPersonByTypeAndMobileNo(String type,String mobileNo);
 	
 }
+

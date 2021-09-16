@@ -13,10 +13,12 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import com.jmk.eh.exception.EntityNotFoundException;
 import com.jmk.enums.Status;
 import com.jmk.people.enums.PersonType;
 import com.jmk.people.model.Sevadar;
 import com.jmk.people.repository.PersonRepository;
+import com.jmk.project.model.Project;
 
 @Service("sevadarMgmtService")
 public class SevadarMgmtServiceImpl implements PersonMgmtService<Sevadar>{
@@ -39,6 +41,9 @@ public class SevadarMgmtServiceImpl implements PersonMgmtService<Sevadar>{
 	@Override
 	public Sevadar findPersonDetailsById(Long id) {
 		Optional<com.jmk.people.entity.Sevadar> sevadarEntity=repository.findById(id);
+		if(!sevadarEntity.isPresent()) {
+			throw new EntityNotFoundException(Project.class,"id",id.toString());
+		}
 		Sevadar sevadarModel=mapEntityToModel(mapper,sevadarEntity.get(),Sevadar.class);
 		return sevadarModel;
 	}
@@ -56,15 +61,7 @@ public class SevadarMgmtServiceImpl implements PersonMgmtService<Sevadar>{
 		sevadarModels = StreamSupport.stream(iterableSevadars.spliterator(), false).map(sevadarEntity->mapEntityToModel(mapper, sevadarEntity, Sevadar.class)).collect(Collectors.toList());
 		return sevadarModels;
 	}
-
-	@Override
-	public List<Sevadar> findAllPersonsByStatus(Status status) {
-		List<Sevadar> sevadarModels=new ArrayList<>();
-		Iterable<com.jmk.people.entity.Sevadar> iterableSevadars=repository.findAll();
-		sevadarModels = StreamSupport.stream(iterableSevadars.spliterator(), false).map(sevadarEntity->mapEntityToModel(mapper, sevadarEntity, Sevadar.class)).collect(Collectors.toList());
-		return sevadarModels;
-	}
-
+	
 	@Override
 	@Cacheable(value="sevadarCacheByMobileNo",key="#mobileNo",unless="#result == null")
 	public Sevadar findPersonByMobileNumber(String mobileNumber) {
@@ -77,4 +74,11 @@ public class SevadarMgmtServiceImpl implements PersonMgmtService<Sevadar>{
 		return sevadarModel;
 	}
 
+	@Override
+	public List<Sevadar> findAllPersonsByStatus(Status status) {
+		List<Sevadar> sevadarModels=new ArrayList<>();
+		Iterable<com.jmk.people.entity.Sevadar> iterableSevadars=repository.findAll();
+		sevadarModels = StreamSupport.stream(iterableSevadars.spliterator(), false).map(sevadarEntity->mapEntityToModel(mapper, sevadarEntity, Sevadar.class)).collect(Collectors.toList());
+		return sevadarModels;
+	}
 }

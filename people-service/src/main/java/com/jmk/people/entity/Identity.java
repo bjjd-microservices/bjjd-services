@@ -18,9 +18,16 @@ import javax.persistence.Version;
 
 import com.jmk.enums.DocumentType;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * Identity
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "IDENTITY")
 public class Identity implements Serializable{
@@ -70,190 +77,5 @@ public class Identity implements Serializable{
 	@Version
 	private Long version;
 
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	/**
-	 * @return the documentType
-	 */
-	public DocumentType getDocumentType() {
-		return documentType;
-	}
-
-	/**
-	 * @param documentType the documentType to set
-	 */
-	public void setDocumentType(DocumentType documentType) {
-		this.documentType = documentType;
-	}
-
-	/**
-	 * @return the documentNumber
-	 */
-	public String getDocumentNumber() {
-		return documentNumber;
-	}
-
-	/**
-	 * @param documentNumber the documentNumber to set
-	 */
-	public void setDocumentNumber(String documentNumber) {
-		this.documentNumber = documentNumber;
-	}
-
-	/**
-	 * @return the documentName
-	 */
-	public String getDocumentName() {
-		return documentName;
-	}
-
-	/**
-	 * @param documentName the documentName to set
-	 */
-	public void setDocumentName(String documentName) {
-		this.documentName = documentName;
-	}
-
-	/**
-	 * @return the documentPath
-	 */
-	public String getDocumentPath() {
-		return documentPath;
-	}
-
-	/**
-	 * @param documentPath the documentPath to set
-	 */
-	public void setDocumentPath(String documentPath) {
-		this.documentPath = documentPath;
-	}
-
-	/**
-	 * @return the documentDetails
-	 */
-	public String getDocumentDetails() {
-		return documentDetails;
-	}
-
-	/**
-	 * @param documentDetails the documentDetails to set
-	 */
-	public void setDocumentDetails(String documentDetails) {
-		this.documentDetails = documentDetails;
-	}
-
-	/**
-	 * @return the person
-	 */
-	public Person getPerson() {
-		return person;
-	}
-
-	/**
-	 * @param person the person to set
-	 */
-	public void setPerson(Person person) {
-		this.person = person;
-	}
-
-	/**
-	 * @return the groupId
-	 */
-	public Integer getGroupId() {
-		return groupId;
-	}
-
-	/**
-	 * @param groupId the groupId to set
-	 */
-	public void setGroupId(Integer groupId) {
-		this.groupId = groupId;
-	}
-
-	/**
-	 * @return the createdBy
-	 */
-	public Long getCreatedBy() {
-		return createdBy;
-	}
-
-	/**
-	 * @param createdBy the createdBy to set
-	 */
-	public void setCreatedBy(Long createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	/**
-	 * @return the createdOn
-	 */
-	public LocalDateTime getCreatedOn() {
-		return createdOn;
-	}
-
-	/**
-	 * @param createdOn the createdOn to set
-	 */
-	public void setCreatedOn(LocalDateTime createdOn) {
-		this.createdOn = createdOn;
-	}
-
-	/**
-	 * @return the modifiedBy
-	 */
-	public Long getModifiedBy() {
-		return modifiedBy;
-	}
-
-	/**
-	 * @param modifiedBy the modifiedBy to set
-	 */
-	public void setModifiedBy(Long modifiedBy) {
-		this.modifiedBy = modifiedBy;
-	}
-
-	/**
-	 * @return the whenModified
-	 */
-	public LocalDateTime getWhenModified() {
-		return whenModified;
-	}
-
-	/**
-	 * @param whenModified the whenModified to set
-	 */
-	public void setWhenModified(LocalDateTime whenModified) {
-		this.whenModified = whenModified;
-	}
-
-	/**
-	 * @return the version
-	 */
-	public Long getVersion() {
-		return version;
-	}
-
-	/**
-	 * @param version the version to set
-	 */
-	public void setVersion(Long version) {
-		this.version = version;
-	}
-	
-	
-	
-	
 
 }
