@@ -27,3 +27,4 @@ public class Devotee extends Person {
 	private String devoteeType = null;
 
 }
+

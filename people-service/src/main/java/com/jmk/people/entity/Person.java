@@ -41,9 +41,6 @@ import lombok.NoArgsConstructor;
 @Inheritance(strategy=InheritanceType.JOINED)
 @DiscriminatorColumn(name="person_type",discriminatorType=DiscriminatorType.STRING)//Optional to define the type of Person
 public class Person implements Serializable{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id

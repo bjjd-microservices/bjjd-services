@@ -14,3 +14,4 @@ public interface ProjectMgmtServiceClient {
 	ResponseEntity<Project> findProjectDetailsById(@PathVariable("id") Long id);		
 	
 }
+
