@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jmk.account.model.Donation;
+import com.jmk.aws.service.S3Service;
 import com.jmk.user.model.User;
 import com.jmk.user.service.UserService;
 
@@ -35,6 +37,9 @@ public class UserApiController implements UserApi {
     private static final Logger log = LoggerFactory.getLogger(UserApiController.class);
 
     private final ObjectMapper objectMapper;
+    
+    @Autowired
+    private S3Service s3Service;
     
     @Autowired
     private UserService userService;
@@ -50,18 +55,18 @@ public class UserApiController implements UserApi {
         this.request = request;
     }
 
-    public ResponseEntity<User> createUser(@ApiParam(value = "" ,required=true )  @Valid @RequestBody User user,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel) {
-    	 String accept = request.getHeader("Accept");
-         if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
-        	 	 user.setPassword(passwordEncoder.encode(user.getPassword()));
-        	 	enrichCommonUserDetails(user);
-             	 user=userService.saveUser(user);
-                 return new ResponseEntity<User>(user,HttpStatus.OK);
-         }
-
-         return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
-
-    }
+	public ResponseEntity<User> createUser(@ApiParam(value = "", required = true) @Valid @RequestPart User user,
+			@RequestPart("photo") MultipartFile photo,
+			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel) {
+		
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		enrichCommonUserDetails(user);
+		user = userService.saveUser(user);
+		if (photo != null) {
+			s3Service.uploadFile("USERS",user.getId().toString(),"Photo",photo);
+		}
+		return new ResponseEntity<User>(user, HttpStatus.OK);
+	}
 
     public ResponseEntity<Void> createUsersWithArrayInput(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<User> users,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel) {
     	String accept = request.getHeader("Accept");
@@ -76,9 +81,9 @@ public class UserApiController implements UserApi {
         return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    public ResponseEntity<Void> deleteUserByUsername(@ApiParam(value = "Username",required=true) @PathVariable("username") String username) {
-        int userid=userService.deleteUserByUsername(username);
-        return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<Integer> deleteUserByUsername(@ApiParam(value = "username") @Valid @RequestParam(value = "username", required = true) String username) {
+    	Integer deleteRecords=userService.deleteUserByUsername(username);
+        return new ResponseEntity<Integer>(deleteRecords,HttpStatus.OK);
     }
 
     public ResponseEntity<Void> deleteUserById(@ApiParam(value = "User Id",required=true) @PathVariable("id") Long id) {
@@ -146,7 +151,6 @@ public class UserApiController implements UserApi {
         return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
     
-
     /**
      * Enrich Common User Details
      * @param user

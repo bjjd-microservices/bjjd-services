@@ -31,6 +31,8 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	
 
 	@Override
 	@Caching(put = { @CachePut(value = "usersCacheById", key = "#result.id"),
@@ -96,8 +98,8 @@ public class UserServiceImpl implements UserService{
 	@Caching(evict = { @CacheEvict(value = "usersCacheById", key = "#id"),
 			@CacheEvict(value = "usersCacheByUsername", key = "#username") })
 	public int deleteUserByUsername(String username) {
-		int userid=userRepository.deleteByUsername(username);
-		return userid;
+		int deleteRecords=userRepository.deleteByUsername(username);
+		return deleteRecords;
 	}
 	
 	/**
