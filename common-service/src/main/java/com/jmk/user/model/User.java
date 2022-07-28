@@ -24,10 +24,6 @@ import lombok.NoArgsConstructor;
  * User
  */
 @Validated
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-@Data //It is combination of @ToString, @EqualsAndHashCode ,@Getter,@Setter and @RequiredArgsConstructor
 @ApiModel(value = "user")
 public class User implements Serializable{
 
@@ -132,5 +128,175 @@ public class User implements Serializable{
 		this.identities.add(identitiesItem);
 		return this;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getDisplayName() {
+		return displayName;
+	}
+
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getSecurity() {
+		return security;
+	}
+
+	public void setSecurity(String security) {
+		this.security = security;
+	}
+
+	public String getEncryption() {
+		return encryption;
+	}
+
+	public void setEncryption(String encryption) {
+		this.encryption = encryption;
+	}
+
+	public Integer getLoginAttempt() {
+		return loginAttempt;
+	}
+
+	public void setLoginAttempt(Integer loginAttempt) {
+		this.loginAttempt = loginAttempt;
+	}
+
+	public Integer getFailAttempt() {
+		return failAttempt;
+	}
+
+	public void setFailAttempt(Integer failAttempt) {
+		this.failAttempt = failAttempt;
+	}
+
+	public MessageStatus getSmsSent() {
+		return smsSent;
+	}
+
+	public void setSmsSent(MessageStatus smsSent) {
+		this.smsSent = smsSent;
+	}
+
+	public MessageStatus getEmailSent() {
+		return emailSent;
+	}
+
+	public void setEmailSent(MessageStatus emailSent) {
+		this.emailSent = emailSent;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public Profile getProfile() {
+		return profile;
+	}
+
+	public void setProfile(Profile profile) {
+		this.profile = profile;
+	}
+
+	public Set<Identity> getIdentities() {
+		return identities;
+	}
+
+	public void setIdentities(Set<Identity> identities) {
+		this.identities = identities;
+	}
+
+	public Set<Address> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(Set<Address> addresses) {
+		this.addresses = addresses;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
+	public Integer getGroupId() {
+		return groupId;
+	}
+
+	public void setGroupId(Integer groupId) {
+		this.groupId = groupId;
+	}
+
+	public Long getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(Long createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public LocalDateTime getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(LocalDateTime createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public Long getModifiedBy() {
+		return modifiedBy;
+	}
+
+	public void setModifiedBy(Long modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+	public LocalDateTime getWhenModified() {
+		return whenModified;
+	}
+
+	public void setWhenModified(LocalDateTime whenModified) {
+		this.whenModified = whenModified;
+	}
+
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+	
+	
 
 }
