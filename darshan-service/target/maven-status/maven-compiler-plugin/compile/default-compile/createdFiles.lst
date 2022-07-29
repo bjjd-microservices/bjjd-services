@@ -27,6 +27,7 @@ com\jmk\swagger\configuration\CustomInstantDeserializer$FromIntegerArguments.cla
 com\jmk\swagger\configuration\CustomInstantDeserializer$1.class
 com\jmk\darshan\api\DarshanApiController.class
 com\jmk\darshan\api\ApiException.class
+com\jmk\darshan\Singleton.class
 com\jmk\swagger\configuration\CustomInstantDeserializer$9.class
 com\jmk\swagger\configuration\CustomInstantDeserializer.class
 com\jmk\swagger\configuration\HomeController.class

@@ -23,6 +23,7 @@
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
 		<jib-maven-plugin.version>3.1.1</jib-maven-plugin.version>
 		<jmk-version>0.0.1.RELEASE</jmk-version>
+		<junit-jupiter.version>5.4.0</junit-jupiter.version>
 	</properties>
 	
 	<dependencies>
@@ -109,12 +110,13 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+	
 		<dependency>
-			<groupId>org.junit.vintage</groupId>
-			<artifactId>junit-vintage-engine</artifactId>
-			<scope>test</scope>
-		</dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+	
 	</dependencies>
 
 	<dependencyManagement>
@@ -201,6 +203,7 @@
 		<module>kafka-producer-service</module>
 		<module>kafka-consumer-service</module>
 		<module>cache-service</module>
+		<module>aws-service</module>
 	</modules>
 	
 </project>

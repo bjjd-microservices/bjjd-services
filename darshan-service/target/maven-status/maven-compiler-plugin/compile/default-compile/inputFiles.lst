@@ -3,6 +3,7 @@ C:\Users\rajivbansal2981\git\bjjd-microservices\darshan-service\src\main\java\co
 C:\Users\rajivbansal2981\git\bjjd-microservices\darshan-service\src\main\java\com\jmk\swagger\configuration\JacksonConfiguration.java
 C:\Users\rajivbansal2981\git\bjjd-microservices\darshan-service\src\main\java\com\jmk\swagger\configuration\SwaggerDocumentationConfig.java
 C:\Users\rajivbansal2981\git\bjjd-microservices\darshan-service\src\main\java\com\jmk\darshan\api\DarshanApi.java
+C:\Users\rajivbansal2981\git\bjjd-microservices\darshan-service\src\main\java\com\jmk\darshan\Singleton.java
 C:\Users\rajivbansal2981\git\bjjd-microservices\darshan-service\src\main\java\com\jmk\darshan\validator\RequestValidator.java
 C:\Users\rajivbansal2981\git\bjjd-microservices\darshan-service\src\main\java\com\jmk\darshan\feign\client\UserMgmtServiceClient.java
 C:\Users\rajivbansal2981\git\bjjd-microservices\darshan-service\src\main\java\com\jmk\swagger\configuration\HomeController.java
