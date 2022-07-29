@@ -6,11 +6,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import javax.transaction.Transactional;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import com.jmk.eh.exception.EntityNotFoundException;
@@ -79,6 +82,14 @@ public class ProjectServiceImpl  implements ProjectService {
 		Iterable<com.jmk.project.entity.Project> iterableProjects=projectRespository.findAll();
 		projectModels=StreamSupport.stream(iterableProjects.spliterator(),false).map(projectEntity->modelMapper.map(projectEntity, Project.class)).collect(Collectors.toList());
 		return projectModels;
+	}
+
+	@Override
+	@Caching(evict = {
+			@CacheEvict(value = "projectCacheByCode", key = "#code") })
+	@Transactional
+	public int deleteProjectByProjectCode(String code) {
+		return projectRespository.deleteByCode(code);
 	}
 
 	

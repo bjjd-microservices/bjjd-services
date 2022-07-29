@@ -52,7 +52,6 @@ public interface ProjectApi {
         method = RequestMethod.POST)
     ResponseEntity<List<Project>> createProjects(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Project> body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
 
-
     @ApiOperation(value = "Project Deletion Service based on the project id", nickname = "deleteProjectById", notes = "Project Deletion Service based on the project id", tags={ "ProjectMgmt", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Project deleted succussfully"),
@@ -64,7 +63,16 @@ public interface ProjectApi {
         consumes = { "application/json" },
         method = RequestMethod.DELETE)
     ResponseEntity<Void> deleteProjectById(@ApiParam(value = "Project Id",required=true) @PathVariable("id") Long id);
-
+    
+    @ApiOperation(value = "Project Deletion Service based on the project code", nickname = "deleteProjectByProjectCode", notes = "Project Deletion Service based on the project code", tags={ "ProjectMgmt", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Project deleted succussfully"),
+        @ApiResponse(code = 400, message = "Invalid project code supplied"),
+        @ApiResponse(code = 404, message = "Project code not found"),
+        @ApiResponse(code = 500, message = "Internal Server Error") })
+    @RequestMapping(value = "/deleteByProjectCode", produces = { "application/json" }, consumes = {
+	"application/json" }, method = RequestMethod.DELETE)
+    ResponseEntity<Integer> deleteProjectByProjectCode(@ApiParam(value = "Project Id",required=true) @PathVariable("projectCode") String projectCode);
 
     @ApiOperation(value = "Find Project Details based on the project id", nickname = "findProjectDetailsById", notes = "Find Project Details based on the project id", response = Project.class, tags={ "ProjectMgmt", })
     @ApiResponses(value = { 

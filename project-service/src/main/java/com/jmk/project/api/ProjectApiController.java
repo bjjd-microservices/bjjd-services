@@ -89,6 +89,7 @@ public class ProjectApiController implements ProjectApi {
 			@ApiParam(value = "xChannel") @RequestHeader(value = "xChannel", required = false) String xChannel,
 			@ApiParam(value = "The status to restrict the results to.  If not provided, all records are returned", allowableValues = "A, I") @Valid @RequestParam(value = "status", required = false) String status) {
 		String accept = request.getHeader("Accept");
+		String username = request.getHeader("username");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
 				|| accept.contains("*")) {
 			List<Project> projects = projectService.findAllProjectsByStatus(Status.A);
@@ -154,6 +155,12 @@ public class ProjectApiController implements ProjectApi {
 		project.setWhenModified(LocalDateTime.now());
 		project.setModifiedBy(user.getId());
 		return project;
+	}
+
+	@Override
+	public ResponseEntity<Integer> deleteProjectByProjectCode(@ApiParam(value = "projectCode") @Valid @RequestParam(value = "projectCode", required = true) String projectCode) {
+		Integer deleteRecords=projectService.deleteProjectByProjectCode(projectCode);
+		return new ResponseEntity<Integer>(deleteRecords,HttpStatus.OK);
 	}
 
 }

@@ -18,6 +18,8 @@ public interface ProjectService   {
 	List<Project> findAllProjectsByStatus(Status status);
 	
 	Project findProjectByCode(String code);
+	
+	int deleteProjectByProjectCode(String projectCode);
 
 }
 

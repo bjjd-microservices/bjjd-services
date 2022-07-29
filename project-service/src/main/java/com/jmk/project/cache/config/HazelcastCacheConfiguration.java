@@ -7,6 +7,7 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 import com.hazelcast.config.Config;
 import com.hazelcast.config.EvictionPolicy;
@@ -19,6 +20,7 @@ import com.hazelcast.spring.cache.HazelcastCacheManager;
 
 @Configuration
 @EnableCaching
+@Profile({ "prod","dev" })
 public class HazelcastCacheConfiguration {
 
 	private final Logger log = LoggerFactory.getLogger(HazelcastCacheConfiguration.class);
