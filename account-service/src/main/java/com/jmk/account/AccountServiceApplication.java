@@ -26,6 +26,7 @@ public class AccountServiceApplication {
 
     public static void main(String[] args) throws Exception {
         new SpringApplication(AccountServiceApplication.class).run(args);
+        
     }
     
 }
