@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.jmk</groupId>
-	<artifactId>bjjd-microservices</artifactId>
+	<artifactId>bjjd-services</artifactId>
 	<version>0.0.1.RELEASE</version>
 	<packaging>pom</packaging>
 	
@@ -96,10 +96,11 @@
 		
 		<!-- Lombok data -->
 		<dependency>
-		    <groupId>org.projectlombok</groupId>
-		    <artifactId>lombok</artifactId>
-		    <scope>compile</scope>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.22</version>
 		</dependency>
+
 		
 		
 		<!-- spring-boot-starter-test “Starter”, which imports both Spring Boot 

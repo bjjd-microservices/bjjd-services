@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.jmk</groupId>
-		<artifactId>bjjd-microservices</artifactId>
+		<artifactId>bjjd-services</artifactId>
 		<version>0.0.1.RELEASE</version>
 	</parent>
 	<artifactId>auth-service</artifactId>

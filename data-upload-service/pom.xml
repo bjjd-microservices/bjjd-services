@@ -6,7 +6,7 @@
 	
 	<parent>
 		<groupId>com.jmk</groupId>
-		<artifactId>bjjd-microservices</artifactId>
+		<artifactId>bjjd-services</artifactId>
 		<version>0.0.1.RELEASE</version>
 	</parent>
 

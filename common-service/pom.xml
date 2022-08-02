@@ -39,12 +39,7 @@
     		<artifactId>spring-cloud-starter-openfeign</artifactId>
     		<version>2.1.4.RELEASE</version>
 		</dependency>
-		<!-- Lombok data -->
-		<dependency>
-		    <groupId>org.projectlombok</groupId>
-		    <artifactId>lombok</artifactId>
-		    <version>1.18.20</version>
-		</dependency>
+
 		<!--SpringFox dependencies -->
         <dependency>
             <groupId>io.springfox</groupId>

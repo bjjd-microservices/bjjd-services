@@ -17,9 +17,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonTypeIdResolver;
 import com.jmk.eh.exceptionhandler.LowerCaseClassNameResolver;
 
-import lombok.Data;
 
-@Data
 @JsonTypeIdResolver(LowerCaseClassNameResolver.class)
 @JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.CUSTOM, property = "error", visible = true)
 public class ApiError {
