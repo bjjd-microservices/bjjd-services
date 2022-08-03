@@ -198,8 +198,8 @@
 		<module>people-service</module>
 		<module>auth-service</module>
 		<module>gateway-service</module>
-		<module>cloud-gateway-service</module>
-		<!-- Additional Modules -->
+		<!-- 	<module>cloud-gateway-service</module> -->
+            <!-- Additional Modules -->
 		<module>kafka-producer-service</module>
 		<module>kafka-consumer-service</module>
 		<module>cache-service</module>
