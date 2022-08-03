@@ -28,8 +28,7 @@ import io.swagger.annotations.ApiResponses;
 @Api(value = "donation", description = "the donate API")
 @RequestMapping(value = "/donation")
 public interface DonationApi {
-	
-    @ApiOperation(value = "Save Donation Service", nickname = "saveDonation", notes = "Save Donation Service", response = Donation.class, tags={ "DonationService", })
+	@ApiOperation(value = "Save Donation Service", nickname = "saveDonation", notes = "Save Donation Service", response = Donation.class, tags={ "DonationService", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = Donation.class),
         @ApiResponse(code = 400, message = "Bad Request"),
