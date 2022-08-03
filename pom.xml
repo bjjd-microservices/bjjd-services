@@ -192,17 +192,23 @@
 		<module>project-service</module>
 		<module>account-service</module>
 		<module>darshan-service</module>
-		<module>data-upload-service</module>
-		<module>eureka-server</module>
-		<module>message-sender-service</module>
+
 		<module>people-service</module>
 		<module>auth-service</module>
-		<module>gateway-service</module>
-		<!-- 	<module>cloud-gateway-service</module> -->
-            <!-- Additional Modules -->
-		<module>kafka-producer-service</module>
+
+		<!--
+		  <module>cloud-gateway-service</module>
+		 <module>cache-service</module>
+		 <module>message-sender-service</module>
+		 <module>kafka-producer-service</module>
 		<module>kafka-consumer-service</module>
-		<module>cache-service</module>
+		<module>gateway-service</module>
+		<module>eureka-server</module>
+		<module>data-upload-service</module>
+		 -->
+            <!-- Additional Modules -->
+
+
 
 	</modules>
 	
