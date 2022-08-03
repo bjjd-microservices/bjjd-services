@@ -33,10 +33,8 @@ import com.amazonaws.services.s3.model.S3ObjectSummary;
 @Service
 public class S3ServiceImpl implements S3Service{
 
-
     @Autowired
     private AmazonS3 amazonS3;
-
     @Value("${amazon.bucketName}")
 	private String bucketName;
     

@@ -196,7 +196,6 @@
 		<module>eureka-server</module>
 		<module>message-sender-service</module>
 		<module>people-service</module>
-		<module>config-server</module>
 		<module>auth-service</module>
 		<module>gateway-service</module>
 		<module>cloud-gateway-service</module>
