@@ -79,8 +79,7 @@ public class DonationApiController implements DonationApi {
 		}
 		return new ResponseEntity<Donation>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
-    public ResponseEntity<List<Donation>> saveDonations(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Donation> donations,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel) {
+	public ResponseEntity<List<Donation>> saveDonations(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Donation> donations,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel) {
     	String accept = request.getHeader("Accept");
     	String username=request.getHeader("username");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
