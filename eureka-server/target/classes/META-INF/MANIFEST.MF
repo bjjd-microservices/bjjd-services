@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Built-By: rajivbansal2981
-Build-Jdk: 16.0.2
-Implementation-Title: eureka-server
-Implementation-Version: 0.0.1.RELEASE
-Implementation-Vendor-Id: com.jmk
-Implementation-URL: https://spring.io/projects/spring-boot/eureka-server
-Created-By: Maven Integration for Eclipse
-
