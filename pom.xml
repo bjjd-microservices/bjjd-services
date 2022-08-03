@@ -203,7 +203,7 @@
 		<module>kafka-producer-service</module>
 		<module>kafka-consumer-service</module>
 		<module>cache-service</module>
-		<module>aws-service</module>
+
 	</modules>
 	
 </project>
