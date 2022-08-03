@@ -5,7 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d34eb4f4-fd9c-415b-bdb2-7306f9ac540d" name="Changes" comment="JaiMataKi">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/account-service/src/main/java/com/jmk/account/api/DonationApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/account-service/src/main/java/com/jmk/account/api/DonationApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../config-server/src/main/java/com/jmk/config/server/ConfigServerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../config-server/src/main/java/com/jmk/config/server/ConfigServerApplication.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,7 +21,7 @@
   </component>
   <component name="ChangesViewManager">
     <option name="groupingKeys">
-      <option value="module" />
+      <option value="repository" />
     </option>
   </component>
   <component name="Git.Settings">
@@ -56,10 +63,24 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/rajivbansal2981/git/aws-service/pom.xml",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+    "last_opened_file_path": "C:/Users/rajivbansal2981/git/bjjd-microservices/message-sender-service/pom.xml",
+    "settings.editor.selected.configurable": "vcs.Git"
+  },
+  "keyToStringList": {
+    "ChangesTree.GroupingKeys": [
+      "module",
+      "directory",
+      "repository"
+    ]
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.jmk.message.model" />
+      <recent name="com.jmk.kafka.message.model" />
+      <recent name="com.jmk.kafka.message.util" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -118,7 +139,35 @@
       <option name="project" value="LOCAL" />
       <updated>1659504155188</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="JaiMataKi">
+      <created>1659506404843</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1659506404843</updated>
+    </task>
+    <task id="LOCAL-00009" summary="JaiMataKi">
+      <created>1659506598805</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1659506598805</updated>
+    </task>
+    <task id="LOCAL-00010" summary="JaiMataKi">
+      <created>1659510057808</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1659510057808</updated>
+    </task>
+    <task id="LOCAL-00011" summary="JaiMataKi">
+      <created>1659511775574</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1659511775574</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="zuul-gateway-service" />
+        <module name="common-service" />
+        <module name="aws-service" />
+        <module name="cloud-gateway-service" />
+        <module name="user-service" />
+        <module name="eureka-server" />
+        <module name="message-sender-service" />
+        <module name="config-server" />
+        <module name="auth-service" />
+        <module name="people-service" />
+        <module name="kafka-consumer-service" />
+        <module name="kafka-producer-service" />
+        <module name="account-service" />
+        <module name="project-service" />
+        <module name="darshan-service" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="cache-service" target="11" />
+      <module name="config-server (1)" target="11" />
+      <module name="data-upload-service" target="11" />
+      <module name="gateway-service" target="11" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="account-service" options="-parameters" />
+      <module name="auth-service" options="-parameters" />
+      <module name="aws-service" options="-parameters" />
+      <module name="cache-service" options="-parameters" />
+      <module name="cloud-gateway-service" options="-parameters" />
+      <module name="common-service" options="-parameters" />
+      <module name="config-server" options="-parameters" />
+      <module name="config-server (1)" options="-parameters" />
+      <module name="darshan-service" options="-parameters" />
+      <module name="data-upload-service" options="-parameters" />
+      <module name="eureka-server" options="-parameters" />
+      <module name="gateway-service" options="-parameters" />
+      <module name="kafka-consumer-service" options="-parameters" />
+      <module name="kafka-producer-service" options="-parameters" />
+      <module name="message-sender-service" options="-parameters" />
+      <module name="people-service" options="-parameters" />
+      <module name="project-service" options="-parameters" />
+      <module name="user-service" options="-parameters" />
+      <module name="zuul-gateway-service" options="-parameters" />
+    </option>
+  </component>
+</project>
