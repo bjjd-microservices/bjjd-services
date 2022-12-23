@@ -32,6 +32,7 @@ public class ProjectServiceImpl  implements ProjectService {
 	
 	@Override
 	@CachePut(value = "projectCacheByCode", key = "#projectModel.code")
+	@Transactional
 	public Project saveProject(Project projectModel) {
 		com.jmk.project.entity.Project projectEntity=modelMapper.map(projectModel, com.jmk.project.entity.Project.class);
 		projectEntity=projectRespository.save(projectEntity);
