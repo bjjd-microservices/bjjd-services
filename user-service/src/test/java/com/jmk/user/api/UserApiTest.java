@@ -1,7 +1,8 @@
 package com.jmk.user.api;
 
-import java.io.FileInputStream;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jmk.user.api.util.UserModelUtility;
+import com.jmk.user.model.User;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -21,9 +22,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jmk.user.api.util.UserModelUtility;
-import com.jmk.user.model.User;
+import java.io.FileInputStream;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
