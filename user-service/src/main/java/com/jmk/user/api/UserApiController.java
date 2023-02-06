@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.jmk.user.feign.client.S3ServiceClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jmk.aws.service.S3Service;
 import com.jmk.user.model.User;
 import com.jmk.user.service.UserService;
 
@@ -39,7 +39,7 @@ public class UserApiController implements UserApi {
     private final ObjectMapper objectMapper;
     
     @Autowired
-    private S3Service s3Service;
+    private S3ServiceClient s3ServiceClient;
     
     @Autowired
     private UserService userService;
@@ -63,7 +63,7 @@ public class UserApiController implements UserApi {
 		enrichCommonUserDetails(user);
 		user = userService.saveUser(user);
 		if (photo != null) {
-			s3Service.uploadFile("USERS",user.getId().toString(),"Photo",photo);
+            s3ServiceClient.uploadFile("USERS",user.getId().toString(),"Photo",photo);
 		}
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
