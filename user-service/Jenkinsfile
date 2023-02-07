@@ -23,13 +23,14 @@ pipeline {
                 sh "mvn clean install -DskipTests -P prod"
                     script{
                         def version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
+                        env.version = version
                     }
             }
         }
         stage('Build Docker Image') {
             steps {
                  dir('user-service'){
-                    sh "docker build -t rajivbansal2981/user-service:${version} ."
+                    sh "docker build -t rajivbansal2981/user-service:${env.version} ."
                  }
             }
         }
@@ -39,7 +40,7 @@ pipeline {
                              withCredentials([string(credentialsId: 'DockerHubPassword', variable: 'DockerHubPassword')]) {
                                  sh "docker login -u rajivbansal2981 -p ${DockerHubPassword}"
                              }
-                             sh "docker push rajivbansal2981/user-service:${version}"
+                             sh "docker push rajivbansal2981/user-service:${env.version}"
                          }
                     }
                 }
