@@ -23,6 +23,7 @@ pipeline {
                 sh "mvn clean install -DskipTests -P prod"
                     script{
                         def version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
+                        print version
                         env.version = version
                     }
             }
