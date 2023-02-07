@@ -22,10 +22,7 @@ pipeline {
             steps{
                 sh "mvn clean install -DskipTests -P prod"
                     script{
-                        def pom = readMavenPom file:'pom.xml'
-                        print pom.version
-                        env.version = pom.version
-
+                        def env.version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
                     }
             }
         }
