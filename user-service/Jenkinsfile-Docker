@@ -1,51 +1,71 @@
 pipeline {
-    agent any
-    environment {
-            GITHUB_CREDENTIALS = credentials('github-credentials-id')
+  agent any
+  environment {
+    GITHUB_CREDENTIALS = credentials('github-credentials-id')
+  }
+  tools {
+    maven 'M3'
+  }
+  stages {
+    stage('Checkout from Github') {
+      steps {
+        git url: 'https://github.com/bjjd-microservices/bjjd-services.git', branch: 'master'
+      }
     }
-    tools {
-        maven 'M3'
-     }
-    stages {
-        stage('Checkout from Github') {
-            steps{
-             git url: 'https://github.com/bjjd-microservices/bjjd-services.git' , branch: 'master'
-            }
-        }
-        stage('Remove existing Docker Image') {
-                     steps {
-                         sh "docker rm -f user-service || true"
-                         sh "docker rmi \$(docker images | grep 'rajivbansal2981/user-service') &> /dev/null || true"
-                     }
-        }
-        stage('Build Project') {
-            steps{
-                sh "mvn clean install -DskipTests -P prod"
-            }
-        }
-        stage('Build Docker Image') {
-            steps {
-                 dir('user-service'{
-                    sh "docker build -t rajivbansal2981/user-service:${BUILD_NUMBER} ."
-                 }
-            }
-        }
-        stage('Docker Login and push') {
-                steps {
-                        dir('user-service'){
-                             withCredentials([string(credentialsId: 'DockerHubPassword', variable: 'DockerHubPassword')]) {
-                                 sh "docker login -u rajivbansal2981 -p ${DockerHubPassword}"
-                             }
-                             sh "docker push rajivbansal2981/cloud-gateway-service:${BUILD_NUMBER}"
-                         }
-                    }
+    stage('Remove existing Docker Image') {
+      steps {
+        sh "docker rm -f user-service || true"
+        sh "docker rmi \$(docker images | grep 'rajivbansal2981/user-service') &> /dev/null || true"
+      }
+    }
+    stage('Quality Status Gate Check') {
+      steps {
+        dir('user-service') {
+            script {
+              withSonarQubeEnv('sonarserver') {
+                sh "mvn sonar:sonar"
+              }
+              timeout(time: 1, unit: 'HOURS') {
+                def qg = waitForQualityGate()
+                if (qg.status != 'OK') {
+                  error "Pipeline aborted due to quality gate failure: ${qg.status}"
                 }
-        stage('Deploy Docker application in Jenkin Server') {
-            steps {
-                     sh "docker run -d -p 8888:8888 --name cloud-gateway-service rajivbansal2981/cloud-gateway-service:${BUILD_NUMBER}"
+              }
             }
-        }
+          }
+      }
     }
-
+    stage('Build Project') {
+      steps {
+        sh "mvn clean install -DskipTests -P prod"
+        script {
+          def version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
+          print version
+          env.version = version
+        }
+      }
+    }
+    stage('Build Docker Image') {
+      steps {
+        dir('user-service') {
+          sh "docker build -t rajivbansal2981/user-service:${env.version} ."
+        }
+      }
+    }
+    stage('Docker Login and push') {
+      steps {
+        dir('user-service') {
+          withCredentials([string(credentialsId: 'DockerHubPassword', variable: 'DockerHubPassword')]) {
+            sh "docker login -u rajivbansal2981 -p ${DockerHubPassword}"
+          }
+          sh "docker push rajivbansal2981/user-service:${env.version}"
+        }
+      }
+    }
+    stage('Deploy Docker application in Jenkin Server') {
+       steps {
+           sh "docker run -d -p 8888:8888 --name cloud-gateway-service rajivbansal2981/user-service:${env.version}"
+       }
+    }
+  }
 }
-
