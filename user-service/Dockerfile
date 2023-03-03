@@ -1,5 +1,5 @@
 FROM openjdk:11 as builder
-RUN mkdir /usr/app/src
+RUN mkdir -p /usr/app/src
 COPY . /usr/app/src
 WORKDIR /usr/app/src
 RUN ./mvnw clean install -DskipTests -P prod
