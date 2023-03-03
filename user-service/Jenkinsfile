@@ -42,7 +42,7 @@ pipeline {
       steps {
         dir('user-service') {
           withCredentials([string(credentialsId: 'DockerRepositoryPasswordNexus', variable: 'DockerRepositoryPasswordNexus')]) {
-               sh "docker build -t localhost:8083/user-service:${env.version} -f Dockerfile"
+               sh "docker build -t localhost:8083/user-service:${env.version} ."
                sh "docker login -u admin -p ${DockerRepositoryPasswordNexus} localhost:8083"
                sh "docker push localhost:8083/user-service:${env.version}"
                sh "docker rmi localhost:8083/user-service:${env.version}"
