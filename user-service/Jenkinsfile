@@ -45,7 +45,6 @@ pipeline {
                sh "docker build -t localhost:8083/user-service:${env.version} -f user-service/Dockerfile user-service"
                sh "docker login -u admin -p ${DockerRepositoryPasswordNexus} localhost:8083"
                sh "docker push localhost:8083/user-service:${env.version}"
-               sh "mvn clean install -DskipTests -P prod"
         }
       }
     }
