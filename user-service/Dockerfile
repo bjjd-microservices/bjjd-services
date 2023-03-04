@@ -1,5 +1,7 @@
 FROM maven:3.8.1-openjdk-11-slim AS builder
 RUN mkdir -p /usr/app
+COPY pom.xml .
+RUN mvn -e -B dependency:resolve
 COPY . /usr/app
 WORKDIR /usr/app
 RUN mvn clean install -DskipTests -P prod
