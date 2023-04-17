@@ -12,12 +12,6 @@ pipeline {
         git url: 'https://github.com/bjjd-microservices/bjjd-services.git', branch: 'master'
       }
     }
-    stage('Remove existing Docker Image') {
-      steps {
-        sh "docker rm -f user-service || true"
-        sh "docker rmi \$(docker images | grep 'rajivbansal2981/user-service') &> /dev/null || true"
-      }
-    }
     stage('Quality Status Gate Check') {
       steps {
         dir('user-service') {
@@ -35,7 +29,7 @@ pipeline {
           }
       }
     }
-    stage('Build Project') {
+    stage('Extract Build Version') {
       steps {
         sh "mvn clean install -DskipTests -P prod"
         script {
@@ -45,27 +39,15 @@ pipeline {
         }
       }
     }
-    stage('Build Docker Image') {
+    stage('Build Docker Image and push on Nexus Repository') {
       steps {
-        dir('user-service') {
-          sh "docker build -t rajivbansal2981/user-service:${env.version} ."
+          withCredentials([string(credentialsId: 'DockerRepositoryPasswordNexus', variable: 'DockerRepositoryPasswordNexus')]) {
+               sh "docker build -t localhost:8083/user-service:${env.version} -f user-service/Dockerfile user-service"
+               sh "docker login -u admin -p ${DockerRepositoryPasswordNexus} localhost:8083"
+               sh "docker push localhost:8083/user-service:${env.version}"
+               sh "docker rmi localhost:8083/user-service:${env.version}"
         }
       }
-    }
-    stage('Docker Login and push') {
-      steps {
-        dir('user-service') {
-          withCredentials([string(credentialsId: 'DockerHubPassword', variable: 'DockerHubPassword')]) {
-            sh "docker login -u rajivbansal2981 -p ${DockerHubPassword}"
-          }
-          sh "docker push rajivbansal2981/user-service:${env.version}"
-        }
-      }
-    }
-    stage('Deploy Docker application in Jenkin Server') {
-       steps {
-           sh "docker run -d -p 8888:8888 --name cloud-gateway-service rajivbansal2981/user-service:${env.version}"
-       }
     }
   }
 }
