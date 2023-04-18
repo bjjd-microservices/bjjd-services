@@ -15,7 +15,7 @@ pipeline {
     stage('QualityStatusGateCheck') {
       when {
                   expression {
-                      return QualityStatusGateCheck
+                      return true
                   }
       }
       steps {
@@ -59,7 +59,7 @@ pipeline {
     stage('DeployDockerApplicationInJenkinsServer') {
      when {
                       expression {
-                          return QualityStatusGateCheck
+                          return true
                       }
       }
        steps {
