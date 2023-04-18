@@ -44,13 +44,6 @@ pipeline {
         }
       }
     }
-    stage('Build ') {
-      steps {
-        dir('user-service') {
-          "
-        }
-      }
-    }
     stage('Build Docker Image and push on Docker Hub') {
       steps {
         dir('user-service') {
