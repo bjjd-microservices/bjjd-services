@@ -13,7 +13,9 @@ pipeline {
       }
     }
     stage('QualityStatusGateCheck') {
-      when { equals expected: true, actual: QualityStatusGateCheck }
+      when {
+                      branch 'production'
+                  }
       steps {
         dir('user-service') {
             script {
