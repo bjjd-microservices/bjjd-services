@@ -64,7 +64,7 @@ pipeline {
      }
      stage('Validating helm configurations using Datree'){
              steps {
-                 dir('user-service/k8s') {
+                 dir('user-service/k8s/') {
                     sh "helm datree test user-service/"
                  }
              }
