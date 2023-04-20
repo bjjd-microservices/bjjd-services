@@ -42,7 +42,7 @@ pipeline {
         }
       }
     }
-    stage('Build Docker Image and push on Docker Hub') {
+    stage('Build Docker Image and Push on Docker Hub') {
       steps {
         dir('user-service') {
           withCredentials([string(credentialsId: 'DockerHubPassword', variable: 'DockerHubPassword')]) {
@@ -65,6 +65,7 @@ pipeline {
      stage('Validating helm configurations using Datree'){
              steps {
                  dir('user-service/k8s/') {
+                    sh "helm version"
                     sh "helm datree test user-service/"
                  }
              }
