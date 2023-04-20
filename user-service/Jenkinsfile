@@ -69,7 +69,8 @@ pipeline {
                         sh "helm version"
                         sh "helm repo add datree-webhook https://datreeio.github.io/admission-webhook-datree"
                         sh "helm repo update"
-                        sh "helm install -n datree datree-webhook datree-webhook/datree-admission-webhook --debug --create-namespace --set datree.token=bd210691-8062-46af-a7ec-1532a843bc67 --set datree.clusterName=$(kubectl config current-context)"
+                        sh "helm plugin install https://github.com/datreeio/helm-datree"
+                        sh "helm plugin update datree"
                         sh "DATREE_HELM_COMMAND='microk8s helm3' helm datree version"
                     }
                  }
