@@ -13,11 +13,7 @@ pipeline {
       }
     }
     stage('QualityStatusGateCheck') {
-      when {
-                  expression {
-                      return true
-                  }
-      }
+      when { equals expected: true, actual: QualityStatusGateCheck }
       steps {
         dir('user-service') {
             script {
@@ -55,16 +51,6 @@ pipeline {
           }
         }
       }
-    }
-    stage('DeployDockerApplicationInJenkinsServer') {
-     when {
-                      expression {
-                          return true
-                      }
-      }
-       steps {
-           sh "docker run -d -p 3379:3379 --name user-service rajivbansal2981/user-service:${env.version}"
-       }
     }
   }
 }
