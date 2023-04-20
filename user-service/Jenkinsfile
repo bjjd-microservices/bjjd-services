@@ -67,7 +67,7 @@ pipeline {
                  dir('user-service/k8s/') {
                     withEnv(['DATREE_TOKEN=bd210691-8062-46af-a7ec-1532a843bc67']) {
                         sh "helm version"
-                        sh "microk8s helm3 datree version"
+                        sh "DATREE_HELM_COMMAND="microk8s helm3" helm datree test"
                     }
                  }
              }
