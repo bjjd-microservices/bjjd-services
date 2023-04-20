@@ -15,7 +15,7 @@ pipeline {
     stage('QualityStatusGateCheck') {
       when {
                       branch 'production'
-                  }
+      }
       steps {
         dir('user-service') {
             script {
@@ -54,5 +54,13 @@ pipeline {
         }
       }
     }
+    stage('DeployDockerApplicationInJenkinsServer') {
+         when {
+                               branch 'production'
+         }
+         steps {
+               sh "docker run -d -p 3379:3379 --name user-service rajivbansal2981/user-service:${env.version}"
+           }
+        }
   }
 }
