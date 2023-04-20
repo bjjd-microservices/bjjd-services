@@ -62,6 +62,13 @@ pipeline {
                sh "docker run -d -p 3379:3379 --name user-service rajivbansal2981/user-service:${env.version}"
            }
      }
+     stage('Validating helm configurations using Datree'){
+             steps {
+                 dir('user-service/k8s') {
+                    sh "helm datree test user-service/"
+                 }
+             }
+       }
   }
   post {
        		always {
