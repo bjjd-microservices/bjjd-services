@@ -67,6 +67,9 @@ pipeline {
                  dir('user-service/k8s/') {
                     withEnv(['DATREE_TOKEN=bd210691-8062-46af-a7ec-1532a843bc67']) {
                         sh "helm version"
+                        sh "helm repo add datree-webhook https://datreeio.github.io/admission-webhook-datree"
+                        sh "helm repo update"
+                        sh "helm install -n datree datree-webhook datree-webhook/datree-admission-webhook --debug --create-namespace --set datree.token=bd210691-8062-46af-a7ec-1532a843bc67 --set datree.clusterName=$(kubectl config current-context)"
                         sh "DATREE_HELM_COMMAND='microk8s helm3' helm datree version"
                     }
                  }
