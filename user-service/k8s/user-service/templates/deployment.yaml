@@ -54,7 +54,7 @@ spec:
             containerPort: {{ .Values.port}} # The port that the container exposes
           - name: multicast
             containerPort: 5701 # The port that Hazelcast exposes
-          livenessProbe:
+        livenessProbe:
             httpGet:
               path: /
               port: http
@@ -78,7 +78,7 @@ spec:
               cpu: 0.5
             limits:
               memory: 0.25Gi 
-              cpu: 0.5
+              cpu: 0.5  
         env:
         - name: DB_HOSTNAME
           valueFrom:
