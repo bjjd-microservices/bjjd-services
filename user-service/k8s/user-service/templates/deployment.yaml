@@ -63,7 +63,7 @@ spec:
             successThreshold: 1
             failureThreshold: 3
             timeoutSeconds: 10
-          readinessProbe:
+        readinessProbe:
             httpGet:
               path: /
               port: http
@@ -71,14 +71,14 @@ spec:
             periodSeconds: 5
             successThreshold: 1
             failureThreshold: 3
-            timeoutSeconds: 10
-          resources:
+            timeoutSeconds: 10  
+        resources:
             requests:
               memory: 0.25Gi
               cpu: 0.5
             limits:
               memory: 0.25Gi 
-              cpu: 0.5  
+              cpu: 0.5    
         env:
         - name: DB_HOSTNAME
           valueFrom:
