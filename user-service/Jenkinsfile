@@ -68,8 +68,10 @@ pipeline {
                     withEnv(['DATREE_TOKEN=3736500e-a75c-49ca-b271-24ea5f611c90']) {
                         sh "helm repo add datree-webhook https://datreeio.github.io/admission-webhook-datree"
                         sh "helm repo update"
-                        sh "helm install -n datree datree-webhook datree-webhook/datree-admission-webhook --debug --create-namespace --set datree.token=3736500e-a75c-49ca-b271-24ea5f611c90 --set datree.clusterName=microk8s"
-                        sh "helm datree version"
+                        sh "helm plugin install https://github.com/datreeio/helm-datree"
+                        sh "helm plugin update datree"
+						            sh "helm datree config set token 3736500e-a75c-49ca-b271-24ea5f611c90"
+						            sh "helm datree version"
                     }
                  }
              }
