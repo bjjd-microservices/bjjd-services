@@ -47,9 +47,9 @@ pipeline {
         dir('user-service') {
           withCredentials([string(credentialsId: 'DockerHubPassword', variable: 'DockerHubPassword')]) {
             sh "docker build -t rajivbansal2981/user-service:${env.version} ."
-            sh "docker login -u rajivbansal2981 -p ${DockerHubPassword}"
-            sh "docker push rajivbansal2981/user-service:${env.version}"
-            sh "docker rmi rajivbansal2981/user-service:${env.version}"
+          //  sh "docker login -u rajivbansal2981 -p ${DockerHubPassword}"
+         //   sh "docker push rajivbansal2981/user-service:${env.version}"
+         //   sh "docker rmi rajivbansal2981/user-service:${env.version}"
           }
         }
       }
