@@ -70,8 +70,8 @@ pipeline {
           steps {
             dir('user-service/k8s') {
 
-              def chartName =  sh script: "helm show chart user-service | grep name | cut -d: -f 2 | tr -d ' '"
-              def chartVersion = sh script: "helm show chart user-service | grep version | cut -d: -f 2 | tr -d ' '"
+              def chartName =  sh script: 'helm show chart user-service | grep name | cut -d: -f 2 | tr -d ' ''
+              def chartVersion = sh script: 'helm show chart user-service | grep version | cut -d: -f 2 | tr -d ' ''
               def chartPath = 'user-service'
 
               def gitURL = 'https://github.com/bjjd-microservices/k8s-helm-chart-repo.git'
