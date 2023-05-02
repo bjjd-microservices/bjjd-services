@@ -61,7 +61,7 @@ pipeline {
                  steps {
                      dir('user-service/k8s/') {
                         withEnv(['DATREE_TOKEN=3736500e-a75c-49ca-b271-24ea5f611c90']) {
-                          //  sh "helm datree test user-service/"
+                        //    sh "helm datree test user-service/"
                         }
                      }
                  }
@@ -70,13 +70,14 @@ pipeline {
           steps {
             dir('user-service/k8s') {
               script{
-                    def chartVersion =  sh script: "helm show chart user-service1 | grep version | cut -d: -f 2 | tr -d ' '",returnStdout: true
-                    echo 'Chart version is ${chartVersion}'
-                    def chartName =  sh script: "helm show chart user-service1 | grep name | cut -d: -f 2 | tr -d ' '",returnStdout: true
-                   // def chartPackage =
-                    def chartPath = "user-service1"
-                    def gitURL = "https://github.com/bjjd-microservices/k8s-helm-chart-repo.git"
+                    def chartVersion =  sh script: "helm show chart user-service | grep version | cut -d: -f 2 | tr -d ' '",returnStdout: true
+                    def chartName =  sh script: "helm show chart user-service | grep name | cut -d: -f 2 | tr -d ' '",returnStdout: true
+                    def chartPackage ='${chartName}-${chartVersion}.tgz'
+                    echo 'Chart package is ${chartPackage}'
+                    def chartPath = "user-service"
 
+                    def gitURL = "https://github.com/bjjd-microservices/k8s-helm-chart-repo.git"
+                    def branch = "main"
                     //1. Packaging helm chart
                     sh "helm package ${chartPath} --version ${chartVersion}"
 
