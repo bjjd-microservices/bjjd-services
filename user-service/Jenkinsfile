@@ -83,7 +83,7 @@ pipeline {
                     sh "helm package ${chartPath} --version ${chartVersion}"
 
                     //2. Update the index.yaml file
-                    sh "helm repo index . --url ${repoUrl} --merge ${indexPath}"
+                 //   sh "helm repo index . --url ${repoUrl} --merge ${indexPath}"
 
               }
 
