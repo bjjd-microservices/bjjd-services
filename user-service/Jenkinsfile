@@ -74,7 +74,7 @@ pipeline {
                     script: "helm show chart user-service | grep name | cut -d: -f 2 | tr -d ' '",
                     returnStdout: true
                     )
-                    echo "Chart version is ${chartName}""
+                    echo "Chart version is ${chartName}"
 
               }
 
