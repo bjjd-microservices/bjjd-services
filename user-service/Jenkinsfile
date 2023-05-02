@@ -71,7 +71,7 @@ pipeline {
             dir('user-service/k8s') {
               script{
                     def chartVersion =  sh script: "helm show chart user-service1 | grep version | cut -d: -f 2 | tr -d ' '",returnStdout: true
-                    echo ${chartVersion}
+                    echo 'Chart version is ${chartVersion}'
                     def chartName =  sh script: "helm show chart user-service1 | grep name | cut -d: -f 2 | tr -d ' '",returnStdout: true
                    // def chartPackage =
                     def chartPath = "user-service1"
