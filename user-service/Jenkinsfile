@@ -47,12 +47,12 @@ pipeline {
         dir('user-service') {
           withCredentials([string(credentialsId: 'DockerHubPassword', variable: 'DockerHubPassword')]) {
             //1. Build docker image
-            sh "docker build -t rajivbansal2981/user-service:${env.version} ."
+            //sh "docker build -t rajivbansal2981/user-service:${env.version} ."
             //2. Login and push docker image
-            sh "docker login -u rajivbansal2981 -p ${DockerHubPassword}"
-            sh "docker push rajivbansal2981/user-service:${env.version}"
+            //sh "docker login -u rajivbansal2981 -p ${DockerHubPassword}"
+            //sh "docker push rajivbansal2981/user-service:${env.version}"
             //3. Remove docker image from jenkins machine
-            sh "docker rmi rajivbansal2981/user-service:${env.version}"
+            //sh "docker rmi rajivbansal2981/user-service:${env.version}"
           }
         }
       }
@@ -73,8 +73,8 @@ pipeline {
                     def chartName =  sh (
                     script: "helm show chart user-service | grep name | cut -d: -f 2 | tr -d ' '",
                     returnStdout: true
-
                     )
+                    echo "Chart version is ${chartName}""
 
               }
 
