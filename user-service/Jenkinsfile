@@ -46,9 +46,12 @@ pipeline {
       steps {
         dir('user-service') {
           withCredentials([string(credentialsId: 'DockerHubPassword', variable: 'DockerHubPassword')]) {
+            //1. Build docker image
             sh "docker build -t rajivbansal2981/user-service:${env.version} ."
+            //2. Login and push docker image
             sh "docker login -u rajivbansal2981 -p ${DockerHubPassword}"
             sh "docker push rajivbansal2981/user-service:${env.version}"
+            //3. Remove docker image from jenkins machine
             sh "docker rmi rajivbansal2981/user-service:${env.version}"
           }
         }
@@ -66,9 +69,14 @@ pipeline {
         stage('Package helm chart and Push to Github Repository') {
           steps {
             dir('user-service/k8s') {
-              def chartName = def chartVersion = $(helm show chart user-service | grep name | cut -d: -f 2 | tr -d ' ')
+
+              def chartName =  $(helm show chart user-service | grep name | cut -d: -f 2 | tr -d ' ')
               def chartVersion = $(helm show chart user-service | grep version | cut -d: -f 2 | tr -d ' ')
               def chartPath = 'user-service'
+
+              def gitURL = 'https://github.com/bjjd-microservices/k8s-helm-chart-repo.git'
+
+              //1. Packaging helm chart
               sh "helm package ${chartPath} --version ${chartVersion}"
 
             }
