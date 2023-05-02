@@ -47,29 +47,41 @@ pipeline {
         dir('user-service') {
           withCredentials([string(credentialsId: 'DockerHubPassword', variable: 'DockerHubPassword')]) {
             sh "docker build -t rajivbansal2981/user-service:${env.version} ."
-          //  sh "docker login -u rajivbansal2981 -p ${DockerHubPassword}"
-         //   sh "docker push rajivbansal2981/user-service:${env.version}"
-         //   sh "docker rmi rajivbansal2981/user-service:${env.version}"
+            sh "docker login -u rajivbansal2981 -p ${DockerHubPassword}"
+            sh "docker push rajivbansal2981/user-service:${env.version}"
+            sh "docker rmi rajivbansal2981/user-service:${env.version}"
           }
         }
       }
     }
-    stage('DeployDockerApplicationInJenkinsServer') {
-         when {
-               branch 'production'
-         }
-         steps {
-               sh "docker run -d -p 3379:3379 --name user-service rajivbansal2981/user-service:${env.version}"
-           }
-     }
-     stage('Validating helm configurations using Datree'){
-             steps {
-                 dir('user-service/k8s/') {
-                    withEnv(['DATREE_TOKEN=3736500e-a75c-49ca-b271-24ea5f611c90']) {
-                        sh "helm datree test user-service/"
-                    }
+    stage('Validating helm configurations using Datree'){
+                 steps {
+                     dir('user-service/k8s/') {
+                        withEnv(['DATREE_TOKEN=3736500e-a75c-49ca-b271-24ea5f611c90']) {
+                            sh "helm datree test user-service/"
+                        }
+                     }
                  }
-             }
+           }
+        stage('Package helm chart and Push to Github Repository') {
+          steps {
+            dir('user-service/k8s') {
+              def chartName = def chartVersion = $(helm show chart user-service | grep name | cut -d: -f 2 | tr -d ' ')
+              def chartVersion = $(helm show chart user-service | grep version | cut -d: -f 2 | tr -d ' ')
+              def chartPath = 'user-service'
+              sh "helm package ${chartPath} --version ${chartVersion}"
+
+            }
+          }
+        }
+
+       stage('DeployDockerApplicationInJenkinsServer') {
+                when {
+                      branch 'production'
+                }
+                steps {
+                      sh "docker run -d -p 3379:3379 --name user-service rajivbansal2981/user-service:${env.version}"
+                  }
        }
   }
   post {
