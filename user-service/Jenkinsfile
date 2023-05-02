@@ -84,10 +84,12 @@ pipeline {
                     def chartPath = 'user-service'
                     def gitURL = 'https://github.com/bjjd-microservices/k8s-helm-chart-repo.git'
 
+                    //1. Packaging helm chart
+                    sh "helm package ${chartPath} --version ${chartVersion}"
+
+
               }
 
-               //1. Packaging helm chart
-                sh "helm package ${chartPath} --version ${chartVersion}"
 
             }
           }
