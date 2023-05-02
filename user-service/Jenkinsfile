@@ -69,15 +69,23 @@ pipeline {
         stage('Package helm chart and Push to Github Repository') {
           steps {
             dir('user-service/k8s') {
+              script{
+                    def chartName =  sh (
+                    script: "helm show chart user-service | grep name | cut -d: -f 2 | tr -d ' '",
+                    returnStdout: true
 
-              def chartName =  sh (script: "helm show chart user-service | grep name | cut -d: -f 2 | tr -d ' '")
-              def chartVersion = sh (script: "helm show chart user-service | grep version | cut -d: -f 2 | tr -d ' '")
-              def chartPath = 'user-service'
+                    )
 
-              def gitURL = 'https://github.com/bjjd-microservices/k8s-helm-chart-repo.git'
+              }
+
+
+             // def chartVersion = sh (script: "helm show chart user-service | grep version | cut -d: -f 2 | tr -d ' '")
+             // def chartPath = 'user-service'
+
+          //    def gitURL = 'https://github.com/bjjd-microservices/k8s-helm-chart-repo.git'
 
               //1. Packaging helm chart
-              sh "helm package ${chartPath} --version ${chartVersion}"
+            //  sh "helm package ${chartPath} --version ${chartVersion}"
 
             }
           }
