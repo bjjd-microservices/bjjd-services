@@ -73,14 +73,17 @@ pipeline {
                     def chartVersion =  sh script: "helm show chart user-service | grep version | cut -d: -f 2 | tr -d ' '",returnStdout: true
                     def chartName =  sh script: "helm show chart user-service | grep name | cut -d: -f 2 | tr -d ' '",returnStdout: true
                     def chartPackage ="${chartName}-${chartVersion}.tgz"
-                    echo 'Chart package is ${chartPackage}'
+                    echo "Chart package is ${chartPackage}"
                     def chartPath = "user-service"
 
                     def gitURL = "https://github.com/bjjd-microservices/k8s-helm-chart-repo.git"
                     def branch = "main"
+                    def commitMessage = "Update chart to version ${chartVersion}"
                     //1. Packaging helm chart
                     sh "helm package ${chartPath} --version ${chartVersion}"
 
+                    //2. Update the index.yaml file
+                    sh "helm repo index . --url ${repoUrl} --merge ${indexPath}"
 
               }
 
