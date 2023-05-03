@@ -76,7 +76,7 @@ pipeline {
                     echo "Chart package is ${chartPackage}"
                     def chartPath = "user-service"
 
-                    def gitURL = "https://github.com/bjjd-microservices/k8s-helm-chart-repo.git"
+                    def gitUrl = "https://github.com/bjjd-microservices/k8s-helm-chart-repo.git"
                     def branch = "main"
                     def commitMessage = "Update chart to version ${chartVersion}"
                     //1. Packaging helm chart
