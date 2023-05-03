@@ -83,7 +83,15 @@ pipeline {
                     sh "helm package ${chartPath} --version ${chartVersion}"
 
                     //2. Update the index.yaml file
-                 //   sh "helm repo index . --url ${repoUrl} --merge ${indexPath}"
+                   //sh "helm repo index . --url ${repoUrl} --merge ${indexPath}"
+
+                 // Add the GitHub remote
+                 sh "git remote add origin ${gitUrl}"
+
+                 // Push the Helm chart package to the GitHub repository
+                 sh "git add ${chartPackage}"
+                 sh "git commit -m '${commitMessage}'"
+                 sh "git push origin ${branch}"
 
               }
 
