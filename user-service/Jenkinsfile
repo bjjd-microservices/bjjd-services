@@ -81,8 +81,9 @@ pipeline {
                     //1. Packaging helm chart
                     sh "helm package ${chartPath} --version ${chartVersion}"
 
+                    sh '''
                     curl -H "Authorization: token ${env.GITHUB_TOKEN}" -H "Content-Type: application/octet-stream" --data-binary "@${CHART_NAME}-${CHART_VERSION}.tgz" "https://api.github.com/repos/${env.REPO_OWNER}/${env.REPO_NAME}/releases/TAG_NAME/assets?name=${CHART_NAME}-${CHART_VERSION}.tgz"
-
+                    '''
               }
 
 
