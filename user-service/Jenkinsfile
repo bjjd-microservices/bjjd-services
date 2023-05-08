@@ -76,18 +76,17 @@ pipeline {
                     def chartName =  sh script: "helm show chart user-service | grep name | cut -d: -f 2 | tr -d ' ' | tr -d '\\n'",returnStdout: true
                     def chartPackage ="${chartName}-${chartVersion}.tgz"
                     def chartFile = "@${chartName}-${chartVersion}.tgz"
-                    echo "Chart File is ${chartFile}"
                     def chartPath = "user-service"
 
                     //1. Packaging helm chart
                     sh "helm package ${chartPath} --version ${chartVersion}"
 
-                    sh '''
-                        curl -H "Authorization: token ${GITHUB_CREDENTIALS}" \
-                        -H "Content-Type: application/octet-stream" \
-                        --data-binary "${chartFile}" \
-                        "https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases/TAG_NAME/assets?name=${chartPackage}"
-                   '''
+                    sh """
+                        curl -H 'Authorization: token ${GITHUB_CREDENTIALS}' \
+                        -H 'Content-Type: application/octet-stream' \
+                        --data-binary '${chartFile}' \
+                        'https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases/TAG_NAME/assets?name=${chartPackage}'
+                   """
               }
 
 
