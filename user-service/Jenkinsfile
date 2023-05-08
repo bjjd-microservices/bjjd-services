@@ -36,7 +36,7 @@ pipeline {
     }
     stage('Build Project') {
       steps {
-        sh "mvn clean install -DskipTests -P prod"
+      //  sh "mvn clean install -DskipTests -P prod"
         script {
           def version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
           print version
