@@ -77,13 +77,14 @@ pipeline {
                     def chartPackage ="${chartName}-${chartVersion}.tgz"
                     echo "Chart package is ${chartPackage}"
                     def chartPath = "user-service"
+                    TAG_NAME = 'v1.0.0'
 
                     //1. Packaging helm chart
                     sh "helm package ${chartPath} --version ${chartVersion}"
 
-                    sh '''
-                    curl -H "Authorization: token ${GITHUB_CREDENTIALS}" -H "Content-Type: application/octet-stream" --data-binary "${chartPackage}" "https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases/TAG_NAME/assets?name=${chartPackage}"
-                    '''
+                    sh """
+                    curl -H 'Authorization: token ${GITHUB_CREDENTIALS}' -H 'Content-Type: application/octet-stream' --data-binary '@${chartPackage}' 'https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases/${chartVersion}/assets?name=${chartPackage}'
+                    """
               }
 
 
