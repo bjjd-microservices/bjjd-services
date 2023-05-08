@@ -75,7 +75,7 @@ pipeline {
                     def chartVersion =  sh script: "helm show chart user-service | grep version | cut -d: -f 2 | tr -d ' '",returnStdout: true
                     def chartName =  sh script: "helm show chart user-service | grep name | cut -d: -f 2 | tr -d ' '",returnStdout: true
                     def chartPackage ="${chartName}-${chartVersion}.tgz"
-                    def chartFile = "@${chartPackage}"
+                    def chartFile = "@${chartName}-${chartVersion}.tgz"
                     echo "Chart File is ${chartFile}"
                     def chartPath = "user-service"
 
