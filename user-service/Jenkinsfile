@@ -82,7 +82,7 @@ pipeline {
                     sh "helm package ${chartPath} --version ${chartVersion}"
 
                     sh '''
-                    curl -H "Authorization: token ${GITHUB_CREDENTIALS}" -H "Content-Type: application/octet-stream" --data-binary "@${chartPackage}" "https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases/TAG_NAME/assets?name=${chartPackage}"
+                    curl -H "Authorization: token ${env.GITHUB_CREDENTIALS}" -H "Content-Type: application/octet-stream" --data-binary "@${chartPackage}" "https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases/TAG_NAME/assets?name=${chartPackage}"
                     '''
               }
 
