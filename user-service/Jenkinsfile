@@ -85,7 +85,7 @@ pipeline {
                         curl -H 'Authorization: token ${GITHUB_CREDENTIALS}' \
                         -H 'Content-Type: application/octet-stream' \
                         --data-binary '${chartFile}' \
-                        'https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/assets?name=${chartPackage}'
+                        'https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases/assets/${assetId}?name=${chartPackage}'
                    """
               }
 
