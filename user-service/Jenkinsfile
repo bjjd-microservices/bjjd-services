@@ -81,17 +81,26 @@ pipeline {
                     def commitMessage = "Update chart to version ${chartVersion}"
                     //1. Packaging helm chart
                     sh "helm package ${chartPath} --version ${chartVersion}"
-
+                    def gitHubToken = credentials('github-credentials-id')
                     //2. Update the index.yaml file
                    //sh "helm repo index . --url ${repoUrl} --merge ${indexPath}"
+                    def gitHub = github url: 'https://github.com/bjjd-microservices/k8s-helm-chart-repo.git', credentialsId: gitHubToken.id
+
+                    def filePath = 'my-file.txt'
+                    def fileContent = 'Hello, world!'
+                    def encodedContent = fileContent.bytes.encodeBase64().toString()
+
+                     // Create the new file on the GitHub repository
+                    gitHub.writeFile file: filePath, content: encodedContent, message: commitMessage, branch: branch
+
 
                  // Add the GitHub remote
-                 sh "git remote add origin ${gitUrl}"
+              //   sh "git remote add origin ${gitUrl}"
 
                  // Push the Helm chart package to the GitHub repository
-                 sh "git add ${chartPackage}"
-                 sh "git commit -m '${commitMessage}'"
-                 sh "git push origin ${branch}"
+           //      sh "git add ${chartPackage}"
+            //     sh "git commit -m '${commitMessage}'"
+             //    sh "git push origin ${branch}"
 
               }
 
