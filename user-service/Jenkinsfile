@@ -2,7 +2,6 @@ pipeline {
   agent any
   environment {
     GITHUB_CREDENTIALS = credentials('github-credentials-id')
-
   }
   tools {
     maven 'M3'
@@ -80,9 +79,9 @@ pipeline {
                         //1. Packaging helm chart
                         sh "helm package ${chartPath} --version ${chartVersion}"
 
-                        sh """
-                           curl -u admin:${NexusRepositoryPassword} http://localhost:8081/repository/helm-hosted/user-service --upload-file ${chartPackage} -v
-                        """
+                        sh '''
+                           curl -u admin:${NexusRepositoryPassword} http://localhost:8081/repository/helm-hosted/user-service/ --upload-file ${chartPackage} -v
+                        '''
                   }
                 }
 
