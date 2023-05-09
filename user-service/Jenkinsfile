@@ -69,29 +69,22 @@ pipeline {
            }
         stage('Package helm chart and Push to Github Repository') {
           steps {
-            dir('user-service/k8s') {
-              script{
-                    def chartVersion =  sh script: "helm show chart user-service | grep version | cut -d: -f 2 | tr -d ' ' | tr -d '\\n'",returnStdout: true
-                    def chartName =  sh script: "helm show chart user-service | grep name | cut -d: -f 2 | tr -d ' ' | tr -d '\\n'",returnStdout: true
-                    def chartPackage ="${chartName}-${chartVersion}.tgz"
-                    def chartFile = "@${chartName}-${chartVersion}.tgz"
-                    def chartPath = "user-service"
+            script{
+                 withCredentials([string(credentialsId: 'NexusRepositoryPassword', variable: 'NexusRepositoryPassword')]) {
+                    dir('user-service/k8s') {
+                        def chartVersion =  sh script: "helm show chart user-service | grep version | cut -d: -f 2 | tr -d ' ' | tr -d '\\n'",returnStdout: true
+                        def chartName =  sh script: "helm show chart user-service | grep name | cut -d: -f 2 | tr -d ' ' | tr -d '\\n'",returnStdout: true
+                        def chartPackage ="${chartName}-${chartVersion}.tgz"
+                        def chartPath = "user-service"
 
-                    //1. Packaging helm chart
-                    sh "helm package ${chartPath} --version ${chartVersion}"
-                    sh "git config --global --add url.'git@github.com:'.insteadOf 'https://github.com/'"
-                    sh "git add ."
-                    sh "git commit -m 'Add ${chartFile}'"
-                    sh "git push origin HEAD:main"
+                        //1. Packaging helm chart
+                        sh "helm package ${chartPath} --version ${chartVersion}"
 
-                   // sh """
-                   //     curl -H 'Authorization: token ${GITHUB_CREDENTIALS}' \
-                   //     -H 'Content-Type: application/octet-stream' \
-                   //     --data-binary '${chartFile}' \
-                   //     'https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases/assets/main?name=${chartPackage}'
-                   // """
-              }
-
+                        sh """
+                           curl -u admin:${NexusRepositoryPassword} http://localhost:8081/repository/helm-hosted/user-service --upload-file ${chartPackage} -v
+                        """
+                  }
+                }
 
             }
           }
