@@ -81,7 +81,7 @@ pipeline {
                     sh "helm package ${chartPath} --version ${chartVersion}"
 
                     sh "git add ."
-                    sh 'git commit -m 'Add ${chartFile}'"
+                    sh "git commit -m 'Add ${chartFile}'"
                     sh "git push origin HEAD:main"
 
                    // sh """
