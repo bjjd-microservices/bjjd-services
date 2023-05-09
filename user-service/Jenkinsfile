@@ -80,7 +80,7 @@ pipeline {
                         sh "helm package ${chartPath} --version ${chartVersion}"
 
                         sh """
-                           curl -u admin:$NexusRepositoryPassword http://localhost:8081/repository/helm-hosted/ --upload-file user-service-0.1.0.tgz
+                           curl -u admin:$NexusRepositoryPassword http://localhost:8081/repository/helm-hosted/ --upload-file xyz.tgz
                         """
                   }
                 }
