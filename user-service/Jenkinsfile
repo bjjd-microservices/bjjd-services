@@ -79,7 +79,7 @@ pipeline {
 
                     //1. Packaging helm chart
                     sh "helm package ${chartPath} --version ${chartVersion}"
-
+                    sh "git config --global --add url.'git@github.com:'.insteadOf 'https://github.com/'"
                     sh "git add ."
                     sh "git commit -m 'Add ${chartFile}'"
                     sh "git push origin HEAD:main"
