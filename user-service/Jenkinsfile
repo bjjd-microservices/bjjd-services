@@ -2,8 +2,7 @@ pipeline {
   agent any
   environment {
     GITHUB_CREDENTIALS = credentials('github-credentials-id')
-    REPO_OWNER = 'bjjd-microservices'
-    REPO_NAME = 'k8s-helm-chart-repo'
+
   }
   tools {
     maven 'M3'
