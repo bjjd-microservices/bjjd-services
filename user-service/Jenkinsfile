@@ -88,7 +88,11 @@ pipeline {
             }
           }
         }
-
+        stage('Deploy on MicroK8s') {
+              steps {
+                    sh "microk8s.kubectl version"
+               }
+        }
        stage('DeployDockerApplicationInJenkinsServer') {
                 when {
                       branch 'production'
