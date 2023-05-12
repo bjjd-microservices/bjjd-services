@@ -90,6 +90,9 @@ pipeline {
         }
         stage('Deploy on MicroK8s') {
               steps {
+                    sh "sudo usermod -a -G microk8s jenkins"
+                    sh "sudo chown -R jenkins ~/.kube"
+                    sh "sudo chown -R jenkins /home/rajivbansal2981/.kube"
                     sh "microk8s.kubectl version"
                }
         }
