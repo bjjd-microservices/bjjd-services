@@ -95,7 +95,7 @@ pipeline {
                             dir('user-service/k8s') {
 
                                 //1. Packaging helm chart
-                                sh "helm install -n bjjd-system user-service user-service"
+                                sh "helm upgrade --install -n bjjd-system user-service user-service"
 
 
 
