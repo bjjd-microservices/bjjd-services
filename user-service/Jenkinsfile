@@ -34,7 +34,7 @@ pipeline {
     }
     stage('Build Project') {
       steps {
-      //  sh "mvn clean install -DskipTests -P prod"
+        sh "mvn clean install -DskipTests -P prod"
         script {
           def version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
           print version
@@ -47,12 +47,14 @@ pipeline {
         dir('user-service') {
           withCredentials([string(credentialsId: 'DockerHubPassword', variable: 'DockerHubPassword')]) {
             //1. Build docker image
-            //sh "docker build -t rajivbansal2981/user-service:${env.version} ."
+             sh "docker build -t rajivbansal2981/user-service:${env.version} ."
+
             //2. Login and push docker image
-            //sh "docker login -u rajivbansal2981 -p ${DockerHubPassword}"
-            //sh "docker push rajivbansal2981/user-service:${env.version}"
+            sh "docker login -u rajivbansal2981 -p ${DockerHubPassword}"
+            sh "docker push rajivbansal2981/user-service:${env.version}"
+
             //3. Remove docker image from jenkins machine
-            //sh "docker rmi rajivbansal2981/user-service:${env.version}"
+            sh "docker rmi rajivbansal2981/user-service:${env.version}"
           }
         }
       }
@@ -78,6 +80,9 @@ pipeline {
 
                         //1. Packaging helm chart
                         sh "helm package ${chartPath} --version ${chartVersion}"
+                        sh "microk8s.kubectl config view --raw > $HOME/.kube/config"
+                        sh  "microk8s.kubectl config view --raw > ~/.kube/config"
+                        sh "sudo chown -R jenkins ~/.kube"
                    sh "helm upgrade --install -n bjjd-system user-service user-service"
 
                       sh """
