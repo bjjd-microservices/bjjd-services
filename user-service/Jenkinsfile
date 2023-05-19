@@ -88,7 +88,27 @@ pipeline {
             }
           }
         }
-        stage('Deploy on MicroK8s') {
+        stage('Deploy docker image on kubernetes using helm') {
+                  steps {
+                    script{
+
+                            dir('user-service/k8s') {
+                                def chartVersion =  sh script: "helm show chart user-service | grep version | cut -d: -f 2 | tr -d ' ' | tr -d '\\n'",returnStdout: true
+                                def chartName =  sh script: "helm show chart user-service | grep name | cut -d: -f 2 | tr -d ' ' | tr -d '\\n'",returnStdout: true
+                                def chartPackage ="${chartName}-${chartVersion}.tgz"
+                                def chartPath = "user-service"
+
+                                //1. Packaging helm chart
+                           //     sh "helm install -n bjjd-system user-service user-service"
+
+
+
+                        }
+
+                    }
+                  }
+                }
+        stage('Verify the Deployment on MicroK8s') {
               steps {
 
                     sh "microk8s.kubectl version"
