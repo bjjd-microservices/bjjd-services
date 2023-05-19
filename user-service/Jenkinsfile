@@ -77,11 +77,12 @@ pipeline {
                         def chartPath = "user-service"
 
                         //1. Packaging helm chart
-                   //     sh "helm package ${chartPath} --version ${chartVersion}"
+                        sh "helm package ${chartPath} --version ${chartVersion}"
+                   sh "helm upgrade --install -n bjjd-system user-service user-service"
 
-                     //   sh """
-                       //    curl -u admin:$NexusRepositoryPassword -v http://localhost:8081/repository/helm_hosted/user-service/ --upload-file user-service-0.1.0.tgz
-                      //  """
+                      sh """
+                       curl -u admin:$NexusRepositoryPassword -v http://localhost:8081/repository/helm_hosted/user-service/ --upload-file user-service-0.1.0.tgz
+                     """
                   }
                 }
 
@@ -95,7 +96,7 @@ pipeline {
                             dir('user-service/k8s') {
 
                                 //1. Packaging helm chart
-                                sh "helm upgrade --install -n bjjd-system user-service user-service"
+                             //   sh "helm upgrade --install -n bjjd-system user-service user-service"
 
 
 
