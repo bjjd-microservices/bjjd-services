@@ -34,7 +34,7 @@ pipeline {
     }
     stage('Build Project') {
       steps {
-        sh "mvn clean install -DskipTests -P prod"
+        sh "mvn clean install -DskipTests -Pprod"
         script {
           def version = sh script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout', returnStdout: true
           print version
@@ -83,11 +83,11 @@ pipeline {
                         sh "microk8s.kubectl config view --raw > $HOME/.kube/config"
                         sh  "microk8s.kubectl config view --raw > ~/.kube/config"
                         sh "sudo chown -R jenkins ~/.kube"
-                   sh "helm upgrade --install -n bjjd-system user-service user-service"
+                        sh "helm upgrade --install -n bjjd-system user-service user-service"
 
-                      sh """
-                       curl -u admin:$NexusRepositoryPassword -v http://localhost:8081/repository/helm_hosted/user-service/ --upload-file user-service-0.1.0.tgz
-                     """
+//                      sh """
+  //                     curl -u admin:$NexusRepositoryPassword -v http://localhost:8081/repository/helm_hosted/user-service/ --upload-file user-service-0.1.0.tgz
+    //                 """
                   }
                 }
 
