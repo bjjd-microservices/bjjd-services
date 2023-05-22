@@ -38,7 +38,7 @@ public class UserApiController implements UserApi {
 
     private final ObjectMapper objectMapper;
     
-    @Autowired
+    @Autowired(required = false)
     private S3ServiceClient s3ServiceClient;
     
     @Autowired

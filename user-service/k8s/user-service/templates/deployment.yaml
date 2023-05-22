@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Values.namespace}}
 data:
   "spring.active.profile": "prod"
-  "database.hostname": "db-server.cznoz9bpqnlj.ap-south-1.rds.amazonaws.com"
+  "database.hostname": "localhost"
   "database.name": "users_db"
   "database.port": "3306"
   "database.username": "bjjd"
@@ -17,7 +17,7 @@ metadata:
   namespace: {{ .Values.namespace}}
 type: Opaque
 stringData:
-  database.root.password: server_42_123 #My sql root password:bjjd
+  database.root.password: bjjd_379 #My sql root password:bjjd
   database.password: bjjd_379
 ---
 apiVersion: apps/v1
