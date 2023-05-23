@@ -54,24 +54,6 @@ spec:
             containerPort: {{ .Values.port}} # The port that the container exposes
           - name: multicast
             containerPort: 5701 # The port that Hazelcast exposes
-        livenessProbe:
-            httpGet:
-              path: /
-              port: http
-            initialDelaySeconds: 60
-            periodSeconds: 5
-            successThreshold: 1
-            failureThreshold: 3
-            timeoutSeconds: 10
-        readinessProbe:
-            httpGet:
-              path: /
-              port: http
-            initialDelaySeconds: 60
-            periodSeconds: 5
-            successThreshold: 1
-            failureThreshold: 3
-            timeoutSeconds: 10  
         resources:
             requests:
               memory: 0.25Gi
