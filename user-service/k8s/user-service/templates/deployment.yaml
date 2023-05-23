@@ -43,8 +43,6 @@ spec:
       labels:
         app: {{ .Values.name}}
     spec:
-      hostname: busybox-1
-      subdomain: default-subdomain
       containers:
       - name: {{ .Values.name}}
         image: {{ .Values.image}}
