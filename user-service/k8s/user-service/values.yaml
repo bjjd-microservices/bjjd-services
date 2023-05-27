@@ -4,5 +4,5 @@ configmap: user-service-configmap
 secret: user-service-secrets
 image: rajivbansal2981/user-service:0.0.1.RELEASE
 port: 3379
-servicetype: ClusterIP
+servicetype: NodePort
 replicas: 1
