@@ -1,7 +1,5 @@
 package com.jmk.user.cache.config;
 
-import com.hazelcast.config.*;
-import com.hazelcast.kubernetes.HazelcastKubernetesDiscoveryStrategyFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +9,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.hazelcast.config.Config;
+import com.hazelcast.config.EvictionPolicy;
+import com.hazelcast.config.ManagementCenterConfig;
+import com.hazelcast.config.MapConfig;
+import com.hazelcast.config.MaxSizePolicy;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.spring.cache.HazelcastCacheManager;
@@ -54,21 +57,18 @@ public class HazelcastCacheConfiguration {
 		 * same thing can be done by enabling kubernetes config
 		 */
 		config.getNetworkConfig().getJoin().getMulticastConfig().setEnabled(false);
-
-				/*
+		/*
 		 * configure the Kubernetes Discovery Strategy. this configuration will form a
 		 * Hazelcast with all Hazelcast instances assigned to services in the current
 		 * namespace.
 		 */
-		//config.getNetworkConfig().getJoin().getKubernetesConfig().setEnabled(true);
+		config.getNetworkConfig().getJoin().getKubernetesConfig().setEnabled(true);
 
-		DiscoveryConfig discoveryConfig = config.getNetworkConfig().getJoin().getDiscoveryConfig();
-		HazelcastKubernetesDiscoveryStrategyFactory factory = new HazelcastKubernetesDiscoveryStrategyFactory();
 
-		DiscoveryStrategyConfig strategyConfig = new DiscoveryStrategyConfig(factory);
-		strategyConfig.addProperty("service-dns", "hazelcast.bjjd-system.svc.cluster.local");
-		strategyConfig.addProperty("service-dns-timeout", "20");
-		discoveryConfig.addDiscoveryStrategyConfig(strategyConfig);
+	//	System.setProperty("service-dns","hazelcast-service.bjjd-system.svc.cluster.local");
+		System.setProperty("service-dns-timeout","10");
+		System.setProperty("service-dns","hazelcast.bjjd-system.svc.cluster.local");
+
 
 		// In development, remove multicast auto-configuration
 		if (activeProfile.equals("dev")) {
