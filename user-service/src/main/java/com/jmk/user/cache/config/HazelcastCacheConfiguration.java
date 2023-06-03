@@ -66,6 +66,10 @@ public class HazelcastCacheConfiguration {
 
 
 		System.setProperty("hazelcast-service.bjjd-system.svc.cluster.local", "service-dns");
+		System.setProperty("service-dns","hazelcast-service.bjjd-system.svc.cluster.local");
+		System.setProperty("service-dns-timeout","10");
+		System.setProperty("service-dns","hazelcast.bjjd-system.svc.cluster.local");
+
 		// In development, remove multicast auto-configuration
 		if (activeProfile.equals("dev")) {
 			System.setProperty("hazelcast.local.localAddress", "127.0.0.1");
