@@ -18,7 +18,7 @@ import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.spring.cache.HazelcastCacheManager;
 
-@Configuration
+//@Configuration
 @EnableCaching
 @Profile({ "prod","dev" })
 public class HazelcastCacheConfiguration {

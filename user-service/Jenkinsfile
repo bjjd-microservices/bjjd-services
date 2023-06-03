@@ -80,9 +80,9 @@ pipeline {
 
                         //1. Packaging helm chart
                         sh "helm package ${chartPath} --version ${chartVersion}"
-                        sh "kubectl config view --raw > $HOME/.kube/config"
-                       sh  "kubectl config view --raw > ~/.kube/config"
-                        sh "sudo chown -R jenkins ~/.kube"
+                   //     sh "kubectl config view --raw > $HOME/.kube/config"
+                   //    sh  "kubectl config view --raw > ~/.kube/config"
+                    //    sh "sudo chown -R jenkins ~/.kube"
                         sh "helm upgrade --install -n bjjd-system user-service user-service"
 
 //                      sh """
