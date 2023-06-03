@@ -60,7 +60,7 @@ public class HazelcastCacheConfiguration {
 		 * Hazelcast with all Hazelcast instances assigned to services in the current
 		 * namespace.
 		 */
-		config.getNetworkConfig().getJoin().getKubernetesConfig().setEnabled(true);
+		//config.getNetworkConfig().getJoin().getKubernetesConfig().setEnabled(true);
 
 		DiscoveryConfig discoveryConfig = config.getNetworkConfig().getJoin().getDiscoveryConfig();
 		HazelcastKubernetesDiscoveryStrategyFactory factory = new HazelcastKubernetesDiscoveryStrategyFactory();
