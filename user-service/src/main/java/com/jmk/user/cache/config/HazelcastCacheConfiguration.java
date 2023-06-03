@@ -19,8 +19,8 @@ import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.spring.cache.HazelcastCacheManager;
 
 //@Configuration
-@EnableCaching
-@Profile({ "prod","dev" })
+//@EnableCaching
+//@Profile({ "prod","dev" })
 public class HazelcastCacheConfiguration {
 
 	private final Logger log = LoggerFactory.getLogger(HazelcastCacheConfiguration.class);
