@@ -66,7 +66,7 @@ public class HazelcastCacheConfiguration {
 		HazelcastKubernetesDiscoveryStrategyFactory factory = new HazelcastKubernetesDiscoveryStrategyFactory();
 
 		DiscoveryStrategyConfig strategyConfig = new DiscoveryStrategyConfig(factory);
-		strategyConfig.addProperty("service-dns", "hazelcast-service.bjjd-system.svc.cluster.local");
+		strategyConfig.addProperty("service-dns", "hazelcast.bjjd-system.svc.cluster.local");
 		strategyConfig.addProperty("service-dns-timeout", "20");
 		discoveryConfig.addDiscoveryStrategyConfig(strategyConfig);
 
