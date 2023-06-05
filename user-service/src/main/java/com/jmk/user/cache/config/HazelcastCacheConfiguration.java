@@ -20,7 +20,7 @@ import com.hazelcast.spring.cache.HazelcastCacheManager;
 
 @Configuration
 @EnableCaching
-@Profile({ "prod","dev" })
+@Profile({ "kubernetes","dev" })
 public class HazelcastCacheConfiguration {
 
 	private final Logger log = LoggerFactory.getLogger(HazelcastCacheConfiguration.class);
