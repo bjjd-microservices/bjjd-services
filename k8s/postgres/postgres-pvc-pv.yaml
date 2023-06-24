@@ -2,6 +2,7 @@ kind: PersistentVolume
 apiVersion: v1
 metadata:
   name: postgres-pv-volume  # Sets PV's name
+  namespace: bjjd-system
   labels:
     type: local  # Sets PV's type to local
     app: postgres
