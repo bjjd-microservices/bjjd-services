@@ -11,4 +11,4 @@ COPY target/user-service-*.jar /app
 EXPOSE 3379
 
 # Set the entry point
-CMD ["java","-Dspring.profiles.active=kubernetes","-jar","/app/user-service-0.0.1-RELEASE.jar"]
+CMD ["java","-Dspring.profiles.active=kubernetes","-jar","/app/user-service-0.0.1.RELEASE.jar"]
