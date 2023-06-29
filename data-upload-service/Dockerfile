@@ -5,10 +5,10 @@ FROM openjdk:11-jre-slim-buster
 WORKDIR /app
 
 # Copy the application code and any other necessary files
-COPY target/user-service-*.jar /app
+COPY target/data-upload-service-*.jar /app
 
 # Expose the port on which the application will listen
-EXPOSE 3379
+EXPOSE 8379
 
 # Set the entry point
-CMD ["java","-Dspring.profiles.active=kubernetes","-jar","/app/user-service-0.0.1-RELEASE.jar"]
+CMD ["java","-Dspring.profiles.active=kubernetes","-jar","/app/data-upload-service-0.0.1-RELEASE.jar"]

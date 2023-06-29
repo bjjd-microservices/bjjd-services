@@ -1,4 +1,14 @@
-FROM openjdk:8
-copy ./target/project-service-0.0.1-RELEASE.jar project-service-0.0.1-RELEASE.jar
-EXPOSE 5379
-CMD ["java","-jar","project-service-0.0.1-RELEASE.jar"]
+# Use a minimal OpenJDK image as the base
+FROM openjdk:11-jre-slim-buster
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the application code and any other necessary files
+COPY target/project-service-*.jar /app
+
+# Expose the port on which the application will listen
+EXPOSE 3379
+
+# Set the entry point
+CMD ["java","-Dspring.profiles.active=kubernetes","-jar","/app/project-service-0.0.1-RELEASE.jar"]
