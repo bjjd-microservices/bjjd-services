@@ -1,8 +1,0 @@
-name: project-service
-namespace: bjjd-system
-configmap: project-service-configmap
-secret: project-service-secrets
-image: rajivbansal2981/project-service:0.0.1.RELEASE
-port: 5379
-servicetype: ClusterIP
-replicas: 1
