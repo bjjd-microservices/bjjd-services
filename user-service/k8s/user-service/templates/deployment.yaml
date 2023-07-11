@@ -42,13 +42,22 @@ spec:
               containerPort: 5701 # The port that Hazelcast exposes
           readinessProbe:
             httpGet:
-              path: /api/user-service/
+              path: /api/user-service/actuator/health
               port: http
-            initialDelaySeconds: 160
+            initialDelaySeconds: 90
             periodSeconds: 10
             successThreshold: 1
             failureThreshold: 3
             timeoutSeconds: 60
+          livenessProbe:
+            httpGet:
+              path: /api/user-service/actuator/health
+              port: http
+            initialDelaySeconds: 90
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+            timeoutSeconds: 10
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-configmap
