@@ -51,7 +51,7 @@ spec:
             timeoutSeconds: 60
           livenessProbe:
             httpGet:
-              path: /api/user-service/actuator/health
+              path: /api/user-service/user/
               port: http
             initialDelaySeconds: 90
             periodSeconds: 10
