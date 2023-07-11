@@ -40,15 +40,6 @@ spec:
               protocol: TCP
             - name: multicast
               containerPort: 5701 # The port that Hazelcast exposes
-          readinessProbe:
-            httpGet:
-              path: /api/project-service/
-              port: http
-            initialDelaySeconds: 160
-            periodSeconds: 10
-            successThreshold: 1
-            failureThreshold: 3
-            timeoutSeconds: 60
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-configmap
