@@ -15,4 +15,4 @@ spec:
     - port: 5701
       name: hazelcast
   selector:
-    {{- include "user-service.selectorLabels" . | nindent 4 }}
+    {{- include "project-service.selectorLabels" . | nindent 4 }}
