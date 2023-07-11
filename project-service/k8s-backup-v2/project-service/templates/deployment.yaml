@@ -1,0 +1,90 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.configmap}}
+  namespace: {{ .Values.namespace}}
+data:
+  "spring.active.profile": "prod"
+  "database.hostname": "bjjd.ce5cf1jqfzdf.ap-south-1.rds.amazonaws.com"
+  "database.root.user": "root" #My sql root password:bjjd
+  "database.name": "project_db"
+  "database.port": "3306"
+  "database.username": "bjjd"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ .Values.secret}}
+  namespace: {{ .Values.namespace}}
+type: Opaque
+stringData:
+  database.root.password: bjjd_379 #My sql root password:bjjd
+  database.password: bjjd_379
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name}}
+  namespace: {{ .Values.namespace}}
+  labels:
+    app: {{ .Values.name}}
+spec:
+  replicas: {{ .Values.replicas}}
+  minReadySeconds: 45
+  selector:
+    matchLabels:
+      app: {{ .Values.name}}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name}}
+    spec:
+      containers:
+      - name: {{ .Values.name}}
+        image: {{ .Values.image}}
+        imagePullPolicy: Always #IfNotPresent
+        ports:
+          - name: http
+            containerPort: {{ .Values.port}} # The port that the container exposes
+          - name: multicast
+            containerPort: 5701 # The port that Hazelcast exposes
+        resources:
+            requests:
+              memory: 0.50Gi
+              cpu: 1
+            limits:
+              memory: 0.50Gi
+              cpu: 1
+        env:
+        - name: DB_HOSTNAME
+          valueFrom:
+             configMapKeyRef:
+              name: {{ .Values.configmap}}
+              key: database.hostname #MySQL db host name
+        - name: DB_NAME
+          valueFrom: 
+             configMapKeyRef:
+                 name: {{ .Values.configmap}}
+                 key: database.name
+        - name: DB_USERNAME
+          valueFrom: 
+             configMapKeyRef:
+                 name: {{ .Values.configmap}}
+                 key: database.username
+        - name: DB_PASSWORD
+          valueFrom:
+             secretKeyRef:
+                name: {{ .Values.secret}}
+                key: database.password
+        - name: DB_PORT
+          valueFrom: 
+             configMapKeyRef:
+                 name: {{ .Values.configmap}}
+                 key: database.port
+        - name: SPRING_ACTIVE_PROFILE
+          valueFrom: 
+             configMapKeyRef:
+                 name: {{ .Values.configmap}}
+                 key: spring.active.profile
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 60
