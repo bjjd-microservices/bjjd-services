@@ -42,7 +42,7 @@ spec:
               containerPort: 5701 # The port that Hazelcast exposes
           readinessProbe:
             httpGet:
-              path: /user-service/
+              path: /api/user-service/
               port: http
             initialDelaySeconds: 160
             periodSeconds: 50
