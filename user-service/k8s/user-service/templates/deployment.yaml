@@ -44,11 +44,11 @@ spec:
             httpGet:
               path: /user-service/
               port: http
-            initialDelaySeconds: 60
-            periodSeconds: 5
+            initialDelaySeconds: 160
+            periodSeconds: 50
             successThreshold: 1
             failureThreshold: 3
-            timeoutSeconds: 10
+            timeoutSeconds: 60
           envFrom:
             - configMapRef:
                 name: {{ .Release.Name }}-configmap
