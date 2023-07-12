@@ -31,7 +31,7 @@ import io.swagger.annotations.ApiResponses;
 public interface UserApi {
 
 	@GetMapping(path = "/")
-	public String imUpAndRunning() ;
+	public String appUpAndRunning() ;
 
 	@ApiOperation(value = "User Creation Service", nickname = "createUser", notes = "User Creation Service", response = User.class, tags = {
 			"UserMgmt", })

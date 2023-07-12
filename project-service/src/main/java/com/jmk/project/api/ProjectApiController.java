@@ -46,6 +46,11 @@ public class ProjectApiController implements ProjectApi {
 		this.request = request;
 	}
 
+	public String appUpAndRunning() {
+		return "{healthy:true}";
+	}
+
+
 	public ResponseEntity<Project> createProject(
 			@ApiParam(value = "", required = true) @Valid @RequestBody Project project,
 			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel) {

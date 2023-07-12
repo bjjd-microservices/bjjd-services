@@ -10,12 +10,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import com.jmk.project.model.Project;
 
@@ -29,6 +24,9 @@ import io.swagger.annotations.ApiResponses;
 @Api(value = "project", description = "the project API")
 @RequestMapping(value = "/project")
 public interface ProjectApi {
+
+    @GetMapping(path = "/")
+    public String appUpAndRunning() ;
 
     @ApiOperation(value = "Project Creation Service", nickname = "createProject", notes = "Project Creation Service", response = Project.class, tags={ "ProjectMgmt", })
     @ApiResponses(value = { 

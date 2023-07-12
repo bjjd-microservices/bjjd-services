@@ -50,7 +50,7 @@ public class UserApiController implements UserApi {
         this.request = request;
     }
 
-   public String imUpAndRunning() {
+    public String appUpAndRunning() {
         return "{healthy:true}";
     }
 
