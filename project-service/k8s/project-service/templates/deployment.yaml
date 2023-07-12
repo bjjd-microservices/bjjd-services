@@ -62,7 +62,7 @@ spec:
             - configMapRef:
                 name: "{{ .Release.Name }}-configmap"
             - secretRef:
-            name: "{{ .Release.Name }}-secret"
+                name: "{{ .Release.Name }}-secret"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
