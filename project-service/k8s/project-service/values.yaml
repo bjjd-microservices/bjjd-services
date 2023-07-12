@@ -1,21 +1,21 @@
-# Default values for user-service.
+# Default values for project-service.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 namespace: "bjjd-system"
 
 config:
-   springActiveProfile: "kubernetes"
-   databaseHostname: "bjjd.ce5cf1jqfzdf.ap-south-1.rds.amazonaws.com"
-   databaseRootUser: "root"
-   databaseName: "project_db"
-   databasePort: "3306"
-   databaseUsername: "bjjd"
-   
+  springActiveProfile: "kubernetes"
+  databaseHostname: "bjjd.ce5cf1jqfzdf.ap-south-1.rds.amazonaws.com"
+  databaseRootUser: "root"
+  databaseName: "project_db"
+  databasePort: "3306"
+  databaseUsername: "bjjd"
+
 secret:
-    databaseRootPassword: "bjjd_379"
-    databasePassword: "bjjd_379"
-    
+  databaseRootPassword: "bjjd_379"
+  databasePassword: "bjjd_379"
+
 
 replicaCount: 1
 
@@ -41,7 +41,7 @@ serviceAccount:
 podAnnotations: {}
 
 podSecurityContext: {}
-  # fsGroup: 2000
+# fsGroup: 2000
 
 securityContext: {}
   # capabilities:
@@ -49,14 +49,14 @@ securityContext: {}
   #   - ALL
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
-  # runAsUser: 1000
+# runAsUser: 1000
 
 service:
   type: NodePort
   port: 5379
 
 
-resources: 
+resources:
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
