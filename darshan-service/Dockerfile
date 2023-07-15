@@ -11,4 +11,4 @@ COPY target/darshan-service-*.jar /app
 EXPOSE 4379
 
 # Set the entry point
-CMD ["java","-Dspring.profiles.active=kubernetes","-jar","/app/darshan-service-0.0.1-RELEASE.jar"]
+CMD ["java","-Dspring.profiles.active=kubernetes","-jar","/app/darshan-service-0.0.1.RELEASE.jar"]
