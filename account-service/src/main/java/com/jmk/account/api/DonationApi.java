@@ -10,11 +10,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import com.jmk.account.model.Donation;
 
@@ -28,6 +24,10 @@ import io.swagger.annotations.ApiResponses;
 @Api(value = "donation", description = "the donate API")
 @RequestMapping(value = "/donation")
 public interface DonationApi {
+
+    @GetMapping(path = "/")
+    public String appUpAndRunning() ;
+
     @ApiOperation(value = "Save Donation Service", nickname = "saveDonation", notes = "Save Donation Service", response = Donation.class, tags={ "DonationService", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = Donation.class),

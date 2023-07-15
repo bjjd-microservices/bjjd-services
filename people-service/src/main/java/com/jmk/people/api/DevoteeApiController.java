@@ -47,6 +47,10 @@ public class DevoteeApiController implements DevoteeApi {
         this.request = request;
     }
 
+	public String appUpAndRunning() {
+		return "{healthy:true}";
+	}
+
 	public ResponseEntity<Devotee> createDevotee(
 			@ApiParam(value = "", required = true) @Valid @RequestBody Devotee devotee,
 			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel) {

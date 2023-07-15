@@ -10,12 +10,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import com.jmk.people.model.Devotee;
 
@@ -29,6 +24,9 @@ import io.swagger.annotations.ApiResponses;
 @Api(value = "devotee", description = "the devotee API")
 @RequestMapping(value="/devotee")
 public interface DevoteeApi {
+
+    @GetMapping(path = "/")
+    public String appUpAndRunning() ;
 
     @ApiOperation(value = "Devotee Creation Service", nickname = "createDevotee", notes = "Devotee Creation Service", response = Devotee.class, tags={ "DevoteeMgmtServiceApi", })
     @ApiResponses(value = { 

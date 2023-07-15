@@ -52,6 +52,10 @@ public class DonationApiController implements DonationApi {
 	
 	@Autowired
 	private DonorCreator donorCreator;
+
+	public String appUpAndRunning() {
+		return "{healthy:true}";
+	}
 	
 	@org.springframework.beans.factory.annotation.Autowired
 	public DonationApiController(ObjectMapper objectMapper, HttpServletRequest request) {
