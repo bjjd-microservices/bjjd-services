@@ -10,11 +10,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import com.jmk.darshan.model.Darshan;
 
@@ -28,6 +24,9 @@ import io.swagger.annotations.ApiResponses;
 @Api(value = "darshan", description = "the darshan API")
 @RequestMapping(value = "/darshan")
 public interface DarshanApi {
+
+    @GetMapping(path = "/")
+    public String appUpAndRunning() ;
 
     @ApiOperation(value = "Darshan Deletion Service based on the darshan id", nickname = "deleteDarshanById", notes = "Darshan Deletion Service based on the darshan id", tags={ "DarshanMgmt", })
     @ApiResponses(value = { 

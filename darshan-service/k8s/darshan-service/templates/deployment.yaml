@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "account-service.fullname" . }}
+  name: {{ include "darshan-service.fullname" . }}
   namespace: {{ .Values.namespace }}
   labels:
-    {{- include "account-service.labels" . | nindent 4 }}
+    {{- include "darshan-service.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "account-service.selectorLabels" . | nindent 6 }}
+      {{- include "darshan-service.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -19,13 +19,13 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "account-service.selectorLabels" . | nindent 8 }}
+        {{- include "darshan-service.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "account-service.serviceAccountName" . }}
+      serviceAccountName: {{ include "darshan-service.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -40,7 +40,7 @@ spec:
               protocol: TCP
           readinessProbe:
             httpGet:
-              path: /api/account-service/donation/
+              path: /api/darshan-service/darshan/
               port: http
             initialDelaySeconds: 90
             periodSeconds: 10
@@ -49,7 +49,7 @@ spec:
             timeoutSeconds: 60
           livenessProbe:
             httpGet:
-              path: /api/account-service/donation/
+              path: /api/darshan-service/darshan/
               port: http
             initialDelaySeconds: 90
             periodSeconds: 10

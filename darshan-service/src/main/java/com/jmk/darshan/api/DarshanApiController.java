@@ -56,6 +56,10 @@ public class DarshanApiController implements DarshanApi {
 	@Autowired
 	private DarshanMgmtService darshanMgmtService;
 
+	public String appUpAndRunning() {
+		return "{healthy:true}";
+	}
+
 	public DarshanApiController(ObjectMapper objectMapper, HttpServletRequest request) {
 		this.objectMapper = objectMapper;
 		this.request = request;

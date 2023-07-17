@@ -8,7 +8,7 @@ config:
   springActiveProfile: "kubernetes"
   databaseHostname: "bjjd.ce5cf1jqfzdf.ap-south-1.rds.amazonaws.com"
   databaseRootUser: "root"
-  databaseName: "account_db"
+  databaseName: "darshan_db"
   databasePort: "3306"
   databaseUsername: "bjjd"
 
@@ -20,7 +20,7 @@ secret:
 replicaCount: 1
 
 image:
-  repository: rajivbansal2981/account-service
+  repository: rajivbansal2981/darshan-service
   pullPolicy: Always #IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "0.0.1.RELEASE"
@@ -53,7 +53,7 @@ securityContext: {}
 
 service:
   type: NodePort
-  port: 7379
+  port: 4379
 
 
 resources:
