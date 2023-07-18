@@ -4,23 +4,10 @@
 
 namespace: "bjjd-system"
 
-config:
-  springActiveProfile: "kubernetes"
-  databaseHostname: "bjjd.ce5cf1jqfzdf.ap-south-1.rds.amazonaws.com"
-  databaseRootUser: "root"
-  databaseName: "project_db"
-  databasePort: "3306"
-  databaseUsername: "bjjd"
-
-secret:
-  databaseRootPassword: "bjjd_379"
-  databasePassword: "bjjd_379"
-
-
 replicaCount: 1
 
 image:
-  repository: rajivbansal2981/project-service
+  repository: rajivbansal2981/data-upload-service
   pullPolicy: Always #IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "0.0.1.RELEASE"
@@ -53,7 +40,7 @@ securityContext: {}
 
 service:
   type: NodePort
-  port: 5379
+  port: 8379
 
 
 resources:

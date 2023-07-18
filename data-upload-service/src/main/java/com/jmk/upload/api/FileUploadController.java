@@ -7,10 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import com.jmk.eh.apierror.ApiError;
 import com.jmk.eh.apierror.ExcelSheetValidationError;
@@ -32,6 +29,11 @@ public class FileUploadController {
 	
 	@Autowired
 	private DataValidationService dataValidationService;
+
+	@GetMapping(path = "/")
+	public String appUpAndRunning() {
+		return "{healthy:true}";
+	}
 	
 	@PostMapping("/")
 	public ResponseEntity<UploadFileResponse> upload(@RequestParam("file") MultipartFile file){
