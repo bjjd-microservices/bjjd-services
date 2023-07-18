@@ -40,7 +40,7 @@ spec:
               protocol: TCP
           readinessProbe:
             httpGet:
-              path: /api/data-upload-service/donation/
+              path: /api/data-upload-service/upload/
               port: http
             initialDelaySeconds: 90
             periodSeconds: 10
