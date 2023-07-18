@@ -11,4 +11,4 @@ COPY target/data-upload-service-*.jar /app
 EXPOSE 8379
 
 # Set the entry point
-CMD ["java","-Dspring.profiles.active=kubernetes","-jar","/app/data-upload-service-0.0.1-RELEASE.jar"]
+CMD ["java","-Dspring.profiles.active=kubernetes","-jar","/app/data-upload-service-0.0.1.RELEASE.jar"]
