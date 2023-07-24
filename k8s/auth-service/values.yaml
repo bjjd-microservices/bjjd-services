@@ -1,7 +1,0 @@
-name: auth-service
-namespace: bjjd-system
-configmap: auth-service-configmap
-image: rajivbansal2981/auth-service:0.0.1.RELEASE
-port: 2379
-servicetype: ClusterIP
-replicas: 1

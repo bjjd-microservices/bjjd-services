@@ -1,7 +1,0 @@
-name: data-upload-service
-namespace: bjjd-system
-configmap: data-upload-service-configmap
-image: rajivbansal2981/data-upload-service:0.0.1.RELEASE
-port: 8379
-servicetype: ClusterIP
-replicas: 1

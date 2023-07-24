@@ -1,7 +1,0 @@
-name: gateway-service
-namespace: bjjd-system
-configmap: gateway-service-configmap
-image: rajivbansal2981/gateway-service:0.0.1.RELEASE
-port: 1379
-servicetype: LoadBalancer
-replicas: 1

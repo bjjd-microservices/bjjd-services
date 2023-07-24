@@ -1,8 +1,0 @@
-name: darshan-service
-namespace: bjjd-system
-configmap: darshan-service-configmap
-secret: darshan-service-secrets
-image: rajivbansal2981/darshan-service:0.0.1.RELEASE
-port: 4379
-servicetype: ClusterIP
-replicas: 1

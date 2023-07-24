@@ -1,8 +1,0 @@
-name: people-service
-namespace: bjjd-system
-configmap: people-service-configmap
-secret: people-service-secrets
-image: rajivbansal2981/people-service:0.0.1.RELEASE
-port: 6379
-servicetype: ClusterIP
-replicas: 1
