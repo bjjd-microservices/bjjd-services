@@ -113,7 +113,7 @@ pipeline {
                    echo "Helm chart has been successfully deployed with Release Status: ${releaseStatus}"
 
 
-                    if (releaseStatus.trim() == "deployed") {
+                    if (releaseStatus == "deployed") {
                          echo "Helm chart has been successfully deployed with Release Status: ${releaseStatus}"
                     } else {
                           error "Pipeline aborted due to deployment failed: ${releaseStatus}"
