@@ -112,7 +112,7 @@ pipeline {
 
                    echo "Helm chart has been successfully deployed with Release Status: ${releaseStatus}"
 
-                    def status = "deployed"
+                    def status = releaseStatus.toString()
                     if (status == "deployed") {
                          echo "Helm chart has been successfully deployed with Release Status: ${releaseStatus}"
                     } else {
