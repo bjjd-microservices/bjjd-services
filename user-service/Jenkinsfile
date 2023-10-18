@@ -113,7 +113,7 @@ pipeline {
                     // Print or use the status as needed
                         echo "Release Status: ${releaseStatus}"
 
-                    if (releaseStatus != 'deployed') {
+                    if (releaseStatus.toString() != 'deployed') {
                           error "Pipeline aborted due to quality gate failure: ${releaseStatus}"
                     }
                }
