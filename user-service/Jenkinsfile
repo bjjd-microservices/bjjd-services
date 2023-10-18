@@ -101,7 +101,7 @@ pipeline {
                     }
                   }
                 }
-        stage('Verify the Deployment on MicroK8s') {
+        stage('Verify the Deployment in Kubernetes Environment') {
             steps {
                script{
                     // Install Helm and any dependencies if necessary
