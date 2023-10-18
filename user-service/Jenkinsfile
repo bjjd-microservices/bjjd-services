@@ -105,7 +105,7 @@ pipeline {
               steps {
                     // Install Helm and any dependencies if necessary
                                        sh 'helm version --client'
-
+                                       def RELEASE_NAME = "user-service"
                                        // Run Helm ls command and capture the status
                                        def releaseStatus = sh(script: "helm ls -o json ${RELEASE_NAME} | jq -r '.[0].status'", returnStdout: true).trim()
 
