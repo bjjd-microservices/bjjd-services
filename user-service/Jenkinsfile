@@ -104,8 +104,17 @@ pipeline {
         stage('Verify the Deployment on MicroK8s') {
               steps {
 
-                    def deployedStatus =  sh script: "helm ls -n bjjd-system | grep 'user-service' | awk '{ print ${8} }'",returnStdout: true
-                    print deployedStatus
+                    // Install Helm and any dependencies if necessary
+                                        sh 'helm version --client'
+                                         def RELEASE_NAME = "user-service"
+                                        // Run Helm ls command and capture the status
+                                        def releaseJson = sh(script: "helm ls -o json ${RELEASE_NAME}", returnStdout: true).trim()
+
+                                        // Parse JSON using Groovy's JsonSlurper
+                                        def releaseStatus = new JsonSlurper().parseText(releaseJson)[0].status
+
+                                        // Print or use the status as needed
+                                        echo "Release Status: ${releaseStatus}"
                }
         }
 
