@@ -110,14 +110,10 @@ pipeline {
                     // Run Helm ls command and capture the status
                     def releaseStatus = sh script: "helm ls -n bjjd-system --output json -f ${RELEASE_NAME} | jq -r '.[0].status'", returnStdout: true
 
-                    def status = 'deployed'
-                    if (status == 'deployed'){
-                      echo "Deployed status: " ${status}
-                    }
-                     echo "Helm chart has been successfully deployed with Release Status: ${releaseStatus}"
+                   echo "Helm chart has been successfully deployed with Release Status: ${releaseStatus}"
 
 
-                    if (releaseStatus.trim() == 'deployed') {
+                    if (releaseStatus.trim() == "deployed") {
                          echo "Helm chart has been successfully deployed with Release Status: ${releaseStatus}"
                     } else {
                           error "Pipeline aborted due to deployment failed: ${releaseStatus}"
