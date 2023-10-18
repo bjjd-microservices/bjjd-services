@@ -104,7 +104,7 @@ pipeline {
         stage('Verify the Deployment on MicroK8s') {
               steps {
 
-                    def deployedStatus =  sh script: "helm ls -n bjjd-system | grep 'user-service' | awk '{ print $8 }'",returnStdout: true
+                    def deployedStatus =  sh script: "helm ls -n bjjd-system | grep 'user-service' | awk '{ print ${8} }'",returnStdout: true
                     print deployedStatus
                }
         }
