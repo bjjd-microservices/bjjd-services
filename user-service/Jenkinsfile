@@ -103,18 +103,16 @@ pipeline {
                 }
         stage('Verify the Deployment on MicroK8s') {
               steps {
-
                     // Install Helm and any dependencies if necessary
-                                        sh 'helm version --client'
-                                         def RELEASE_NAME = "user-service"
-                                        // Run Helm ls command and capture the status
-                                        def releaseJson = sh(script: "helm ls -o json ${RELEASE_NAME}", returnStdout: true).trim()
+                                       sh 'helm version --client'
 
-                                        // Parse JSON using Groovy's JsonSlurper
-                                        def releaseStatus = new JsonSlurper().parseText(releaseJson)[0].status
+                                       // Run Helm ls command and capture the status
+                                       def releaseStatus = sh(script: "helm ls -o json ${RELEASE_NAME} | jq -r '.[0].status'", returnStdout: true).trim()
 
-                                        // Print or use the status as needed
-                                        echo "Release Status: ${releaseStatus}"
+                                       // Print or use the status as needed
+                                       echo "Release Status: ${releaseStatus}"
+
+
                }
         }
 
