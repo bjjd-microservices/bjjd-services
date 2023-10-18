@@ -80,8 +80,8 @@ pipeline {
 
                         //1. Packaging helm chart
                         sh "helm package ${chartPath} --version ${chartVersion}"
-                        sh "helm upgrade --install -n bjjd-system user-service user-service"
 
+                        //2. Pushing helm chart in nexus repository
                       sh """
                        curl -u admin:$NexusRepositoryPassword -v http://localhost:8081/repository/helm_hosted/user-service/ --upload-file user-service-0.1.0.tgz
                      """
@@ -94,16 +94,10 @@ pipeline {
         stage('Deploy docker image on kubernetes using helm') {
                   steps {
                     script{
-
                             dir('user-service/k8s') {
-
-                                //1. Packaging helm chart
-                             //   sh "helm upgrade --install -n bjjd-system user-service user-service"
-
-
-
+                                //Deploying helm chart on Kubernetes environment
+                                sh "helm upgrade --install -n bjjd-system user-service user-service"
                         }
-
                     }
                   }
                 }
@@ -113,14 +107,7 @@ pipeline {
                     sh "kubectl version"
                }
         }
-       stage('DeployDockerApplicationInJenkinsServer') {
-                when {
-                      branch 'production'
-                }
-                steps {
-                      sh "docker run -d -p 3379:3379 --name user-service rajivbansal2981/user-service:${env.version}"
-                  }
-       }
+
   }
   post {
        		always {
