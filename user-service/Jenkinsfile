@@ -103,16 +103,16 @@ pipeline {
                 }
         stage('Verify the Deployment on MicroK8s') {
               steps {
+                script{
                     // Install Helm and any dependencies if necessary
                     def RELEASE_NAME = "user-service"
 
+                    // Run Helm ls command and capture the status
+                    def releaseStatus = sh script: "helm ls -o json ${RELEASE_NAME} | jq -r '.[0].status'", returnStdout: true
 
-                                       // Run Helm ls command and capture the status
-                                       def releaseStatus = sh script: "helm ls -o json ${RELEASE_NAME} | jq -r '.[0].status'", returnStdout: true
-
-                                       // Print or use the status as needed
-                                       echo "Release Status: ${releaseStatus}"
-
+                    // Print or use the status as needed
+                   echo "Release Status: ${releaseStatus}"
+                    }
 
                }
         }
