@@ -80,8 +80,8 @@ pipeline {
 
                         //1. Packaging helm chart
                         sh "helm package ${chartPath} --version ${chartVersion}"
-                        sh "helm upgrade --install -n bjjd-system project-service project-service"
 
+                        //2. Pushing helm chart in nexus repository
                       sh """
                        curl -u admin:$NexusRepositoryPassword -v http://localhost:8081/repository/helm_hosted/project-service/ --upload-file project-service-0.1.0.tgz
                      """
@@ -91,36 +91,34 @@ pipeline {
             }
           }
         }
-        stage('Deploy docker image on kubernetes using helm') {
-                  steps {
-                    script{
+        stage('Deploy helm chart in Kubernetes Environment') {
+                          steps {
+                            script{
+                                    dir('project-service/k8s') {
+                                        //Deploying helm chart on Kubernetes environment
+                                        sh "helm upgrade --install -n bjjd-system project-service project-service"
+                                }
+                            }
+                          }
+        }
+        stage('Verify the Deployment on Kubernetes Environment') {
+                    steps {
+                       script{
+                            // Install Helm and any dependencies if necessary
+                            def RELEASE_NAME = "project-service"
 
-                            dir('project-service/k8s') {
+                            // Run Helm ls command and capture the status
+                            def releaseStatus = sh script: "helm ls -n bjjd-system --output json -f ${RELEASE_NAME} | jq -r '.[0].status'", returnStdout: true
 
-                                //1. Packaging helm chart
-                             //   sh "helm upgrade --install -n bjjd-system project-service project-service"
-
-
-
-                        }
+                            if (releaseStatus.toString().trim() == "deployed") {
+                                 echo "Helm chart has been successfully deployed with Release Status: ${releaseStatus}"
+                            } else {
+                                  error "Pipeline aborted due to deployment failed: ${releaseStatus}"
+                            }
+                       }
 
                     }
-                  }
-                }
-        stage('Verify the Deployment on MicroK8s') {
-              steps {
-
-                    sh "kubectl version"
-               }
         }
-       stage('DeployDockerApplicationInJenkinsServer') {
-                when {
-                      branch 'production'
-                }
-                steps {
-                      sh "docker run -d -p 5379:5379 --name project-service rajivbansal2981/project-service:${env.version}"
-                  }
-       }
   }
   post {
        		always {
