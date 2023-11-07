@@ -82,9 +82,9 @@ pipeline {
                         sh "helm package ${chartPath} --version ${chartVersion}"
 
                         //2. Pushing helm chart in nexus repository
-                      sh """
-                       curl -u admin:$NexusRepositoryPassword -v http://localhost:8081/repository/helm_hosted/user-service/ --upload-file user-service-0.1.0.tgz
-                     """
+                  //    sh """
+                  //     curl -u admin:$NexusRepositoryPassword -v http://localhost:8081/repository/helm_hosted/user-service/ --upload-file user-service-0.1.0.tgz
+                  //   """
                   }
                 }
 
