@@ -54,7 +54,7 @@ securityContext: {}
 service:
   type: NodePort
   port: 3379
-  nodePort: 93379
+  nodePort: 32379
 
 
 resources: 
