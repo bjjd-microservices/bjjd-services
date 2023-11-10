@@ -12,6 +12,7 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+      nodePort: {{ .Values.service.nodePort }}
     - port: 5701
       name: hazelcast
   selector:
