@@ -68,7 +68,7 @@ pipeline {
                      }
                  }
            }
-        stage('Package helm chart and Push to Github Repository') {
+        stage('Package helm chart and Push to Nexus Repository') {
           steps {
             script{
                  withCredentials([string(credentialsId: 'NexusRepositoryPassword', variable: 'NexusRepositoryPassword')]) {

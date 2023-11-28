@@ -68,7 +68,7 @@ pipeline {
                      }
                  }
            }
-        stage('Package helm chart and Push to Github Repository') {
+        stage('Package helm chart and Push to Nexus Repository') {
           steps {
             script{
                  withCredentials([string(credentialsId: 'NexusRepositoryPassword', variable: 'NexusRepositoryPassword')]) {
@@ -80,18 +80,18 @@ pipeline {
 
                         //1. Packaging helm chart
                         sh "helm package ${chartPath} --version ${chartVersion}"
-                        sh "helm upgrade --install -n bjjd-system account-service account-service"
 
-                      sh """
-                       curl -u admin:$NexusRepositoryPassword -v http://localhost:8081/repository/helm_hosted/account-service/ --upload-file account-service-0.1.0.tgz
-                     """
+
+                  //    sh """
+                  //     curl -u admin:$NexusRepositoryPassword -v http://localhost:8081/repository/helm_hosted/account-service/ --upload-file account-service-0.1.0.tgz
+                  //   """
                   }
                 }
 
             }
           }
         }
-        stage('Deploy docker image on kubernetes using helm') {
+        stage('Deploy helm chart in Kubernetes Environment') {
                   steps {
                     script{
 
@@ -107,20 +107,25 @@ pipeline {
                     }
                   }
                 }
-        stage('Verify the Deployment on MicroK8s') {
-              steps {
+        stage('Verify the Deployment on Kubernetes Environment') {
+                            steps {
+                               script{
+                                    // Install Helm and any dependencies if necessary
+                                     def RELEASE_NAME = "account-service"
 
-                    sh "kubectl version"
-               }
-        }
-       stage('DeployDockerApplicationInJenkinsServer') {
-                when {
-                      branch 'production'
+                                    // Run Helm ls command and capture the status
+                                    def releaseStatus = sh script: "helm ls -n bjjd-system --output json -f ${RELEASE_NAME} | jq -r '.[0].status'", returnStdout: true
+
+                                    // Checking the release status
+                                    if (releaseStatus.toString().trim() == "deployed") {
+                                         echo "Helm chart has been successfully deployed with Release Status: ${releaseStatus}"
+                                    } else {
+                                          error "Pipeline aborted due to deployment failed: ${releaseStatus}"
+                                    }
+                               }
+
+                            }
                 }
-                steps {
-                      sh "docker run -d -p 7379:7379 --name account-service rajivbansal2981/account-service:${env.version}"
-                  }
-       }
   }
   post {
        		always {
