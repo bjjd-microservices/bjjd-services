@@ -80,48 +80,47 @@ pipeline {
 
                         //1. Packaging helm chart
                         sh "helm package ${chartPath} --version ${chartVersion}"
-                        sh "helm upgrade --install -n bjjd-system darshan-service darshan-service"
 
-                      sh """
-                       curl -u admin:$NexusRepositoryPassword -v http://localhost:8081/repository/helm_hosted/darshan-service/ --upload-file darshan-service-0.1.0.tgz
-                     """
+                        //2. Pushing helm chart in nexus repository
+                 //     sh """
+                 //      curl -u admin:$NexusRepositoryPassword -v http://localhost:8081/repository/helm_hosted/darshan-service/ --upload-file darshan-service-0.1.0.tgz
+                 //    """
                   }
                 }
 
             }
           }
         }
-        stage('Deploy docker image on kubernetes using helm') {
-                  steps {
-                    script{
-
-                            dir('darshan-service/k8s') {
-
-                                //1. Packaging helm chart
-                             //   sh "helm upgrade --install -n bjjd-system darshan-service darshan-service"
-
-
-
-                        }
-
-                    }
-                  }
+        stage('Deploy helm chart in Kubernetes Environment') {
+                                  steps {
+                                    script{
+                                            dir('darshan-service/k8s') {
+                                                //Deploying helm chart on Kubernetes environment
+                                                sh "helm upgrade --install -n bjjd-system darshan-service darshan-service"
+                                        }
+                                    }
+                                  }
                 }
-        stage('Verify the Deployment on MicroK8s') {
-              steps {
+                stage('Verify the Deployment on Kubernetes Environment') {
+                            steps {
+                               script{
+                                    // Install Helm and any dependencies if necessary
+                                     def RELEASE_NAME = "darshan-service"
 
-                    sh "kubectl version"
-               }
-        }
-       stage('DeployDockerApplicationInJenkinsServer') {
-                when {
-                      branch 'production'
+                                    // Run Helm ls command and capture the status
+                                    def releaseStatus = sh script: "helm ls -n bjjd-system --output json -f ${RELEASE_NAME} | jq -r '.[0].status'", returnStdout: true
+
+                                    // Checking the release status
+                                    if (releaseStatus.toString().trim() == "deployed") {
+                                         echo "Helm chart has been successfully deployed with Release Status: ${releaseStatus}"
+                                    } else {
+                                          error "Pipeline aborted due to deployment failed: ${releaseStatus}"
+                                    }
+                               }
+
+                            }
                 }
-                steps {
-                      sh "docker run -d -p 4379:4379 --name darshan-service rajivbansal2981/darshan-service:${env.version}"
-                  }
-       }
-  }
+          }
   post {
        		always {
        			mail bcc: '', body: "<br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "${currentBuild.result} CI: Project name -> ${env.JOB_NAME}", to: "rajivbansal2981@gmail.com";
