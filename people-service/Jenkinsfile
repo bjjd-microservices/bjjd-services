@@ -82,44 +82,45 @@ pipeline {
                         sh "helm package ${chartPath} --version ${chartVersion}"
 
                         //2. Pushing helm chart in nexus repository
-                      sh """
-                       curl -u admin:$NexusRepositoryPassword -v http://localhost:8081/repository/helm_hosted/people-service/ --upload-file people-service-0.1.0.tgz
-                     """
+                //      sh """
+                //       curl -u admin:$NexusRepositoryPassword -v http://localhost:8081/repository/helm_hosted/people-service/ --upload-file people-service-0.1.0.tgz
+                //     """
                   }
                 }
 
             }
           }
         }
-        stage('Deploy helm chart in Kubernetes Environment') {
-                          steps {
-                            script{
-                                    dir('people-service/k8s') {
-                                        //Deploying helm chart on Kubernetes environment
-                                        sh "helm upgrade --install -n bjjd-system people-service people-service"
-                                }
-                            }
-                          }
-                        }
-                stage('Verify the Deployment on MicroK8s') {
-                    steps {
-                       script{
-                            // Install Helm and any dependencies if necessary
-                            def RELEASE_NAME = "people-service"
-
-                            // Run Helm ls command and capture the status
-                            def releaseStatus = sh script: "helm ls -n bjjd-system --output json -f ${RELEASE_NAME} | jq -r '.[0].status'", returnStdout: true
-
-                            if (releaseStatus.toString().trim() == "deployed") {
-                                 echo "Helm chart has been successfully deployed with Release Status: ${releaseStatus}"
-                            } else {
-                                  error "Pipeline aborted due to deployment failed: ${releaseStatus}"
-                            }
-                       }
-
+    stage('Deploy helm chart in Kubernetes Environment') {
+                                      steps {
+                                        script{
+                                                dir('people-service/k8s') {
+                                                    //Deploying helm chart on Kubernetes environment
+                                                    sh "helm upgrade --install -n bjjd-system people-service people-service"
+                                            }
+                                        }
+                                      }
                     }
-                }
-          }
+    stage('Verify the Deployment on Kubernetes Environment') {
+                                steps {
+                                   script{
+                                        // Install Helm and any dependencies if necessary
+                                         def RELEASE_NAME = "people-service"
+
+                                        // Run Helm ls command and capture the status
+                                        def releaseStatus = sh script: "helm ls -n bjjd-system --output json -f ${RELEASE_NAME} | jq -r '.[0].status'", returnStdout: true
+
+                                        // Checking the release status
+                                        if (releaseStatus.toString().trim() == "deployed") {
+                                             echo "Helm chart has been successfully deployed with Release Status: ${releaseStatus}"
+                                        } else {
+                                              error "Pipeline aborted due to deployment failed: ${releaseStatus}"
+                                        }
+                                   }
+
+                                }
+   }
+  }
   post {
        		always {
        			mail bcc: '', body: "<br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "${currentBuild.result} CI: Project name -> ${env.JOB_NAME}", to: "rajivbansal2981@gmail.com";
