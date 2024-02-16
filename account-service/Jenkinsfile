@@ -81,7 +81,7 @@ pipeline {
                         //1. Packaging helm chart
                         sh "helm package ${chartPath} --version ${chartVersion}"
 
-
+                    //2. Move package to nexus repository
                   //    sh """
                   //     curl -u admin:$NexusRepositoryPassword -v http://localhost:8081/repository/helm_hosted/account-service/ --upload-file account-service-0.1.0.tgz
                   //   """
