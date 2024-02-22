@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Values.namespace}}
 data:
   "spring.active.profile": "prod"
-  "database.hostname": "bjjd.ce5cf1jqfzdf.ap-south-1.rds.amazonaws.com"
+  "database.hostname": "bjjd.c7c08ia24f18.ap-south-1.rds.amazonaws.com"
   "database.root.user": "root" #My sql root password:bjjd
   "database.name": "users_db"
   "database.port": "3306"
