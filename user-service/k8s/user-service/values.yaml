@@ -6,7 +6,7 @@ namespace: "bjjd-system"
 
 config:
    springActiveProfile: "kubernetes"
-   databaseHostname: "bjjd.c7c08ia24f18.ap-south-1.rds1.amazonaws.com"
+   databaseHostname: "bjjd.c7c08ia24f18.ap-south-1.rds.amazonaws.com"
    databaseRootUser: "root"
    databaseName: "users_db"
    databasePort: "3306"
