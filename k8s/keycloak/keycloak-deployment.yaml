@@ -21,7 +21,8 @@ spec:
       restartPolicy: Always
       containers:
         - name: keycloak
-          image: jboss/keycloak:3.4.3.Final
+          image: quay.io/keycloak/keycloak:21.0.2
+          args: ["start-dev"]
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
@@ -38,13 +39,17 @@ spec:
               value: "DEBUG"
             - name: PROXY_ADDRESS_FORWARDING
               value: "true"
-            - name: KEYCLOAK_USER
+            - name: KEYCLOAK_ADMIN
               value: "admin"
-            - name: KEYCLOAK_PASSWORD
+            - name: KEYCLOAK_ADMIN_PASSWORD
               value: "password"
-            - name: POSTGRES_USER
+            - name: KC_DB
+              value: postgres
+            - name: KC_DB_URL
+              value: "jdbc:postgresql://postgres/keycloak-db"
+            - name: KC_DB_USERNAME
               value: "admin"
-            - name: POSTGRES_PASSWORD
+            - name: KC_DB_PASSWORD
               value: "password"
             - name: POSTGRES_PORT_5432_TCP_ADDR
               value: "postgres"
@@ -52,3 +57,7 @@ spec:
               value: "5432"
             - name: POSTGRES_DATABASE
               value: "keycloak-db"
+            - name: KC_METRICS_ENABLED
+              value: "true"
+            - name: KC_HOSTNAME_STRICT_HTTPS
+              value: "true"

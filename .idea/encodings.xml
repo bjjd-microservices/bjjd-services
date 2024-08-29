@@ -2,7 +2,6 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/../aws-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../aws-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../bjjd-microservices/eureka-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../bjjd-microservices/eureka-server/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../bjjd-microservices/kafka-consumer-service/src/main/java" charset="UTF-8" />
@@ -19,7 +18,6 @@
     <file url="file://$PROJECT_DIR$/cloud-gateway-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cloud-gateway-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/common-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/common-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/config-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/config-server/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/darshan-service/src/main/java" charset="UTF-8" />
@@ -36,8 +34,13 @@
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/user-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../cloud-gateway-service/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../cloud-gateway-service/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../config-server/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../config-server/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../eureka-server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../eureka-server/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../kafka-consumer-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../kafka-consumer-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../kafka-producer-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../kafka-producer-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../message-sender-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../message-sender-service/src/main/resources" charset="UTF-8" />
   </component>
 </project>
