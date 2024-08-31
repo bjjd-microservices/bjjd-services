@@ -60,7 +60,7 @@ public class HazelcastCacheConfiguration {
 		Config config = new Config();
 		config.addMapConfig(projectCacheByCodeMapConfig());
 		config.setInstanceName("ProjectService");
-		config.getNetworkConfig().setPort(5702);
+		config.getNetworkConfig().setPort(5701);
 		config.getNetworkConfig().setPortAutoIncrement(true);
 		
 		/*
