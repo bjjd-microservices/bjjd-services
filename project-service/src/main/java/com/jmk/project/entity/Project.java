@@ -40,7 +40,7 @@ public class Project implements Serializable{
 	@Column(name = "name")
 	private String name = null;
 	
-	@Column(name="code",unique=true)
+	@Column(name="code")
 	private String code=null;
 
 
