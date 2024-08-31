@@ -75,8 +75,10 @@ public class HazelcastCacheConfiguration {
 		 */
 		config.getNetworkConfig().getJoin().getKubernetesConfig().setEnabled(true);
 		System.setProperty("hazelcast-service.default.svc.cluster.local", "service-dns");
+		log.error("We are in kubernetes profile");
 		// In development, remove multicast auto-configuration
 		if (activeProfile.equals("dev")) {
+			log.error("We are in dev profile ***********************************************");
 			System.setProperty("hazelcast.local.localAddress", "127.0.0.1");
 
 			config.getNetworkConfig().getJoin().getAwsConfig().setEnabled(false);
