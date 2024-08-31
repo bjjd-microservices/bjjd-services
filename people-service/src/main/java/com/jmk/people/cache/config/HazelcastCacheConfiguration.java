@@ -16,9 +16,11 @@ import com.hazelcast.config.MaxSizePolicy;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.spring.cache.HazelcastCacheManager;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
 @EnableCaching
+@Profile({ "kubernetes","dev" })
 public class HazelcastCacheConfiguration {
 
 	private final Logger log = LoggerFactory.getLogger(HazelcastCacheConfiguration.class);
