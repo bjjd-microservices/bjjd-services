@@ -44,19 +44,19 @@ spec:
             httpGet:
               path: /api/project-service/project/
               port: http
-            initialDelaySeconds: 90
+            initialDelaySeconds: 120
             periodSeconds: 10
             successThreshold: 1
-            failureThreshold: 3
+            failureThreshold: 5
             timeoutSeconds: 60
           livenessProbe:
             httpGet:
               path: /api/project-service/project/
               port: http
-            initialDelaySeconds: 90
+            initialDelaySeconds: 120
             periodSeconds: 10
             successThreshold: 1
-            failureThreshold: 3
+            failureThreshold: 5
             timeoutSeconds: 10
           envFrom:
             - configMapRef:
