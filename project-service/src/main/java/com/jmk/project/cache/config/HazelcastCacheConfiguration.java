@@ -18,7 +18,7 @@ import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.spring.cache.HazelcastCacheManager;
 
-@Configuration
+//@Configuration
 @EnableCaching
 @Profile({ "kubernetes","dev" })
 public class HazelcastCacheConfiguration {
@@ -74,7 +74,7 @@ public class HazelcastCacheConfiguration {
 		 * namespace.
 		 */
 		config.getNetworkConfig().getJoin().getKubernetesConfig().setEnabled(true);
-		System.setProperty("hazelcast-service.bjjd-system.svc.cluster.local", "service-dns");
+		System.setProperty("hazelcast-service.default.svc.cluster.local", "service-dns");
 		log.error("We are in kubernetes profile");
 		// In development, remove multicast auto-configuration
 		if (activeProfile.equals("dev")) {
