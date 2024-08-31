@@ -39,7 +39,7 @@ spec:
               containerPort: {{ .Values.service.port }}
               protocol: TCP
             - name: multicast
-              containerPort: 5701 # The port that Hazelcast exposes
+              containerPort: 5702 # The port that Hazelcast exposes
           readinessProbe:
             httpGet:
               path: /api/project-service/project/

@@ -12,7 +12,7 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
-    - port: 5701
+    - port: 5702
       name: hazelcast
   selector:
     {{- include "project-service.selectorLabels" . | nindent 4 }}
