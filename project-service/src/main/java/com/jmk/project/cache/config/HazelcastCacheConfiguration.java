@@ -60,7 +60,7 @@ public class HazelcastCacheConfiguration {
 		Config config = new Config();
 		config.addMapConfig(projectCacheByCodeMapConfig());
 		config.setInstanceName("ProjectService");
-		config.getNetworkConfig().setPort(5701);
+		config.getNetworkConfig().setPort(5702);
 		config.getNetworkConfig().setPortAutoIncrement(true);
 		
 		/*
@@ -75,8 +75,8 @@ public class HazelcastCacheConfiguration {
 		 */
 		config.getNetworkConfig().getJoin().getKubernetesConfig().setEnabled(true);
 
-		//		System.setProperty("service-dns-timeout","10");
-//		System.setProperty("service-dns","hazelcast.bjjd-system.svc.cluster.local");
+	//	System.setProperty("service-dns-timeout","10");
+    //	System.setProperty("service-dns","hazelcast.bjjd-system.svc.cluster.local");
 
 		log.error("We are in kubernetes profile");
 		// In development, remove multicast auto-configuration
