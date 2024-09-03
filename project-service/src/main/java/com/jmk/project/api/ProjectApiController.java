@@ -69,39 +69,23 @@ public class ProjectApiController implements ProjectApi {
 
 	public ResponseEntity<Project> findProjectDetailsById(
 			@ApiParam(value = "Project Id", required = true) @PathVariable("id") Long id) {
-		String accept = request.getHeader("Accept");
-		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
-				|| accept.contains("*")) {
 			Project project = projectService.findProjectDetailsById(id);
 			return new ResponseEntity<Project>(project, HttpStatus.OK);
-		}
-		return new ResponseEntity<Project>(HttpStatus.NOT_IMPLEMENTED);
 	}
 	
 	public ResponseEntity<Project> findProjectByCode(
 			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel,
 			@ApiParam(value = "") @Valid @RequestParam(value = "code", required = false) String code) {
-		String accept = request.getHeader("Accept");
-		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
-				|| accept.contains("*")) {
 			Project project = projectService.findProjectByCode(code);
 			return new ResponseEntity<Project>(project, HttpStatus.OK);
-		}
-		return new ResponseEntity<Project>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
 	public ResponseEntity<List<Project>> findProjectsByStatus(
 			@ApiParam(value = "xChannel") @RequestHeader(value = "xChannel", required = false) String xChannel,
 			@ApiParam(value = "The status to restrict the results to.  If not provided, all records are returned", allowableValues = "A, I") @Valid @RequestParam(value = "status", required = false) String status) {
-		String accept = request.getHeader("Accept");
 		String username = request.getHeader("username");
-		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
-				|| accept.contains("*")) {
-			List<Project> projects = projectService.findAllProjectsByStatus(Status.A);
-			return new ResponseEntity<List<Project>>(projects, HttpStatus.OK);
-		}
-
-		return new ResponseEntity<List<Project>>(HttpStatus.NOT_IMPLEMENTED);
+		List<Project> projects = projectService.findAllProjectsByStatus(Status.A);
+		return new ResponseEntity<List<Project>>(projects, HttpStatus.OK);
 	}
 	
 	public ResponseEntity<List<Project>> createProjects(
