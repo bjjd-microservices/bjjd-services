@@ -87,7 +87,8 @@ public interface ProjectApi {
         @ApiResponse(code = 200, message = "OK", response = Project.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid status value"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @GetMapping(value = "/findByStatus")
+    @GetMapping(value = "/findByStatus",
+        produces = { "application/json" })
     ResponseEntity<List<Project>> findProjectsByStatus(@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel,@ApiParam(value = "The status to restrict the results to.  If not provided, all records are returned", allowableValues = "A, I") @Valid @RequestParam(value = "status", required = false) String status);
 
     @ApiOperation(value = "Find the project by code", nickname = "findProjectByCode", notes = "Find the project by code", response = Project.class, tags={ "ProjectMgmt", })
