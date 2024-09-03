@@ -96,10 +96,8 @@ public interface ProjectApi {
         @ApiResponse(code = 200, message = "OK", response = Project.class),
         @ApiResponse(code = 400, message = "Invalid Project Code"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/findProjectByCode",
-        produces = { "application/json", "application/xml" }, 
-        consumes = { "application/json", "application/xml" },
-        method = RequestMethod.GET)
+    @GetMapping(value = "/findProjectByCode",
+            produces = { "application/json" })
     ResponseEntity<Project> findProjectByCode(@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel,@ApiParam(value = "") @Valid @RequestParam(value = "code", required = false) String code);
 
     @ApiOperation(value = "Update Project Details based on the project id", nickname = "updateProjectById", notes = "Update Project Details based on the project id", response = Project.class, tags={ "ProjectMgmt", })
