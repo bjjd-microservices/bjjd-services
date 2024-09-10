@@ -97,7 +97,7 @@ public interface ProjectApi {
         @ApiResponse(code = 400, message = "Invalid Project name supplied"),
         @ApiResponse(code = 404, message = "Project not found or inactive"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @PutMapping(value = "/{id}",
+    @PutMapping(value = "updateProject/{id}",
         produces = { "application/json", "application/xml" },
         consumes = { "application/json", "application/xml" })
     ResponseEntity<Project> updateProjectById(@ApiParam(value = "Project Id",required=true) @PathVariable("id") Long id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Project body);
