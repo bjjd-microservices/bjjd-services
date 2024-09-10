@@ -33,10 +33,9 @@ public interface ProjectApi {
         @ApiResponse(code = 200, message = "OK", response = Project.class),
         @ApiResponse(code = 400, message = "Bad Request"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/",
+    @PostMapping(value = "/",
         produces = { "application/json", "application/xml" }, 
-        consumes = { "application/json", "application/xml" },
-        method = RequestMethod.POST)
+        consumes = { "application/json", "application/xml" })
     ResponseEntity<Project> createProject(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Project body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
 
 
@@ -44,10 +43,8 @@ public interface ProjectApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Successfully found"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/createProjects",
-        produces = { "application/json" }, 
-        consumes = { "application/json" },
-        method = RequestMethod.POST)
+    @PostMapping(value = "/createProjects", produces = { "application/json", "application/xml" },
+        consumes = { "application/json", "application/xml" })
     ResponseEntity<List<Project>> createProjects(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Project> body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
 
     @ApiOperation(value = "Project Deletion Service based on the project id", nickname = "deleteProjectById", notes = "Project Deletion Service based on the project id", tags={ "ProjectMgmt", })
@@ -56,10 +53,7 @@ public interface ProjectApi {
         @ApiResponse(code = 400, message = "Invalid User id supplied"),
         @ApiResponse(code = 404, message = "Project Id not found"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/{id}",
-        produces = { "application/json" }, 
-        consumes = { "application/json" },
-        method = RequestMethod.DELETE)
+    @DeleteMapping(value = "deleteById/{id}")
     ResponseEntity<Void> deleteProjectById(@ApiParam(value = "Project Id",required=true) @PathVariable("id") Long id);
     
     @ApiOperation(value = "Project Deletion Service based on the project code", nickname = "deleteProjectByProjectCode", notes = "Project Deletion Service based on the project code", tags={ "ProjectMgmt", })
@@ -68,8 +62,7 @@ public interface ProjectApi {
         @ApiResponse(code = 400, message = "Invalid project code supplied"),
         @ApiResponse(code = 404, message = "Project code not found"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/deleteByProjectCode", produces = { "application/json" }, consumes = {
-	"application/json" }, method = RequestMethod.DELETE)
+    @DeleteMapping(value = "deleteByProjectCode/{projectCode}")
     ResponseEntity<Integer> deleteProjectByProjectCode(@ApiParam(value = "Project Id",required=true) @PathVariable("projectCode") String projectCode);
 
     @ApiOperation(value = "Find Project Details based on the project id", nickname = "findProjectDetailsById", notes = "Find Project Details based on the project id", response = Project.class, tags={ "ProjectMgmt", })
@@ -104,10 +97,9 @@ public interface ProjectApi {
         @ApiResponse(code = 400, message = "Invalid Project name supplied"),
         @ApiResponse(code = 404, message = "Project not found or inactive"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/{id}",
-        produces = { "application/json" }, 
-        consumes = { "application/json" },
-        method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}",
+        produces = { "application/json", "application/xml" },
+        consumes = { "application/json", "application/xml" })
     ResponseEntity<Project> updateProjectById(@ApiParam(value = "Project Id",required=true) @PathVariable("id") Long id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Project body);
 
 }

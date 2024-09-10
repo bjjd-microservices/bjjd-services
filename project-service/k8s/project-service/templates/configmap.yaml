@@ -11,3 +11,4 @@ data:
   database_port: {{ .Values.config.databasePort | quote }}
   database_username: {{ .Values.config.databaseUsername | quote }}
   spring.cloud.vault.host: "192.168.49.1"
+  spring.cloud.vault.token: "root"

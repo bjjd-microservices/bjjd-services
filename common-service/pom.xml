@@ -45,9 +45,8 @@
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
 		<dependency>
-			<groupId>org.hibernate</groupId>
+			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>6.2.5.Final</version>
 		</dependency>
 
 
@@ -55,7 +54,7 @@
 	    <dependency>
 			<groupId>org.modelmapper</groupId>
 			<artifactId>modelmapper</artifactId>
-			<version>3.0.0</version>
+			<version>3.2.0</version>
 		</dependency>
 		<!-- Spring Cloud Open Feign Client to handle the Feign Exceptions -->
 		<dependency>
