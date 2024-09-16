@@ -41,6 +41,19 @@ public class ProjectServiceImpl  implements ProjectService {
 	}
 
 	@Override
+	public List<Project> saveProjects(List<Project> projectModels) {
+		List<com.jmk.project.entity.Project> projectEntities=projectModels.stream().map(projectModel->modelMapper.map(projectModel,com.jmk.project.entity.Project.class)).collect(Collectors.toList());
+		Iterable<com.jmk.project.entity.Project> iterableProjects=projectRespository.saveAll(projectEntities);
+		projectModels=StreamSupport.stream(iterableProjects.spliterator(),false).map(projectEntity->modelMapper.map(projectEntity, Project.class)).collect(Collectors.toList());
+		return projectModels;
+	}
+
+	/**
+	 * @param projectModel
+	 * @return
+	 */
+
+	@Override
 	@Cacheable(value="projectCacheByCode",key="#code",unless="#result == null")
 	public Project findProjectByCode(String code) {
 		Project projectModel=null;
@@ -52,37 +65,52 @@ public class ProjectServiceImpl  implements ProjectService {
 	}
 	
 	@Override
-	@CacheEvict(value = "projectCacheByCode", key = "#code")
-	public void deleteProjectById(Long id) {
-		projectRespository.deleteById(id);;
-	}
-
-	
-	@Override
-	public Project findProjectDetailsById(Long id) {
+	public Project findProjectById(Long id) {
 		Optional<com.jmk.project.entity.Project> optionalProject= projectRespository.findById(id);
-		if(!optionalProject.isPresent()) {
+		if(optionalProject.isEmpty()) {
 			throw new EntityNotFoundException(Project.class,"id",id.toString());
 		}
 		Project projectModel=modelMapper.map(optionalProject.get(),Project.class);
 		return projectModel;
 	}
 
-	
+
 	@Override
-	public List<Project> saveProjects(List<Project> projectModels) {
-		List<com.jmk.project.entity.Project> projectEntities=projectModels.stream().map(projectModel->modelMapper.map(projectModel,com.jmk.project.entity.Project.class)).collect(Collectors.toList());
-		Iterable<com.jmk.project.entity.Project> iterableProjects=projectRespository.saveAll(projectEntities);
+	public List<Project> findProjectsByStatus(Status status) {
+		List<Project> projectModels=new ArrayList<>();
+		Iterable<com.jmk.project.entity.Project> iterableProjects=projectRespository.findAll();
+		projectModels=StreamSupport.stream(iterableProjects.spliterator(),false).map(projectEntity->modelMapper.map(projectEntity, Project.class)).collect(Collectors.toList());
+		return projectModels;
+	}
+
+	/**
+	 * @return
+	 */
+	@Override
+	public List<Project> findAllProjects() {
+		List<Project> projectModels=new ArrayList<>();
+		Iterable<com.jmk.project.entity.Project> iterableProjects=projectRespository.findAll();
 		projectModels=StreamSupport.stream(iterableProjects.spliterator(),false).map(projectEntity->modelMapper.map(projectEntity, Project.class)).collect(Collectors.toList());
 		return projectModels;
 	}
 
 	@Override
-	public List<Project> findAllProjectsByStatus(Status status) {
-		List<Project> projectModels=new ArrayList<>();
-		Iterable<com.jmk.project.entity.Project> iterableProjects=projectRespository.findAll();
-		projectModels=StreamSupport.stream(iterableProjects.spliterator(),false).map(projectEntity->modelMapper.map(projectEntity, Project.class)).collect(Collectors.toList());
-		return projectModels;
+	public Project updateProject(Long id,Project projectModel) {
+		Optional<com.jmk.project.entity.Project> optionalProject= projectRespository.findById(id);
+		if(optionalProject.isEmpty()) {
+			throw new EntityNotFoundException(Project.class,"id",id.toString());
+		}
+		com.jmk.project.entity.Project projectEntity=modelMapper.map(projectModel, com.jmk.project.entity.Project.class);
+		projectEntity.setId(id);
+		projectEntity=projectRespository.save(projectEntity);
+		projectModel=modelMapper.map(projectEntity,Project.class);
+		return projectModel;
+	}
+
+
+	@Override
+	public void deleteProjectById(Long id) {
+		projectRespository.deleteById(id);;
 	}
 
 	@Override

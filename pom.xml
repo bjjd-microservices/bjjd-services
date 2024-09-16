@@ -196,11 +196,12 @@
 			<spring.profiles.active>dev</spring.profiles.active>
 		</properties>
 		<dependencies>
+			<!-- Removed logstash dependency temporary
 			<dependency>
 				<groupId>net.logstash.logback</groupId>
 				<artifactId>logstash-logback-encoder</artifactId>
 				<version>6.6</version>
-			</dependency>
+			</dependency>-->
 			<!-- Zipkin:distributed tracing system which provides a UI to see the traces -->
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>

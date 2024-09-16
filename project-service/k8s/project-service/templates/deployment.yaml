@@ -42,7 +42,7 @@ spec:
               containerPort: 5701 # The port that Hazelcast exposes
           readinessProbe:
             httpGet:
-              path: /api/project-service/project/
+              path: /api/project-service/v1/projects/health
               port: http
             initialDelaySeconds: 120
             periodSeconds: 10
@@ -51,7 +51,7 @@ spec:
             timeoutSeconds: 60
           livenessProbe:
             httpGet:
-              path: /api/project-service/project/
+              path: /api/project-service/v1/projects/health
               port: http
             initialDelaySeconds: 120
             periodSeconds: 10

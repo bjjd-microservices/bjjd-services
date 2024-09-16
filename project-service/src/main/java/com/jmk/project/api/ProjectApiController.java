@@ -1,5 +1,6 @@
 package com.jmk.project.api;
 
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +28,7 @@ import com.jmk.project.service.ProjectService;
 import com.jmk.user.model.User;
 
 import io.swagger.annotations.ApiParam;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-06T22:35:14.568+05:30")
 @RestController
@@ -46,7 +48,7 @@ public class ProjectApiController implements ProjectApi {
 		this.request = request;
 	}
 
-	public String appUpAndRunning() {
+	public String checkHealth() {
 		return "{healthy:true}";
 	}
 
@@ -62,32 +64,17 @@ public class ProjectApiController implements ProjectApi {
 				enrichCommonDetails(project, user);
 			}
 			project = projectService.saveProject(project);
-			return new ResponseEntity<Project>(project, HttpStatus.OK);
+			URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+					.path("/id/{id}")
+					.buildAndExpand(project.getId())
+					.toUri();
+
+			return ResponseEntity.created(location)
+					.build();
 		}
 		return new ResponseEntity<Project>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	public ResponseEntity<Project> findProjectDetailsById(
-			@ApiParam(value = "Project Id", required = true) @PathVariable("id") Long id) {
-			Project project = projectService.findProjectDetailsById(id);
-			return new ResponseEntity<Project>(project, HttpStatus.OK);
-	}
-	
-	public ResponseEntity<Project> findProjectByCode(
-			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel,
-			@ApiParam(value = "") @Valid @RequestParam(value = "code", required = false) String code) {
-			Project project = projectService.findProjectByCode(code);
-			return new ResponseEntity<Project>(project, HttpStatus.OK);
-	}
-
-	public ResponseEntity<List<Project>> findProjectsByStatus(
-			@ApiParam(value = "xChannel") @RequestHeader(value = "xChannel", required = false) String xChannel,
-			@ApiParam(value = "The status to restrict the results to.  If not provided, all records are returned", allowableValues = "A, I") @Valid @RequestParam(value = "status", required = false) String status) {
-		String username = request.getHeader("username");
-		List<Project> projects = projectService.findAllProjectsByStatus(Status.A);
-		return new ResponseEntity<List<Project>>(projects, HttpStatus.OK);
-	}
-	
 	public ResponseEntity<List<Project>> createProjects(
 			@ApiParam(value = "", required = true) @Valid @RequestBody List<Project> projects,
 			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel) {
@@ -108,10 +95,38 @@ public class ProjectApiController implements ProjectApi {
 		return new ResponseEntity<List<Project>>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
+	/**
+	 * @return 
+	 */
+	@Override
+	public ResponseEntity<List<Project>> findAllProjects() {
+		List<Project> projects = projectService.findAllProjects();
+		if (projects != null) {
+			return new ResponseEntity<List<Project>>(projects, HttpStatus.OK);
+		}
+		return new ResponseEntity<List<Project>>(HttpStatus.NOT_IMPLEMENTED);
+	}
 
-	public ResponseEntity<Project> updateProjectById(
-			@ApiParam(value = "Project Id", required = true) @PathVariable("id") Long id,
-			@ApiParam(value = "", required = true) @Valid @RequestBody Project project) {
+
+	public ResponseEntity<Project> findProjectById(Long id) {
+			Project project = projectService.findProjectById(id);
+			return new ResponseEntity<Project>(project, HttpStatus.OK);
+	}
+	
+	public ResponseEntity<Project> findProjectByCode(String code) {
+			Project project = projectService.findProjectByCode(code);
+			return new ResponseEntity<Project>(project, HttpStatus.OK);
+	}
+
+	public ResponseEntity<List<Project>> findProjectsByStatus(String status) {
+		String username = request.getHeader("username");
+		List<Project> projects = projectService.findProjectsByStatus(Status.A);
+		return new ResponseEntity<List<Project>>(projects, HttpStatus.OK);
+	}
+
+
+
+public ResponseEntity<Project> updateProject(Long id,Project project) {
 		String accept = request.getHeader("Accept");
 		String username = request.getHeader("username");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
@@ -120,8 +135,14 @@ public class ProjectApiController implements ProjectApi {
 				User user = userServiceClient.findUserDetailsByUserName(username).getBody();
 				enrichCommonDetails(project, user);
 			}
-			project = projectService.saveProject(project);
-			return new ResponseEntity<Project>(project, HttpStatus.OK);
+			project = projectService.updateProject(id,project);
+			URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+					.path("id/{id}")
+					.buildAndExpand(project.getId())
+					.toUri();
+
+			return ResponseEntity.created(location)
+					.build();
 		}
 
 		return new ResponseEntity<Project>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -134,6 +155,11 @@ public class ProjectApiController implements ProjectApi {
 		return ResponseEntity.noContent().build();
 	}
 
+	@Override
+	public ResponseEntity<Integer> deleteProjectByCode(String projectCode) {
+		Integer deleteRecords=projectService.deleteProjectByProjectCode(projectCode);
+		return new ResponseEntity<Integer>(deleteRecords,HttpStatus.OK);
+	}
 
 	private Project enrichCommonDetails(Project project, User user) {
 		if (project.getId() == null) {
@@ -144,12 +170,6 @@ public class ProjectApiController implements ProjectApi {
 		project.setWhenModified(LocalDateTime.now());
 		project.setModifiedBy(user.getId());
 		return project;
-	}
-
-	@Override
-	public ResponseEntity<Integer> deleteProjectByProjectCode(@ApiParam(value = "projectCode") @Valid @RequestParam(value = "projectCode", required = true) String projectCode) {
-		Integer deleteRecords=projectService.deleteProjectByProjectCode(projectCode);
-		return new ResponseEntity<Integer>(deleteRecords,HttpStatus.OK);
 	}
 
 }

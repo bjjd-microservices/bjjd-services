@@ -21,85 +21,96 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-06T22:35:14.568+05:30")
 
-@Api(value = "project", description = "the project API")
-@RequestMapping(value = "/project")
+@Api(value = "project-service", description = "the project API")
+@RequestMapping(value = "v1/projects")
 public interface ProjectApi {
 
-    @GetMapping(path = "/")
-    public String appUpAndRunning() ;
+    @ApiOperation(value = "Project Service health check", nickname = "healthcheck", notes = "Project Service health check", response = Project.class, tags={ "project-service", })
+    @GetMapping(path = "/health")
+    public String checkHealth() ;
 
-    @ApiOperation(value = "Project Creation Service", nickname = "createProject", notes = "Project Creation Service", response = Project.class, tags={ "ProjectMgmt", })
+    @ApiOperation(value = "Project Creation Service", nickname = "createProject", notes = "Project Creation Service", response = Project.class, tags={ "project-service", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = Project.class),
         @ApiResponse(code = 400, message = "Bad Request"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @PostMapping(value = "/",
-        produces = { "application/json", "application/xml" }, 
+    @PostMapping(produces = { "application/json", "application/xml" },
         consumes = { "application/json", "application/xml" })
     ResponseEntity<Project> createProject(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Project body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
 
-
-    @ApiOperation(value = "Project Creation with input arrays Service", nickname = "createProjects", notes = "Project Finding Service", tags={ "ProjectMgmt", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Successfully found"),
-        @ApiResponse(code = 500, message = "Internal Server Error") })
-    @PostMapping(value = "/createProjects", produces = { "application/json", "application/xml" },
-        consumes = { "application/json", "application/xml" })
+    @ApiOperation(value = "Project Creation Service with input arrays", nickname = "createProjects", notes = "Project Finding Service", tags={ "project-service", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully found"),
+            @ApiResponse(code = 500, message = "Internal Server Error") })
+    @PostMapping(value = "/bulk", produces = { "application/json", "application/xml" },
+            consumes = { "application/json", "application/xml" })
     ResponseEntity<List<Project>> createProjects(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Project> body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
 
-    @ApiOperation(value = "Project Deletion Service based on the project id", nickname = "deleteProjectById", notes = "Project Deletion Service based on the project id", tags={ "ProjectMgmt", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Project deleted succussfully"),
-        @ApiResponse(code = 400, message = "Invalid User id supplied"),
-        @ApiResponse(code = 404, message = "Project Id not found"),
-        @ApiResponse(code = 500, message = "Internal Server Error") })
-    @DeleteMapping(value = "deleteById/{id}")
-    ResponseEntity<Void> deleteProjectById(@ApiParam(value = "Project Id",required=true) @PathVariable("id") Long id);
-    
-    @ApiOperation(value = "Project Deletion Service based on the project code", nickname = "deleteProjectByProjectCode", notes = "Project Deletion Service based on the project code", tags={ "ProjectMgmt", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Project deleted succussfully"),
-        @ApiResponse(code = 400, message = "Invalid project code supplied"),
-        @ApiResponse(code = 404, message = "Project code not found"),
-        @ApiResponse(code = 500, message = "Internal Server Error") })
-    @DeleteMapping(value = "deleteByProjectCode/{projectCode}")
-    ResponseEntity<Integer> deleteProjectByProjectCode(@ApiParam(value = "Project Id",required=true) @PathVariable("projectCode") String projectCode);
 
-    @ApiOperation(value = "Find Project Details based on the project id", nickname = "findProjectDetailsById", notes = "Find Project Details based on the project id", response = Project.class, tags={ "ProjectMgmt", })
+    @ApiOperation(value = "Find Project Details based on the project id", nickname = "findProjectDetailsById", notes = "Find Project Details based on the project id", response = Project.class, tags={ "project-service", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully found", response = Project.class),
+            @ApiResponse(code = 400, message = "Invalid Project name and password supplied"),
+            @ApiResponse(code = 404, message = "Project not found or inactive"),
+            @ApiResponse(code = 500, message = "Internal Server Error") })
+    @GetMapping
+    ResponseEntity<List<Project>> findAllProjects();
+
+    @ApiOperation(value = "Find Project Details based on the project id", nickname = "findProjectDetailsById", notes = "Find Project Details based on the project id", response = Project.class, tags={ "project-service", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Successfully found", response = Project.class),
         @ApiResponse(code = 400, message = "Invalid Project name and password supplied"),
         @ApiResponse(code = 404, message = "Project not found or inactive"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @GetMapping(value = "/{id}")
-    ResponseEntity<Project> findProjectDetailsById(@ApiParam(value = "Project Id",required=true) @PathVariable("id") Long id);
+    @GetMapping(value = "/id/{id}")
+    ResponseEntity<Project> findProjectById(@ApiParam(value = "Project Id",required=true) @PathVariable("id") Long id);
 
 
-    @ApiOperation(value = "Find all the projects by status", nickname = "findProjectsByStatus", notes = "Find all the projects by status", response = Project.class, responseContainer = "List", tags={ "ProjectMgmt", })
+    @ApiOperation(value = "Find all the projects by status", nickname = "findProjectsByStatus", notes = "Find all the projects by status", response = Project.class, responseContainer = "List", tags={ "project-service", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = Project.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid status value"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @GetMapping(value = "/findByStatus",produces = { "application/json" })
-    ResponseEntity<List<Project>> findProjectsByStatus(@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel,@ApiParam(value = "The status to restrict the results to.  If not provided, all records are returned", allowableValues = "A, I") @Valid @RequestParam(value = "status", required = false) String status);
+    @GetMapping(value = "status/{status}",produces = { "application/json" })
+    ResponseEntity<List<Project>> findProjectsByStatus(@ApiParam(value = "Project Status",required=true) @PathVariable("status") String status);
 
-    @ApiOperation(value = "Find the project by code", nickname = "findProjectByCode", notes = "Find the project by code", response = Project.class, tags={ "ProjectMgmt", })
+    @ApiOperation(value = "Find the project by code", nickname = "findProjectByCode", notes = "Find the project by code", response = Project.class, tags={ "project-service", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = Project.class),
         @ApiResponse(code = 400, message = "Invalid Project Code"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @GetMapping(value = "/findProjectByCode",produces = { "application/json" })
-    ResponseEntity<Project> findProjectByCode(@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel,@ApiParam(value = "") @Valid @RequestParam(value = "code", required = false) String code);
+    @GetMapping(value = "code/{code}",produces = { "application/json" })
+    ResponseEntity<Project> findProjectByCode(@ApiParam(value = "Project code",required=true) @PathVariable("code") String code);
 
-    @ApiOperation(value = "Update Project Details based on the project id", nickname = "updateProjectById", notes = "Update Project Details based on the project id", response = Project.class, tags={ "ProjectMgmt", })
+    @ApiOperation(value = "Update Project Details based on the project id", nickname = "updateProjectById", notes = "Update Project Details based on the project id", response = Project.class, tags={ "project-service", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Successfully found", response = Project.class),
         @ApiResponse(code = 400, message = "Invalid Project name supplied"),
         @ApiResponse(code = 404, message = "Project not found or inactive"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @PutMapping(value = "updateProject/{id}",
+    @PutMapping(value = "/{id}",
         produces = { "application/json", "application/xml" },
         consumes = { "application/json", "application/xml" })
-    ResponseEntity<Project> updateProjectById(@ApiParam(value = "Project Id",required=true) @PathVariable("id") Long id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Project body);
+    ResponseEntity<Project> updateProject(@ApiParam(value = "Project Id",required=true) @PathVariable("id") Long id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Project project);
+
+
+    @ApiOperation(value = "Project Deletion Service based on the project id", nickname = "deleteProjectById", notes = "Project Deletion Service based on the project id", tags={ "project-service", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Project deleted succussfully"),
+            @ApiResponse(code = 400, message = "Invalid User id supplied"),
+            @ApiResponse(code = 404, message = "Project Id not found"),
+            @ApiResponse(code = 500, message = "Internal Server Error") })
+    @DeleteMapping(value = "/id/{id}")
+    ResponseEntity<Void> deleteProjectById(@ApiParam(value = "Project Id",required=true) @PathVariable("id") Long id);
+
+    @ApiOperation(value = "Project Deletion Service based on the project code", nickname = "deleteProjectByProjectCode", notes = "Project Deletion Service based on the project code", tags={ "project-service", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Project deleted succussfully"),
+            @ApiResponse(code = 400, message = "Invalid project code supplied"),
+            @ApiResponse(code = 404, message = "Project code not found"),
+            @ApiResponse(code = 500, message = "Internal Server Error") })
+    @DeleteMapping(value = "/code/{code}")
+    ResponseEntity<Integer> deleteProjectByCode(@ApiParam(value = "Project Code",required=true) @PathVariable("code") String code);
+
 
 }

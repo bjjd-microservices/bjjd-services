@@ -8,14 +8,18 @@ import com.jmk.project.model.Project;
 public interface ProjectService   {
 
 	Project saveProject(Project project);
+
+	Project updateProject(Long id,Project project);
 	
-	Project findProjectDetailsById(Long id);
+	Project findProjectById(Long id);
 	
 	void deleteProjectById(Long id);
 	
 	List<Project> saveProjects(List<Project> project);
 
-	List<Project> findAllProjectsByStatus(Status status);
+	List<Project> findProjectsByStatus(Status status);
+
+	List<Project> findAllProjects();
 	
 	Project findProjectByCode(String code);
 	
