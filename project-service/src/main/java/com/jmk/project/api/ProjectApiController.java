@@ -65,7 +65,7 @@ public class ProjectApiController implements ProjectApi {
 			}
 			project = projectService.saveProject(project);
 			URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-					.path("/id/{id}")
+					.path("/{id}")
 					.buildAndExpand(project.getId())
 					.toUri();
 
@@ -137,7 +137,7 @@ public ResponseEntity<Project> updateProject(Long id,Project project) {
 			}
 			project = projectService.updateProject(id,project);
 			URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-					.path("id/{id}")
+					.path("/{id}")
 					.buildAndExpand(project.getId())
 					.toUri();
 

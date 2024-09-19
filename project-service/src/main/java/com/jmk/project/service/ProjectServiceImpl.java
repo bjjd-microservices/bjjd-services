@@ -49,21 +49,17 @@ public class ProjectServiceImpl  implements ProjectService {
 	}
 
 	/**
-	 * @param projectModel
 	 * @return
 	 */
-
 	@Override
-	@Cacheable(value="projectCacheByCode",key="#code",unless="#result == null")
-	public Project findProjectByCode(String code) {
-		Project projectModel=null;
-		com.jmk.project.entity.Project projectEntity=projectRespository.findByCode(code);
-		if(projectEntity!=null) {
-		 projectModel=modelMapper.map(projectEntity, Project.class);
-		}
-		return projectModel;
+	public List<Project> findAllProjects() {
+		List<Project> projectModels=new ArrayList<>();
+		Iterable<com.jmk.project.entity.Project> iterableProjects=projectRespository.findAll();
+		projectModels=StreamSupport.stream(iterableProjects.spliterator(),false).map(projectEntity->modelMapper.map(projectEntity, Project.class)).collect(Collectors.toList());
+		return projectModels;
 	}
-	
+
+
 	@Override
 	public Project findProjectById(Long id) {
 		Optional<com.jmk.project.entity.Project> optionalProject= projectRespository.findById(id);
@@ -78,21 +74,29 @@ public class ProjectServiceImpl  implements ProjectService {
 	@Override
 	public List<Project> findProjectsByStatus(Status status) {
 		List<Project> projectModels=new ArrayList<>();
-		Iterable<com.jmk.project.entity.Project> iterableProjects=projectRespository.findAll();
+		Iterable<com.jmk.project.entity.Project> iterableProjects=projectRespository.findByStatus(status);
 		projectModels=StreamSupport.stream(iterableProjects.spliterator(),false).map(projectEntity->modelMapper.map(projectEntity, Project.class)).collect(Collectors.toList());
 		return projectModels;
 	}
 
 	/**
+	 * @param projectModel
 	 * @return
 	 */
+
 	@Override
-	public List<Project> findAllProjects() {
-		List<Project> projectModels=new ArrayList<>();
-		Iterable<com.jmk.project.entity.Project> iterableProjects=projectRespository.findAll();
-		projectModels=StreamSupport.stream(iterableProjects.spliterator(),false).map(projectEntity->modelMapper.map(projectEntity, Project.class)).collect(Collectors.toList());
-		return projectModels;
+	@Cacheable(value="projectCacheByCode",key="#code",unless="#result == null")
+	public Project findProjectByCode(String code) {
+		Project projectModel=null;
+		com.jmk.project.entity.Project projectEntity=projectRespository.findByCode(code);
+		if(projectEntity!=null) {
+			projectModel=modelMapper.map(projectEntity, Project.class);
+		}
+		return projectModel;
 	}
+
+
+
 
 	@Override
 	public Project updateProject(Long id,Project projectModel) {

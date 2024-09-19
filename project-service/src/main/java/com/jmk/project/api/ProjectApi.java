@@ -62,7 +62,7 @@ public interface ProjectApi {
         @ApiResponse(code = 400, message = "Invalid Project name and password supplied"),
         @ApiResponse(code = 404, message = "Project not found or inactive"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @GetMapping(value = "/id/{id}")
+    @GetMapping(value = "/{id}")
     ResponseEntity<Project> findProjectById(@ApiParam(value = "Project Id",required=true) @PathVariable("id") Long id);
 
 
