@@ -1,6 +1,6 @@
 package com.jmk.project;
 
-import com.jmk.project.config.AppConfig;
+import com.jmk.config.AppConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -37,7 +37,7 @@ public class ProjectServiceApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		log.info("External Api URI : {} ", appConfig.getHost());
+		log.info("MySQL hostname  : {} ", appConfig.getHostname());
 
 	}
 

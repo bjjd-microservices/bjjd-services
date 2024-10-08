@@ -1,4 +1,4 @@
-package com.jmk.project.config;
+package com.jmk.config;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,16 +11,16 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties("db.mysql")
 public class AppConfig {
 
-    private String host;
+    private String hostname;
     private String username;
     private String password;
 
-    public String getHost() {
-        return host;
+    public String getHostname() {
+        return hostname;
     }
 
-    public void setHost(String host) {
-        this.host = host;
+    public void setHostname(String hostname) {
+        this.hostname = hostname;
     }
 
     public String getUsername() {
