@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.jmk.project.model.Project;
 import com.jmk.user.feign.client.S3ServiceClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,14 +51,26 @@ public class UserApiController implements UserApi {
         this.request = request;
     }
 
-    public String appUpAndRunning() {
+    public String checkHealth() {
         return "{healthy:true}";
     }
 
-	public ResponseEntity<User> createUser(@ApiParam(value = "", required = true) @Valid @RequestPart User user,
-			@RequestPart("photo") MultipartFile photo,
-			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel) {
-		
+    public ResponseEntity<User> loginUser(@NotNull @Size(min=3,max=36) @ApiParam(value = "username to be find", required = true) @Valid @RequestParam(value = "username", required = true) String username,@NotNull @Size(min=3,max=36) @ApiParam(value = "password of the user", required = true) @Valid @RequestParam(value = "password", required = true) String password) {
+        String accept = request.getHeader("Accept");
+        if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
+            User user = userService.findUserDetailsByUserName(username);
+            return new ResponseEntity<User>(user, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    public ResponseEntity<Void> logoutUser() {
+        return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
+    public ResponseEntity<User> createUser(User user,MultipartFile photo,String xChannel) {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		enrichCommonUserDetails(user);
 		user = userService.saveUser(user);
@@ -67,9 +80,7 @@ public class UserApiController implements UserApi {
 		return new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 
-
-
-    public ResponseEntity<Void> createUsersWithArrayInput(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<User> users,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel) {
+    public ResponseEntity<Void> createUsers(List<User> users,String xChannel) {
     	String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
         	users=users.stream().map(user->enrichCommonUserDetails(user)).collect(Collectors.toList());
@@ -82,18 +93,12 @@ public class UserApiController implements UserApi {
         return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    public ResponseEntity<Integer> deleteUserByUsername(@ApiParam(value = "username") @Valid @RequestParam(value = "username", required = true) String username) {
-    	Integer deleteRecords=userService.deleteUserByUsername(username);
-        return new ResponseEntity<Integer>(deleteRecords,HttpStatus.OK);
+    public ResponseEntity<List<User>> findAllUsers(){
+        List<User> users = userService.findAllUsers();
+        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
     }
 
-    public ResponseEntity<Void> deleteUserById(@ApiParam(value = "User Id",required=true) @PathVariable("id") Long id) {
-         userService.deleteUserById(id);
-         //Below return statement is the correct way to handle the delete request
-         return ResponseEntity.noContent().build();
-    }
-
-    public ResponseEntity<User> findUserDetailsById(@ApiParam(value = "User Id",required=true) @PathVariable("id") Long id) {
+    public ResponseEntity<User> findUserDetailsById(Long id) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
             	User user=userService.findUserDetailsById(id);
@@ -102,11 +107,8 @@ public class UserApiController implements UserApi {
         return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-
     @Override
-	public ResponseEntity<User> findUserDetailsByUserName(
-			@ApiParam(value = "xChannel") @RequestHeader(value = "xChannel", required = false) String xChannel,
-			@ApiParam(value = "username") @Valid @RequestParam(value = "username", required = false) String username) {
+	public ResponseEntity<User> findUserDetailsByUserName(String username) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
 			User user = userService.findUserDetailsByUserName(username);
@@ -116,21 +118,7 @@ public class UserApiController implements UserApi {
 		return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	public ResponseEntity<User> loginUser(@NotNull @Size(min=3,max=36) @ApiParam(value = "username to be find", required = true) @Valid @RequestParam(value = "username", required = true) String username,@NotNull @Size(min=3,max=36) @ApiParam(value = "password of the user", required = true) @Valid @RequestParam(value = "password", required = true) String password) {
-		String accept = request.getHeader("Accept");
-		if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
-			User user = userService.findUserDetailsByUserName(username);
-			return new ResponseEntity<User>(user, HttpStatus.OK);
-		}
-
-		return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    public ResponseEntity<Void> logoutUser() {
-        return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    public ResponseEntity<User> updateUserById(@ApiParam(value = "User Id",required=true) @PathVariable("id") Integer id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody User user) {
+    public ResponseEntity<User> updateUser(Integer id,User user) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
         	enrichCommonUserDetails(user);
@@ -150,6 +138,17 @@ public class UserApiController implements UserApi {
         }
 
         return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    public ResponseEntity<Void> deleteUserById(@ApiParam(value = "User Id",required=true) @PathVariable("id") Long id) {
+        userService.deleteUserById(id);
+        //Below return statement is the correct way to handle the delete request
+        return ResponseEntity.noContent().build();
+    }
+
+    public ResponseEntity<Integer> deleteUserByUsername(@ApiParam(value = "username") @Valid @RequestParam(value = "username", required = true) String username) {
+        Integer deleteRecords=userService.deleteUserByUsername(username);
+        return new ResponseEntity<Integer>(deleteRecords,HttpStatus.OK);
     }
     
     /**

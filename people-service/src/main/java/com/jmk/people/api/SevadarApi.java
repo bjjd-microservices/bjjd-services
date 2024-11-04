@@ -9,13 +9,10 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.jmk.people.model.Member;
+import com.jmk.project.model.Project;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import com.jmk.people.model.Sevadar;
 
@@ -27,41 +24,44 @@ import io.swagger.annotations.ApiResponses;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-02-27T07:02:52.969Z")
 
 @Api(value = "sevadar", description = "the sevadar API")
-@RequestMapping(value = "/sevadar")
+@RequestMapping(value = "v1/sevadars")
 public interface SevadarApi {
 
-    @ApiOperation(value = "Sevadar Creation Service", nickname = "createSevadar", notes = "Sevadar Creation Service", response = Sevadar.class, tags={ "SevadarMgmtServiceApi", })
+    @ApiOperation(value = "Health check service", nickname = "healthcheck", notes = "Health Check Service", tags={ "SevadarMgmtServiceApi" })
+    @GetMapping(path = "/health")
+    public String checkHealth() ;
+
+    @ApiOperation(value = "Sevadar Creation Service", nickname = "createSevadar", notes = "Sevadar Creation Service", response = Sevadar.class, tags={ "SevadarMgmtServiceApi" })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = Sevadar.class),
-        @ApiResponse(code = 400, message = "Bad Request"),
-        @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/",
-        produces = { "application/json", "application/xml" }, 
-        consumes = { "application/json", "application/xml" },
-        method = RequestMethod.POST)
+        @ApiResponse(code = 400, message = "Bad Request"),        @ApiResponse(code = 500, message = "Internal Server Error") })
+    @PostMapping(produces = { "application/json", "application/xml" },
+            consumes = { "application/json", "application/xml" })
     ResponseEntity<Sevadar> createSevadar(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Sevadar body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
 
     @ApiOperation(value = "Sevadar Creation with input arrays Service", nickname = "createSevadarsWithArrayInput", notes = "Sevadar Finding Service", tags={ "SevadarMgmtServiceApi", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Successfully found"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/createSevadars",
-        produces = { "application/json" }, 
-        consumes = { "application/json" },
-        method = RequestMethod.POST)
-    ResponseEntity<List<Sevadar>> createSevadars(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Sevadar> body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
+    @PostMapping(value = "/bulk", produces = { "application/json", "application/xml" },
+            consumes = { "application/json", "application/xml" })
+    ResponseEntity<List<Sevadar>> createSevadars(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Sevadar> sevadars,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
 
-    @ApiOperation(value = "Sevadar Deletion Service based on the sevadar id", nickname = "deleteSevadarById", notes = "Sevadar Deletion Service based on the sevadar id", tags={ "SevadarMgmtServiceApi", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Sevadar deleted succussfully"),
-        @ApiResponse(code = 400, message = "Invalid User id supplied"),
-        @ApiResponse(code = 404, message = "Sevadar Id not found"),
-        @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/{id}",
-        produces = { "application/json" }, 
-        consumes = { "application/json" },
-        method = RequestMethod.DELETE)
-    ResponseEntity<Void> deleteSevadarById(@ApiParam(value = "Sevadar Id",required=true) @PathVariable("id") Long id) ;
+    @ApiOperation(value = "Find all the Sevadar Details", nickname = "find All Sevadar", response = Sevadar.class, tags={ "SevadarMgmtServiceApi" } )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully found", response = Sevadar.class),
+            @ApiResponse(code = 500, message = "Internal Server Error") })
+    @GetMapping
+    ResponseEntity<List<Sevadar>> findAllSevadars();
+
+    @ApiOperation(value = "Find Sevadar Details based on the sevadar id", nickname = "findSevadarDetailsById", notes = "Find Sevadar Details based on the sevadar id", response = Sevadar.class, tags={ "SevadarMgmtServiceApi", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully found", response = Sevadar.class),
+            @ApiResponse(code = 400, message = "Invalid Sevadar name and password supplied"),
+            @ApiResponse(code = 404, message = "Sevadar not found or inactive"),
+            @ApiResponse(code = 500, message = "Internal Server Error") })
+    @GetMapping(value = "/{id}")
+    ResponseEntity<Sevadar> findSevadarById(@ApiParam(value = "Sevadar Id",required=true) @PathVariable("id") Long id) ;
 
     @ApiOperation(value = "Find the sevadar by mobile number", nickname = "findSevadarByMobileNumber", notes = "Find the sevadar by mobile number", response = Sevadar.class, tags={ "SevadarMgmtServiceApi", })
     @ApiResponses(value = { 
@@ -69,35 +69,16 @@ public interface SevadarApi {
         @ApiResponse(code = 400, message = "Invalid mobile number supplied"),
         @ApiResponse(code = 404, message = "Sevadar not found or inactive"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/findByMobileNumber",
-        produces = { "application/json", "application/xml" }, 
-        consumes = { "application/json", "application/xml" },
-        method = RequestMethod.GET)
-    ResponseEntity<Sevadar> findSevadarByMobileNumber(@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel,@ApiParam(value = "") @Valid @RequestParam(value = "mobileNo", required = false) String mobileNo) ;
-
-    @ApiOperation(value = "Find Sevadar Details based on the sevadar id", nickname = "findSevadarDetailsById", notes = "Find Sevadar Details based on the sevadar id", response = Sevadar.class, tags={ "SevadarMgmtServiceApi", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Successfully found", response = Sevadar.class),
-        @ApiResponse(code = 400, message = "Invalid Sevadar name and password supplied"),
-        @ApiResponse(code = 404, message = "Sevadar not found or inactive"),
-        @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/{id}",
-        produces = { "application/json" }, 
-        consumes = { "application/json" },
-        method = RequestMethod.GET)
-    ResponseEntity<Sevadar> findSevadarDetailsById(@ApiParam(value = "Sevadar Id",required=true) @PathVariable("id") Long id) ;
-
+    @GetMapping(value = "mobileno/{mobileno}",produces = { "application/json" })
+    ResponseEntity<Sevadar> findSevadarByMobileNumber(@ApiParam(value = "Mobile Number",required=true) @PathVariable("mobileno") String mobileNo) ;
 
     @ApiOperation(value = "Find the sevadars by status", nickname = "findSevadarsByStatus", notes = "Find all the sevadars by status", response = Sevadar.class, responseContainer = "List", tags={ "SevadarMgmtServiceApi", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = Sevadar.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid status value"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/findByStatus",
-        produces = { "application/json", "application/xml" }, 
-        consumes = { "application/json", "application/xml" },
-        method = RequestMethod.GET)
-    ResponseEntity<List<Sevadar>> findSevadarsByStatus(@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel,@ApiParam(value = "The status to restrict the results to.  If not provided, all records are returned", allowableValues = "A, I") @Valid @RequestParam(value = "status", required = false) String status) ;
+    @GetMapping(value = "status/{status}",produces = { "application/json" })
+    ResponseEntity<List<Sevadar>> findSevadarsByStatus(@ApiParam(value = "Project Status",required=true) @PathVariable("status") String status) ;
 
 
     @ApiOperation(value = "Update Sevadar Details based on the sevadar id", nickname = "updateSevadarById", notes = "Update Sevadar Details based on the sevadar id", response = Sevadar.class, tags={ "SevadarMgmtServiceApi", })
@@ -106,10 +87,18 @@ public interface SevadarApi {
         @ApiResponse(code = 400, message = "Invalid Sevadar name supplied"),
         @ApiResponse(code = 404, message = "Sevadar not found or inactive"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/{id}",
-        produces = { "application/json" }, 
-        consumes = { "application/json" },
-        method = RequestMethod.PUT)
-    ResponseEntity<Sevadar> updateSevadarById(@ApiParam(value = "Sevadar Id",required=true) @PathVariable("id") Long id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Sevadar body);
+    @PutMapping(value = "/{id}",
+            produces = { "application/json", "application/xml" },
+            consumes = { "application/json", "application/xml" })
+    ResponseEntity<Sevadar> updateSevadar(@ApiParam(value = "Sevadar Id",required=true) @PathVariable("id") Long id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Sevadar sevadar);
+
+    @ApiOperation(value = "Sevadar Deletion Service based on the sevadar id", nickname = "deleteSevadarById", notes = "Sevadar Deletion Service based on the sevadar id", tags={ "SevadarMgmtServiceApi", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Sevadar deleted succussfully"),
+            @ApiResponse(code = 400, message = "Invalid User id supplied"),
+            @ApiResponse(code = 404, message = "Sevadar Id not found"),
+            @ApiResponse(code = 500, message = "Internal Server Error") })
+    @DeleteMapping(value = "/{id}")
+    ResponseEntity<Void> deleteSevadarById(@ApiParam(value = "Sevadar Id",required=true) @PathVariable("id") Long id) ;
 
 }

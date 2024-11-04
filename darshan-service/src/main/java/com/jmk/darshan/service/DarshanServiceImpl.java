@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import com.jmk.project.model.Project;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import com.jmk.darshan.repository.DarshanRepository;
 import com.jmk.eh.exception.EntityNotFoundException;
 
 @Service
-public class DarshanMgmtServiceImpl implements DarshanMgmtService{
+public class DarshanServiceImpl implements DarshanService {
 	
 	@Autowired
 	private DarshanRepository repository;
@@ -45,8 +46,26 @@ public class DarshanMgmtServiceImpl implements DarshanMgmtService{
 		if(!optionalDarshan.isPresent()) {
 			throw new EntityNotFoundException(Darshan.class, "id",id.toString());
 		}
-		Darshan darshanModel=mapper.map(optionalDarshan.get(),Darshan.class);
-		return darshanModel;
+		Darshan darshan=mapper.map(optionalDarshan.get(),Darshan.class);
+		return darshan;
+	}
+
+	/**
+	 * @param id 
+	 * @param darshan
+	 * @return
+	 */
+	@Override
+	public Darshan updateDarshan(Long id, Darshan darshan) {
+		Optional<com.jmk.darshan.entity.Darshan> optionalEntity= repository.findById(id);
+		if(optionalEntity.isEmpty()) {
+			throw new EntityNotFoundException(Project.class,"id",id.toString());
+		}
+		com.jmk.darshan.entity.Darshan darshanEntity=mapper.map(darshan, com.jmk.darshan.entity.Darshan.class);
+		darshanEntity.setId(id);
+		darshanEntity=repository.save(darshanEntity);
+		darshan=mapper.map(darshanEntity,Darshan.class);
+		return darshan;
 	}
 
 	@Override

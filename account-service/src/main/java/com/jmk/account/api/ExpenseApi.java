@@ -10,11 +10,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import com.jmk.account.model.Expense;
 
@@ -26,52 +22,37 @@ import io.swagger.annotations.ApiResponses;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-04-05T20:28:14.461+05:30")
 
 @Api(value = "expense", description = "the expense API")
-@RequestMapping(value = "/expense")
+@RequestMapping(value = "v1/expenses")
 public interface ExpenseApi {
+
+    @ApiOperation(value = "Health check service", nickname = "healthcheck", notes = "Health Check Service")
+    @GetMapping(path = "/health")
+    public String checkHealth() ;
 	
     @ApiOperation(value = "Save Expense Service", nickname = "saveExpense", notes = "Save Expense Service", response = Expense.class, tags={ "ExpenseService", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = Expense.class),
         @ApiResponse(code = 400, message = "Bad Request"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/",
-        produces = { "application/json", "application/xml" }, 
-        consumes = { "application/json", "application/xml" },
-        method = RequestMethod.POST)
+    @PostMapping(produces = { "application/json", "application/xml" },
+            consumes = { "application/json", "application/xml" })
     ResponseEntity<Expense> saveExpense(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Expense body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
 
     @ApiOperation(value = "Saving Expenses with input arrays Service", nickname = "saveExpenses", notes = "Saving Expenses", tags={ "ExpenseService", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Successfully found"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/saveExpenses",
-        produces = { "application/json" }, 
-        consumes = { "application/json" },
-        method = RequestMethod.POST)
+    @PostMapping(value = "/bulk", produces = { "application/json", "application/xml" },
+            consumes = { "application/json", "application/xml" })
     ResponseEntity<List<Expense>> saveExpenses(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Expense> body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
     
-    @ApiOperation(value = "Expense Deletion Service based on the expense id", nickname = "deleteExpenseById", notes = "Expense Deletion Service based on the expense id", tags={ "ExpenseService", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Expense deleted succussfully"),
-        @ApiResponse(code = 400, message = "Invalid User id supplied"),
-        @ApiResponse(code = 404, message = "Expense Id not found"),
-        @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/{id}",
-        produces = { "application/json" }, 
-        consumes = { "application/json" },
-        method = RequestMethod.DELETE)
-    ResponseEntity<Void> deleteExpenseById(@ApiParam(value = "Expense Id",required=true) @PathVariable("id") Long id);
-
     @ApiOperation(value = "Find Expense Details based on the expense id", nickname = "findExpenseDetailsById", notes = "Find Expense Details based on the expense id", response = Expense.class, tags={ "ExpenseService", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Successfully found", response = Expense.class),
         @ApiResponse(code = 400, message = "Invalid Expense name and password supplied"),
         @ApiResponse(code = 404, message = "Expense not found or inactive"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/{id}",
-        produces = { "application/json" }, 
-        consumes = { "application/json" },
-        method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     ResponseEntity<Expense> findExpenseDetailsById(@ApiParam(value = "Expense Id",required=true) @PathVariable("id") Long id);
     
     @ApiOperation(value = "Update Expense Details based on the expense id", nickname = "updateExpenseById", notes = "Update Expense Details based on the expense id", response = Expense.class, tags={ "ExpenseService", })
@@ -80,10 +61,17 @@ public interface ExpenseApi {
         @ApiResponse(code = 400, message = "Invalid Expense name supplied"),
         @ApiResponse(code = 404, message = "Expense not found or inactive"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/{id}",
-        produces = { "application/json" }, 
-        consumes = { "application/json" },
-        method = RequestMethod.PUT)
-    ResponseEntity<Expense> updateExpenseById(@ApiParam(value = "Expense Id",required=true) @PathVariable("id") Long id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Expense body);
+    @PutMapping(value = "/{id}",
+            produces = { "application/json", "application/xml" },
+            consumes = { "application/json", "application/xml" })
+    ResponseEntity<Expense> updateExpense(@ApiParam(value = "Expense Id",required=true) @PathVariable("id") Long id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Expense body);
 
+    @ApiOperation(value = "Expense Deletion Service based on the expense id", nickname = "deleteExpenseById", notes = "Expense Deletion Service based on the expense id", tags={ "ExpenseService", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Expense deleted succussfully"),
+            @ApiResponse(code = 400, message = "Invalid User id supplied"),
+            @ApiResponse(code = 404, message = "Expense Id not found"),
+            @ApiResponse(code = 500, message = "Internal Server Error") })
+    @DeleteMapping(value = "/{id}")
+    ResponseEntity<Void> deleteExpenseById(@ApiParam(value = "Expense Id",required=true) @PathVariable("id") Long id);
 }

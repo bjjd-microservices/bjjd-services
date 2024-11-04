@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import com.jmk.project.model.Project;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,6 +52,25 @@ public class DonationServiceImpl implements DonationService{
 		Donation donationModel=mapper.map(optionalDonation.get(),Donation.class);
 		return donationModel;
 	}
+
+	/**
+	 * @param id 
+	 * @param donation
+	 * @return
+	 */
+	@Override
+	public Donation updateDonation(Long id, Donation donation) {
+		Optional<com.jmk.account.entity.Donation> optionalEntity= repository.findById(id);
+		if(optionalEntity.isEmpty()) {
+			throw new EntityNotFoundException(Project.class,"id",id.toString());
+		}
+		com.jmk.account.entity.Donation donationEntity=mapper.map(donation, com.jmk.account.entity.Donation.class);
+		donationEntity.setId(id);
+		donationEntity=repository.save(donationEntity);
+		donation=mapper.map(donationEntity,Donation.class);
+		return donation;
+	}
+
 
 	@Override
 	public void deleteDonationById(Long id) {

@@ -1,5 +1,6 @@
 package com.jmk.account.api;
 
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +30,8 @@ import com.jmk.messaging.util.MessageBuilder;
 import com.jmk.user.model.User;
 
 import io.swagger.annotations.ApiParam;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-04-05T20:28:14.461+05:30")
 @RestController
 public class ExpenseApiController implements ExpenseApi {
@@ -54,9 +57,11 @@ public class ExpenseApiController implements ExpenseApi {
         this.request = request;
     }
 
-	public ResponseEntity<Expense> saveExpense(
-			@ApiParam(value = "", required = true) @Valid @RequestBody Expense expense,
-			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel) {
+	public String checkHealth() {
+		return "{healthy:true}";
+	}
+
+	public ResponseEntity<Expense> saveExpense(Expense expense,String xChannel) {
 		String accept = request.getHeader("Accept");
 		String username=request.getHeader("username");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
@@ -91,26 +96,12 @@ public class ExpenseApiController implements ExpenseApi {
         return new ResponseEntity<List<Expense>>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
     
-    public ResponseEntity<Void> deleteExpenseById(
-			@ApiParam(value = "Expense Id", required = true) @PathVariable("id") Long id) {
-    	expenseService.deleteExpenseById(id);
-        //Below return statement is the correct way to handle the delete request
-        return ResponseEntity.noContent().build();
-	}
-
-	public ResponseEntity<Expense> findExpenseDetailsById(
-			@ApiParam(value = "Expense Id", required = true) @PathVariable("id") Long id) {
-		String accept = request.getHeader("Accept");
-		if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
+	public ResponseEntity<Expense> findExpenseDetailsById(Long id) {
 			Expense expense = expenseService.findExpenseDetailsById(id);
 			return new ResponseEntity<Expense>(expense, HttpStatus.OK);
-		}
-		return new ResponseEntity<Expense>(HttpStatus.NOT_IMPLEMENTED);
 	}
 	
-	public ResponseEntity<Expense> updateExpenseById(
-			@ApiParam(value = "Expense Id", required = true) @PathVariable("id") Long id,
-			@ApiParam(value = "", required = true) @Valid @RequestBody Expense expense) {
+	public ResponseEntity<Expense> updateExpense(Long id,Expense expense) {
 		String accept = request.getHeader("Accept");
 		String username=request.getHeader("username");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
@@ -119,11 +110,23 @@ public class ExpenseApiController implements ExpenseApi {
 				User user=userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
 				enrichCommonDetails(expense,user);
 			}
-			expense = expenseService.saveExpense(expense);
-			return new ResponseEntity<Expense>(expense, HttpStatus.OK);
+			expense = expenseService.updateExpense(id,expense);
+			URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+					.path("/{id}")
+					.buildAndExpand(expense.getId())
+					.toUri();
+
+			return ResponseEntity.created(location)
+					.build();
 		}
 
 		return new ResponseEntity<Expense>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	public ResponseEntity<Void> deleteExpenseById(Long id) {
+		expenseService.deleteExpenseById(id);
+		//Below return statement is the correct way to handle the delete request
+		return ResponseEntity.noContent().build();
 	}
 	
 	private Expense enrichCommonDetails(Expense expense,User user) {

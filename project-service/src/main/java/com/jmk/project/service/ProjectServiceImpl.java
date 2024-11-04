@@ -95,9 +95,6 @@ public class ProjectServiceImpl  implements ProjectService {
 		return projectModel;
 	}
 
-
-
-
 	@Override
 	public Project updateProject(Long id,Project projectModel) {
 		Optional<com.jmk.project.entity.Project> optionalProject= projectRespository.findById(id);

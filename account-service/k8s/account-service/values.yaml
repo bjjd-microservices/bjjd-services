@@ -6,15 +6,15 @@ namespace: "bjjd-system"
 
 config:
   springActiveProfile: "kubernetes"
-  databaseHostname: "bjjd-mysql.c9gk2c2q2kng.ap-south-1.rds.amazonaws.com"
-  databaseRootUser: "bjjd_admin"
+  databaseHostname: "to-be-fetched-from-hashicorp-vault"
+  databaseRootUser: "to-be-fetched-from-hashicorp-vault"
   databaseName: "account_db"
   databasePort: "3306"
-  databaseUsername: "bjjd"
+  databaseUsername: "to-be-fetched-from-hashicorp-vault"
 
 secret:
-  databaseRootPassword: "bjjd_379"
-  databasePassword: "bjjd_379"
+  databaseRootPassword: "to-be-fetched-from-hashicorp-vault"
+  databasePassword: "to-be-fetched-from-hashicorp-vault"
 
 
 replicaCount: 1

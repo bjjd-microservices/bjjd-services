@@ -1,4 +1,5 @@
 package com.jmk.people.api;
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -7,6 +8,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.jmk.project.model.Project;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +29,8 @@ import com.jmk.people.service.PersonMgmtService;
 import com.jmk.user.model.User;
 
 import io.swagger.annotations.ApiParam;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-02-27T07:02:52.969Z")
 
 @RestController
@@ -47,7 +51,7 @@ public class DevoteeApiController implements DevoteeApi {
         this.request = request;
     }
 
-	public String appUpAndRunning() {
+	public String checkHealth() {
 		return "{healthy:true}";
 	}
 
@@ -89,44 +93,34 @@ public class DevoteeApiController implements DevoteeApi {
 		return new ResponseEntity<List<Devotee>>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-    public ResponseEntity<Void> deleteDevoteeById(@ApiParam(value = "Devotee Id",required=true) @PathVariable("id") Long id) {
-    	String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
-        	personMgmtService.deletePersonById(id);
-        }
-        return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    public ResponseEntity<Devotee> findDevoteeByMobileNumber(@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel,@ApiParam(value = "") @Valid @RequestParam(value = "mobileNo", required = false) String mobileNo) {
-		String accept = request.getHeader("Accept");
-		if (accept != null && (accept.contains("application/json") || accept.contains("*"))) {
-			Devotee devotee = personMgmtService.findPersonByMobileNumber(mobileNo);
-			return new ResponseEntity<Devotee>(devotee, HttpStatus.OK);
-		}
-		return new ResponseEntity<Devotee>(HttpStatus.INTERNAL_SERVER_ERROR);
-	}
-
-    public ResponseEntity<Devotee> findDevoteeDetailsById(@ApiParam(value = "Devotee Id",required=true) @PathVariable("id") Long id) {
-    	String accept = request.getHeader("Accept");
-		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
-				|| accept.contains("*")) {
-			Devotee devotee = personMgmtService.findPersonDetailsById(id);
-			return new ResponseEntity<Devotee>(devotee, HttpStatus.OK);
-		}
-        return new ResponseEntity<Devotee>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    public ResponseEntity<List<Devotee>> findDevoteesByStatus(@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel,@ApiParam(value = "The status to restrict the results to.  If not provided, all records are returned", allowableValues = "A, I") @Valid @RequestParam(value = "status", required = false) String status) {
-    	String accept = request.getHeader("Accept");
-		if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
-			List<Devotee> devotees = personMgmtService.findAllPersonsByStatus(Status.A);
+	/**
+	 * @return
+	 */
+	@Override
+	public ResponseEntity<List<Devotee>> findAllDevotees() {
+		List<Devotee> devotees = personMgmtService.findAllPersons();
+		if (devotees != null) {
 			return new ResponseEntity<List<Devotee>>(devotees, HttpStatus.OK);
 		}
-
 		return new ResponseEntity<List<Devotee>>(HttpStatus.NOT_IMPLEMENTED);
+	}
+
+	public ResponseEntity<Devotee> findDevoteeById(Long id) {
+			Devotee devotee = personMgmtService.findPersonById(id);
+			return new ResponseEntity<Devotee>(devotee, HttpStatus.OK);
+	}
+
+    public ResponseEntity<Devotee> findDevoteeByMobileNumber(String mobileNo) {
+			Devotee devotee = personMgmtService.findPersonByMobileNumber(mobileNo);
+			return new ResponseEntity<Devotee>(devotee, HttpStatus.OK);
+	}
+
+    public ResponseEntity<List<Devotee>> findDevoteesByStatus(String status) {
+			List<Devotee> devotees = personMgmtService.findAllPersonsByStatus(Status.valueOf(status));
+			return new ResponseEntity<List<Devotee>>(devotees, HttpStatus.OK);
     }
 
-    public ResponseEntity<Devotee> updateDevoteeById(@ApiParam(value = "Devotee Id",required=true) @PathVariable("id") Long id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Devotee devotee) {
+    public ResponseEntity<Devotee> updateDevotee(Long id,Devotee devotee) {
 		String accept = request.getHeader("Accept");
 		String username=request.getHeader("username");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
@@ -135,12 +129,24 @@ public class DevoteeApiController implements DevoteeApi {
 				User user = userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
 				enrichCommonDetails(devotee,user);
 			}
-			devotee = personMgmtService.savePerson(devotee);
-			return new ResponseEntity<Devotee>(devotee, HttpStatus.OK);
+
+			devotee = personMgmtService.updatePerson(id,devotee);
+			URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+					.path("/{id}")
+					.buildAndExpand(devotee.getId())
+					.toUri();
+
+			return ResponseEntity.created(location)
+					.build();
 		}
 
 		return new ResponseEntity<Devotee>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+	public ResponseEntity<Void> deleteDevoteeById(Long id) {
+			personMgmtService.deletePersonById(id);
+		return ResponseEntity.noContent().build();
+	}
     
     private Devotee enrichCommonDetails(Devotee devotee,User user) {
 		if (devotee.getId() == null) {

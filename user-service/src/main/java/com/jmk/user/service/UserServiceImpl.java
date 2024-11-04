@@ -8,6 +8,7 @@ import java.util.stream.StreamSupport;
 
 import javax.transaction.Transactional;
 
+import com.jmk.project.model.Project;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -27,10 +28,10 @@ import com.jmk.user.repository.UserRepository;
 public class UserServiceImpl implements UserService{
 	
 	@Autowired
-	private UserRepository userRepository;
+	private UserRepository repository;
 	
 	@Autowired
-	private ModelMapper modelMapper;
+	private ModelMapper mapper;
 	
 	
 
@@ -38,49 +39,20 @@ public class UserServiceImpl implements UserService{
 	@Caching(put = { @CachePut(value = "usersCacheById", key = "#result.id"),
 			@CachePut(value = "usersCacheByUsername", key = "#result.username") })
 	public User saveUser(User userModel) {
-		com.jmk.user.entity.User userEntity=modelMapper.map(updateUserModel(userModel), com.jmk.user.entity.User.class);
-		userEntity=userRepository.save(userEntity);
-		userModel=modelMapper.map(userEntity, User.class);
+		com.jmk.user.entity.User userEntity= mapper.map(updateUserModel(userModel), com.jmk.user.entity.User.class);
+		userEntity= repository.save(userEntity);
+		userModel= mapper.map(userEntity, User.class);
 		return userModel;
 	}
 
-	@Override
-	@Caching(evict = { @CacheEvict(value = "usersCacheById", key = "#id"),
-			@CacheEvict(value = "usersCacheByUsername", key = "#username") })
-	public void deleteUserById(Long id) {
-		userRepository.deleteById(id);
-	}
-
-	@Override
-	@Cacheable(value="usersCacheByUsername",key="#username",unless="#result == null")
-	public User findUserDetailsByUserName(String username) {
-		com.jmk.user.entity.User userEntity=userRepository.findByUsername(username);
-		if(userEntity==null) {
-			throw new EntityNotFoundException(User.class,"UserName",username);
-		}
-		User userModel=modelMapper.map(userEntity, User.class);
-		return userModel;
-	}
-
-	@Override
-	@Cacheable(value="usersCacheById",key="#id",unless="#result == null")
-	public User findUserDetailsById(Long id) {
-		Optional<com.jmk.user.entity.User> optionalUser=userRepository.findById(id);
-		if(!optionalUser.isPresent()) {
-			throw new EntityNotFoundException(User.class,"id",id.toString());
-		}
-		User userModel=modelMapper.map(optionalUser.get(), User.class);
-		return userModel;
-	}
-	
 	@Override
 	public List<User> saveUsers(List<User> userModels) {
 		final List<com.jmk.user.entity.User> userEntities = userModels.stream()
-				.map(userModel -> modelMapper.map(updateUserModel(userModel), com.jmk.user.entity.User.class))
+				.map(userModel -> mapper.map(updateUserModel(userModel), com.jmk.user.entity.User.class))
 				.collect(Collectors.toList());
-		Iterable<com.jmk.user.entity.User> iterableUsers = userRepository.saveAll(userEntities);
+		Iterable<com.jmk.user.entity.User> iterableUsers = repository.saveAll(userEntities);
 		userModels = StreamSupport.stream(iterableUsers.spliterator(), false)
-				.map(userEntity -> modelMapper.map(userEntity, User.class)).collect(Collectors.toList());
+				.map(userEntity -> mapper.map(userEntity, User.class)).collect(Collectors.toList());
 		return userModels;
 	}
 
@@ -88,17 +60,66 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public List<User> findAllUsers() {
 		List<User> userModels=new ArrayList<>();
-		Iterable<com.jmk.user.entity.User> iterableUsers=userRepository.findAll();
-		userModels=StreamSupport.stream(iterableUsers.spliterator(),false).map(userEntity->modelMapper.map(userEntity,User.class)).collect(Collectors.toList());
+		Iterable<com.jmk.user.entity.User> iterableUsers= repository.findAll();
+		userModels=StreamSupport.stream(iterableUsers.spliterator(),false).map(userEntity-> mapper.map(userEntity,User.class)).collect(Collectors.toList());
 		return userModels;
 	}
 
-	
+	@Override
+	@Cacheable(value="usersCacheById",key="#id",unless="#result == null")
+	public User findUserDetailsById(Long id) {
+		Optional<com.jmk.user.entity.User> optionalUser= repository.findById(id);
+		if(!optionalUser.isPresent()) {
+			throw new EntityNotFoundException(User.class,"id",id.toString());
+		}
+		User userModel= mapper.map(optionalUser.get(), User.class);
+		return userModel;
+	}
+
+	@Override
+	@Cacheable(value="usersCacheByUsername",key="#username",unless="#result == null")
+	public User findUserDetailsByUserName(String username) {
+		com.jmk.user.entity.User userEntity= repository.findByUsername(username);
+		if(userEntity==null) {
+			throw new EntityNotFoundException(User.class,"UserName",username);
+		}
+		User userModel= mapper.map(userEntity, User.class);
+		return userModel;
+	}
+
+
+
+	/**
+	 * @param id
+	 * @param user
+	 * @return
+	 */
+	@Override
+	public User updateUser(Long id, User user) {
+		Optional<com.jmk.user.entity.User> optionalEntity= repository.findById(id);
+		if(optionalEntity.isEmpty()) {
+			throw new EntityNotFoundException(Project.class,"id",id.toString());
+		}
+		com.jmk.user.entity.User userEntity=mapper.map(updateUserModel(user), com.jmk.user.entity.User.class);
+		userEntity.setId(id);
+		userEntity=repository.save(userEntity);
+		user=mapper.map(userEntity,User.class);
+		return user;
+	}
+
+	@Override
+	@Caching(evict = { @CacheEvict(value = "usersCacheById", key = "#id"),
+			@CacheEvict(value = "usersCacheByUsername", key = "#username") })
+	public void deleteUserById(Long id) {
+		repository.deleteById(id);
+	}
+
+
 	@Override
 	@Caching(evict = { @CacheEvict(value = "usersCacheById", key = "#id"),
 			@CacheEvict(value = "usersCacheByUsername", key = "#username") })
 	public int deleteUserByUsername(String username) {
-		int deleteRecords=userRepository.deleteByUsername(username);
+		int deleteRecords= repository.deleteByUsername(username);
 		return deleteRecords;
 	}
 	

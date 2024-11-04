@@ -9,13 +9,9 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.jmk.project.model.Project;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import com.jmk.people.model.Member;
 
@@ -27,18 +23,20 @@ import io.swagger.annotations.ApiResponses;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-02-27T07:02:52.969Z")
 
 @Api(value = "member", description = "the member API")
-@RequestMapping(value = "/member")
+@RequestMapping(value = "v1/members")
 public interface MemberApi {
 
-    @ApiOperation(value = "Member Creation Service", nickname = "createMember", notes = "Member Creation Service", response = Member.class, tags={ "MemberMgmtServiceApi", })
+    @ApiOperation(value = "Health check service", nickname = "healthcheck", notes = "Health Check Service", tags={ "MemberMgmtServiceApi" })
+    @GetMapping(path = "/health")
+    public String checkHealth() ;
+
+    @ApiOperation(value = "Member Creation Service", nickname = "createMember", notes = "Member Creation Service", response = Member.class, tags={ "MemberMgmtServiceApi" })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = Member.class),
         @ApiResponse(code = 400, message = "Bad Request"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/",
-        produces = { "application/json", "application/xml" }, 
-        consumes = { "application/json", "application/xml" },
-        method = RequestMethod.POST)
+    @PostMapping(produces = { "application/json", "application/xml" },
+            consumes = { "application/json", "application/xml" })
     ResponseEntity<Member> createMember(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Member body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
 
 
@@ -46,25 +44,26 @@ public interface MemberApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Successfully found"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/createMembers",
-        produces = { "application/json" }, 
-        consumes = { "application/json" },
-        method = RequestMethod.POST)
+    @PostMapping(value = "/bulk", produces = { "application/json", "application/xml" },
+            consumes = { "application/json", "application/xml" })
     ResponseEntity<List<Member>> createMembers(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<Member> body,@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel);
 
 
-    @ApiOperation(value = "Member Deletion Service based on the member id", nickname = "deleteMemberById", notes = "Member Deletion Service based on the member id", tags={ "MemberMgmtServiceApi", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Member deleted succussfully"),
-        @ApiResponse(code = 400, message = "Invalid User id supplied"),
-        @ApiResponse(code = 404, message = "Member Id not found"),
-        @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/{id}",
-        produces = { "application/json" }, 
-        consumes = { "application/json" },
-        method = RequestMethod.DELETE)
-    ResponseEntity<Void> deleteMemberById(@ApiParam(value = "Member Id",required=true) @PathVariable("id") Long id);
+    @ApiOperation(value = "Find all the Member Details", nickname = "find All Members", response = Member.class, tags={ "MemberMgmtServiceApi" } )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully found", response = Member.class),
+            @ApiResponse(code = 500, message = "Internal Server Error") })
+    @GetMapping
+    ResponseEntity<List<Member>> findAllMembers();
 
+    @ApiOperation(value = "Find Member Details based on the member id", nickname = "findMemberDetailsById", notes = "Find Member Details based on the member id", response = Member.class, tags={ "MemberMgmtServiceApi", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully found", response = Member.class),
+            @ApiResponse(code = 400, message = "Invalid Member name and password supplied"),
+            @ApiResponse(code = 404, message = "Member not found or inactive"),
+            @ApiResponse(code = 500, message = "Internal Server Error") })
+    @GetMapping(value = "/{id}")
+    ResponseEntity<Member> findMemberById(@ApiParam(value = "Member Id",required=true) @PathVariable("id") Long id) ;
 
     @ApiOperation(value = "Find all the members by status", nickname = "findMemberByMobileNumber", notes = "Find all the members by status", response = Member.class, tags={ "MemberMgmtServiceApi", })
     @ApiResponses(value = { 
@@ -72,24 +71,8 @@ public interface MemberApi {
         @ApiResponse(code = 400, message = "Invalid Member number supplied"),
         @ApiResponse(code = 404, message = "Member not found or inactive"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/findByMobileNumber",
-        produces = { "application/json", "application/xml" }, 
-        consumes = { "application/json", "application/xml" },
-        method = RequestMethod.GET)
-    ResponseEntity<Member> findMemberByMobileNumber(@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel,@ApiParam(value = "") @Valid @RequestParam(value = "mobileNo", required = false) String mobileNo);
-
-
-    @ApiOperation(value = "Find Member Details based on the member id", nickname = "findMemberDetailsById", notes = "Find Member Details based on the member id", response = Member.class, tags={ "MemberMgmtServiceApi", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Successfully found", response = Member.class),
-        @ApiResponse(code = 400, message = "Invalid Member name and password supplied"),
-        @ApiResponse(code = 404, message = "Member not found or inactive"),
-        @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/{id}",
-        produces = { "application/json" }, 
-        consumes = { "application/json" },
-        method = RequestMethod.GET)
-    ResponseEntity<Member> findMemberDetailsById(@ApiParam(value = "Member Id",required=true) @PathVariable("id") Long id) ;
+    @GetMapping(value = "mobileno/{mobileno}",produces = { "application/json" })
+    ResponseEntity<Member> findMemberByMobileNumber(@ApiParam(value = "Mobile Number",required=true) @PathVariable("mobileno") String mobileNo);
 
 
     @ApiOperation(value = "Find all the members by status", nickname = "findMembersByStatus", notes = "Find all the members by status", response = Member.class, responseContainer = "List", tags={ "MemberMgmtServiceApi", })
@@ -97,11 +80,8 @@ public interface MemberApi {
         @ApiResponse(code = 200, message = "OK", response = Member.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid status value"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/findByStatus",
-        produces = { "application/json", "application/xml" }, 
-        consumes = { "application/json", "application/xml" },
-        method = RequestMethod.GET)
-    ResponseEntity<List<Member>> findMembersByStatus(@ApiParam(value = "" ) @RequestHeader(value="xChannel", required=false) String xChannel,@ApiParam(value = "The status to restrict the results to.  If not provided, all records are returned", allowableValues = "A, I") @Valid @RequestParam(value = "status", required = false) String status);
+    @GetMapping(value = "status/{status}",produces = { "application/json" })
+    ResponseEntity<List<Member>> findMembersByStatus(@ApiParam(value = "Project Status",required=true) @PathVariable("status") String status);
 
 
     @ApiOperation(value = "Update Member Details based on the member id", nickname = "updateMemberById", notes = "Update Member Details based on the member id", response = Member.class, tags={ "MemberMgmtServiceApi", })
@@ -110,10 +90,17 @@ public interface MemberApi {
         @ApiResponse(code = 400, message = "Invalid Member name supplied"),
         @ApiResponse(code = 404, message = "Member not found or inactive"),
         @ApiResponse(code = 500, message = "Internal Server Error") })
-    @RequestMapping(value = "/{id}",
-        produces = { "application/json" }, 
-        consumes = { "application/json" },
-        method = RequestMethod.PUT)
-    ResponseEntity<Member> updateMemberById(@ApiParam(value = "Member Id",required=true) @PathVariable("id") Long id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Member body) ;
+    @PutMapping(value = "/{id}",
+            produces = { "application/json", "application/xml" },
+            consumes = { "application/json", "application/xml" })
+    ResponseEntity<Member> updateMember(@ApiParam(value = "Member Id",required=true) @PathVariable("id") Long id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Member member) ;
 
+    @ApiOperation(value = "Member Deletion Service based on the member id", nickname = "deleteMemberById", notes = "Member Deletion Service based on the member id", tags={ "MemberMgmtServiceApi", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Member deleted succussfully"),
+            @ApiResponse(code = 400, message = "Invalid User id supplied"),
+            @ApiResponse(code = 404, message = "Member Id not found"),
+            @ApiResponse(code = 500, message = "Internal Server Error") })
+    @DeleteMapping(value = "/{id}")
+    ResponseEntity<Void> deleteMemberById(@ApiParam(value = "Member Id",required=true) @PathVariable("id") Long id);
 }

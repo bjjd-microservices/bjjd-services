@@ -1,5 +1,6 @@
 package com.jmk.darshan.api;
 
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +23,7 @@ import com.jmk.darshan.enums.VisitorType;
 import com.jmk.darshan.feign.client.MessageSenderServiceClient;
 import com.jmk.darshan.feign.client.UserMgmtServiceClient;
 import com.jmk.darshan.model.Darshan;
-import com.jmk.darshan.service.DarshanMgmtService;
+import com.jmk.darshan.service.DarshanService;
 import com.jmk.darshan.util.VisitorCreator;
 import com.jmk.darshan.validator.RequestValidator;
 import com.jmk.messaging.util.MessageBuilder;
@@ -31,6 +31,7 @@ import com.jmk.people.model.Devotee;
 import com.jmk.user.model.User;
 
 import io.swagger.annotations.ApiParam;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-05-12T00:51:00.325+05:30")
 
@@ -54,9 +55,9 @@ public class DarshanApiController implements DarshanApi {
 	private VisitorCreator visitorCreator;
 	
 	@Autowired
-	private DarshanMgmtService darshanMgmtService;
+	private DarshanService darshanService;
 
-	public String appUpAndRunning() {
+	public String checkHealth() {
 		return "{healthy:true}";
 	}
 
@@ -65,8 +66,7 @@ public class DarshanApiController implements DarshanApi {
 		this.request = request;
 	}
 	
-	public ResponseEntity<Darshan> saveDarshan(@ApiParam(value = "", required = true) @Valid @RequestBody Darshan darshan,
-			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel) {
+	public ResponseEntity<Darshan> saveDarshan(Darshan darshan,String xChannel) {
 		String accept = request.getHeader("Accept");
 		String username=request.getHeader("username");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
@@ -80,7 +80,7 @@ public class DarshanApiController implements DarshanApi {
 					User user=userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
 					enrichCommonDetails(darshan,user);
 				}
-				darshan = darshanMgmtService.saveDarshan(darshan);
+				darshan = darshanService.saveDarshan(darshan);
 				messageSenderService.sendMessage(MessageBuilder.build(darshan));
 			}
 			return new ResponseEntity<Darshan>(darshan, HttpStatus.OK);
@@ -88,8 +88,7 @@ public class DarshanApiController implements DarshanApi {
 		return new ResponseEntity<Darshan>(HttpStatus.NOT_IMPLEMENTED);
 	}
 	
-	public ResponseEntity<List<Darshan>> saveDarshans(@ApiParam(value = "", required = true) @Valid @RequestBody List<Darshan> darshans,
-			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel) {
+	public ResponseEntity<List<Darshan>> saveDarshans(List<Darshan> darshans, String xChannel) {
 		String accept = request.getHeader("Accept");
 		String username = request.getHeader("username");
 
@@ -100,7 +99,7 @@ public class DarshanApiController implements DarshanApi {
 				darshans = darshans.stream().map(darshan -> enrichCommonDetails(darshan, user))
 						.collect(Collectors.toList());
 			}
-			darshans = darshanMgmtService.saveDarshans(darshans);
+			darshans = darshanService.saveDarshans(darshans);
 			if (darshans != null) {
 				messageSenderService.sendMessages(darshans.stream().map(darshan->MessageBuilder.build(darshan)).collect(Collectors.toList()));
 				return new ResponseEntity<List<Darshan>>(darshans, HttpStatus.OK);
@@ -110,31 +109,12 @@ public class DarshanApiController implements DarshanApi {
 	}
 
 
-	public ResponseEntity<Void> deleteDarshanById(@ApiParam(value = "Darshan Id", required = true) @PathVariable("id") Long id) {
-		String accept = request.getHeader("Accept");
-		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
-				|| accept.contains("*")) {
-			darshanMgmtService.deleteDarshanById(id);
-			return ResponseEntity.noContent().build();
-		}
-		return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
-	}
-	
-	
-
-	public ResponseEntity<Darshan> findDarshanDetailsById(@ApiParam(value = "Darshan Id", required = true) @PathVariable("id") Long id) {
-		String accept = request.getHeader("Accept");
-		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
-				|| accept.contains("*")) {
-			Darshan darshan = darshanMgmtService.findDarshanDetailsById(id);
+	public ResponseEntity<Darshan> findDarshanDetailsById(Long id) {
+			Darshan darshan = darshanService.findDarshanDetailsById(id);
 			return new ResponseEntity<Darshan>(darshan, HttpStatus.OK);
-		}
-		return new ResponseEntity<Darshan>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-	public ResponseEntity<Darshan> updateDarshanById(
-			@ApiParam(value = "Darshan Id", required = true) @PathVariable("id") Long id,
-			@ApiParam(value = "", required = true) @Valid @RequestBody Darshan darshan) {
+	public ResponseEntity<Darshan> updateDarshan(Long id,Darshan darshan) {
 		String accept = request.getHeader("Accept");
 		String username=request.getHeader("username");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
@@ -143,12 +123,23 @@ public class DarshanApiController implements DarshanApi {
 				User user=userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
 				enrichCommonDetails(darshan,user);
 			}
-			darshan = darshanMgmtService.saveDarshan(darshan);
-			return new ResponseEntity<Darshan>(darshan, HttpStatus.OK);
+
+			darshan = darshanService.updateDarshan(id,darshan);
+			URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+					.path("/{id}")
+					.buildAndExpand(darshan.getId())
+					.toUri();
+
+			return ResponseEntity.created(location).build();
 		}
 		return new ResponseEntity<Darshan>(HttpStatus.NOT_IMPLEMENTED);
 	}
-	
+
+	public ResponseEntity<Void> deleteDarshanById(Long id) {
+			darshanService.deleteDarshanById(id);
+			return ResponseEntity.noContent().build();
+	}
+
 	private Darshan enrichCommonDetails(Darshan darshan,User user) {
 		if (darshan.getId() == null) {
 			darshan.setCreatedOn(LocalDateTime.now());

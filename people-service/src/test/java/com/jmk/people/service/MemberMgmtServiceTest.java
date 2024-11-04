@@ -50,7 +50,7 @@ public class MemberMgmtServiceTest {
 	
 	@Test
 	public void testFindPersonByID() {
-		member=personMgmtService.findPersonDetailsById(1L);
+		member=personMgmtService.findPersonById(1L);
 		Assert.assertNotNull(member);
 	}
 

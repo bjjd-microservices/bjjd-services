@@ -1,5 +1,6 @@
 package com.jmk.account.api;
 
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,6 +31,7 @@ import com.jmk.people.model.Devotee;
 import com.jmk.user.model.User;
 
 import io.swagger.annotations.ApiParam;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-04-05T20:28:14.461+05:30")
 @RestController
@@ -53,7 +55,7 @@ public class DonationApiController implements DonationApi {
 	@Autowired
 	private DonorCreator donorCreator;
 
-	public String appUpAndRunning() {
+	public String checkHealth() {
 		return "{healthy:true}";
 	}
 	
@@ -61,9 +63,7 @@ public class DonationApiController implements DonationApi {
 	public DonationApiController(ObjectMapper objectMapper, HttpServletRequest request) {
 		this.request = request;
 	}
-	public ResponseEntity<Donation> saveDonation(
-			@ApiParam(value = "", required = true) @Valid @RequestBody Donation donation,
-			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel) {
+	public ResponseEntity<Donation> saveDonation(Donation donation,String xChannel) {
 		String accept = request.getHeader("Accept");
 		String username=request.getHeader("username");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
@@ -105,26 +105,12 @@ public class DonationApiController implements DonationApi {
         return new ResponseEntity<List<Donation>>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    public ResponseEntity<Void> deleteDonationById(
-			@ApiParam(value = "Donation Id", required = true) @PathVariable("id") Long id) {
-    	donationService.deleteDonationById(id);
-        //Below return statement is the correct way to handle the delete request
-        return ResponseEntity.noContent().build();
-	}
-
-	public ResponseEntity<Donation> findDonationDetailsById(
-			@ApiParam(value = "Donation Id", required = true) @PathVariable("id") Long id) {
-		String accept = request.getHeader("Accept");
-		if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
+	public ResponseEntity<Donation> findDonationDetailsById(Long id) {
 			Donation donation = donationService.findDonationDetailsById(id);
 			return new ResponseEntity<Donation>(donation, HttpStatus.OK);
-		}
-		return new ResponseEntity<Donation>(HttpStatus.NOT_IMPLEMENTED);
 	}
 	
-	public ResponseEntity<Donation> updateDonationById(
-			@ApiParam(value = "Donation Id", required = true) @PathVariable("id") Long id,
-			@ApiParam(value = "", required = true) @Valid @RequestBody Donation donation) {
+	public ResponseEntity<Donation> updateDonation(Long id,Donation donation) {
 		String accept = request.getHeader("Accept");
 		String username=request.getHeader("username");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml") || accept.contains("*")) {
@@ -132,12 +118,25 @@ public class DonationApiController implements DonationApi {
 				User user=userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
 				enrichCommonDetails(donation,user);
 			}
-			donation = donationService.saveDonation(donation);
-			return new ResponseEntity<Donation>(donation, HttpStatus.OK);
+			donation = donationService.updateDonation(id,donation);
+			URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+					.path("/{id}")
+					.buildAndExpand(donation.getId())
+					.toUri();
+
+			return ResponseEntity.created(location)
+					.build();
 		}
 		return new ResponseEntity<Donation>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
+
+	public ResponseEntity<Void> deleteDonationById(Long id) {
+		donationService.deleteDonationById(id);
+		//Below return statement is the correct way to handle the delete request
+		return ResponseEntity.noContent().build();
+	}
+
+
 	private Donation enrichCommonDetails(Donation donation,User user) {
 		if (donation.getId() == null) {
 			donation.setCreatedOn(LocalDateTime.now());

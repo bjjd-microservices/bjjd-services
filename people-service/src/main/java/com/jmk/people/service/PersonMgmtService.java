@@ -2,6 +2,7 @@ package com.jmk.people.service;
 
 import java.util.List;
 
+import com.jmk.project.model.Project;
 import org.modelmapper.ModelMapper;
 
 import com.jmk.enums.Status;
@@ -12,16 +13,20 @@ import com.jmk.people.model.Person;
 public interface PersonMgmtService<T extends Person> {
 	
 	T savePerson(T person);
-	
-	T findPersonDetailsById(Long id);
-	
-	void deletePersonById(Long id);
-	
+
 	List<T> savePersons(List<T> persons);
+	
+	T findPersonById(Long id);
+
+	List<T> findAllPersons();
 
 	List<T> findAllPersonsByStatus(Status status);
-	
+
 	T findPersonByMobileNumber(String mobileNumber);
+	
+	void deletePersonById(Long id);
+
+	T updatePerson(Long id, T t);
 	
 	public default <U extends com.jmk.people.entity.Person> U mapModelToEntity(ModelMapper mapper,Person personModel,Class<U> clazz) {
 		U personEntity=mapper.map(personModel,clazz);

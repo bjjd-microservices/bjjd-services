@@ -3,6 +3,7 @@ package com.jmk.account.service;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.jmk.account.model.Donation;
 import com.jmk.account.model.Expense;
 
 public interface ExpenseService {
@@ -12,6 +13,8 @@ public interface ExpenseService {
 	public List<Expense> saveExpenses(List<Expense> expenses);
 	
 	public Expense findExpenseDetailsById(Long id);
+
+	Expense updateExpense(Long id, Expense expense);
 	
 	public void deleteExpenseById(Long id);
 	

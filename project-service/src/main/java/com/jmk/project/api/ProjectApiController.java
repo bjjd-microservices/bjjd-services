@@ -119,8 +119,7 @@ public class ProjectApiController implements ProjectApi {
 	}
 
 	public ResponseEntity<List<Project>> findProjectsByStatus(String status) {
-		String username = request.getHeader("username");
-		List<Project> projects = projectService.findProjectsByStatus(Status.A);
+		List<Project> projects = projectService.findProjectsByStatus(Status.valueOf(status));
 		return new ResponseEntity<List<Project>>(projects, HttpStatus.OK);
 	}
 
@@ -148,8 +147,7 @@ public ResponseEntity<Project> updateProject(Long id,Project project) {
 		return new ResponseEntity<Project>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	public ResponseEntity<Void> deleteProjectById(
-			@ApiParam(value = "Project Id", required = true) @PathVariable("id") Long id) {
+	public ResponseEntity<Void> deleteProjectById(Long id) {
 		projectService.deleteProjectById(id);
 		// Below return statement is the correct way to handle the delete request
 		return ResponseEntity.noContent().build();

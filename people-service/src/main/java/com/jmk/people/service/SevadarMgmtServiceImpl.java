@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import com.jmk.people.model.Devotee;
+import com.jmk.people.model.Member;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -39,31 +41,36 @@ public class SevadarMgmtServiceImpl implements PersonMgmtService<Sevadar>{
 	}
 
 	@Override
-	public Sevadar findPersonDetailsById(Long id) {
-		Optional<com.jmk.people.entity.Sevadar> sevadarEntity=repository.findById(id);
-		if(!sevadarEntity.isPresent()) {
-			throw new EntityNotFoundException(Project.class,"id",id.toString());
-		}
-		Sevadar sevadarModel=mapEntityToModel(mapper,sevadarEntity.get(),Sevadar.class);
-		return sevadarModel;
-	}
-
-	@Override
-	@CacheEvict(value = "sevadarCacheByMobileNo", key = "#mobileNo")
-	public void deletePersonById(Long id) {
-		repository.deleteById(id);
-	}
-
-	@Override
 	public List<Sevadar> savePersons(List<Sevadar> sevadarModels) {
 		final List<com.jmk.people.entity.Sevadar> sevadarEntities = sevadarModels.stream().map(sevadarModel->mapModelToEntity(mapper, sevadarModel, com.jmk.people.entity.Sevadar.class)).collect(Collectors.toList());
 		Iterable<com.jmk.people.entity.Sevadar> iterableSevadars = repository.saveAll(sevadarEntities);
 		sevadarModels = StreamSupport.stream(iterableSevadars.spliterator(), false).map(sevadarEntity->mapEntityToModel(mapper, sevadarEntity, Sevadar.class)).collect(Collectors.toList());
 		return sevadarModels;
 	}
-	
+
+	/**
+	 * @return
+	 */
 	@Override
-	@Cacheable(value="sevadarCacheByMobileNo",key="#mobileNo",unless="#result == null")
+	public List<Sevadar> findAllPersons() {
+		List<Sevadar> sevadarModels=new ArrayList<>();
+		Iterable<com.jmk.people.entity.Sevadar> iterableSevadars=repository.findAllByType(PersonType.SEVADAR.getType());
+		sevadarModels = StreamSupport.stream(iterableSevadars.spliterator(), false).map(sevadarEntity->mapEntityToModel(mapper, sevadarEntity, Sevadar.class)).collect(Collectors.toList());
+		return sevadarModels;
+	}
+
+	@Override
+	public Sevadar findPersonById(Long id) {
+		com.jmk.people.entity.Sevadar sevadarEntity=repository.findPersonByTypeAndId(PersonType.SEVADAR.getType(),id);
+		if(sevadarEntity==null) {
+			throw new EntityNotFoundException(Project.class,"id",id.toString());
+		}
+		Sevadar sevadarModel=mapEntityToModel(mapper,sevadarEntity,Sevadar.class);
+		return sevadarModel;
+	}
+
+	@Override
+	//@Cacheable(value="sevadarCacheByMobileNo",key="#mobileNo",unless="#result == null")
 	public Sevadar findPersonByMobileNumber(String mobileNumber) {
 		Sevadar sevadarModel = null;
 		com.jmk.people.entity.Sevadar sevadarEntity = repository
@@ -77,8 +84,31 @@ public class SevadarMgmtServiceImpl implements PersonMgmtService<Sevadar>{
 	@Override
 	public List<Sevadar> findAllPersonsByStatus(Status status) {
 		List<Sevadar> sevadarModels=new ArrayList<>();
-		Iterable<com.jmk.people.entity.Sevadar> iterableSevadars=repository.findAll();
+		Iterable<com.jmk.people.entity.Sevadar> iterableSevadars=repository.findByStatus(status);
 		sevadarModels = StreamSupport.stream(iterableSevadars.spliterator(), false).map(sevadarEntity->mapEntityToModel(mapper, sevadarEntity, Sevadar.class)).collect(Collectors.toList());
 		return sevadarModels;
 	}
+
+	@Override
+	public Sevadar updatePerson(Long id, Sevadar sevadar) {
+		Optional<com.jmk.people.entity.Sevadar> optionalEntity= repository.findById(id);
+		if(optionalEntity.isEmpty()) {
+			throw new EntityNotFoundException(Devotee.class,"id",id.toString());
+		}
+		com.jmk.people.entity.Sevadar sevadarEntity=mapModelToEntity(mapper,sevadar, com.jmk.people.entity.Sevadar.class);
+		sevadarEntity.setId(id);
+		sevadarEntity=repository.save(sevadarEntity);
+		sevadar=mapEntityToModel(mapper, sevadarEntity, Sevadar.class);
+		return sevadar;
+	}
+
+	@Override
+	@CacheEvict(value = "sevadarCacheByMobileNo", key = "#mobileNo")
+	public void deletePersonById(Long id) {
+		repository.deleteById(id);
+	}
+
+
+	
+
 }

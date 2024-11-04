@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import com.jmk.account.model.Donation;
+import com.jmk.project.model.Project;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,6 +52,24 @@ public class ExpenseServiceImpl implements ExpenseService {
 		}
 		Expense expenseModel=mapper.map(optionalExpense.get(),Expense.class);
 		return expenseModel;
+	}
+
+	/**
+	 * @param id 
+	 * @param expense
+	 * @return
+	 */
+	@Override
+	public Expense updateExpense(Long id, Expense expense) {
+		Optional<com.jmk.account.entity.Expense> optionalEntity= repository.findById(id);
+		if(optionalEntity.isEmpty()) {
+			throw new EntityNotFoundException(Expense.class,"id",id.toString());
+		}
+		com.jmk.account.entity.Expense expenseEntity=mapper.map(expense, com.jmk.account.entity.Expense.class);
+		expenseEntity.setId(id);
+		expenseEntity=repository.save(expenseEntity);
+		expense=mapper.map(expenseEntity, Expense.class);
+		return expense;
 	}
 
 	@Override

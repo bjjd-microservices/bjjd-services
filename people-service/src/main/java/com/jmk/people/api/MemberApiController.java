@@ -1,5 +1,6 @@
 package com.jmk.people.api;
 
+import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.jmk.people.model.Devotee;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +30,7 @@ import com.jmk.people.service.PersonMgmtService;
 import com.jmk.user.model.User;
 
 import io.swagger.annotations.ApiParam;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-02-27T07:02:52.969Z")
 
@@ -47,6 +50,10 @@ public class MemberApiController implements MemberApi {
 	@org.springframework.beans.factory.annotation.Autowired
 	public MemberApiController(ObjectMapper objectMapper, HttpServletRequest request) {
 		this.request = request;
+	}
+
+	public String checkHealth() {
+		return "{healthy:true}";
 	}
 
 	public ResponseEntity<Member> createMember(@ApiParam(value = "", required = true) @Valid @RequestBody Member member,
@@ -83,55 +90,31 @@ public class MemberApiController implements MemberApi {
 		return new ResponseEntity<List<Member>>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-	public ResponseEntity<Void> deleteMemberById(
-			@ApiParam(value = "Member Id", required = true) @PathVariable("id") Long id) {
-		String accept = request.getHeader("Accept");
-		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
-				|| accept.contains("*")) {
-			personMgmtService.deletePersonById(id);
-		}
-		return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
-	}
-
-	public ResponseEntity<Member> findMemberByMobileNumber(
-			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel,
-			@ApiParam(value = "") @Valid @RequestParam(value = "mobileNo", required = false) String mobileNo) {
-		String accept = request.getHeader("Accept");
-		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
-				|| accept.contains("*")) {
-			Member member = personMgmtService.findPersonByMobileNumber(mobileNo);
-			return new ResponseEntity<Member>(member, HttpStatus.OK);
-		}
-		return new ResponseEntity<Member>(HttpStatus.NOT_IMPLEMENTED);
-	}
-
-	public ResponseEntity<Member> findMemberDetailsById(
-			@ApiParam(value = "Member Id", required = true) @PathVariable("id") Long id) {
-		String accept = request.getHeader("Accept");
-		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
-				|| accept.contains("*")) {
-			Member member = personMgmtService.findPersonDetailsById(id);
-			return new ResponseEntity<Member>(member, HttpStatus.OK);
-		}
-		return new ResponseEntity<Member>(HttpStatus.NOT_IMPLEMENTED);
-	}
-
-	public ResponseEntity<List<Member>> findMembersByStatus(
-			@ApiParam(value = "") @RequestHeader(value = "xChannel", required = false) String xChannel,
-			@ApiParam(value = "The status to restrict the results to.  If not provided, all records are returned", allowableValues = "A, I") @Valid @RequestParam(value = "status", required = false) String status) {
-		String accept = request.getHeader("Accept");
-		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
-				|| accept.contains("*")) {
-			List<Member> members = personMgmtService.findAllPersonsByStatus(Status.A);
+	@Override
+	public ResponseEntity<List<Member>> findAllMembers() {
+		List<Member> members = personMgmtService.findAllPersonsByStatus(Status.A);
+		if (members != null) {
 			return new ResponseEntity<List<Member>>(members, HttpStatus.OK);
 		}
-
 		return new ResponseEntity<List<Member>>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-	public ResponseEntity<Member> updateMemberById(
-			@ApiParam(value = "Member Id", required = true) @PathVariable("id") Long id,
-			@ApiParam(value = "", required = true) @Valid @RequestBody Member member) {
+	public ResponseEntity<Member> findMemberById(Long id) {
+			Member member = personMgmtService.findPersonById(id);
+			return new ResponseEntity<Member>(member, HttpStatus.OK);
+	}
+
+	public ResponseEntity<Member> findMemberByMobileNumber(String mobileNo) {
+			Member member = personMgmtService.findPersonByMobileNumber(mobileNo);
+			return new ResponseEntity<Member>(member, HttpStatus.OK);
+	}
+
+	public ResponseEntity<List<Member>> findMembersByStatus(String status) {
+			List<Member> members = personMgmtService.findAllPersonsByStatus(Status.valueOf(status));
+			return new ResponseEntity<List<Member>>(members, HttpStatus.OK);
+	}
+
+	public ResponseEntity<Member> updateMember(Long id,Member member) {
 		String accept = request.getHeader("Accept");
 		String username = request.getHeader("username");
 		if (accept != null && accept.contains("application/json") || accept.contains("application/xml")
@@ -140,11 +123,22 @@ public class MemberApiController implements MemberApi {
 				User user = userMgmtServiceClient.findUserDetailsByUserName(username).getBody();
 				enrichCommonDetails(member, user);
 			}
-			member = personMgmtService.savePerson(member);
-			return new ResponseEntity<Member>(member, HttpStatus.OK);
+			member = personMgmtService.updatePerson(id,member);
+			URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+					.path("/{id}")
+					.buildAndExpand(member.getId())
+					.toUri();
+
+			return ResponseEntity.created(location)
+					.build();
 		}
 
 		return new ResponseEntity<Member>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	public ResponseEntity<Void> deleteMemberById(Long id) {
+		personMgmtService.deletePersonById(id);
+		return ResponseEntity.noContent().build();
 	}
 
 	private Member enrichCommonDetails(Member member, User user) {
