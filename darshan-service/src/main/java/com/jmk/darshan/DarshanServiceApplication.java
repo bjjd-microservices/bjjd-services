@@ -16,7 +16,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableSwagger2
-@EnableFeignClients(basePackages = "com.jmk")
+@EnableFeignClients
 @EnableJpaRepositories
 @ComponentScan(basePackages = { "com.jmk" })
 @EnableConfigurationProperties(AppConfig.class)

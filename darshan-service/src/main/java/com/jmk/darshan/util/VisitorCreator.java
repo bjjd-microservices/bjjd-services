@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import com.jmk.darshan.feign.client.PeopleMgmtServiceClient;
+import com.jmk.darshan.feign.client.PeopleServiceClient;
 import com.jmk.darshan.model.Darshan;
 import com.jmk.enums.Group;
 import com.jmk.enums.Status;
@@ -17,7 +17,7 @@ import com.jmk.people.model.Devotee;
 public class VisitorCreator {
 
 	@Autowired
-	private PeopleMgmtServiceClient peopleMgmtServiceClient;
+	private PeopleServiceClient peopleMgmtServiceClient;
 
 	public Devotee createDevotee(Darshan darshan) {
 		Devotee devotee = new Devotee();

@@ -17,7 +17,7 @@ import com.jmk.user.model.User;
  *
  */
 @FeignClient(name="user-service",contextId="user-cache-service")
-public interface UserMgmtServiceClient{
+public interface UserServiceClient {
 	
 	@GetMapping(value="/api/user-service/user/findByUsername",produces = "application/json",consumes = "application/json")
 	ResponseEntity<User> findUserDetailsByUserName(@RequestParam(value = "username", required = false) String username);

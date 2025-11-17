@@ -6,22 +6,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
+import com.jmk.darshan.feign.client.MessageSenderServiceClient;
+import com.jmk.messaging.model.Message;
+import feign.FeignException;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jmk.darshan.enums.VisitorType;
-import com.jmk.darshan.feign.client.MessageSenderServiceClient;
-import com.jmk.darshan.feign.client.UserMgmtServiceClient;
+import com.jmk.darshan.feign.client.UserServiceClient;
 import com.jmk.darshan.model.Darshan;
 import com.jmk.darshan.service.DarshanService;
 import com.jmk.darshan.util.VisitorCreator;
@@ -30,7 +30,6 @@ import com.jmk.messaging.util.MessageBuilder;
 import com.jmk.people.model.Devotee;
 import com.jmk.user.model.User;
 
-import io.swagger.annotations.ApiParam;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-05-12T00:51:00.325+05:30")
@@ -43,16 +42,16 @@ public class DarshanApiController implements DarshanApi {
 	private final HttpServletRequest request;
 	
 	@Autowired
-	private MessageSenderServiceClient messageSenderService;
-	
-	@Autowired
-	private UserMgmtServiceClient userMgmtServiceClient;
+	private UserServiceClient userMgmtServiceClient;
 	
 	@Autowired
 	private RequestValidator requestValidator;
 	
 	@Autowired
 	private VisitorCreator visitorCreator;
+
+	@Autowired
+	private MessageSenderServiceClient messageSenderServiceClient;
 	
 	@Autowired
 	private DarshanService darshanService;
@@ -81,7 +80,7 @@ public class DarshanApiController implements DarshanApi {
 					enrichCommonDetails(darshan,user);
 				}
 				darshan = darshanService.saveDarshan(darshan);
-				messageSenderService.sendMessage(MessageBuilder.build(darshan));
+				sendMessage(MessageBuilder.build(darshan));
 			}
 			return new ResponseEntity<Darshan>(darshan, HttpStatus.OK);
 		}
@@ -101,7 +100,7 @@ public class DarshanApiController implements DarshanApi {
 			}
 			darshans = darshanService.saveDarshans(darshans);
 			if (darshans != null) {
-				messageSenderService.sendMessages(darshans.stream().map(darshan->MessageBuilder.build(darshan)).collect(Collectors.toList()));
+				sendMessages(darshans.stream().map(darshan -> MessageBuilder.build(darshan)).collect(Collectors.toList()));
 				return new ResponseEntity<List<Darshan>>(darshans, HttpStatus.OK);
 			}
 		}
@@ -149,6 +148,25 @@ public class DarshanApiController implements DarshanApi {
 		darshan.setWhenModified(LocalDateTime.now());
 		darshan.setModifiedBy(user.getId());
 		return darshan;
+	}
+
+	@CircuitBreaker(name="sendMessage",fallbackMethod = "sendMessageFallback")
+	public void sendMessage(Message message){
+		messageSenderServiceClient.sendMessage(message);
+	}
+
+	public String sendMessageFallback(String message, Throwable t) {
+		LOGGER.info("---Response from sendMessageFallback method---");
+		LOGGER.info("MessageSenderServiceClient Service is not available.");
+		return "Fallback response: " + message + " - Error: " + t.getMessage();
+	}
+
+	private void sendMessages(List<Message> messages){
+		try {
+			messageSenderServiceClient.sendMessages(messages);
+		}catch(FeignException feignException){
+			LOGGER.info("MessageSenderServiceClient Service is not available.");
+		}
 	}
 
 }

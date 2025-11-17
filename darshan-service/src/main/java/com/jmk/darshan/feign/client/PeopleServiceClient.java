@@ -2,6 +2,8 @@ package com.jmk.darshan.feign.client;
 
 import javax.validation.Valid;
 
+import com.jmk.common.config.LoadBalancerConfiguration;
+import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,18 +19,19 @@ import com.jmk.people.model.Sevadar;
  * 
  */
 @FeignClient(name="people-service") //Service id of people management service
-public interface PeopleMgmtServiceClient {
+@LoadBalancerClient(name="people-service",configuration = LoadBalancerConfiguration.class)
+public interface PeopleServiceClient {
 
-	@PostMapping(value="/api/people-service/devotee/",produces="application/json",consumes="application/json")
+	@PostMapping(value="/api/people-service/v1/devotees/",produces="application/json",consumes="application/json")
 	ResponseEntity<Devotee> createDevotee(@Valid @RequestBody Devotee devotee);
 	
-	@GetMapping(value="/api/people-service/devotee/{id}",produces="application/json",consumes="application/json")
+	@GetMapping(value="/api/people-service/v1/devotees/{id}",produces="application/json",consumes="application/json")
 	ResponseEntity<Devotee> findDevoteeDetailsById(@PathVariable("id") Long id);
 	
-	@GetMapping(value="/api/people-service/member/{id}",produces="application/json",consumes="application/json")
+	@GetMapping(value="/api/people-service/v1/members/{id}",produces="application/json",consumes="application/json")
 	ResponseEntity<Member> findMemberDetailsById(@PathVariable("id") Long id) ;
-	
-	@GetMapping(value="/api/people-service/sevadar/{id}",produces="application/json",consumes="application/json")
+
+	@GetMapping(value="/api/people-service/v1/sevadars/{id}",produces="application/json",consumes="application/json")
 	ResponseEntity<Sevadar> findSevadarDetailsById(@PathVariable("id") Long id) ;
 			
 }

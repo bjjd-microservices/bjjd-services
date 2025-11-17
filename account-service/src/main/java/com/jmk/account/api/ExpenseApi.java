@@ -64,7 +64,7 @@ public interface ExpenseApi {
     @PutMapping(value = "/{id}",
             produces = { "application/json", "application/xml" },
             consumes = { "application/json", "application/xml" })
-    ResponseEntity<Expense> updateExpense(@ApiParam(value = "Expense Id",required=true) @PathVariable("id") Long id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Expense body);
+    ResponseEntity<Expense> updateExpense(@ApiParam(value = "Expense Id",required=true) @PathVariable("id") Long id,@ApiParam(value = "" ,required=true )  @Valid @RequestBody Expense expense);
 
     @ApiOperation(value = "Expense Deletion Service based on the expense id", nickname = "deleteExpenseById", notes = "Expense Deletion Service based on the expense id", tags={ "ExpenseService", })
     @ApiResponses(value = {
